@@ -4,7 +4,28 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+	<!--Servlet Filter that handles site authorization.-->
+	<filter>
+		<filter-name>AuthorizationFilter</filter-name>
+		<description>This Filter authorizes user access to application
+			components based upon request URI.</description>
+		<filter-class>com.nositer.webapp.AuthorizationFilter</filter-class>
+		<init-param>
+			<param-name>error_page</param-name>
+			<param-value>../../error.jsp</param-value>
+		</init-param>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>AuthorizationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>com.nositer.webapp.HibernateListener</listener-class>
+	</listener>
+	
+	
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
@@ -20,22 +41,7 @@
 	
 
 
-	<!--Servlet Filter that handles site authorization.-->
-	<filter>
-		<filter-name>AuthorizationFilter</filter-name>
-		<filter-class>com.nositer.webapp.AuthorizationFilter</filter-class>
-		<description>This Filter authorizes user access to application
-			components based upon request URI.</description>
-		<init-param>
-			<param-name>error_page</param-name>
-			<param-value>../../error.jsp</param-value>
-		</init-param>
-	</filter>
 
-	<filter-mapping>
-		<filter-name>AuthorizationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 
 
 	<!-- Default page to serve -->

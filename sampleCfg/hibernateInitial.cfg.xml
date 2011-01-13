@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">abc123</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/nositer?blobSendChunkSize=1024000000&amp;max_allowed_packet=1024000000&amp;autoReconnect=true</property>
+		<property name="hibernate.connection.username">nositer</property>
+		<!-- 
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		-->
+		
+		<property name="hibernate.dialect">com.nositer.hibernate.MyMySQLDialect</property>
+		<property name="hibernate.connection.autocommit">false</property> 
+		<property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property> 
+		<property name="hibernate.show_sql">true</property>
+
+		<!--  connection pooling via C3P0 -->
+		
+	
+		<property name="c3p0.acquire_increment">5</property>
+		<property name="c3p0.idleConnectionTestPeriod">300</property>
+		<property name="c3p0.idle_test_period">100</property> 
+		<property name="c3p0.max_size">100</property>
+		<property name="c3p0.max_statements">100</property>
+		<property name="c3p0.min_size">5</property>
+		<property name="c3p0.timeout">100</property> 
+		<property name="c3p0.checkout_timeout">1000</property>
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		
+		 
+		 
+		 <!-- HUH?!?!?
+		<property name="c3p0.maxIdleTime">120</property>
+		<property name="c3p0.maxIdleTimeExcessConnections">90</property>
+		<property name="c3p0.acquireIncrement">5</property>
+		<property name="c3p0.idleConnectionTestPeriod">60</property>
+		<property name="c3p0.testConnectionOnCheckin"></property>
+		<property name="c3p0.maxPoolSize">100</property>
+		<property name="c3p0.minPoolSize">5</property>
+		<property name="c3p0.initialPoolSize">5</property>
+		<property name="c3p0.checkoutTimeout">1000</property>
+		<property name="c3p0.unreturnedConnectionTimeout">600</property>
+		<property name="c3p0.debugUnreturnedConnectionStackTraces">true</property>
+		 -->
+		
+	</session-factory>
+</hibernate-configuration>

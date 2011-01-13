@@ -221,14 +221,15 @@
       <g:DockLayoutPanel
         unit='PX'>
         <!-- Main menu tree. -->
-        <g:lineStart
-          size='225'>
+      <g:lineStart         > 
           <g:ScrollPanel
             styleName='{style.mainMenu}'>
             <c:CellTree
               ui:field='mainMenu' />
           </g:ScrollPanel>
-        </g:lineStart>
+
+       </g:lineStart> 
+      
 
         <!-- Main content area. -->
         <g:center>
