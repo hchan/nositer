@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="/public/css/main.css" />
 <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript">
+
+
+
 function ajaxSubmit () {
 	
             $.ajax ( {
@@ -46,6 +49,16 @@ function ajaxSubmit () {
    
 }
 $(document).ready(function() {
+	$('#loader').hide();
+	$.ajaxSetup({
+		  beforeSend: function() {
+		     $('#loader').show();
+		  },
+		  complete: function(){
+		     $('#loader').hide();
+		  },
+		  success: function() {}
+		});
 	 $('#loginErrors').hide();
 	});
 </script>
@@ -73,9 +86,14 @@ Invalid Login/Password
 </TR>
 
 <TR>
-<TD colspan="2">
+<TD>
 <INPUT TYPE="button" VALUE="Submit" onclick="ajaxSubmit()" />
 </TD>
+<TD>
+<DIV ID="loader">
+<IMG SRC="/public/gxt/images/gxt/icons/loading.gif"/>
+</DIV>
+<TD>
 </TR>
 </TABLE>
 </fieldset>
