@@ -98,7 +98,7 @@ public class AuthorizationFilter implements Filter{
 		//errors.add("Invalid login/password");
 		//request.setAttribute("errors", errors);
 		//request.getRequestDispatcher("/login.jsp").forward(request, response);
-		response.getWriter().print("<RESULT><ERRORS>Invalid login/password</ERRORS></RESULT>");
+		response.getWriter().print("<?xml version=\"1.0\" encoding=\"utf-8\" ?><RESULTS><ERRORS>Invalid login/password</ERRORS></RESULTS>\n");
 	}
 
 	@Override

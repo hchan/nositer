@@ -12,9 +12,24 @@ function ajaxSubmit () {
                                //contentType: "text/html; charset=utf-8",
                                type: 'POST',
                                success: function(data){
-                            	   
-                                    var numErrors = $(data).find("ERRORS").size();
-                                    
+                            	   var xml;
+                            	  
+                            	   if (typeof data == "string") {
+                            		   if (navigator.appName == "Microsoft Internet Explorer") {
+                            	   		 xml = new ActiveXObject("Microsoft.XMLDOM");
+                            	    	xml.async = false;
+                            	    	xml.loadXML(data);
+                            		   } else {
+                            			   xml = data;
+                            		   }
+                            	   } else {
+                            	    xml = data;
+                            	   }
+                                    var numErrors = 0;
+                                    $(xml).find("ERRORS").each(function() {                                    	
+                                    	numErrors++;
+                                    });
+                                  
                                     if (numErrors > 0) {
                                     	$('#loginErrors').show();
                                           //$("#errors").html(errors);
