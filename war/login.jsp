@@ -7,8 +7,7 @@
 
 
 
-function ajaxSubmit () {
-	
+function ajaxSubmit () {	
             $.ajax ( {
                                url: "/login",
                                data: $("#ajax-form").serialize(),
@@ -19,14 +18,14 @@ function ajaxSubmit () {
                             	  
                             	   if (typeof data == "string") {
                             		   if (navigator.appName == "Microsoft Internet Explorer") {
-                            	   		 xml = new ActiveXObject("Microsoft.XMLDOM");
-                            	    	xml.async = false;
-                            	    	xml.loadXML(data);
+                            	   		   xml = new ActiveXObject("Microsoft.XMLDOM");
+                            	    	   xml.async = false;
+                            	    	   xml.loadXML(data);
                             		   } else {
                             			   xml = data;
                             		   }
                             	   } else {
-                            	    xml = data;
+                            	       xml = data;
                             	   }
                                     var numErrors = 0;
                                     $(xml).find("ERRORS").each(function() {                                    	
@@ -39,16 +38,17 @@ function ajaxSubmit () {
                                           //$("#errors").focus();
                                            //$('html, body').animate({scrollTop:
 											//$("#errors").offset().top}, 'slow');
-                                         retval = false;
+                                        retval = false;
                                     } else {
-                                    		window.location.reload();
-                                           retval = true;
+                                    	window.location.reload();
+                                        retval = true;
                                     }
                                 }
             }  );
    
 }
-$(document).ready(function() {
+$(document).ready(
+ function() {
 	$('#loader').hide();
 	$.ajaxSetup({
 		  beforeSend: function() {
@@ -60,7 +60,8 @@ $(document).ready(function() {
 		  success: function() {}
 		});
 	 $('#loginErrors').hide();
-	});
+ }
+);
 </script>
 </head>
 <BODY><DIV class="loginDescription">Nos Iter<BR />
