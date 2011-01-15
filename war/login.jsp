@@ -33,7 +33,9 @@ function ajaxSubmit () {
                                     });
                                   
                                     if (numErrors > 0) {
-                                    	$('#loginErrors').show();
+                                    	//$('#loginErrors').show();
+                                    	$('#loginErrors').hide();
+                                    	$('#loginErrors').fadeIn("slow");
                                           //$("#errors").html(errors);
                                           //$("#errors").focus();
                                            //$('html, body').animate({scrollTop:
