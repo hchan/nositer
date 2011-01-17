@@ -1,6 +1,7 @@
 .loginDescription {
 	text-align: center;
 	font-family: sans-serif;
+	font-style: italic;
 	font-size: 16pt;
 	background-color: #999999;
 	border-style: dotted;
@@ -18,4 +19,18 @@
 	width:30%; 
 	margin-left:35%; 
 	margin-right:35%;
+}
+
+.loginDescriptionExamples {
+	width: 30%;
+	margin-left:35%; 
+	margin-right:35%;
+	text-align: left;	
+	color: blue;
+	font-size: 8pt;
+}
+
+.loginDescriptionExampleItem {
+	font-weight: bold;
+	display: inline;
 }
