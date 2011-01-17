@@ -1,10 +1,19 @@
 package com.nositer.client;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
+import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 
 public class MainPanel extends ContentPanel {
 	private Nositer nositer;
+	private BorderLayoutData mainLayoutData;
+
+	public BorderLayoutData getMainLayoutData() {
+		return mainLayoutData;
+	}
+
+	public void setMainLayoutData(BorderLayoutData mainLayoutData) {
+		this.mainLayoutData = mainLayoutData;
+	}
 
 	public Nositer getNositer() {
 		return nositer;
@@ -13,13 +22,15 @@ public class MainPanel extends ContentPanel {
 	public void setNositer(Nositer nositer) {
 		this.nositer = nositer;
 	}
-	
-	public MainPanel (Nositer nositer) {
+
+	public MainPanel (Nositer nositer, BorderLayoutData mainLayoutData) {
+		this.mainLayoutData = mainLayoutData;
 		this.nositer = nositer;
 		init();
 	}
 
 	private void init() {
+		this.setHeaderVisible(false);
 		this.setHeading("Nos Iter - Journey with us");
 	}
 }
