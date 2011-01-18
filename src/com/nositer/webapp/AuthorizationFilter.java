@@ -22,9 +22,11 @@ import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 
 public class AuthorizationFilter implements Filter {
+	public static final String LOGIN_URL = "/login";
+	public static final String PUBLIC_URL = "/public";
+	public static final String USER_SESSION_KEY = "user";
 	private static final ThreadLocal<HttpServletRequest> perThreadRequest = new ThreadLocal<HttpServletRequest>();
 	private static final ThreadLocal<HttpServletResponse> perThreadResponse = new ThreadLocal<HttpServletResponse>();
-	public final static String USER_SESSION_KEY = "user";
 
 	public static HttpServletRequest getThreadLocalRequest() {
 		return perThreadRequest.get();
@@ -46,8 +48,8 @@ public class AuthorizationFilter implements Filter {
 		perThreadResponse.set(resp);
 		try {
 			String urlStr = req.getRequestURI();
-			if (!(urlStr.startsWith("/public"))) {		
-				if (urlStr.equals("/login")) {
+			if (!(urlStr.startsWith(PUBLIC_URL))) {		
+				if (urlStr.equals(LOGIN_URL)) {
 					doLoginRequest(req, resp, chain);
 				} else {
 					doSessionCheck(req, resp, chain);
