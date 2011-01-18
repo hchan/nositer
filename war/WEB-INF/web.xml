@@ -12,7 +12,17 @@
 		<filter-class>com.nositer.webapp.AuthorizationFilter</filter-class>
 		<init-param>
 			<param-name>error_page</param-name>
-			<param-value>../../error.jsp</param-value>
+			<param-value>/error.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>AccessLogFilter</filter-name>
+		<description>This Filter is used for logging</description>
+		<filter-class>com.nositer.webapp.AccessLogFilter</filter-class>
+		<init-param>
+			<param-name>error_page</param-name>
+			<param-value>/error.jsp</param-value>
 		</init-param>
 	</filter>
 
@@ -20,6 +30,8 @@
 		<filter-name>AuthorizationFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
 	
 	<listener>
 		<listener-class>com.nositer.webapp.HibernateListener</listener-class>

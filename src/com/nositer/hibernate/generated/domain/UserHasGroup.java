@@ -1,6 +1,11 @@
 package com.nositer.hibernate.generated.domain;
 
-// Generated 12-Jan-2011 3:57:44 PM by Hibernate Tools 3.2.4.GA
+import com.nositer.hibernate.*;
+
+// Generated Jan 17, 2011 4:14:32 PM by Hibernate Tools 3.2.4.GA
+// Enhanced by Henry
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_has_group", catalog = "nositer")
-public class UserHasGroup implements java.io.Serializable {
+public class UserHasGroup implements java.io.Serializable, Domain {
 
 	private Integer id;
 	private Group group;

@@ -11,11 +11,32 @@
 <listEntry value="org.hibernate.tools.hbm2java"/>
 <listEntry value="org.hibernate.tools.hbm2hbmxml"/>
 <listEntry value="org.hibernate.tools.hbm2dao"/>
-<listEntry value="org.hibernate.tools.hbmtemplate"/>
 <listEntry value="org.hibernate.tools.hbm2cfgxml"/>
 <listEntry value="org.hibernate.tools.hbm2doc"/>
 <listEntry value="org.hibernate.tools.hbm2ddl"/>
+<listEntry value="myDomain"/>
+<listEntry value="myDto"/>
 </listAttribute>
+
+<booleanAttribute key="org.hibernate.tools.exporters.myDomain" value="true"/>
+<stringAttribute key="org.hibernate.tools.exporters.myDomain.extension_id" value="org.hibernate.tools.hbmtemplate"/>
+<mapAttribute key="org.hibernate.tools.exporters.myDomain.properties">
+<mapEntry key="file_pattern" value="com/nositer/hibernate/generated/domain/{class-name}.java"/>
+<mapEntry key="package_name" value="com.nositer.hibernate.generated.domain"/>
+<mapEntry key="outputdir" value="/nositer/src"/>
+<mapEntry key="template_name" value="domain/Pojo.ftl"/>
+</mapAttribute>
+
+<booleanAttribute key="org.hibernate.tools.exporters.myDto" value="true"/>
+<stringAttribute key="org.hibernate.tools.exporters.myDto.extension_id" value="org.hibernate.tools.hbmtemplate"/>
+<mapAttribute key="org.hibernate.tools.exporters.myDto.properties">
+<mapEntry key="file_pattern" value="com/nositer/client/dto/generated/{class-name}.java"/>
+<mapEntry key="package_name" value="com.nositer.client.dto.generated"/>
+<mapEntry key="outputdir" value="/nositer/src"/>
+<mapEntry key="template_name" value="dto/Pojo.ftl"/>
+</mapAttribute>
+
+
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2cfgxml" value="true"/>
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2cfgxml.extension_id" value="org.hibernate.tools.hbm2cfgxml"/>
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2dao" value="false"/>
@@ -26,7 +47,7 @@
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2doc.extension_id" value="org.hibernate.tools.hbm2doc"/>
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2hbmxml" value="false"/>
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2hbmxml.extension_id" value="org.hibernate.tools.hbm2hbmxml"/>
-<booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2java" value="true"/>
+<booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2java" value="false"/>
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2java.extension_id" value="org.hibernate.tools.hbm2java"/>
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbmtemplate" value="false"/>
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbmtemplate.extension_id" value="org.hibernate.tools.hbmtemplate"/>
@@ -38,5 +59,6 @@
 <booleanAttribute key="org.hibernate.tools.reveng.detect_one_to_one" value="true"/>
 <booleanAttribute key="org.hibernate.tools.reveng.detect_optimistc_lock" value="true"/>
 <booleanAttribute key="org.hibernate.tools.schema2hbm" value="true"/>
-<booleanAttribute key="org.hibernate.tools.useOwnTemplates" value="false"/>
+<stringAttribute key="org.hibernate.tools.templatepath" value="\nositer\hibernateTemplate\"/>
+<booleanAttribute key="org.hibernate.tools.useOwnTemplates" value="true"/>
 </launchConfiguration>
