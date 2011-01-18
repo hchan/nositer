@@ -1,8 +1,9 @@
-package com.nositer.client;
+package com.nositer.client.left;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.nositer.client.Nositer;
 
 public class LeftPanel extends ContentPanel {
 	private Nositer nositer;

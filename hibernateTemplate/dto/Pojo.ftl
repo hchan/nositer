@@ -12,11 +12,12 @@ ${pojo.getPackageDeclaration()}
 // Enhanced by Henry
 
 
-
-import java.util.List;
-import java.util.ArrayList;
+import com.google.gwt.user.client.rpc.IsSerializable;
+//import java.util.List;
+//import java.util.ArrayList;
 <#assign classbody>
-<#include "PojoTypeDeclaration.ftl"/> ,DTO {
+@SuppressWarnings("serial")
+<#include "PojoTypeDeclaration.ftl"/> , IsSerializable, DTO {
 
 <#if !pojo.isInterface()>
 <#include "PojoFields.ftl"/>

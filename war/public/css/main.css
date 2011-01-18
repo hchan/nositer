@@ -22,9 +22,8 @@
 }
 
 .loginDescriptionExamples {
-	width: 30%;
-	margin-left:35%; 
-	margin-right:35%;
+	width: 40%;
+	margin: auto;
 	text-align: left;	
 	color: blue;
 	font-size: 8pt;
@@ -33,4 +32,23 @@
 .loginDescriptionExampleItem {
 	font-weight: bold;
 	display: inline;
+}
+
+#topPanel .welcomeDescription {
+	font-weight: bold;
+	font-family: fantasy;
+	font-size: 14pt;
+	padding-left: 5px;
+	padding-top: 3px;
+	color: #111188;
+}
+
+#topPanel .youAreLoggedOnAs {
+	padding-left: 5px;
+}
+
+#topPanel .firstLastName {
+	font-weight: bold;
+	color: #111188;
+	padding-left: 5px;
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 
 import com.nositer.hibernate.HibernateUtil;
-import com.nositer.hibernate.SQLHashMap;
+import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.User;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
@@ -83,7 +83,7 @@ public class AuthorizationFilter implements Filter {
 		if (login != null) {
 			Session session = HibernateUtil.getSession();
 			try {
-				List<User> results = session.createSQLQuery(SQLHashMap.get("findUserByEmail")).addEntity(User.class).setString("EMAIL", login).list();
+				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYEMAIL.sql()).addEntity(User.class).setString("EMAIL", login).list();
 				if (results.size() == 0) {
 					doInvalidLoginPassword(request, response, chain);						
 				} else {

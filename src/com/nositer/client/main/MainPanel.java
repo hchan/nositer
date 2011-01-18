@@ -1,7 +1,8 @@
-package com.nositer.client;
+package com.nositer.client.main;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.nositer.client.Nositer;
 
 public class MainPanel extends ContentPanel {
 	private Nositer nositer;

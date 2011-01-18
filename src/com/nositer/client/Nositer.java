@@ -1,29 +1,22 @@
 package com.nositer.client;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
-import com.extjs.gxt.ui.client.Style.Scroll;
-import com.extjs.gxt.ui.client.event.ButtonEvent;
-import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.util.Margins;
-import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
-import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Element;
-import com.extjs.gxt.ui.client.widget.button.Button;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.nositer.client.util.GWTUtil;
+import com.nositer.client.left.LeftPanel;
+import com.nositer.client.main.MainPanel;
+import com.nositer.client.top.TopPanel;
 
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Nositer implements EntryPoint {
-
 	private TopPanel topPanel;
 	private LeftPanel leftPanel;
 	private MainPanel mainPanel;

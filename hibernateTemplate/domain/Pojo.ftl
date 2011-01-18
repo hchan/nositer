@@ -14,9 +14,10 @@ ${pojo.getPackageDeclaration()}
 
 // Generated ${date} by Hibernate Tools ${version}
 // Enhanced by Henry
-import java.util.List;
-import java.util.ArrayList;
+//import java.util.List;
+//import java.util.ArrayList;
 <#assign classbody>
+@SuppressWarnings("serial")
 <#include "PojoTypeDeclaration.ftl"/>, Domain {
 
 <#if !pojo.isInterface()>
