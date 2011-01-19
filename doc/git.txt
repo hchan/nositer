@@ -1,0 +1,2 @@
+to ignore certain files in a dir, create a .gitignore file
+to remove files from git (unstage), git rm --cached
