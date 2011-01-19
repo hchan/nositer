@@ -1,4 +1,4 @@
-package com.nositer.client;
+package com.nositer.client.service;
 
 import com.google.gwt.core.client.GWT;
 

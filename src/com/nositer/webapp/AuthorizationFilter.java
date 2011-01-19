@@ -24,6 +24,8 @@ import com.nositer.util.Encrypt;
 public class AuthorizationFilter implements Filter {
 	public static final String LOGIN_URL = "/login";
 	public static final String PUBLIC_URL = "/public";
+	public static final String REGISTER_URL = "/Register.html";
+	public static final String REGISTER_PREFIX = "/register";
 	public static final String USER_SESSION_KEY = "user";
 	private static final ThreadLocal<HttpServletRequest> perThreadRequest = new ThreadLocal<HttpServletRequest>();
 	private static final ThreadLocal<HttpServletResponse> perThreadResponse = new ThreadLocal<HttpServletResponse>();
@@ -41,18 +43,20 @@ public class AuthorizationFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse resp = (HttpServletResponse)response;
-		perThreadRequest.set(req);
-		perThreadResponse.set(resp);
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+		HttpServletRequest request = (HttpServletRequest)req;
+		HttpServletResponse response = (HttpServletResponse)resp;
+		perThreadRequest.set(request);
+		perThreadResponse.set(response);
 		try {
-			String urlStr = req.getRequestURI();
+			String urlStr = request.getRequestURI();
 			if (!(urlStr.startsWith(PUBLIC_URL))) {		
 				if (urlStr.equals(LOGIN_URL)) {
-					doLoginRequest(req, resp, chain);
+					doLoginRequest(request, response, chain);
+				} else if (urlStr.startsWith(REGISTER_PREFIX) || urlStr.equals(REGISTER_URL)) {
+					doRegisterRequest(request, response, chain);
 				} else {
-					doSessionCheck(req, resp, chain);
+					doSessionCheck(request, response, chain);
 				}
 			} else {
 				chain.doFilter(request, response);
@@ -62,6 +66,11 @@ public class AuthorizationFilter implements Filter {
 			perThreadResponse.set(null);
 		}
 	}
+
+	private void doRegisterRequest(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+		chain.doFilter(request, response);
+	}
+
 
 	private void doSessionCheck(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
@@ -91,9 +100,6 @@ public class AuthorizationFilter implements Filter {
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
 						request.getSession().setAttribute(USER_SESSION_KEY, userDTO);
-						//chain.doFilter(request, response);
-						//request.getRequestDispatcher("/Nositer.html").forward(request, response);
-						//resp.sendRedirect("/Nositer.html");
 						response.getWriter().print("<SUCCESS>Login successful</SUCCESS>");
 					} else {
 						doInvalidLoginPassword(request, response, chain);			
@@ -113,11 +119,7 @@ public class AuthorizationFilter implements Filter {
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 	
-	private void doInvalidLoginPassword (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-		//ArrayList<String> errors = new ArrayList<String>();
-		//errors.add("Invalid login/password");
-		//request.setAttribute("errors", errors);
-		//request.getRequestDispatcher("/login.jsp").forward(request, response);
+	private void doInvalidLoginPassword (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {		
 		response.getWriter().print("<?xml version=\"1.0\" encoding=\"utf-8\" ?><RESULTS><ERRORS>Invalid login/password</ERRORS></RESULTS>\n");
 	}
 

@@ -87,7 +87,7 @@ Invalid Login/Password
 
 <TABLE class="centerTable">
 <TR>
-<TD>Login (email address):</TD>
+<TD>Login:</TD>
 <TD><INPUT TYPE="TEXT" NAME="login" /></TD>
 </TR>
 
@@ -109,5 +109,10 @@ Invalid Login/Password
 </TABLE>
 </fieldset>
 </form>
+<TABLE class="centerTable">
+<TR>
+<TD align="center"><A HREF="/Register.html">Create an Account</A>
+</TR>
+</TABLE>
 </BODY>
 </HTML>

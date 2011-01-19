@@ -1,9 +1,10 @@
-package com.nositer.server;
+package com.nositer.server.service;
 
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.nositer.client.ProfileService;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.service.ProfileService;
+import com.nositer.webapp.Application;
 import com.nositer.webapp.AuthorizationFilter;
 
 @SuppressWarnings("serial")
@@ -12,7 +13,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 	@Override
 	public User getCurrentUser() throws RuntimeException {
 		User retval = null;
-		retval = (User) this.perThreadRequest.get().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);
+		retval = (User) Application.getRequest().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);
 		return retval;
 	}
 

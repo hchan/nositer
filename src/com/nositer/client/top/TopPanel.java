@@ -7,8 +7,8 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nositer.client.Nositer;
-import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.service.ServiceBroker;
 import com.nositer.client.util.GWTUtil;
 
 public class TopPanel extends ContentPanel {
