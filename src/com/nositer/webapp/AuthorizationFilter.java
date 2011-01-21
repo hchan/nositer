@@ -92,7 +92,7 @@ public class AuthorizationFilter implements Filter {
 		if (login != null) {
 			Session session = HibernateUtil.getSession();
 			try {
-				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYEMAIL.sql()).addEntity(User.class).setString("EMAIL", login).list();
+				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYEMAIL.sql()).addEntity(User.class).setString("LOGIN", login).list();
 				if (results.size() == 0) {
 					doInvalidLoginPassword(request, response, chain);						
 				} else {
@@ -100,7 +100,7 @@ public class AuthorizationFilter implements Filter {
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
 						request.getSession().setAttribute(USER_SESSION_KEY, userDTO);
-						response.getWriter().print("<SUCCESS>Login successful</SUCCESS>");
+						doSuccessfulLogin(request, response, chain);							
 					} else {
 						doInvalidLoginPassword(request, response, chain);			
 					}						
@@ -119,6 +119,9 @@ public class AuthorizationFilter implements Filter {
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 	
+	private void doSuccessfulLogin(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+		response.getWriter().print("<SUCCESS>Login successful</SUCCESS>");
+	}
 	private void doInvalidLoginPassword (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {		
 		response.getWriter().print("<?xml version=\"1.0\" encoding=\"utf-8\" ?><RESULTS><ERRORS>Invalid login/password</ERRORS></RESULTS>\n");
 	}

@@ -1,7 +1,7 @@
 package com.nositer.hibernate;
 
 public enum SqlHelper {
-	FINDUSERBYEMAIL ("SELECT * FROM USER WHERE EMAIL = :EMAIL");
+	FINDUSERBYEMAIL ("SELECT * FROM USER WHERE LOGIN = :LOGIN");
 
 	
 	
