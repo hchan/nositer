@@ -5,7 +5,6 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.Nositer;
 
 public class MainPanel extends ContentPanel {
-	private Nositer nositer;
 	private BorderLayoutData mainLayoutData;
 
 	public BorderLayoutData getMainLayoutData() {
@@ -16,17 +15,9 @@ public class MainPanel extends ContentPanel {
 		this.mainLayoutData = mainLayoutData;
 	}
 
-	public Nositer getNositer() {
-		return nositer;
-	}
 
-	public void setNositer(Nositer nositer) {
-		this.nositer = nositer;
-	}
-
-	public MainPanel (Nositer nositer, BorderLayoutData mainLayoutData) {
+	public MainPanel (BorderLayoutData mainLayoutData) {
 		this.mainLayoutData = mainLayoutData;
-		this.nositer = nositer;
 		init();
 	}
 

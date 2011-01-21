@@ -3,15 +3,11 @@ package com.nositer.client.left;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
-import com.nositer.client.Nositer;
 
 public class LeftPanel extends ContentPanel {
-	private Nositer nositer;
-	private BorderLayoutData leftLayoutData;
-	public Nositer getNositer() {
-		return nositer;
-	}
 
+	private BorderLayoutData leftLayoutData;
+	
 	public BorderLayoutData getLeftLayoutData() {
 		return leftLayoutData;
 	}
@@ -20,12 +16,8 @@ public class LeftPanel extends ContentPanel {
 		this.leftLayoutData = leftLayoutData;
 	}
 
-	public void setNositer(Nositer nositer) {
-		this.nositer = nositer;
-	}
 
-	public LeftPanel (Nositer nositer, BorderLayoutData leftLayoutData) {
-		this.nositer = nositer;
+	public LeftPanel (BorderLayoutData leftLayoutData) {	
 		this.leftLayoutData = leftLayoutData;
 		init();
 	}

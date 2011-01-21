@@ -39,8 +39,7 @@ public class TopPanel extends ContentPanel {
 		this.nositer = nositer;
 	}
 
-	public TopPanel (Nositer nositer, BorderLayoutData topLayoutData) {
-		this.nositer = nositer;
+	public TopPanel (BorderLayoutData topLayoutData) {		
 		this.topLayoutData = topLayoutData;
 		init();
 	}

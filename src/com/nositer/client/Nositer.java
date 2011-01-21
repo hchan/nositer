@@ -21,7 +21,14 @@ public class Nositer implements EntryPoint {
 	private LeftPanel leftPanel;
 	private MainPanel mainPanel;
 	private LayoutContainer layoutContainer;
+	private static Nositer instance;
 
+	public static Nositer getInstance() {
+		return instance;
+	}
+	public static void setInstance(Nositer instance) {
+		Nositer.instance = instance;
+	}
 	public LayoutContainer getLayoutContainer() {
 		return layoutContainer;
 	}
@@ -58,7 +65,8 @@ public class Nositer implements EntryPoint {
 		BorderLayoutData borderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		viewport.add(layoutContainer, borderLayoutData);
 		borderLayoutData.setMargins(new Margins(1));
-		RootPanel.get().add(viewport);
+		instance = this;
+		RootPanel.get().add(viewport);		
 	}
 
 
@@ -69,11 +77,11 @@ public class Nositer implements EntryPoint {
 		BorderLayout borderLayout = new BorderLayout();
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
-		topPanel = new TopPanel(this, topLayoutData);	
+		topPanel = new TopPanel(topLayoutData);	
 		BorderLayoutData leftLayoutData = new BorderLayoutData(LayoutRegion.WEST);
-		leftPanel = new LeftPanel(this, leftLayoutData);
+		leftPanel = new LeftPanel(leftLayoutData);
 		BorderLayoutData mainLayoutData = new BorderLayoutData(LayoutRegion.CENTER);  
-		mainPanel = new MainPanel(this, mainLayoutData);
+		mainPanel = new MainPanel(mainLayoutData);
 		
 		layoutContainer.add(topPanel, topLayoutData);
 		layoutContainer.add(leftPanel, leftLayoutData);
