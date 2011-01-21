@@ -18,8 +18,8 @@ import com.nositer.client.top.TopPanel;
  */
 public class Nositer implements EntryPoint {
 	private TopPanel topPanel;
-	private LeftPanel leftPanel;
 	private MainPanel mainPanel;
+	private LeftPanel leftPanel;
 	private LayoutContainer layoutContainer;
 	private static Nositer instance;
 
@@ -69,11 +69,8 @@ public class Nositer implements EntryPoint {
 		RootPanel.get().add(viewport);		
 	}
 
-
-
 	public void initLayoutContainer() {
-		layoutContainer = new LayoutContainer();
-	
+		layoutContainer = new LayoutContainer();	
 		BorderLayout borderLayout = new BorderLayout();
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
@@ -81,12 +78,10 @@ public class Nositer implements EntryPoint {
 		BorderLayoutData leftLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 		leftPanel = new LeftPanel(leftLayoutData);
 		BorderLayoutData mainLayoutData = new BorderLayoutData(LayoutRegion.CENTER);  
-		mainPanel = new MainPanel(mainLayoutData);
-		
+		mainPanel = new MainPanel(mainLayoutData);		
 		layoutContainer.add(topPanel, topLayoutData);
 		layoutContainer.add(leftPanel, leftLayoutData);
-		layoutContainer.add(mainPanel, mainLayoutData);	
-			
+		layoutContainer.add(mainPanel, mainLayoutData);				
 	}
 }
 

@@ -2,12 +2,14 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 18, 2011 2:25:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Jan 21, 2011 3:35:28 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 //import java.util.List;
 //import java.util.ArrayList;
+
+import java.util.Date;
 
 @SuppressWarnings("serial")
 /**
@@ -18,6 +20,8 @@ public class UserHasGroup implements java.io.Serializable, IsSerializable, DTO {
 	private Integer id;
 	private Group group;
 	private User user;
+	private Date createdtime;
+	private Date modifiedtime;
 
 	public UserHasGroup() {
 	}
@@ -25,6 +29,14 @@ public class UserHasGroup implements java.io.Serializable, IsSerializable, DTO {
 	public UserHasGroup(Group group, User user) {
 		this.group = group;
 		this.user = user;
+	}
+
+	public UserHasGroup(Group group, User user, Date createdtime,
+			Date modifiedtime) {
+		this.group = group;
+		this.user = user;
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
 	}
 
 	public Integer getId() {
@@ -49,6 +61,22 @@ public class UserHasGroup implements java.io.Serializable, IsSerializable, DTO {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getCreatedtime() {
+		return this.createdtime;
+	}
+
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	public Date getModifiedtime() {
+		return this.modifiedtime;
+	}
+
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 }

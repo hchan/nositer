@@ -2,13 +2,14 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 18, 2011 2:25:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Jan 21, 2011 3:35:28 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 //import java.util.List;
 //import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,16 +23,20 @@ public class Group implements java.io.Serializable, IsSerializable, DTO {
 	private String name;
 	private String description;
 	private String shortname;
+	private Date createdtime;
+	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 
 	public Group() {
 	}
 
 	public Group(String name, String description, String shortname,
-			Set<UserHasGroup> userHasGroups) {
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.name = name;
 		this.description = description;
 		this.shortname = shortname;
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
 	}
 
@@ -65,6 +70,22 @@ public class Group implements java.io.Serializable, IsSerializable, DTO {
 
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
+	}
+
+	public Date getCreatedtime() {
+		return this.createdtime;
+	}
+
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	public Date getModifiedtime() {
+		return this.modifiedtime;
+	}
+
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 	public Set<UserHasGroup> getUserHasGroups() {

@@ -2,11 +2,12 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Jan 18, 2011 2:25:17 PM by Hibernate Tools 3.2.4.GA
+// Generated Jan 21, 2011 3:35:27 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 /**
@@ -30,16 +33,20 @@ public class Group implements java.io.Serializable, Domain {
 	private String name;
 	private String description;
 	private String shortname;
+	private Date createdtime;
+	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 
 	public Group() {
 	}
 
 	public Group(String name, String description, String shortname,
-			Set<UserHasGroup> userHasGroups) {
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.name = name;
 		this.description = description;
 		this.shortname = shortname;
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
 	}
 
@@ -79,6 +86,26 @@ public class Group implements java.io.Serializable, Domain {
 
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createdtime", length = 19)
+	public Date getCreatedtime() {
+		return this.createdtime;
+	}
+
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modifiedtime", length = 19)
+	public Date getModifiedtime() {
+		return this.modifiedtime;
+	}
+
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group")

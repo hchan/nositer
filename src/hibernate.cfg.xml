@@ -22,7 +22,9 @@
         <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
         <property name="hibernate.dialect">com.nositer.hibernate.MyMySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
+        <mapping class="com.nositer.hibernate.generated.domain.Postalcode" />
         <mapping class="com.nositer.hibernate.generated.domain.User" />
+        <mapping class="com.nositer.hibernate.generated.domain.Zipcode" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
         <mapping class="com.nositer.hibernate.generated.domain.Group" />
     </session-factory>

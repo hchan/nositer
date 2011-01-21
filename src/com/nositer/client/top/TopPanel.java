@@ -59,14 +59,16 @@ public class TopPanel extends ContentPanel {
 
 			@Override
 			public void onSuccess(User result) {
-				loggedInAs.setLayout(new HBoxLayout());
-				Label youAreLoggedOnAs = new Label("You are logged on as:");
-				youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
-				loggedInAs.add(youAreLoggedOnAs);
-				Label firstLastName = new Label(result.getFirstname() + " " + result.getLastname());
-				firstLastName.setStyleName("firstLastName");
-				loggedInAs.add(firstLastName);
-				TopPanel.this.layout();
+				if (result != null) {
+					loggedInAs.setLayout(new HBoxLayout());
+					Label youAreLoggedOnAs = new Label("You are logged on as:");
+					youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
+					loggedInAs.add(youAreLoggedOnAs);
+					Label firstLastName = new Label(result.getFirstname() + " " + result.getLastname());
+					firstLastName.setStyleName("firstLastName");
+					loggedInAs.add(firstLastName);
+					TopPanel.this.layout();
+				}
 			}
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
