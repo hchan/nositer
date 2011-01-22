@@ -1,5 +1,5 @@
 for lookup table names, the table must end with "code"
-and contain a name and description column
+and contain a name and description column (and of course id)
 
 many to many association tables have a XXX_has_XXX
 
