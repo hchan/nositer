@@ -34,9 +34,10 @@
 	display: inline;
 }
 
-.required {
+.required, .registerLocation {
 	font-weight: bold;
 	color: red;
+	font-size: 10pt;
 }
 
 #topPanel .welcomeDescription {
