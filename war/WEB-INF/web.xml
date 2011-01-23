@@ -43,17 +43,19 @@
 		<servlet-name>GwtServiceResolver</servlet-name>
 		<servlet-class>com.google.gwt.user.server.rpc.GwtServiceResolver</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>registerServlet</servlet-name>
+		<servlet-class>com.nositer.server.service.RegisterServiceImpl</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>GwtServiceResolver</servlet-name>
 		<url-pattern>*.gwtrpc</url-pattern>
 	</servlet-mapping>
-
-
-
-
-
-
+	<servlet-mapping>
+		<servlet-name>registerServlet</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- Default page to serve -->
