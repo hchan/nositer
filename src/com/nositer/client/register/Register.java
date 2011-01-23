@@ -1,22 +1,22 @@
 package com.nositer.client.register;
 
+import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
-import com.extjs.gxt.ui.client.widget.form.FieldSet;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.Radio;
-import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 
@@ -27,6 +27,8 @@ public class Register implements EntryPoint {
 	private MainPanel mainPanel;
 	private LayoutContainer layoutContainer;
 	private FormPanel formPanel;
+	private Button saveButton;
+	private Button cancelButton;
 	
 	public FormPanel getFormPanel() {
 		return formPanel;
@@ -95,10 +97,11 @@ public class Register implements EntryPoint {
 	
 	private void populateMainPanel() {		
 		initFormPanel();
+		mainPanel.setLayout(new CenterLayout());
 		mainPanel.add(formPanel);
 	}
 	
-	private String getRequiredFieldStyle() {
+	public static String getRequiredFieldStyle() {
 		return "color: red; font-weight: bold";
 	}
 
@@ -129,28 +132,30 @@ public class Register implements EntryPoint {
 		passwordAgain.setLabelStyle(getRequiredFieldStyle());
 		passwordAgain.setPassword(true);
 		
-		FieldSet location = new FieldSet();
-		location.setStyleName("registerLocation");
-		location.setLayout(new VBoxLayout());
-		
-		location.setHeading("* Location");
-		RadioGroup country = new RadioGroup();
-		Radio can = new Radio();
-		can.setValue(true);
-		can.setBoxLabel("Canada");
-		Radio usa = new Radio();
-		usa.setBoxLabel("USA");
-		country.add(can);
-		country.add(usa);
-		location.add(country, new VBoxLayoutData(new Margins(5, 0, 0, 5)));
-		location.setHeight(100);
+		Location location = new Location();
 		formPanel.add(firstName);
 		formPanel.add(lastName);
 		formPanel.add(login);
 		formPanel.add(password);
 		formPanel.add(passwordAgain);
 		formPanel.add(location);
+		addButtons();
 		formPanel.setWidth(500);
+	}
+
+	private void addButtons() {
+		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
+		saveButton = new Button("Save");
+		formPanel.addButton(saveButton);  
+		cancelButton = new Button("Cancel");
+		cancelButton.addListener(Events.Select, new Listener<BaseEvent>() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				Window.Location.assign("/Nositer.html");
+			}
+		});
+		formPanel.addButton(cancelButton);  
 	}
 
 }
