@@ -7,7 +7,7 @@ import com.nositer.client.dto.generated.User;
 /**
  * The client side stub for the RPC service.
  */
-@RemoteServiceRelativePath("register")
+@RemoteServiceRelativePath("ServiceResolver.gwtrpc")
 public interface RegisterService extends RemoteService {
-	boolean register(User user) throws RuntimeException;
+	boolean register(User user) throws GWTException;
 }

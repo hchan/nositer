@@ -16,9 +16,13 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.main.MainPanel;
+import com.nositer.client.service.ServiceBroker;
 import com.nositer.client.top.TopPanel;
+import com.nositer.client.util.GWTUtil;
 
 public class Register implements EntryPoint {
 
@@ -29,7 +33,13 @@ public class Register implements EntryPoint {
 	private FormPanel formPanel;
 	private Button saveButton;
 	private Button cancelButton;
-	
+	private TextField<String> firstName;
+	private TextField<String> lastName;
+	private TextField<String> login;
+	private TextField<String> password;
+	private TextField<String> passwordAgain;
+	private Location location;
+
 	public FormPanel getFormPanel() {
 		return formPanel;
 	}
@@ -69,7 +79,7 @@ public class Register implements EntryPoint {
 	public void setTopPanel(TopPanel topPanel) {
 		this.topPanel = topPanel;
 	}
-	
+
 	public void init() {
 		Viewport viewport = new Viewport();
 		viewport.setLayout(new BorderLayout());
@@ -92,15 +102,15 @@ public class Register implements EntryPoint {
 		populateMainPanel();
 		layoutContainer.add(topPanel, topLayoutData);		
 		layoutContainer.add(mainPanel, mainLayoutData);	
-			
+
 	}
-	
+
 	private void populateMainPanel() {		
 		initFormPanel();
 		mainPanel.setLayout(new CenterLayout());
 		mainPanel.add(formPanel);
 	}
-	
+
 	public static String getRequiredFieldStyle() {
 		return "color: red; font-weight: bold";
 	}
@@ -110,29 +120,29 @@ public class Register implements EntryPoint {
 		formPanel.setLabelWidth(150);
 		formPanel.setHeading("Registration");
 		formPanel.setFrame(true);
-		TextField<String> firstName = new TextField<String>();  
+		firstName = new TextField<String>();  
 		firstName.setFieldLabel("* Firstname");  
 		firstName.setLabelStyle(getRequiredFieldStyle());
-		
-		TextField<String> lastName = new TextField<String>();  
+
+		lastName = new TextField<String>();  
 		lastName.setFieldLabel("* Lastname");  
 		lastName.setLabelStyle(getRequiredFieldStyle());
-		
-		TextField<String> login = new TextField<String>();  
+
+		login = new TextField<String>();  
 		login.setFieldLabel("* Login name");  
 		login.setLabelStyle(getRequiredFieldStyle());
-		
-		TextField<String> password = new TextField<String>();  
+
+		password = new TextField<String>();  
 		password.setFieldLabel("* Password");  
 		password.setLabelStyle(getRequiredFieldStyle());
 		password.setPassword(true);
-		
-		TextField<String> passwordAgain = new TextField<String>();  
+
+		passwordAgain = new TextField<String>();  
 		passwordAgain.setFieldLabel("* Password Again");  
 		passwordAgain.setLabelStyle(getRequiredFieldStyle());
 		passwordAgain.setPassword(true);
-		
-		Location location = new Location();
+
+		location = new Location();
 		formPanel.add(firstName);
 		formPanel.add(lastName);
 		formPanel.add(login);
@@ -147,6 +157,33 @@ public class Register implements EntryPoint {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		saveButton = new Button("Save");
 		formPanel.addButton(saveButton);  
+		
+		final AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				Window.Location.assign("/Nositer.html");
+			}
+		};
+		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				if (!(password.getValue().equals(passwordAgain.getValue()))) {
+					// TODO need better alert
+					Window.alert("Password and Password Again are not the same");
+				} else {
+					User user = createDTO();
+					ServiceBroker.registerService.register(user, callback);
+				}
+			}
+		});
+
 		cancelButton = new Button("Cancel");
 		cancelButton.addListener(Events.Select, new Listener<BaseEvent>() {
 
@@ -156,6 +193,16 @@ public class Register implements EntryPoint {
 			}
 		});
 		formPanel.addButton(cancelButton);  
+	}
+
+	private User createDTO() {
+		User retval = new User();
+		retval.setFirstname(firstName.getValue());
+		retval.setLastname(lastName.getValue());
+		retval.setLogin(login.getValue());
+		retval.setPassword(password.getValue());
+		retval.setCountrycode((String) location.getCountry().getValue().getData("countrycode"));
+		return retval;
 	}
 
 }

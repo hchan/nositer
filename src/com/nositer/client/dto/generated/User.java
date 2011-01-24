@@ -2,11 +2,10 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 21, 2011 3:35:28 PM by Hibernate Tools 3.2.4.GA
+// Generated 24-Jan-2011 12:24:12 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-//import java.util.List;
+import com.google.gwt.user.client.rpc.IsSerializable; //import java.util.List;
 //import java.util.ArrayList;
 
 import java.util.Date;
@@ -24,10 +23,10 @@ public class User implements java.io.Serializable, IsSerializable, DTO {
 	private Postalcode postalcode;
 	private String countrycode;
 	private String login;
-	private String email;
 	private String firstname;
 	private String lastname;
 	private String password;
+	private String email;
 	private Boolean gender;
 	private Date birthdate;
 	private String status;
@@ -41,29 +40,28 @@ public class User implements java.io.Serializable, IsSerializable, DTO {
 	public User() {
 	}
 
-	public User(String countrycode, String login, String email,
-			String firstname, String lastname, String password) {
+	public User(String countrycode, String login, String firstname,
+			String lastname, String password) {
 		this.countrycode = countrycode;
 		this.login = login;
-		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
 	}
 
 	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
-			String login, String email, String firstname, String lastname,
-			String password, Boolean gender, Date birthdate, String status,
+			String login, String firstname, String lastname, String password,
+			String email, Boolean gender, Date birthdate, String status,
 			String description, String profession, Date lastlogin,
 			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
 		this.countrycode = countrycode;
 		this.login = login;
-		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
+		this.email = email;
 		this.gender = gender;
 		this.birthdate = birthdate;
 		this.status = status;
@@ -115,14 +113,6 @@ public class User implements java.io.Serializable, IsSerializable, DTO {
 		this.login = login;
 	}
 
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getFirstname() {
 		return this.firstname;
 	}
@@ -145,6 +135,14 @@ public class User implements java.io.Serializable, IsSerializable, DTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Boolean getGender() {

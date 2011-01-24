@@ -18,6 +18,15 @@ public class Location extends FieldSet {
 	private TextField<String> postalcode;
 	private TextField<String> zipcode;
 	private LayoutContainer geographyCode;
+	private RadioGroup country;
+	public RadioGroup getCountry() {
+		return country;
+	}
+
+	public void setCountry(RadioGroup country) {
+		this.country = country;
+	}
+
 	public TextField<String> getPostalcode() {
 		return postalcode;
 	}
@@ -46,6 +55,7 @@ public class Location extends FieldSet {
 		init();
 	}
 
+	// TODO combobox for postal code and zip code
 	private void init() {	
 		postalcode = new TextField<String>();
 		postalcode.setFieldLabel("* Postal code");
@@ -61,7 +71,7 @@ public class Location extends FieldSet {
 		setStyleName("registerLocation");
 		setLayout(new VBoxLayout());		
 		setHeading("* Location");
-		RadioGroup country = new RadioGroup();
+		country = new RadioGroup();
 
 		country.addListener(Events.Change, new Listener<BaseEvent>() {
 
@@ -92,6 +102,7 @@ public class Location extends FieldSet {
 		setHeight(80);
 	}
 
+	
 	private void initGeographyCode() {
 		geographyCode = new LayoutContainer();
 		geographyCode.setLayout(new FormLayout());

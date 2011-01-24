@@ -2,11 +2,10 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 21, 2011 3:35:28 PM by Hibernate Tools 3.2.4.GA
+// Generated 24-Jan-2011 12:24:12 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-//import java.util.List;
+import com.google.gwt.user.client.rpc.IsSerializable; //import java.util.List;
 //import java.util.ArrayList;
 
 import java.util.HashSet;

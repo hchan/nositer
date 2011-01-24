@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Jan 21, 2011 3:35:27 PM by Hibernate Tools 3.2.4.GA
+// Generated 24-Jan-2011 12:24:10 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -37,10 +37,10 @@ public class User implements java.io.Serializable, Domain {
 	private Postalcode postalcode;
 	private String countrycode;
 	private String login;
-	private String email;
 	private String firstname;
 	private String lastname;
 	private String password;
+	private String email;
 	private Boolean gender;
 	private Date birthdate;
 	private String status;
@@ -54,29 +54,28 @@ public class User implements java.io.Serializable, Domain {
 	public User() {
 	}
 
-	public User(String countrycode, String login, String email,
-			String firstname, String lastname, String password) {
+	public User(String countrycode, String login, String firstname,
+			String lastname, String password) {
 		this.countrycode = countrycode;
 		this.login = login;
-		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
 	}
 
 	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
-			String login, String email, String firstname, String lastname,
-			String password, Boolean gender, Date birthdate, String status,
+			String login, String firstname, String lastname, String password,
+			String email, Boolean gender, Date birthdate, String status,
 			String description, String profession, Date lastlogin,
 			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
 		this.countrycode = countrycode;
 		this.login = login;
-		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
+		this.email = email;
 		this.gender = gender;
 		this.birthdate = birthdate;
 		this.status = status;
@@ -137,15 +136,6 @@ public class User implements java.io.Serializable, Domain {
 		this.login = login;
 	}
 
-	@Column(name = "email", nullable = false, length = 128)
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	@Column(name = "firstname", nullable = false, length = 128)
 	public String getFirstname() {
 		return this.firstname;
@@ -171,6 +161,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "email", length = 128)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "gender")
