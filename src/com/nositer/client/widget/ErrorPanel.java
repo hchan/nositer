@@ -1,6 +1,9 @@
 package com.nositer.client.widget;
 
+import java.util.ArrayList;
+
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.fx.FxConfig;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
@@ -37,5 +40,25 @@ public class ErrorPanel extends LayoutContainer {
 		Label label = new Label("&rArr; " + str);
 		label.setStyleName("errorMessages");
 		errorMessages.add(label);
+	}
+	
+	public void setErrors(ArrayList<String> errors) {
+		clearErrorMessages();
+		for (String str : errors) {
+			addErrorMessage(str);
+		}
+	}
+	
+	
+	@Override
+	public void hide() {
+		super.hide();
+	}
+	
+	@Override
+	public void show() {
+		super.show();
+		this.layout();
+		this.el().fadeIn(FxConfig.NONE);
 	}
 }

@@ -1,5 +1,7 @@
 package com.nositer.client.register;
 
+import java.util.ArrayList;
+
 import com.extjs.gxt.ui.client.Style.HideMode;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
@@ -17,6 +19,7 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
+import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
@@ -113,16 +116,16 @@ public class Register implements EntryPoint {
 
 	private void populateMainPanel() {		
 		initFormPanel();
-		
+
 		mainPanel.setLayout(new CenterLayout());
-		ContentPanel registrationPanel = new ContentPanel();
+		ContentPanel registrationPanel = new ContentPanel(new TableLayout(1));
 		registrationPanel.setHeading("Registration");
 		errorPanel = new ErrorPanel();
 		errorPanel.hide();
 		registrationPanel.add(errorPanel);
 		registrationPanel.add(formPanel);
 		mainPanel.add(registrationPanel);
-		
+
 	}
 
 	public static String getRequiredFieldStyle() {
@@ -130,8 +133,8 @@ public class Register implements EntryPoint {
 	}
 
 	private void initFormPanel() {
-		
-		
+
+
 		formPanel = new FormPanel();
 		formPanel.setHeaderVisible(false);
 
@@ -175,11 +178,18 @@ public class Register implements EntryPoint {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		saveButton = new Button("Save");
 		formPanel.addButton(saveButton);  
-		
+
 		final AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				errorPanel.clearErrorMessages();
+				if (caught.getMessage().indexOf("ConstraintViolationException") != -1) {
+					errorPanel.addErrorMessage("Login is already taken");
+				} else {
+					errorPanel.addErrorMessage(caught.getMessage());
+				}
+				errorPanel.show();
 				GWTUtil.log("", caught);
 			}
 
@@ -192,11 +202,11 @@ public class Register implements EntryPoint {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				if (!(password.getValue().equals(passwordAgain.getValue()))) {
-					errorPanel.show();
-					errorPanel.clearErrorMessages();
-					errorPanel.addErrorMessage("Password and Password Again are not the same");
-					errorPanel.layout();
+				ArrayList<String> errors = getErrors();
+				if (errors.size() > 0) {
+					errorPanel.setErrors(errors);
+					errorPanel.show();					
+
 				} else {
 					User user = createDTO();
 					ServiceBroker.registerService.register(user, callback);
@@ -213,6 +223,30 @@ public class Register implements EntryPoint {
 			}
 		});
 		formPanel.addButton(cancelButton);  
+	}
+
+	public ArrayList<String> getErrors() {
+		ArrayList<String> retval = new ArrayList<String>();
+		addRequiredErrorIfNecessary(firstName, retval);
+		addRequiredErrorIfNecessary(lastName, retval);
+		addRequiredErrorIfNecessary(login, retval);
+		addRequiredErrorIfNecessary(password, retval);
+		if ((password.getValue() != null) && (!password.getValue().equals(passwordAgain.getValue()))) {
+			retval.add("Password and Password Again are not the same");
+		} 
+		if (location.getCountry().getValue().getData("countrycode").equals("CAN")) {
+			addRequiredErrorIfNecessary(location.getPostalcode(), retval);
+		} else {
+			addRequiredErrorIfNecessary(location.getZipcode(), retval);
+		}
+		return retval;
+	}
+
+	private void addRequiredErrorIfNecessary(TextField<String> textField,
+			ArrayList<String> retval) {
+		if (textField.getValue() == null) {
+			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
+		}
 	}
 
 	private User createDTO() {

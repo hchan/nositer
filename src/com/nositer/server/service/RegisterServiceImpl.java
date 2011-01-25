@@ -1,6 +1,8 @@
 package com.nositer.server.service;
 
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,8 +12,8 @@ import com.nositer.client.service.GWTException;
 import com.nositer.client.service.RegisterService;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.util.BeanConversion;
+import com.nositer.util.Encrypt;
 import com.nositer.webapp.Application;
-import com.nositer.webapp.AuthorizationFilter;
 
 @SuppressWarnings("serial")
 public class RegisterServiceImpl extends RemoteServiceServlet implements RegisterService {
@@ -24,6 +26,8 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 		 try {
 		     trx = sess.beginTransaction();		   
 		     com.nositer.hibernate.generated.domain.User userDomain = BeanConversion.copyDTO2Domain(user, com.nositer.hibernate.generated.domain.User.class);
+		     userDomain.setPassword(Encrypt.cryptPassword(userDomain.getPassword()));
+		     userDomain.setLastlogin(new Date());
 		     sess.save(userDomain);
 		     trx.commit();
 		     user = BeanConversion.copyDomain2DTO(userDomain, User.class);

@@ -1,6 +1,7 @@
 package com.nositer.webapp;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
@@ -93,7 +95,9 @@ public class AuthorizationFilter implements Filter {
 		String password = request.getParameter("password");
 		if (login != null) {
 			Session session = HibernateUtil.getSession();
+			Transaction trx = null;
 			try {
+				trx = session.beginTransaction();
 				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYEMAIL.sql()).addEntity(User.class).setString("LOGIN", login).list();
 				if (results.size() == 0) {
 					doInvalidLoginPassword(request, response, chain);						
@@ -102,12 +106,16 @@ public class AuthorizationFilter implements Filter {
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
 						Application.setCurrentUser(userDTO);
+						userDomain.setLastlogin(new Date());
+						session.update(userDomain);
 						doSuccessfulLogin(request, response, chain);							
 					} else {
 						doInvalidLoginPassword(request, response, chain);			
 					}						
 				}
+				trx.commit();
 			} catch (Exception e) {
+				HibernateUtil.rollbackTransaction(trx);
 				Application.log.error("", e);
 			} finally {
 				HibernateUtil.closeSession(session);
