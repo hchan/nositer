@@ -1,11 +1,14 @@
 package com.nositer.client.register;
 
+import com.extjs.gxt.ui.client.Style.HideMode;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -14,6 +17,7 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -23,6 +27,7 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.service.ServiceBroker;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.ErrorPanel;
 
 public class Register implements EntryPoint {
 
@@ -39,6 +44,7 @@ public class Register implements EntryPoint {
 	private TextField<String> password;
 	private TextField<String> passwordAgain;
 	private Location location;
+	private ErrorPanel errorPanel;
 
 	public FormPanel getFormPanel() {
 		return formPanel;
@@ -107,8 +113,16 @@ public class Register implements EntryPoint {
 
 	private void populateMainPanel() {		
 		initFormPanel();
+		
 		mainPanel.setLayout(new CenterLayout());
-		mainPanel.add(formPanel);
+		ContentPanel registrationPanel = new ContentPanel();
+		registrationPanel.setHeading("Registration");
+		errorPanel = new ErrorPanel();
+		errorPanel.hide();
+		registrationPanel.add(errorPanel);
+		registrationPanel.add(formPanel);
+		mainPanel.add(registrationPanel);
+		
 	}
 
 	public static String getRequiredFieldStyle() {
@@ -116,7 +130,11 @@ public class Register implements EntryPoint {
 	}
 
 	private void initFormPanel() {
+		
+		
 		formPanel = new FormPanel();
+		formPanel.setHeaderVisible(false);
+
 		formPanel.setLabelWidth(150);
 		formPanel.setHeading("Registration");
 		formPanel.setFrame(true);
@@ -175,8 +193,10 @@ public class Register implements EntryPoint {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				if (!(password.getValue().equals(passwordAgain.getValue()))) {
-					// TODO need better alert
-					Window.alert("Password and Password Again are not the same");
+					errorPanel.show();
+					errorPanel.clearErrorMessages();
+					errorPanel.addErrorMessage("Password and Password Again are not the same");
+					errorPanel.layout();
 				} else {
 					User user = createDTO();
 					ServiceBroker.registerService.register(user, callback);

@@ -30,6 +30,8 @@ public class AuthorizationFilter implements Filter {
 	private static final ThreadLocal<HttpServletRequest> perThreadRequest = new ThreadLocal<HttpServletRequest>();
 	private static final ThreadLocal<HttpServletResponse> perThreadResponse = new ThreadLocal<HttpServletResponse>();
 
+	
+	
 	public static HttpServletRequest getThreadLocalRequest() {
 		return perThreadRequest.get();
 	}
@@ -76,7 +78,7 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = request.getSession(false);
 		com.nositer.client.dto.generated.User userDTO = null;
 		try {
-			userDTO = (com.nositer.client.dto.generated.User)session.getAttribute(USER_SESSION_KEY);
+			userDTO = Application.getCurrentUser();
 		} catch (Exception e) {}
 		if (userDTO == null) {
 			forwardToLoginPage(request, response, chain);
@@ -99,7 +101,7 @@ public class AuthorizationFilter implements Filter {
 					User userDomain = results.get(0);
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
-						request.getSession().setAttribute(USER_SESSION_KEY, userDTO);
+						Application.setCurrentUser(userDTO);
 						doSuccessfulLogin(request, response, chain);							
 					} else {
 						doInvalidLoginPassword(request, response, chain);			

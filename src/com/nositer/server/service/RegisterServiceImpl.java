@@ -27,7 +27,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 		     sess.save(userDomain);
 		     trx.commit();
 		     user = BeanConversion.copyDomain2DTO(userDomain, User.class);
-		     Application.getRequest().getSession().setAttribute(AuthorizationFilter.USER_SESSION_KEY, user);
+		     Application.setCurrentUser(user);
 		     retval = true;
 		 }
 		 catch (Exception e) {
