@@ -19,6 +19,7 @@
         <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost/nositer?blobSendChunkSize=1024000000&amp;max_allowed_packet=1024000000&amp;autoReconnect=true</property>
         <property name="hibernate.connection.username">nositer</property>
+        <property name="hibernate.connection.zeroDateTimeBehavior">convertToNull</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
         <property name="hibernate.dialect">com.nositer.hibernate.MyMySQLDialect</property>
         <property name="hibernate.show_sql">true</property>

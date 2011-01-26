@@ -13,9 +13,10 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
+import com.nositer.client.widget.combobox.PostalcodeComboBox;
 
 public class Location extends FieldSet {
-	private TextField<String> postalcode;
+	private PostalcodeComboBox postalcode;
 	private TextField<String> zipcode;
 	private LayoutContainer geographyCode;
 	private RadioGroup country;
@@ -27,11 +28,11 @@ public class Location extends FieldSet {
 		this.country = country;
 	}
 
-	public TextField<String> getPostalcode() {
+	public PostalcodeComboBox getPostalcode() {
 		return postalcode;
 	}
 
-	public void setPostalcode(TextField<String> postalcode) {
+	public void setPostalcode(PostalcodeComboBox postalcode) {
 		this.postalcode = postalcode;
 	}
 
@@ -55,9 +56,9 @@ public class Location extends FieldSet {
 		init();
 	}
 
-	// TODO combobox for postal code and zip code
+	
 	private void init() {	
-		postalcode = new TextField<String>();
+		postalcode = new PostalcodeComboBox();
 		postalcode.setFieldLabel("* Postal code");
 		postalcode.setStyleName(Register.getRequiredFieldStyle());
 

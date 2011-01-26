@@ -11,10 +11,13 @@ ${pojo.getPackageDeclaration()}
 // Generated ${date} by Hibernate Tools ${version}
 // Enhanced by Henry
 
-
+import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 //import java.util.List;
-//import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 <#assign classbody>
 @SuppressWarnings("serial")
 <#include "PojoTypeDeclaration.ftl"/> , IsSerializable, DTO {
@@ -35,10 +38,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 </#if>
 <#include "PojoExtraClassCode.ftl"/>
-
+<#include "GetColumnNames.ftl"/>
 }
+
 </#assign>
 
-${pojo.generateImports()}
 ${classbody}
 

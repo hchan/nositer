@@ -22,6 +22,9 @@ while ($line = <FH>) {
     @fields = split("\\|", $line);
     for ($i = 0; $i <= $#fields; $i++) {
 	print WH $fields[$i];
+	if ($i == 1) {
+	    print WH "\t"; # description
+	}
 	#if ($i != $#fields) {
 	    print WH "\t";
 	#}

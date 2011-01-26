@@ -2,11 +2,12 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated 24-Jan-2011 12:24:10 AM by Hibernate Tools 3.2.4.GA
+// Generated Jan 25, 2011 6:38:40 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 /**
@@ -27,28 +30,39 @@ import javax.persistence.Table;
 public class Postalcode implements java.io.Serializable, Domain {
 
 	private Integer id;
-	private String postalcode;
+	private String code;
+	private String description;
 	private String city;
 	private String province;
 	private String provincecode;
 	private String citytype;
 	private String latitude;
 	private String longitude;
+	private Date createdtime;
+	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
 
 	public Postalcode() {
 	}
 
-	public Postalcode(String postalcode, String city, String province,
-			String provincecode, String citytype, String latitude,
-			String longitude, Set<User> users) {
-		this.postalcode = postalcode;
+	public Postalcode(String code) {
+		this.code = code;
+	}
+
+	public Postalcode(String code, String description, String city,
+			String province, String provincecode, String citytype,
+			String latitude, String longitude, Date createdtime,
+			Date modifiedtime, Set<User> users) {
+		this.code = code;
+		this.description = description;
 		this.city = city;
 		this.province = province;
 		this.provincecode = provincecode;
 		this.citytype = citytype;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
 		this.users = users;
 	}
 
@@ -63,13 +77,22 @@ public class Postalcode implements java.io.Serializable, Domain {
 		this.id = id;
 	}
 
-	@Column(name = "postalcode", length = 128)
-	public String getPostalcode() {
-		return this.postalcode;
+	@Column(name = "code", nullable = false, length = 128)
+	public String getCode() {
+		return this.code;
 	}
 
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@Column(name = "description", length = 1024)
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Column(name = "city", length = 128)
@@ -124,6 +147,26 @@ public class Postalcode implements java.io.Serializable, Domain {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createdtime", length = 19)
+	public Date getCreatedtime() {
+		return this.createdtime;
+	}
+
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modifiedtime", length = 19)
+	public Date getModifiedtime() {
+		return this.modifiedtime;
+	}
+
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postalcode")

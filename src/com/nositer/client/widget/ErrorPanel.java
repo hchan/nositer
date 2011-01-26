@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.fx.FxConfig;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.google.gwt.user.client.Element;
 
 public class ErrorPanel extends LayoutContainer {
 
@@ -14,9 +15,15 @@ public class ErrorPanel extends LayoutContainer {
 	private LayoutContainer errorMessages;
 
 	public ErrorPanel() {
-		init();
+		//init();
 	}
 
+	@Override
+	protected void onRender(Element parent, int index) {
+		super.onRender(parent, index);
+		init();
+	}
+	
 	public void init() {
 		header = new Label("Errors");
 		header.setStyleName("errorHeader");

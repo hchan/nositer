@@ -2,11 +2,12 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated 24-Jan-2011 12:24:10 AM by Hibernate Tools 3.2.4.GA
+// Generated Jan 25, 2011 6:38:40 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 /**
@@ -27,27 +30,39 @@ import javax.persistence.Table;
 public class Zipcode implements java.io.Serializable, Domain {
 
 	private Integer id;
-	private String zip;
+	private String code;
+	private String description;
 	private String latitude;
 	private String longitude;
 	private String city;
 	private String state;
 	private String county;
 	private String zipClass;
+	private Date createdtime;
+	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
 
 	public Zipcode() {
 	}
 
-	public Zipcode(String zip, String latitude, String longitude, String city,
-			String state, String county, String zipClass, Set<User> users) {
-		this.zip = zip;
+	public Zipcode(String code) {
+		this.code = code;
+	}
+
+	public Zipcode(String code, String description, String latitude,
+			String longitude, String city, String state, String county,
+			String zipClass, Date createdtime, Date modifiedtime,
+			Set<User> users) {
+		this.code = code;
+		this.description = description;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.city = city;
 		this.state = state;
 		this.county = county;
 		this.zipClass = zipClass;
+		this.createdtime = createdtime;
+		this.modifiedtime = modifiedtime;
 		this.users = users;
 	}
 
@@ -62,13 +77,22 @@ public class Zipcode implements java.io.Serializable, Domain {
 		this.id = id;
 	}
 
-	@Column(name = "zip", length = 128)
-	public String getZip() {
-		return this.zip;
+	@Column(name = "code", nullable = false, length = 128)
+	public String getCode() {
+		return this.code;
 	}
 
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@Column(name = "description", length = 1024)
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Column(name = "latitude", length = 128)
@@ -123,6 +147,26 @@ public class Zipcode implements java.io.Serializable, Domain {
 
 	public void setZipClass(String zipClass) {
 		this.zipClass = zipClass;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createdtime", length = 19)
+	public Date getCreatedtime() {
+		return this.createdtime;
+	}
+
+	public void setCreatedtime(Date createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modifiedtime", length = 19)
+	public Date getModifiedtime() {
+		return this.modifiedtime;
+	}
+
+	public void setModifiedtime(Date modifiedtime) {
+		this.modifiedtime = modifiedtime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "zipcode")

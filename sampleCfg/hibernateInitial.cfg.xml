@@ -15,6 +15,7 @@
 		<property name="hibernate.dialect">com.nositer.hibernate.MyMySQLDialect</property>
 		<property name="hibernate.connection.autocommit">false</property> 
 		<property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property> 
+		<property name="hibernate.connection.zeroDateTimeBehavior">convertToNull</property>
 		<property name="hibernate.show_sql">true</property>
 
 		<!--  connection pooling via C3P0 -->

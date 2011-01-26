@@ -18,6 +18,9 @@ while ($line = <FH>) {
     @fields = $csv->fields();
     for ($i = 0; $i <= $#fields; $i++) {
 	print WH $fields[$i];
+	if ($i == 1) {
+	    print WH "\t"; # description
+	}
 	print WH "\t";
     }
     print WH "\n";
