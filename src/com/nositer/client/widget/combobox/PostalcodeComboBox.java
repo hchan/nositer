@@ -13,7 +13,7 @@ import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.shared.ServiceBroker;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
-public class PostalcodeComboBox extends ComboBoxPlus {
+public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
 
 	public PostalcodeComboBox() {		
 		init();

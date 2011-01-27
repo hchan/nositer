@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
+import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
+import com.extjs.gxt.ui.client.data.BeanModelTag;
 import com.extjs.gxt.ui.client.data.HttpProxy;
 import com.extjs.gxt.ui.client.data.ListLoadResult;
 import com.extjs.gxt.ui.client.data.LoadEvent;
@@ -23,7 +25,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.generated.Postalcode;
 @SuppressWarnings("rawtypes") 
-public class ComboBoxPlus<D extends ModelData> extends ComboBox<D> {
+public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 	public static final int FICTITIOUSCOUNT = 1000000;
 	public static final int DEFAULTLIMIT = 20;
 	public ComboBoxPlus() {
@@ -116,5 +118,15 @@ public class ComboBoxPlus<D extends ModelData> extends ComboBox<D> {
 			}
 		});
 		return retval;
+	}
+	
+	public D getBean() {
+		D retval = null;
+		BeanModel beanModel = (BeanModel) getValue();
+		if (beanModel != null) {
+			retval = beanModel.getBean();
+		}
+		return retval;
+		
 	}
 }

@@ -256,10 +256,8 @@ public class Register implements EntryPoint {
 		retval.setLogin(login.getValue());
 		retval.setPassword(password.getValue());
 		retval.setCountrycode((String) location.getCountry().getValue().getData(Location.COUNTRYCODE));
-		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {			
-			BeanModel beanModel = (BeanModel) location.getPostalcode().getValue();
-			Postalcode postalcode = beanModel.getBean();
-			
+		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
+			Postalcode postalcode = location.getPostalcode().getBean();			
 			retval.setPostalcode(postalcode);
 		}
 		return retval;
