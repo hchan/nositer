@@ -2,15 +2,15 @@ package com.nositer.client.register;
 
 import java.util.ArrayList;
 
-import com.extjs.gxt.ui.client.Style.HideMode;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.data.BeanModel;
+import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -20,11 +20,11 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
@@ -234,7 +234,7 @@ public class Register implements EntryPoint {
 		if ((password.getValue() != null) && (!password.getValue().equals(passwordAgain.getValue()))) {
 			retval.add("Password and Password Again are not the same");
 		} 
-		if (location.getCountry().getValue().getData("countrycode").equals("CAN")) {
+		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {
 			addRequiredErrorIfNecessary(location.getPostalcode(), retval);
 		} else {
 			addRequiredErrorIfNecessary(location.getZipcode(), retval);
@@ -255,7 +255,13 @@ public class Register implements EntryPoint {
 		retval.setLastname(lastName.getValue());
 		retval.setLogin(login.getValue());
 		retval.setPassword(password.getValue());
-		retval.setCountrycode((String) location.getCountry().getValue().getData("countrycode"));
+		retval.setCountrycode((String) location.getCountry().getValue().getData(Location.COUNTRYCODE));
+		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {			
+			BeanModel beanModel = (BeanModel) location.getPostalcode().getValue();
+			Postalcode postalcode = beanModel.getBean();
+			
+			retval.setPostalcode(postalcode);
+		}
 		return retval;
 	}
 

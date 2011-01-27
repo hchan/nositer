@@ -13,6 +13,10 @@ public class ServiceBroker {
 	public static final RegisterServiceAsync registerService = GWT.create(RegisterService.class);
 	public static final PostalcodeServiceAsync postalcodeService = GWT.create(PostalcodeService.class);
 	
+	
+	
+	
+	// Not used
 	public static final String JSONSERVICEDIR = "/jsonservice";
 	public static final String POSTALCODEJSONSERVICE = JSONSERVICEDIR + "/postalcode.jsp";
 }

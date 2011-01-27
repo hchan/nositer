@@ -16,6 +16,11 @@ import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.nositer.client.widget.combobox.PostalcodeComboBox;
 
 public class Location extends FieldSet {
+	
+	
+	public static final String COUNTRYCODE_USA = "USA";
+	public static final String COUNTRYCODE_CAN = "CAN";
+	public static final String COUNTRYCODE = "countrycode";
 	private PostalcodeComboBox postalcode;
 	private TextField<String> zipcode;
 	private LayoutContainer geographyCode;
@@ -81,7 +86,7 @@ public class Location extends FieldSet {
 				FieldEvent fieldEvent = (FieldEvent)be;
 				RadioGroup radioGroup = (RadioGroup) fieldEvent.getSource();
 				geographyCode.removeAll();
-				if (radioGroup.getValue().getData("countrycode").equals("CAN")) {
+				if (radioGroup.getValue().getData(COUNTRYCODE).equals(COUNTRYCODE_CAN)) {
 					geographyCode.add(postalcode);
 				} else {
 					geographyCode.add(zipcode);
@@ -92,10 +97,10 @@ public class Location extends FieldSet {
 		Radio can = new Radio();
 		can.setValue(true);
 		can.setBoxLabel("Canada");
-		can.setData("countrycode", "CAN");
+		can.setData(COUNTRYCODE, COUNTRYCODE_CAN);
 		Radio usa = new Radio();
-		usa.setBoxLabel("USA");
-		usa.setData("countrycode", "USA");
+		usa.setBoxLabel(COUNTRYCODE_USA);
+		usa.setData(COUNTRYCODE, COUNTRYCODE_USA);
 		country.add(can);
 		country.add(usa);
 		add(country, new VBoxLayoutData(new Margins(5, 0, 0, 5)));

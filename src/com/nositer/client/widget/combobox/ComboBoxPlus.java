@@ -1,25 +1,40 @@
 package com.nositer.client.widget.combobox;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
+import com.extjs.gxt.ui.client.data.BasePagingLoader;
+import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.HttpProxy;
+import com.extjs.gxt.ui.client.data.ListLoadResult;
+import com.extjs.gxt.ui.client.data.LoadEvent;
+import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.ModelType;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
+import com.extjs.gxt.ui.client.data.PagingLoader;
+import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.LoadListener;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.nositer.client.dto.DTO;
-
-public class ComboBoxPlus extends ComboBox {
+import com.nositer.client.dto.generated.Postalcode;
+@SuppressWarnings("rawtypes") 
+public class ComboBoxPlus<D extends ModelData> extends ComboBox<D> {
+	public static final int FICTITIOUSCOUNT = 1000000;
 	public static final int DEFAULTLIMIT = 20;
 	public ComboBoxPlus() {
 		init();
 	}
 	
 	private void init() {
+		setMinChars(1);
 		this.setPageSize(DEFAULTLIMIT);
 		initPagingToolBar();
+		this.setForceSelection(true);	
 	}
 
 	
@@ -70,5 +85,36 @@ public class ComboBoxPlus extends ComboBox {
 		if (getValue() == null) {
 			setRawValue("");
 		} 
+	}
+	
+	public PagingLoader<PagingLoadResult<ModelData>> getLoader(RpcProxy<PagingLoadResult<Postalcode>> proxy) {
+		PagingLoader<PagingLoadResult<ModelData>> retval = null;
+		BeanModelReader reader = new BeanModelReader() {
+			@Override
+			protected ListLoadResult<ModelData> newLoadResult(Object loadConfig, List<ModelData> models) {
+				//return super.newLoadResult(loadConfig, models);
+				return new BasePagingLoadResult<ModelData>(models);
+			}
+		};
+
+		retval = new BasePagingLoader<PagingLoadResult<ModelData>>(proxy, reader);
+
+		retval.addLoadListener(new LoadListener() {
+			@Override
+			public void loaderLoad(LoadEvent le) {
+				BasePagingLoadResult basePagingLoadResult = le.getData();
+
+				int actualSize = basePagingLoadResult.getData().size();
+
+				//int sizeFromRPC = retval.getTotalCount();
+				//GWTUtil.log("actualSize: " + actualSize);
+				//GWTUtil.log("sizeFromRPC: " + sizeFromRPC); // probably always 0
+				if (actualSize == DEFAULTLIMIT) {
+					basePagingLoadResult.setTotalLength(FICTITIOUSCOUNT);
+				}
+				super.loaderLoad(le);
+			}
+		});
+		return retval;
 	}
 }
