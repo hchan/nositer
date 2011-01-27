@@ -65,16 +65,19 @@ $(document).ready(
 </head>
 <BODY>
 <DIV class="loginDescription">Nos Iter<BR />
-translate: Journey with us<BR />
-Helping you find others with common "I want to do ..."<BR/>
-
+translation from Latin: Journey with us<BR />
+Nos iter is about connecting you to others by asking common groups what you want to do<BR/>
+So you may have answered the question "What I am doing", now Nos Iter reaches one step further
+by inviting others to journey with you by asking:<BR/> 
+"I want to ..."<BR/>
+Post what you want to do in social groups and see how others connect with you.
 
 <DIV class="loginDescriptionExamples">
 <DIV class="loginDescriptionExampleItem">Mar 01/2011: I want to </DIV>go rockclimbing.  Anyone want to join?<BR/>
 <DIV class="loginDescriptionExampleItem">Mar 04/2011: I want to </DIV>go running.  Tempo run @ 4min/km for 10k anyone?<BR/>
-<DIV class="loginDescriptionExampleItem">Mar 07/2011: I am trying to figure out</DIV>how to use JSF.  Hints/tips/comments?<BR/>
-<DIV class="loginDescriptionExampleItem">Mar 11/2011: I am</DIV> driving to Seattle from Vancouver.  If anyone can wants to carpool, let me know<BR/>
-<DIV class="loginDescriptionExampleItem">Mar 11/2011: I am looking for </DIV>a study group for the Science 11 final exam<BR/>
+<DIV class="loginDescriptionExampleItem">Mar 07/2011: I want to </DIV>how to use JSF.  Hints/tips/comments?<BR/>
+<DIV class="loginDescriptionExampleItem">Mar 11/2011: I want to </DIV>drive to Seattle from Vancouver.  If anyone can wants to carpool, let me know<BR/>
+<DIV class="loginDescriptionExampleItem">Mar 11/2011: I want to </DIV>find a study group for the Science 11 final exam<BR/>
 </DIV>
 </DIV>
 

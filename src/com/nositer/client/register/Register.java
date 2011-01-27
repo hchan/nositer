@@ -119,6 +119,7 @@ public class Register implements EntryPoint {
 
 		mainPanel.setLayout(new CenterLayout());
 		ContentPanel registrationPanel = new ContentPanel(new TableLayout(1));
+		registrationPanel.setWidth(500);
 		registrationPanel.setHeading("Registration");
 		errorPanel = new ErrorPanel();
 		errorPanel.hide();
@@ -133,8 +134,6 @@ public class Register implements EntryPoint {
 	}
 
 	private void initFormPanel() {
-
-
 		formPanel = new FormPanel();
 		formPanel.setHeaderVisible(false);
 
