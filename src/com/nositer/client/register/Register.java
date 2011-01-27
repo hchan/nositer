@@ -26,6 +26,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
@@ -258,6 +259,9 @@ public class Register implements EntryPoint {
 		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
 			Postalcode postalcode = location.getPostalcode().getBean();			
 			retval.setPostalcode(postalcode);
+		} else {
+			Zipcode zipcode = location.getZipcode().getBean();			
+			retval.setZipcode(zipcode);
 		}
 		return retval;
 	}

@@ -1,13 +1,13 @@
 package com.nositer.client.widget.combobox;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.shared.ServiceBroker;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
-public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
+public class ZipcodeComboBox extends ComboBoxPlus<Zipcode> {
 
-	public PostalcodeComboBox() {		
+	public ZipcodeComboBox() {		
 		init();
 	}
 
@@ -18,7 +18,7 @@ public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
 	
 	@Override
 	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {
-		ServiceBroker.postalcodeService.getPostalcodes(offset, limit, query, callback);
+		ServiceBroker.zipcodeService.getZipcodes(offset, limit, query, callback);
 		return true;
 	}
 	
@@ -26,7 +26,7 @@ public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
 	private native String getTemplateStr() /*-{ 
     return  [ 
     '<tpl for=".">', 
-    '<div class="x-combo-list-item"><B>{code}</B> <I><small>{city}, {province}</small></I></div>', 
+    '<div class="x-combo-list-item"><B>{code}</B> <I><small>{city}, {state}</small></I></div>', 
     '</tpl>' 
     ].join(""); 
   }-*/;  

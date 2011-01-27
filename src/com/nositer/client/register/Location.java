@@ -9,11 +9,11 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.Radio;
 import com.extjs.gxt.ui.client.widget.form.RadioGroup;
-import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.nositer.client.widget.combobox.PostalcodeComboBox;
+import com.nositer.client.widget.combobox.ZipcodeComboBox;
 
 public class Location extends FieldSet {
 	
@@ -22,7 +22,7 @@ public class Location extends FieldSet {
 	public static final String COUNTRYCODE_CAN = "CAN";
 	public static final String COUNTRYCODE = "countrycode";
 	private PostalcodeComboBox postalcode;
-	private TextField<String> zipcode;
+	private ZipcodeComboBox zipcode;
 	private LayoutContainer geographyCode;
 	private RadioGroup country;
 	public RadioGroup getCountry() {
@@ -41,11 +41,12 @@ public class Location extends FieldSet {
 		this.postalcode = postalcode;
 	}
 
-	public TextField<String> getZipcode() {
+
+	public ZipcodeComboBox getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(TextField<String> zipcode) {
+	public void setZipcode(ZipcodeComboBox zipcode) {
 		this.zipcode = zipcode;
 	}
 
@@ -67,7 +68,7 @@ public class Location extends FieldSet {
 		postalcode.setFieldLabel("* Postal code");
 		postalcode.setStyleName(Register.getRequiredFieldStyle());
 
-		zipcode = new TextField<String>();
+		zipcode = new ZipcodeComboBox();
 		zipcode.setFieldLabel("* Zip code");
 		zipcode.setStyleName(Register.getRequiredFieldStyle());
 

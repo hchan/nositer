@@ -14,14 +14,18 @@ open WH, ">$loadfile";  # In mysqlimport, the name of the datafile should match 
 
 $count = 0;
 while ($line = <FH>) {
+    $count++;
     $csv->parse($line);
     @fields = $csv->fields();
+    print WH "$count\t";
     for ($i = 0; $i <= $#fields; $i++) {
+
 	print WH $fields[$i];
-	if ($i == 1) {
+	print WH "\t";
+	if ($i == 0) {
 	    print WH "\t"; # description
 	}
-	print WH "\t";
+
     }
     print WH "\n";
 }

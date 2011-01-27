@@ -3,6 +3,7 @@ package com.nositer.client.widget.combobox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
@@ -18,28 +19,42 @@ import com.extjs.gxt.ui.client.data.PagingLoader;
 import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.LoadListener;
+import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.ListView;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.generated.Postalcode;
-@SuppressWarnings("rawtypes") 
+import com.nositer.shared.ServiceBroker;
+@SuppressWarnings({"rawtypes", "unchecked"}) 
 public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
+	public static final String CUSTOMDISPLAYFIELD = "CUSTOMDISPLAYFIELD";
 	public static final int FICTITIOUSCOUNT = 1000000;
 	public static final int DEFAULTLIMIT = 20;
-	public ComboBoxPlus() {
-		init();
-	}
-	
-	private void init() {
+	public ComboBoxPlus() {		
 		setMinChars(1);
 		this.setPageSize(DEFAULTLIMIT);
 		initPagingToolBar();
 		this.setForceSelection(true);	
 	}
 
-	
+	public void initAsLookupTable() {
+		this.setDisplayField(CUSTOMDISPLAYFIELD);
+		this.setView(new ListView<BeanModel>() {
+			@Override
+			protected BeanModel prepareData(BeanModel model) {
+				model.set(CUSTOMDISPLAYFIELD, (String)model.get("code"));
+				return super.prepareData(model);
+			}			
+		});
+		RpcProxy proxy = getProxy();
+		PagingLoader<PagingLoadResult<ModelData>> loader = getLoader(proxy); 
+		ListStore<BeanModel> store = new ListStore<BeanModel>(loader);
+		this.setStore(store);
+	}
 	
 	public static ModelType getModelType(ArrayList<String> columnNames) {
 		ModelType retval = new ModelType();
@@ -118,6 +133,29 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 			}
 		});
 		return retval;
+	}
+	
+	public RpcProxy getProxy() {
+		RpcProxy retval = new RpcProxy() {			
+			@Override
+			protected void load(Object loadConfig, AsyncCallback callback) {
+				BasePagingLoadConfig basePagingLoadConfig = (BasePagingLoadConfig)loadConfig;
+				int limit = DEFAULTLIMIT;
+				int offset = basePagingLoadConfig.get("offset");
+				String query = (basePagingLoadConfig.get("query"));
+				if (!doServiceWithRPC(basePagingLoadConfig, callback)) {				
+					doServiceWithRPC(offset, limit, query, callback);
+				}
+			}			
+		};
+		return retval;
+	}
+	
+	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {
+		return false;
+	}
+	public boolean doServiceWithRPC(BasePagingLoadConfig basePagingLoadConfig, AsyncCallback callback) {
+		return false;
 	}
 	
 	public D getBean() {
