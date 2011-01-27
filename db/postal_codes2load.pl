@@ -21,9 +21,13 @@ while ($line = <FH>) {
     #print qq|INSERT INTO POSTALCODE VALUES($count, "$postalcode", "$city", "$province", "$pronvincecode", "$citytype", "$latitude", "$longitude");\n|;
     @fields = split("\\|", $line);
     for ($i = 0; $i <= $#fields; $i++) {
-	print WH $fields[$i];
+
 	if ($i == 1) {
+	    $fields[$i] =~ s#\s*##g;
+	    print WH $fields[$i];
 	    print WH "\t"; # description
+	} else {
+	    print WH $fields[$i];
 	}
 	#if ($i != $#fields) {
 	    print WH "\t";

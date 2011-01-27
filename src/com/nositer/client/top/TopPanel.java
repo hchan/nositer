@@ -8,8 +8,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.User;
-import com.nositer.client.service.ServiceBroker;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.shared.ServiceBroker;
 
 public class TopPanel extends ContentPanel {
 	private Nositer nositer;

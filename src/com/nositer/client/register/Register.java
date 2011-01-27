@@ -27,10 +27,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.service.ServiceBroker;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
+import com.nositer.shared.ServiceBroker;
 
 public class Register implements EntryPoint {
 
