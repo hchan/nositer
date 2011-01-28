@@ -15,16 +15,17 @@
 	padding: 20px;
 	border-style: solid;
 }
+
 .centerTable {
-	width:30%; 
-	margin-left:35%; 
-	margin-right:35%;
+	width: 30%;
+	margin-left: 35%;
+	margin-right: 35%;
 }
 
 .loginDescriptionExamples {
 	width: 40%;
 	margin: auto;
-	text-align: left;	
+	text-align: left;
 	color: blue;
 	font-size: 8pt;
 }
@@ -34,7 +35,7 @@
 	display: inline;
 }
 
-.required, .registerLocation {
+.required,.registerLocation {
 	font-weight: bold;
 	color: red;
 	font-size: 10pt;
@@ -73,4 +74,31 @@
 
 .errorPanel {
 	background-color: #eeaaaa;
+}
+
+.navigationPanel {
+}
+
+.navigationPanel:hover {
+	background-color: #FF0000 !important;
+}
+.navigationItemOff, .navigationTreeItemOff {
+	padding-left: 15px;
+	background-color: #F0F0F0;
+	color: black;
+	font: arial,tahoma,helvetica,sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.navigationItemOn, .navigationTreeItemOn {
+	padding-left: 15px;
+	background-color: #FFE8A0;
+	color: black;
+	font: arial,tahoma,helvetica,sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+.navigationItemOff:hover, .navigationTreeItemOff:hover, .navigationItemOn:hover, .navigationTreeItemOn:hover {
+	background-color: #AAE8A0;
 }
