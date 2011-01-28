@@ -112,7 +112,7 @@ public class TopPanel extends ContentPanel {
 
 			@Override
 			public void onSuccess(Void result) {
-				Window.Location.assign("/Nositer.html");
+				Window.Location.reload();
 			}
 			
 		};

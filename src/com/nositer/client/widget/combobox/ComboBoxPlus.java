@@ -67,10 +67,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		return retval;
 	}
 	
-	public static ModelType  getModelTypeFromClass(Class<? extends DTO> dtoClass) {
-		DTO dto = GWT.create(dtoClass);
-		return getModelType(dto.getColumnNames());
-	}
+	
 	
 	public HttpProxy getHttpProxy(String serviceName) {
 		HttpProxy retval = null;
