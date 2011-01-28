@@ -11,6 +11,7 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -19,6 +20,8 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
@@ -35,6 +38,7 @@ import com.nositer.shared.ServiceBroker;
 
 public class Register implements EntryPoint {
 
+	public static final String NOSITER_HOME_URL = "/Nositer.html";
 	private static Register instance;
 	private TopPanel topPanel;
 	private MainPanel mainPanel;
@@ -117,7 +121,6 @@ public class Register implements EntryPoint {
 
 	private void populateMainPanel() {		
 		initFormPanel();
-
 		mainPanel.setLayout(new CenterLayout());
 		ContentPanel registrationPanel = new ContentPanel(new TableLayout(1));
 		registrationPanel.setWidth(500);
@@ -141,6 +144,10 @@ public class Register implements EntryPoint {
 		formPanel.setLabelWidth(150);
 		formPanel.setHeading("Registration");
 		formPanel.setFrame(true);
+		
+		addRequiredFieldLabel();
+		
+		
 		firstName = new TextField<String>();  
 		firstName.setFieldLabel("* Firstname");  
 		firstName.setLabelStyle(getRequiredFieldStyle());
@@ -162,18 +169,40 @@ public class Register implements EntryPoint {
 		passwordAgain.setFieldLabel("* Password Again");  
 		passwordAgain.setLabelStyle(getRequiredFieldStyle());
 		passwordAgain.setPassword(true);
-
-		location = new Location();
+		location = new Location();				
+		
 		formPanel.add(firstName);
 		formPanel.add(lastName);
 		formPanel.add(login);
 		formPanel.add(password);
 		formPanel.add(passwordAgain);
 		formPanel.add(location);
+		
+		addOptionalFieldLabel();
 		addButtons();
 		formPanel.setWidth(500);
 	}
 
+	private void addRequiredFieldLabel() {
+		FlowLayout flowLayoutRequiredFieldLabelContainer = new FlowLayout();
+		flowLayoutRequiredFieldLabelContainer.setMargins(new Margins(0, 0, 10, 0));
+		LayoutContainer requiredFieldLabelContainer = new LayoutContainer(flowLayoutRequiredFieldLabelContainer);
+		Label requiredFieldLabel = new Label("Required Fields");
+		requiredFieldLabel.setStyleName("requiredFieldLabel");
+		requiredFieldLabelContainer.add(requiredFieldLabel);
+		formPanel.add(requiredFieldLabelContainer);
+	}
+
+	private void addOptionalFieldLabel() {
+		FlowLayout flowLayoutOptionalFieldLabelContainer = new FlowLayout();
+		flowLayoutOptionalFieldLabelContainer.setMargins(new Margins(10, 0, 10, 0));
+		LayoutContainer optionalFieldLabelContainer = new LayoutContainer(flowLayoutOptionalFieldLabelContainer);
+		Label optionalFieldLabel = new Label("Optional Fields");
+		optionalFieldLabel.setStyleName("optionalFieldLabel");
+		optionalFieldLabelContainer.add(optionalFieldLabel);
+		formPanel.add(optionalFieldLabelContainer);
+	}
+	
 	private void addButtons() {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		saveButton = new Button("Save");
@@ -195,7 +224,7 @@ public class Register implements EntryPoint {
 
 			@Override
 			public void onSuccess(Boolean result) {
-				Window.Location.assign("/Nositer.html");
+				Window.Location.assign(NOSITER_HOME_URL);
 			}
 		};
 		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
@@ -219,7 +248,7 @@ public class Register implements EntryPoint {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				Window.Location.assign("/Nositer.html");
+				Window.Location.assign(NOSITER_HOME_URL);
 			}
 		});
 		formPanel.addButton(cancelButton);  

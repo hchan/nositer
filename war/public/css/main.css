@@ -81,6 +81,7 @@
 .navigationPanel:hover {
 	background-color: #FF0000 !important;
 }
+
 .navigationItemOff, .navigationTreeItemOff {
 	padding-left: 15px;
 	background-color: #F0F0F0;
@@ -98,6 +99,13 @@
     font-size: 14px;
     cursor: pointer;
 }
+
 .navigationItemOff:hover, .navigationTreeItemOff:hover, .navigationItemOn:hover, .navigationTreeItemOn:hover {
 	background-color: #AAE8A0;
+}
+
+.requiredFieldLabel, .optionalFieldLabel {
+	font-size: 14px;
+	font-weight: bold;
+	color: #1111ee;
 }
