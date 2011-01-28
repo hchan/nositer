@@ -64,14 +64,16 @@ $(document).ready(
 </script>
 </head>
 <BODY>
-<DIV class="loginDescription">Nos Iter<BR />
-translation from Latin: Journey with us<BR />
-Nos iter is about connecting you to others by asking common groups what you want to do<BR/>
-So you may have answered the question "What I am doing", now Nos Iter reaches one step further
-by inviting others to journey with you by asking:<BR/> 
+<DIV class="loginDescription">
+<H1>Nos Iter</H1>
+<DIV style="font-style: italic; display: inline">translation (from Latin)</DIV>: Journey with us<BR />
+Nos iter is about connecting you to others by reaching into common groups and telling them want you want to do<BR/>
+So you may have answered the question "What I am doing" ... at Nos Iter we go one step further
+by inviting others to journey with us by asking:<BR/> 
 "I want to ..."<BR/>
 Post what you want to do in social groups and see how others connect with you.
-
+<BR/>
+<BR/>
 <DIV class="loginDescriptionExamples">
 <DIV class="loginDescriptionExampleItem">Mar 01/2011: I want to </DIV>go rockclimbing.  Anyone want to join?<BR/>
 <DIV class="loginDescriptionExampleItem">Mar 04/2011: I want to </DIV>go running.  Tempo run @ 4min/km for 10k anyone?<BR/>

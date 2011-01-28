@@ -18,4 +18,9 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		return retval;
 	}
 
+	@Override
+	public void logout() throws GWTException {
+		Application.getRequest().getSession().invalidate();
+	}
+
 }

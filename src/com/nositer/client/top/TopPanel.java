@@ -4,7 +4,12 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.User;
@@ -61,12 +66,28 @@ public class TopPanel extends ContentPanel {
 			public void onSuccess(User result) {
 				if (result != null) {
 					loggedInAs.setLayout(new HBoxLayout());
-					Label youAreLoggedOnAs = new Label("You are logged on as:");
+					Label youAreLoggedOnAs = new Label("You are logged in as:");
 					youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
 					loggedInAs.add(youAreLoggedOnAs);
 					Label firstLastName = new Label(result.getFirstname() + " " + result.getLastname());
 					firstLastName.setStyleName("firstLastName");
 					loggedInAs.add(firstLastName);
+					loggedInAs.add(new Label("&nbsp;&nbsp"));
+					Anchor logout = new Anchor(new SafeHtml() {
+						
+						@Override
+						public String asString() {
+							return "(Log out)";
+						}
+					});
+					logout.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							logout();
+						}
+					});
+					loggedInAs.add(logout);
 					TopPanel.this.layout();
 				}
 			}
@@ -79,5 +100,22 @@ public class TopPanel extends ContentPanel {
 		htmlPanel.setStyleName("welcomeDescription");
 		this.add(htmlPanel);
 		this.add(loggedInAs);
+	}
+	
+	public void logout() {
+		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				Window.Location.assign("/Nositer.html");
+			}
+			
+		};
+		ServiceBroker.profileService.logout(callback);
 	}
 }

@@ -52,29 +52,26 @@ public class NavigationItem extends LayoutContainer {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				selected = !selected;
-				if (selected) {
-					removeStyleName(NAVIGATION_ITEM_OFF);
-					setStyleName(NAVIGATION_ITEM_ON);
-					setBorders(true);
+				if (selected) {					
 					doSelected();
-				} else {
-					removeStyleName(NAVIGATION_ITEM_ON);
-					setStyleName(NAVIGATION_ITEM_OFF);
-					setBorders(true);
+				} else {				
 					doUnSelected();
 				}
-
 			}
-
-
 		});
 	}
 
 	public void doSelected() {
-
+		selected = true;
+		removeStyleName(NAVIGATION_ITEM_OFF);
+		setStyleName(NAVIGATION_ITEM_ON);
+		setBorders(true);
 	}
 
 	public void doUnSelected() {
-
+		selected = false;
+		removeStyleName(NAVIGATION_ITEM_ON);
+		setStyleName(NAVIGATION_ITEM_OFF);
+		setBorders(true);
 	}
 }
