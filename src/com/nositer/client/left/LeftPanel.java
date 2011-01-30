@@ -12,15 +12,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 public class LeftPanel extends ContentPanel {
 
 	private BorderLayoutData leftLayoutData;
-	private ArrayList<NavigationItem> navigationItems;
-
-	public ArrayList<NavigationItem> getNavigationItems() {
-		return navigationItems;
-	}
-
-	public void setNavigationItems(ArrayList<NavigationItem> navigationItems) {
-		this.navigationItems = navigationItems;
-	}
+	private NavigationTree navigationTree;
 
 	public BorderLayoutData getLeftLayoutData() {
 		return leftLayoutData;
@@ -37,7 +29,7 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	private void init() {
-		navigationItems = new ArrayList<NavigationItem>();
+		navigationTree = new NavigationTree();
 		leftLayoutData.setSize(150);
 		leftLayoutData.setCollapsible(true);
 		//this.setHeaderVisible(false);
@@ -49,9 +41,9 @@ public class LeftPanel extends ContentPanel {
 		ContentPanel profile = new ContentPanel();
 		profile.setStyleName("navigationPanel");
 		profile.setHeading("Profile");	
-		NavigationItem viewProfile = createNavigationItem("View Profile");
+		NavigationItem viewProfile = navigationTree.createNavigationItem("View Profile");
 		profile.add(viewProfile);
-		NavigationItem editProfile = createNavigationItem("Edit Profile");
+		NavigationItem editProfile = navigationTree.createNavigationItem("Edit Profile");
 		profile.add(editProfile);
 
 
@@ -59,7 +51,7 @@ public class LeftPanel extends ContentPanel {
 
 		ContentPanel groups = new ContentPanel();
 		groups.setHeading("Groups");	
-		NavigationItem group1 = createNavigationItem("Group1");
+		NavigationItem group1 = navigationTree.createNavigationItem("Group1");
 		groups.add(group1);
 		this.add(groups);
 
@@ -69,24 +61,7 @@ public class LeftPanel extends ContentPanel {
 		this.layout();
 	}
 
-	private NavigationItem createNavigationItem(String labelStr) {
-		final NavigationItem retval = new NavigationItem(labelStr);
-		navigationItems.add(retval);
-		retval.addListener(Events.OnClick, new Listener() {
-
-			@Override
-			public void handleEvent(BaseEvent be) {
-				if (retval.isSelected()) {
-					for (NavigationItem navigationItem : navigationItems) {
-						navigationItem.doUnSelected();
-					}
-					retval.doSelected();
-				}
-			}
-		});
-
-		return retval;
-	}
+	
 
 
 

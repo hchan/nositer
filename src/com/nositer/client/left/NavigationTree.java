@@ -1,82 +1,42 @@
 package com.nositer.client.left;
 
+import java.util.ArrayList;
+
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 
-public class NavigationTree extends LayoutContainer {
-	public static final String NAVIGATIONTREE_ITEM_OFF = "navigationTreeItemOff";
-	public static final String NAVIGATIONTREE_ITEM_ON = "navigationTreeItemOn";
-	public static final String EXPANDPREFIX = "&rArr;&nbsp;";
-	public static final String COLLAPSEPREFIX = "&dArr;&nbsp;";
+public class NavigationTree extends LayoutContainer {	
+	private ArrayList<NavigationItem> navigationItems;
+	public NavigationTree() {
+		navigationItems = new ArrayList<NavigationItem>();
+	}
+	public ArrayList<NavigationItem> getNavigationItems() {
+		return navigationItems;
+	}
+
+	public void setNavigationItems(ArrayList<NavigationItem> navigationItems) {
+		this.navigationItems = navigationItems;
+	}
 	
-	private Label label;
-	private boolean selected = false;
-	private String labelStr;
-
-	public Label getLabel() {
-		return label;
-	}
-
-	public void setLabel(Label label) {
-		this.label = label;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-
-	public String getLabelStr() {
-		return labelStr;
-	}
-
-	public void setLabelStr(String labelStr) {
-		this.labelStr = labelStr;
-	}
-
-	public NavigationTree(String labelStr) {
-		this.labelStr = labelStr;
-		setStyleName(NAVIGATIONTREE_ITEM_OFF);
-		setBorders(true);
-		label = new Label(EXPANDPREFIX + labelStr);
-		add(label);
-		addDefaultListeners();
-	}
-
-	private void addDefaultListeners() {
-		addListener(Events.OnClick, new Listener<BaseEvent>() {
+	public NavigationItem createNavigationItem(String labelStr) {
+		final NavigationItem retval = new NavigationItem(labelStr);
+		navigationItems.add(retval);
+		retval.addListener(Events.OnClick, new Listener() {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				selected = !selected;
-				if (selected) {
-					removeStyleName(NAVIGATIONTREE_ITEM_OFF);
-					setStyleName(NAVIGATIONTREE_ITEM_ON);
-					setBorders(true);
-					label.setText(COLLAPSEPREFIX + labelStr);
-					doSelected();
-				} else {
-					removeStyleName(NAVIGATIONTREE_ITEM_ON);
-					setStyleName(NAVIGATIONTREE_ITEM_OFF);
-					setBorders(true);
-					label.setText(EXPANDPREFIX + labelStr);
-					doUnSelected();
+				if (retval.isSelected()) {
+					for (NavigationItem navigationItem : navigationItems) {
+						navigationItem.doUnSelected();
+					}
+					retval.doSelected();
 				}
 			}
 		});
-	}
 
-	public void doSelected() {
-
-	}
-
-	public void doUnSelected() {
-
+		return retval;
 	}
 }
