@@ -4,23 +4,24 @@ import java.util.ArrayList;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
-import com.extjs.gxt.ui.client.data.BeanModel;
-import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.DatePicker;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.Radio;
+import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.core.client.EntryPoint;
@@ -52,6 +53,11 @@ public class Register implements EntryPoint {
 	private TextField<String> password;
 	private TextField<String> passwordAgain;
 	private Location location;
+	private TextField<String> email;
+	private RadioGroup gendermale;
+	private TextField<String> profession;
+	private DateField birthdate;
+
 	private ErrorPanel errorPanel;
 
 	public FormPanel getFormPanel() {
@@ -144,10 +150,44 @@ public class Register implements EntryPoint {
 		formPanel.setLabelWidth(150);
 		formPanel.setHeading("Registration");
 		formPanel.setFrame(true);
-		
-		addRequiredFieldLabel();
-		
-		
+
+		addRequiredFieldLabel();				
+		addRequiredFields();		
+		addOptionalFieldLabel();
+		addOptionalFields();
+
+		addButtons();
+		formPanel.setWidth(500);
+	}
+
+	private void addOptionalFields() {
+		email = new TextField<String>();
+		email.setFieldLabel("Email");		
+
+		gendermale = new RadioGroup();
+		gendermale.setFieldLabel("Gender");
+		Radio radioMale = new Radio();
+		radioMale.setBoxLabel("Male");
+		gendermale.add(radioMale);
+		Radio radioFemale = new Radio();
+		radioFemale.setBoxLabel("Female");
+		gendermale.add(radioMale);
+		gendermale.add(radioFemale);
+
+
+		profession = new TextField<String>();
+		profession.setFieldLabel("Profession");
+
+		birthdate = new DateField();
+		birthdate.setFieldLabel("Birthdate (yyyy-MM-dd)");
+
+		formPanel.add(email);
+		formPanel.add(gendermale);
+		formPanel.add(profession);
+		formPanel.add(birthdate);
+	}
+
+	private void addRequiredFields() {
 		firstName = new TextField<String>();  
 		firstName.setFieldLabel("* Firstname");  
 		firstName.setLabelStyle(getRequiredFieldStyle());
@@ -170,17 +210,13 @@ public class Register implements EntryPoint {
 		passwordAgain.setLabelStyle(getRequiredFieldStyle());
 		passwordAgain.setPassword(true);
 		location = new Location();				
-		
+
 		formPanel.add(firstName);
 		formPanel.add(lastName);
 		formPanel.add(login);
 		formPanel.add(password);
 		formPanel.add(passwordAgain);
 		formPanel.add(location);
-		
-		addOptionalFieldLabel();
-		addButtons();
-		formPanel.setWidth(500);
 	}
 
 	private void addRequiredFieldLabel() {
@@ -202,7 +238,7 @@ public class Register implements EntryPoint {
 		optionalFieldLabelContainer.add(optionalFieldLabel);
 		formPanel.add(optionalFieldLabelContainer);
 	}
-	
+
 	private void addButtons() {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		saveButton = new Button("Save");
