@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.Style.Scroll;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -35,6 +36,8 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
+import com.nositer.client.widget.Location;
+import com.nositer.client.widget.radiogroup.GenderRadioGroup;
 import com.nositer.shared.ServiceBroker;
 
 public class Register implements EntryPoint {
@@ -54,7 +57,7 @@ public class Register implements EntryPoint {
 	private TextField<String> passwordAgain;
 	private Location location;
 	private TextField<String> email;
-	private RadioGroup gendermale;
+	private GenderRadioGroup genderRadioGroup;
 	private TextField<String> profession;
 	private DateField birthdate;
 
@@ -119,6 +122,7 @@ public class Register implements EntryPoint {
 		topPanel = new TopPanel(topLayoutData);		
 		BorderLayoutData mainLayoutData = new BorderLayoutData(LayoutRegion.CENTER);  
 		mainPanel = new MainPanel(mainLayoutData);
+		mainPanel.setScrollMode(Scroll.AUTO);
 		populateMainPanel();
 		layoutContainer.add(topPanel, topLayoutData);		
 		layoutContainer.add(mainPanel, mainLayoutData);	
@@ -164,16 +168,7 @@ public class Register implements EntryPoint {
 		email = new TextField<String>();
 		email.setFieldLabel("Email");		
 
-		gendermale = new RadioGroup();
-		gendermale.setFieldLabel("Gender");
-		Radio radioMale = new Radio();
-		radioMale.setBoxLabel("Male");
-		gendermale.add(radioMale);
-		Radio radioFemale = new Radio();
-		radioFemale.setBoxLabel("Female");
-		gendermale.add(radioMale);
-		gendermale.add(radioFemale);
-
+		genderRadioGroup = new GenderRadioGroup();
 
 		profession = new TextField<String>();
 		profession.setFieldLabel("Profession");
@@ -182,7 +177,7 @@ public class Register implements EntryPoint {
 		birthdate.setFieldLabel("Birthdate (yyyy-MM-dd)");
 
 		formPanel.add(email);
-		formPanel.add(gendermale);
+		formPanel.add(genderRadioGroup);
 		formPanel.add(profession);
 		formPanel.add(birthdate);
 	}
@@ -328,6 +323,16 @@ public class Register implements EntryPoint {
 			Zipcode zipcode = location.getZipcode().getBean();			
 			retval.setZipcode(zipcode);
 		}
+		retval.setEmail(email.getValue());
+		if (genderRadioGroup.getGender() != null) {
+			if (genderRadioGroup.getGender().equals(GenderRadioGroup.MALE)) {
+				retval.setGendermale(true);
+			} else {
+				retval.setGendermale(false);
+			}
+		}
+		retval.setProfession(profession.getValue());
+		retval.setBirthdate(birthdate.getValue());
 		return retval;
 	}
 

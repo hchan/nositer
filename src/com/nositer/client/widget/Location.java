@@ -1,4 +1,4 @@
-package com.nositer.client.register;
+package com.nositer.client.widget;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
+import com.nositer.client.register.Register;
 import com.nositer.client.widget.combobox.PostalcodeComboBox;
 import com.nositer.client.widget.combobox.ZipcodeComboBox;
 
