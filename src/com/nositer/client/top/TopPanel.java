@@ -11,13 +11,21 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.shared.ServiceBroker;
 
-public class TopPanel extends ContentPanel {
+public class TopPanel extends ContentPanel {	
 	private static TopPanel instance;
+	private User user;
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public static TopPanel getInstance() {
 		return instance;
 	}
@@ -68,6 +76,7 @@ public class TopPanel extends ContentPanel {
 			@Override
 			public void onSuccess(User result) {
 				if (result != null) {
+					user = result;
 					loggedInAs.setLayout(new HBoxLayout());
 					Label youAreLoggedOnAs = new Label("You are logged in as:");
 					youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");

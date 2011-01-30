@@ -1,9 +1,16 @@
 package com.nositer.client.left;
 
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.nositer.client.main.MainPanel;
+import com.nositer.client.main.ViewProfile;
+import com.nositer.client.top.TopPanel;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class LeftPanel extends ContentPanel {
 	private static LeftPanel instance;
 	public static LeftPanel getInstance() {
@@ -40,6 +47,7 @@ public class LeftPanel extends ContentPanel {
 		instance = this;
 	}
 
+	
 	private void init() {
 		navigationTree = new NavigationTree();
 		leftLayoutData.setSize(150);
@@ -54,6 +62,13 @@ public class LeftPanel extends ContentPanel {
 		profile.setStyleName("navigationPanel");
 		profile.setHeading("Profile");	
 		NavigationItem viewProfile = navigationTree.createNavigationItem("View Profile");
+		viewProfile.addListener(Events.OnClick, new Listener() {
+			@Override
+			public void handleEvent(BaseEvent be) {
+				setMainPanel(ViewProfile.show(TopPanel.getInstance().getUser()));
+			}
+		});
+		
 		profile.add(viewProfile);
 		NavigationItem editProfile = navigationTree.createNavigationItem("Edit Profile");
 		profile.add(editProfile);
@@ -75,7 +90,11 @@ public class LeftPanel extends ContentPanel {
 
 	
 
-
+	private void setMainPanel(ViewProfile viewProfile) {
+		MainPanel.getInstance().removeAll();
+		MainPanel.getInstance().add(viewProfile);
+		MainPanel.getInstance().layout();
+	}
 
 
 }
