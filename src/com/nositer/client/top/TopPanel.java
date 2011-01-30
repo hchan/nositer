@@ -17,7 +17,15 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.shared.ServiceBroker;
 
 public class TopPanel extends ContentPanel {
-	private Nositer nositer;
+	private static TopPanel instance;
+	public static TopPanel getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(TopPanel instance) {
+		TopPanel.instance = instance;
+	}
+
 	private BorderLayoutData topLayoutData;
 	private ContentPanel loggedInAs;
 	public ContentPanel getLoggedInAs() {
@@ -36,17 +44,12 @@ public class TopPanel extends ContentPanel {
 		this.topLayoutData = topLayoutData;
 	}
 
-	public Nositer getNositer() {
-		return nositer;
-	}
-
-	public void setNositer(Nositer nositer) {
-		this.nositer = nositer;
-	}
+	
 
 	public TopPanel (BorderLayoutData topLayoutData) {		
 		this.topLayoutData = topLayoutData;
 		init();
+		instance = this;
 	}
 
 	private void init() {

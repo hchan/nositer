@@ -1,15 +1,26 @@
 package com.nositer.client.left;
 
-import java.util.ArrayList;
-
-import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.Events;
-import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 
 public class LeftPanel extends ContentPanel {
+	private static LeftPanel instance;
+	public static LeftPanel getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(LeftPanel instance) {
+		LeftPanel.instance = instance;
+	}
+
+	public NavigationTree getNavigationTree() {
+		return navigationTree;
+	}
+
+	public void setNavigationTree(NavigationTree navigationTree) {
+		this.navigationTree = navigationTree;
+	}
 
 	private BorderLayoutData leftLayoutData;
 	private NavigationTree navigationTree;
@@ -26,6 +37,7 @@ public class LeftPanel extends ContentPanel {
 	public LeftPanel (BorderLayoutData leftLayoutData) {	
 		this.leftLayoutData = leftLayoutData;
 		init();
+		instance = this;
 	}
 
 	private void init() {
