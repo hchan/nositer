@@ -14,7 +14,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 	@Override
 	public User getCurrentUser() throws GWTException {
 		User retval = null;
-		retval = (User) Application.getRequest().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);
+		retval = (User) Application.getRequest().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);		
 		return retval;
 	}
 

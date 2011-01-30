@@ -14,9 +14,14 @@ public class BeanConversion {
 		net.sf.beanlib.hibernate.UnEnhancer.setDefaultCheckCGLib(false);
 	}
 	
-	public static <T> T copyDomain2DTO (Domain domain, Class<T> toClass) {		
+	public static <T> T copyDomain2DTO (Domain domain, Class<T> toClass) {	
+		T retval = null;
 		Hibernate3BeanReplicator r = new Hibernate3BeanReplicator();
-		return r.shallowCopy(domain, toClass);		
+		retval = r.shallowCopy(domain, toClass);
+		if (!retval.getClass().equals(toClass)) {
+			retval = r.shallowCopy(retval, toClass);
+		}
+		return  retval;
 	}
 	
 	public static <T> T copyDTO2Domain (DTO dto, Class<T> toClass) {
@@ -25,12 +30,11 @@ public class BeanConversion {
 	}
 	
 	public static <T> ArrayList<T> copyDomain2DTO (List<? extends Domain> domainList, Class<T> toClass) {
-		ArrayList<T> retval = new ArrayList<T>();
-		Hibernate3BeanReplicator r = new Hibernate3BeanReplicator();
+		ArrayList<T> retval = new ArrayList<T>();		
 		for (Domain domain : domainList) {
-			retval.add(r.shallowCopy(domain, toClass));		
+			retval.add(copyDomain2DTO(domain, toClass));		
 		}
-		return retval;
+		return retval;	
 	}
 	
 	public static <T> ArrayList<T> copyDTO2Domain (List<? extends DTO> dtoList, Class<T> toClass) {

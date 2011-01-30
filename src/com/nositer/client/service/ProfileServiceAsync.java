@@ -8,5 +8,4 @@ public interface ProfileServiceAsync {
 	void getCurrentUser(AsyncCallback<User> callback);
 
 	void logout(AsyncCallback<Void> callback);
-
 }

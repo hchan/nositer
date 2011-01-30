@@ -17,9 +17,12 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.nositer.client.widget.Location;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
+import com.nositer.hibernate.generated.domain.Postalcode;
 import com.nositer.hibernate.generated.domain.User;
+import com.nositer.hibernate.generated.domain.Zipcode;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 
@@ -105,6 +108,18 @@ public class AuthorizationFilter implements Filter {
 					User userDomain = results.get(0);
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
+						
+						if (userDomain.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
+							Postalcode postalcodeDomain = userDomain.getPostalcode();
+							com.nositer.client.dto.generated.Postalcode postalcodeDTO = 
+								BeanConversion.copyDomain2DTO(postalcodeDomain, com.nositer.client.dto.generated.Postalcode.class);
+							userDTO.setPostalcode(postalcodeDTO);
+						} else {
+							Zipcode zipcodeDomain = userDomain.getZipcode();
+							com.nositer.client.dto.generated.Zipcode zipcodeDTO = BeanConversion.copyDomain2DTO(zipcodeDomain, com.nositer.client.dto.generated.Zipcode.class);
+							userDTO.setZipcode(zipcodeDTO);
+						}
+						
 						Application.setCurrentUser(userDTO);
 						userDomain.setLastlogin(new Date());
 						session.update(userDomain);

@@ -33,7 +33,7 @@ public class HibernateUtil{
 		}
 	}
 
-	public static <T>T findByPrimaryKey (Class<T> clazz, int pk, Session session) {
+	public static <T extends Domain>T findByPrimaryKey (Class<T> clazz, int pk, Session session) {
 		return (T)session.get(clazz, new Integer(pk));
 	}
 	
