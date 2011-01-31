@@ -41,7 +41,7 @@ public class ImageResizer{
 
 			ImageIO.write(
 					//resizeTrick(image, image.getWidth(), image.getHeight()),
-					resizeTrick(image, 200, 200),
+					resize(image, 200, 200),
 					"png",
 					new File("c:/temp/unknownavatar.png"));
 							
@@ -77,7 +77,7 @@ public class ImageResizer{
 		 * If you want to blur image
 		 */
 		// image = blurImage(image);
-		return resize(image, width, height);
+		return image;//resize(image, width, height);
 	}
 
 	public static BufferedImage blurImage(BufferedImage image) {
