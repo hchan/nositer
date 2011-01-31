@@ -109,3 +109,9 @@
 	font-weight: bold;
 	color: #1111ee;
 }
+
+.unknownavatar {
+	border-style:outset;
+	border-width: 5px;
+	border-color: blue;
+}

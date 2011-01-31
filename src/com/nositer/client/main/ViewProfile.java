@@ -6,9 +6,11 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.widget.Unknownavatar;
 import com.nositer.shared.ServiceBroker;
 
 public class ViewProfile extends LayoutContainer {
@@ -57,6 +59,7 @@ public class ViewProfile extends LayoutContainer {
 
 
 	private void init() {
+		this.setLayout(new HBoxLayout());
 		quickStats = new LayoutContainer();
 		quickStats.setLayout(new FormLayout());
 		
@@ -74,6 +77,7 @@ public class ViewProfile extends LayoutContainer {
 		quickStats.add(gender);
 		quickStats.add(profession);
 		this.add(quickStats);
+		this.add(new Unknownavatar());
 		
 	}
 
