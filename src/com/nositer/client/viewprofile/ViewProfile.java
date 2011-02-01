@@ -1,9 +1,16 @@
-package com.nositer.client.main;
+package com.nositer.client.viewprofile;
 
+import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
+import com.extjs.gxt.ui.client.widget.layout.RowData;
+import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
@@ -20,8 +27,8 @@ public class ViewProfile extends LayoutContainer {
 	private LabelField birthdate;
 	private LabelField profession;
 	private Avatar avatar;
-	public void populate(User user) {
 
+	public void populate(User user) {
 		firstname.setValue(user.getFirstname());
 		lastname.setValue(user.getLastname());
 		email.setValue(user.getEmail());
@@ -37,23 +44,18 @@ public class ViewProfile extends LayoutContainer {
 		birthdate.setValue(GWTUtil.getFormattedDate(user.getBirthdate()));
 		profession.setValue(user.getProfession());
 
-
 		if (user.getPostalcode() != null) {
 			location.setValue(user.getPostalcode().getCity() + ", " + user.getPostalcode().getProvince() + " " + user.getCountrycode());
 		} else {
 			location.setValue(user.getZipcode().getCity() + ", " + user.getZipcode().getState() + " " + user.getCountrycode());
 		}
 
-
 		if (user.getAvatarlocation() == null) { 
 			avatar.setPathToImage(ImageHelper.UNKNOWNAVATAR);
 		} else {
 			avatar.setPathToImage(user.getAvatarlocation());
 		}
-
 	}
-
-
 
 	public ViewProfile() {
 		init();
@@ -61,7 +63,18 @@ public class ViewProfile extends LayoutContainer {
 
 
 	private void init() {
-		this.setLayout(new HBoxLayout());
+		//this.setAutoHeight(true);
+		//this.setAutoWidth(true);
+		setHeight(100000);
+		setWidth(100000);
+		this.setLayout(new RowLayout(Orientation.VERTICAL));
+		LayoutContainer quickStatsWithAvatar = createQuickStatsWithAvatar();
+		this.add(quickStatsWithAvatar, new RowData(-1, -1, new Margins(5)));
+	}
+
+	private LayoutContainer createQuickStatsWithAvatar() {
+		LayoutContainer retval = new LayoutContainer();
+		retval.setLayout(new HBoxLayout());
 		quickStats = new LayoutContainer();
 		FormLayout quickStatsLayout = new FormLayout();
 		quickStats.setLayout(quickStatsLayout);
@@ -81,10 +94,10 @@ public class ViewProfile extends LayoutContainer {
 		quickStats.add(gender);
 		quickStats.add(birthdate);
 		quickStats.add(profession);
-		this.add(quickStats);
+		retval.add(quickStats);
 		avatar = new Avatar();
-		this.add(avatar);
-
+		retval.add(avatar);
+		return retval;
 	}
 
 	public LabelField createProfileLabelField(String fieldLabel) {
