@@ -39,6 +39,8 @@ function ajaxSubmit () {
 											//$("#errors").offset().top}, 'slow');
                                         retval = false;
                                     } else {
+                                    	$('#loader').show();
+                                    	$('#loginSuccessful').show();
                                     	window.location.reload();
                                         retval = true;
                                     }
@@ -49,6 +51,7 @@ function ajaxSubmit () {
 $(document).ready(
  function() {
 	$('#loader').hide();
+	$('#loginSuccessful').hide();
 	$.ajaxSetup({
 		  beforeSend: function() {
 		     $('#loader').show();
@@ -108,6 +111,7 @@ Invalid Login/Password
 </TD>
 <TD>
 <DIV ID="loader">
+<DIV ID="loginSuccessful">Login Successful</DIV>
 <IMG SRC="/public/gxt/images/gxt/icons/loading.gif"/>
 </DIV>
 <TD>

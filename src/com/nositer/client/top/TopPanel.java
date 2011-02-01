@@ -120,6 +120,7 @@ public class TopPanel extends ContentPanel {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
+				Window.Location.reload();
 			}
 
 			@Override

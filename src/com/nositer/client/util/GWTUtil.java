@@ -29,4 +29,8 @@ public class GWTUtil {
 		}
 		return retval;
 	}
+
+	public native static void hide(String elementId) /*-{
+		$doc.getElementById(elementId).style.display = 'none';
+	}-*/;
 }

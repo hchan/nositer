@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
+import com.nositer.client.util.GWTUtil;
 
 
 /**
@@ -59,6 +60,7 @@ public class Nositer implements EntryPoint {
 	}
 
 	public void init() {
+		GWTUtil.hide("loadingPleaseWait");
 		Viewport viewport = new Viewport();
 		viewport.setLayout(new BorderLayout());
 		initLayoutContainer();		
