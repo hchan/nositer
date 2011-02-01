@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 29, 2011 6:18:24 PM by Hibernate Tools 3.2.4.GA
+// Generated Jan 31, 2011 10:22:31 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -36,6 +36,7 @@ public class User implements java.io.Serializable, IsSerializable,
 	private String status;
 	private Date statusmodifedtime;
 	private String description;
+	private String avatarlocation;
 	private Date lastlogin;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -57,8 +58,8 @@ public class User implements java.io.Serializable, IsSerializable,
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
 			String profession, String status, Date statusmodifedtime,
-			String description, Date lastlogin, Date createdtime,
-			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			String description, String avatarlocation, Date lastlogin,
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
 		this.countrycode = countrycode;
@@ -73,6 +74,7 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.status = status;
 		this.statusmodifedtime = statusmodifedtime;
 		this.description = description;
+		this.avatarlocation = avatarlocation;
 		this.lastlogin = lastlogin;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -199,6 +201,14 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.description = description;
 	}
 
+	public String getAvatarlocation() {
+		return this.avatarlocation;
+	}
+
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
+	}
+
 	public Date getLastlogin() {
 		return this.lastlogin;
 	}
@@ -248,6 +258,7 @@ public class User implements java.io.Serializable, IsSerializable,
 		retval.add("status");
 		retval.add("statusmodifedtime");
 		retval.add("description");
+		retval.add("avatarlocation");
 		retval.add("lastlogin");
 		retval.add("createdtime");
 		retval.add("modifiedtime");

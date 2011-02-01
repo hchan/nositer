@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Jan 29, 2011 6:18:23 PM by Hibernate Tools 3.2.4.GA
+// Generated Jan 31, 2011 10:22:31 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -47,6 +47,7 @@ public class User implements java.io.Serializable, Domain {
 	private String status;
 	private Date statusmodifedtime;
 	private String description;
+	private String avatarlocation;
 	private Date lastlogin;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -68,8 +69,8 @@ public class User implements java.io.Serializable, Domain {
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
 			String profession, String status, Date statusmodifedtime,
-			String description, Date lastlogin, Date createdtime,
-			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			String description, String avatarlocation, Date lastlogin,
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
 		this.countrycode = countrycode;
@@ -84,6 +85,7 @@ public class User implements java.io.Serializable, Domain {
 		this.status = status;
 		this.statusmodifedtime = statusmodifedtime;
 		this.description = description;
+		this.avatarlocation = avatarlocation;
 		this.lastlogin = lastlogin;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -229,6 +231,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Column(name = "avatarlocation", length = 128)
+	public String getAvatarlocation() {
+		return this.avatarlocation;
+	}
+
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

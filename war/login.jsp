@@ -80,6 +80,7 @@ Post what you want to do in social groups and see how others connect with you.
 <DIV class="loginDescriptionExampleItem">Mar 07/2011: I want to </DIV>how to use JSF.  Hints/tips/comments?<BR/>
 <DIV class="loginDescriptionExampleItem">Mar 11/2011: I want to </DIV>drive to Seattle from Vancouver.  If anyone can wants to carpool, let me know<BR/>
 <DIV class="loginDescriptionExampleItem">Mar 11/2011: I want to </DIV>find a study group for the Science 11 final exam<BR/>
+<BR/>
 </DIV>
 </DIV>
 
@@ -93,12 +94,12 @@ Invalid Login/Password
 <TABLE class="centerTable">
 <TR>
 <TD>Login:</TD>
-<TD><INPUT TYPE="TEXT" NAME="login" /></TD>
+<TD><INPUT TYPE="TEXT" NAME="login" VALUE="q8e192"/></TD>
 </TR>
 
 <TR>
 <TD>Password:</TD>
-<TD><INPUT TYPE="PASSWORD" NAME="password" /></TD> 
+<TD><INPUT TYPE="PASSWORD" NAME="password" VALUE="password"/></TD> 
 </TR>
 
 <TR>

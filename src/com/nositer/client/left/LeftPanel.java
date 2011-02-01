@@ -65,7 +65,9 @@ public class LeftPanel extends ContentPanel {
 		viewProfile.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				setMainPanel(ViewProfile.show(TopPanel.getInstance().getUser()));
+				ViewProfile viewProfile = new ViewProfile();
+				viewProfile.populate(TopPanel.getInstance().getUser());
+				setMainPanel(viewProfile);
 			}
 		});
 		

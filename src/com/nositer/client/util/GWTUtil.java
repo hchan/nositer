@@ -23,8 +23,10 @@ public class GWTUtil {
 	}-*/;
 
 	public static String getFormattedDate(Date date) {
-		String retval = "";
-		retval = DateTimeFormat.getFormat("MMM dd yyyy").format(date);
+		String retval = null;
+		if (date != null) {
+			retval = DateTimeFormat.getFormat("MMM dd yyyy").format(date);
+		}
 		return retval;
 	}
 }
