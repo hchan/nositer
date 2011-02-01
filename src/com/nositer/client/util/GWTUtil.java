@@ -1,6 +1,9 @@
 package com.nositer.client.util;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class GWTUtil {
 	public static void log(String str) {
@@ -19,4 +22,9 @@ public class GWTUtil {
 		} 		
 	}-*/;
 
+	public static String getFormattedDate(Date date) {
+		String retval = "";
+		retval = DateTimeFormat.getFormat("MMM dd yyyy").format(date);
+		return retval;
+	}
 }

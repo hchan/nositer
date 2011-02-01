@@ -10,6 +10,7 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Unknownavatar;
 import com.nositer.shared.ServiceBroker;
 
@@ -21,6 +22,7 @@ public class ViewProfile extends LayoutContainer {
 	private LabelField location;
 	private LabelField email;
 	private LabelField gender;
+	private LabelField birthdate;
 	private LabelField profession;
 	public static ViewProfile show(User user) {
 		if (instance == null) {
@@ -38,6 +40,7 @@ public class ViewProfile extends LayoutContainer {
 			}
 		}
 		instance.gender.setValue(gender);
+		instance.birthdate.setValue(GWTUtil.getFormattedDate(user.getBirthdate()));
 		instance.profession.setValue(user.getProfession());
 		
 
@@ -61,13 +64,15 @@ public class ViewProfile extends LayoutContainer {
 	private void init() {
 		this.setLayout(new HBoxLayout());
 		quickStats = new LayoutContainer();
-		quickStats.setLayout(new FormLayout());
+		FormLayout quickStatsLayout = new FormLayout();
+		quickStats.setLayout(quickStatsLayout);
 		
 		firstname = createProfileLabelField("First name");
 		lastname = createProfileLabelField("Last name");
 		location = createProfileLabelField("Location");
 		email = createProfileLabelField("Email");
-		gender = createProfileLabelField("Gender");		
+		gender = createProfileLabelField("Gender");
+		birthdate = createProfileLabelField("Birth Date");		
 		profession = createProfileLabelField("Profession");
 		
 		quickStats.add(firstname);
@@ -75,6 +80,7 @@ public class ViewProfile extends LayoutContainer {
 		quickStats.add(location);
 		quickStats.add(email);
 		quickStats.add(gender);
+		quickStats.add(birthdate);
 		quickStats.add(profession);
 		this.add(quickStats);
 		this.add(new Unknownavatar());
