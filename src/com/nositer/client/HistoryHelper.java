@@ -38,10 +38,13 @@ public class HistoryHelper {
 			accordionLayout.setActiveItem(null);
 			MainPanel.getInstance().removeAll();
 		} else if (historyToken.equals(VIEWPROFILE.toString())) {
-			leftPanel.getProfile().expand();
-		
+			leftPanel.getProfile().expand();		
 			leftPanel.getNavigationTree().select(leftPanel.getViewProfileNavigationItem());
 			leftPanel.doViewProfile();
+		} else if (historyToken.equals(EDITPROFILE.toString())) {
+			leftPanel.getProfile().expand();		
+			leftPanel.getNavigationTree().select(leftPanel.getEditProfileNavigationItem());
+			leftPanel.doEditProfile();
 		}
 	}
 }

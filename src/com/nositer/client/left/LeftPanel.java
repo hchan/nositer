@@ -11,6 +11,7 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.History;
 import com.nositer.client.HistoryTokenHelper;
+import com.nositer.client.editprofile.EditProfile;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.viewprofile.ViewProfile;
@@ -175,7 +176,7 @@ public class LeftPanel extends ContentPanel {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				doEditProfile();
-				History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
+				History.newItem(HistoryTokenHelper.EDITPROFILE.toString());
 			}
 		});
 	}
@@ -186,6 +187,8 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	public void doEditProfile() {
+		EditProfile editProfile = new EditProfile();
+		setMainPanel(editProfile);
 	}
 	
 	private void setMainPanel(Component component) {
