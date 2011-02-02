@@ -7,6 +7,8 @@ import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.google.gwt.user.client.History;
+import com.nositer.client.HistoryTokenHelper;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.viewprofile.ViewProfile;
@@ -15,6 +17,56 @@ import com.nositer.client.viewprofile.ViewProfileTabPanel;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class LeftPanel extends ContentPanel {
 	private static LeftPanel instance;
+	private BorderLayoutData leftLayoutData;
+	private NavigationTree navigationTree;
+	private AccordionLayout accordionLayout;
+	private ContentPanel profile;
+	private ContentPanel groups;
+	private NavigationItem viewProfileNavigationItem;
+	private NavigationItem editProfileNavigationItem;
+	
+	public NavigationItem getViewProfileNavigationItem() {
+		return viewProfileNavigationItem;
+	}
+
+	public void setViewProfileNavigationItem(
+			NavigationItem viewProfileNavigationItem) {
+		this.viewProfileNavigationItem = viewProfileNavigationItem;
+	}
+
+	public NavigationItem getEditProfileNavigationItem() {
+		return editProfileNavigationItem;
+	}
+
+	public void setEditProfileNavigationItem(
+			NavigationItem editProfileNavigationItem) {
+		this.editProfileNavigationItem = editProfileNavigationItem;
+	}
+
+	public AccordionLayout getAccordionLayout() {
+		return accordionLayout;
+	}
+
+	public void setAccordionLayout(AccordionLayout accordionLayout) {
+		this.accordionLayout = accordionLayout;
+	}
+
+	public ContentPanel getProfile() {
+		return profile;
+	}
+
+	public void setProfile(ContentPanel profile) {
+		this.profile = profile;
+	}
+
+	public ContentPanel getGroups() {
+		return groups;
+	}
+
+	public void setGroups(ContentPanel groups) {
+		this.groups = groups;
+	}
+
 	public static LeftPanel getInstance() {
 		return instance;
 	}
@@ -31,8 +83,7 @@ public class LeftPanel extends ContentPanel {
 		this.navigationTree = navigationTree;
 	}
 
-	private BorderLayoutData leftLayoutData;
-	private NavigationTree navigationTree;
+	
 
 	public BorderLayoutData getLeftLayoutData() {
 		return leftLayoutData;
@@ -50,36 +101,36 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	
-	private void init() {
+	public void init() {
 		navigationTree = new NavigationTree();
 		leftLayoutData.setSize(150);
 		leftLayoutData.setCollapsible(true);
 		//this.setHeaderVisible(false);
 		setHeading("Navigation");
-		AccordionLayout accordionLayout = new AccordionLayout();
+		accordionLayout = new AccordionLayout();
 		accordionLayout.setFill(false);
 
 		setLayout(accordionLayout);
-		ContentPanel profile = new ContentPanel();
+		profile = new ContentPanel();
 		profile.setStyleName("navigationPanel");
 		profile.setHeading("Profile");	
-		NavigationItem viewProfile = navigationTree.createNavigationItem("View Profile");
-		viewProfile.addListener(Events.OnClick, new Listener() {
+		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
+		viewProfileNavigationItem.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				ViewProfileTabPanel viewProfileTabPanel = new ViewProfileTabPanel();				
-				setMainPanel(viewProfileTabPanel);
+				doViewProfile();
+				History.newItem(HistoryTokenHelper.VIEWPROFILE);
 			}
 		});
 		
-		profile.add(viewProfile);
-		NavigationItem editProfile = navigationTree.createNavigationItem("Edit Profile");
-		profile.add(editProfile);
+		profile.add(viewProfileNavigationItem);
+		editProfileNavigationItem = navigationTree.createNavigationItem("Edit Profile");
+		profile.add(editProfileNavigationItem);
 
 
 		this.add(profile);
 
-		ContentPanel groups = new ContentPanel();
+		groups = new ContentPanel();
 		groups.setHeading("Groups");	
 		NavigationItem group1 = navigationTree.createNavigationItem("Group1");
 		groups.add(group1);
@@ -88,10 +139,15 @@ public class LeftPanel extends ContentPanel {
 
 		profile.collapse();
 		profile.setStyleName("x-panel-collapsed");
+		
+		
 		this.layout();
 	}
 
-	
+	public void doViewProfile() {
+		ViewProfileTabPanel viewProfileTabPanel = new ViewProfileTabPanel();				
+		setMainPanel(viewProfileTabPanel);
+	}
 
 	private void setMainPanel(Component component) {
 		MainPanel.getInstance().removeAll();

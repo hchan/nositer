@@ -124,3 +124,7 @@
 	border-width: 5px;
 	border-color: blue;
 }
+
+.profileLabelField {
+	font-weight: bold;	
+}

@@ -111,6 +111,7 @@ public class ViewProfile extends LayoutContainer {
 	public LabelField createProfileLabelField(String fieldLabel) {
 		LabelField retval = new LabelField();
 		retval.setLabelSeparator(":");
+		retval.setStyleName("profileLabelField");
 		retval.setFieldLabel(fieldLabel);
 		return retval;
 	}

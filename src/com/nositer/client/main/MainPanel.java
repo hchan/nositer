@@ -30,7 +30,7 @@ public class MainPanel extends ContentPanel {
 		instance = this;
 	}
 
-	private void init() {
+	public void init() {
 		this.setHeaderVisible(false);
 		this.setHeading("Nos Iter - Journey with us");
 	}
