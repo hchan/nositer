@@ -14,7 +14,11 @@ import com.extjs.gxt.ui.client.widget.layout.FillLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.top.TopPanel;
+import com.nositer.client.util.GWTUtil;
+import com.nositer.shared.ServiceBroker;
 
 public class ViewProfileTabPanel extends TabPanel {
 	public ViewProfileTabPanel() {
@@ -34,15 +38,31 @@ public class ViewProfileTabPanel extends TabPanel {
 		profileTabItem.setScrollMode(Scroll.AUTO);
 		profileTabItem.addListener(Events.Select, new Listener<ComponentEvent>() {  
 			public void handleEvent(ComponentEvent be) {  
-				ViewProfile viewProfile = new ViewProfile();
-				
-				viewProfile.populate(TopPanel.getInstance().getUser());
-				
-				profileTabItem.add(viewProfile);
-				
-				//profileTabItem.add(new Label("HELLO"));
-				//profileTabItem.add(new Label("HELLO"), new BorderLayoutData(LayoutRegion.CENTER));
-				ViewProfileTabPanel.this.layout();
+				final ViewProfile viewProfile = new ViewProfile();
+				if (TopPanel.getInstance().getUser() != null) {
+					viewProfile.populate(TopPanel.getInstance().getUser());
+					profileTabItem.add(viewProfile);
+					ViewProfileTabPanel.this.layout();
+				} else {
+					AsyncCallback<User> callback = new AsyncCallback<User>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							GWTUtil.log("", caught);
+						}
+
+						@Override
+						public void onSuccess(User result) {
+							if (result != null) {
+								TopPanel.getInstance().setUser(result);
+								viewProfile.populate(TopPanel.getInstance().getUser());
+								profileTabItem.add(viewProfile);
+								ViewProfileTabPanel.this.layout();
+							}
+						}
+					};
+					ServiceBroker.profileService.getCurrentUser(callback);
+				}
 			}  
 		});  
 		add(profileTabItem);

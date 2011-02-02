@@ -60,7 +60,7 @@ public class TopPanel extends ContentPanel {
 		instance = this;
 	}
 
-	private void init() {
+	public void init() {
 		setId("topPanel");
 		loggedInAs = new ContentPanel();
 		loggedInAs.setHeaderVisible(false);

@@ -71,8 +71,8 @@ public class Nositer implements EntryPoint {
 		viewport.add(layoutContainer, borderLayoutData);
 		borderLayoutData.setMargins(new Margins(1));
 		instance = this;
-		HistoryHelper.addHistorySupport();
 		RootPanel.get().add(viewport);		
+		HistoryHelper.addHistorySupport();
 	}
 
 	
