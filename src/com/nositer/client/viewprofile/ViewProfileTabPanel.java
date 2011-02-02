@@ -21,12 +21,26 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.shared.ServiceBroker;
 
 public class ViewProfileTabPanel extends TabPanel {
+	
+	private TabItem profileTabItem;
+	public TabItem getProfileTabItem() {
+		return profileTabItem;
+	}
+
+	public void setProfileTabItem(TabItem profileTabItem) {
+		this.profileTabItem = profileTabItem;
+	}
+
 	public ViewProfileTabPanel() {
+		init();
+	}
+	
+	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
 
 
-		final TabItem profileTabItem = new TabItem("Profile");  
+		profileTabItem = new TabItem("My Profile");  
 
 		profileTabItem.setClosable(false);
 		TableLayout tableLayout = new TableLayout(1);

@@ -9,7 +9,8 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import static com.nositer.client.HistoryTokenHelper.*;
 public class HistoryHelper {
-
+	public static final String HOME = "";
+	
 	public static void addHistorySupport() {
 		doOnModuleLoadHistoryToken();
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -36,7 +37,7 @@ public class HistoryHelper {
 		if (historyToken.equals(HOME)) {				
 			accordionLayout.setActiveItem(null);
 			MainPanel.getInstance().removeAll();
-		} else if (historyToken.equals(VIEWPROFILE)) {
+		} else if (historyToken.equals(VIEWPROFILE.toString())) {
 			leftPanel.getProfile().expand();
 		
 			leftPanel.getNavigationTree().select(leftPanel.getViewProfileNavigationItem());
