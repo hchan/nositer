@@ -2,6 +2,7 @@ package com.nositer.client.viewprofile;
 
 import com.extjs.gxt.ui.client.Style.Orientation;
 import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
@@ -27,6 +28,7 @@ public class ViewProfile extends LayoutContainer {
 	private LabelField birthdate;
 	private LabelField profession;
 	private Avatar avatar;
+	private HtmlContainer description;
 
 	public void populate(User user) {
 		firstname.setValue(user.getFirstname());
@@ -55,6 +57,10 @@ public class ViewProfile extends LayoutContainer {
 		} else {
 			avatar.setPathToImage(user.getAvatarlocation());
 		}
+		
+		if (user.getDescription() != null) {
+			description.setHtml(user.getDescription());
+		}
 	}
 
 	public ViewProfile() {
@@ -70,6 +76,8 @@ public class ViewProfile extends LayoutContainer {
 		this.setLayout(new RowLayout(Orientation.VERTICAL));
 		LayoutContainer quickStatsWithAvatar = createQuickStatsWithAvatar();
 		this.add(quickStatsWithAvatar, new RowData(-1, -1, new Margins(5)));
+		description = new HtmlContainer();
+		this.add(description, new RowData(-1, -1, new Margins(5)));
 	}
 
 	private LayoutContainer createQuickStatsWithAvatar() {
