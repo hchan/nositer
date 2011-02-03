@@ -43,10 +43,14 @@ public class ViewProfileTabPanel extends TabPanel {
 		profileTabItem = new TabItem("My Profile");  
 
 		profileTabItem.setClosable(false);
-		TableLayout tableLayout = new TableLayout(1);
-		tableLayout.setHeight("100%");
-		tableLayout.setWidth("100%");
-		profileTabItem.setLayout(tableLayout);
+		
+		/*
+		TableLayout layout = new TableLayout(1);
+		layout.setHeight("100%");
+		layout.setWidth("100%");
+		*/
+		FitLayout layout = new FitLayout();
+		profileTabItem.setLayout(layout);
 	
 		
 		profileTabItem.setScrollMode(Scroll.AUTO);

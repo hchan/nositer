@@ -147,7 +147,7 @@ public class Register implements EntryPoint {
 		return "color: red; font-weight: bold";
 	}
 
-	private void initFormPanel() {
+	public void initFormPanel() {
 		formPanel = new FormPanel();
 		formPanel.setHeaderVisible(false);
 

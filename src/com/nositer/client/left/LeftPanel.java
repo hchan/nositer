@@ -194,7 +194,7 @@ public class LeftPanel extends ContentPanel {
 	private void setMainPanel(Component component) {
 		MainPanel.getInstance().removeAll();
 		MainPanel.getInstance().add(component);
-		MainPanel.getInstance().layout();
+		MainPanel.getInstance().layout(true);
 	}
 
 
