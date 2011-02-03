@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Jan 31, 2011 10:22:31 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 2, 2011 6:15:20 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -33,10 +33,10 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Boolean gendermale;
 	private Date birthdate;
 	private String profession;
-	private String status;
-	private Date statusmodifedtime;
-	private String description;
 	private String avatarlocation;
+	private String note;
+	private Date notemodifedtime;
+	private String description;
 	private Date lastlogin;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -57,8 +57,8 @@ public class User implements java.io.Serializable, IsSerializable,
 	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
-			String profession, String status, Date statusmodifedtime,
-			String description, String avatarlocation, Date lastlogin,
+			String profession, String avatarlocation, String note,
+			Date notemodifedtime, String description, Date lastlogin,
 			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
@@ -71,10 +71,10 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.gendermale = gendermale;
 		this.birthdate = birthdate;
 		this.profession = profession;
-		this.status = status;
-		this.statusmodifedtime = statusmodifedtime;
-		this.description = description;
 		this.avatarlocation = avatarlocation;
+		this.note = note;
+		this.notemodifedtime = notemodifedtime;
+		this.description = description;
 		this.lastlogin = lastlogin;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -177,20 +177,28 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.profession = profession;
 	}
 
-	public String getStatus() {
-		return this.status;
+	public String getAvatarlocation() {
+		return this.avatarlocation;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
 	}
 
-	public Date getStatusmodifedtime() {
-		return this.statusmodifedtime;
+	public String getNote() {
+		return this.note;
 	}
 
-	public void setStatusmodifedtime(Date statusmodifedtime) {
-		this.statusmodifedtime = statusmodifedtime;
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Date getNotemodifedtime() {
+		return this.notemodifedtime;
+	}
+
+	public void setNotemodifedtime(Date notemodifedtime) {
+		this.notemodifedtime = notemodifedtime;
 	}
 
 	public String getDescription() {
@@ -199,14 +207,6 @@ public class User implements java.io.Serializable, IsSerializable,
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getAvatarlocation() {
-		return this.avatarlocation;
-	}
-
-	public void setAvatarlocation(String avatarlocation) {
-		this.avatarlocation = avatarlocation;
 	}
 
 	public Date getLastlogin() {
@@ -255,10 +255,10 @@ public class User implements java.io.Serializable, IsSerializable,
 		retval.add("gendermale");
 		retval.add("birthdate");
 		retval.add("profession");
-		retval.add("status");
-		retval.add("statusmodifedtime");
-		retval.add("description");
 		retval.add("avatarlocation");
+		retval.add("note");
+		retval.add("notemodifedtime");
+		retval.add("description");
 		retval.add("lastlogin");
 		retval.add("createdtime");
 		retval.add("modifiedtime");

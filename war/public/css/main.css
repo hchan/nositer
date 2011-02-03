@@ -129,6 +129,10 @@
 	font-weight: bold;	
 }
 
+.profileNoteLabel, .profileDescriptionLabel {
+	font-weight: bold;	
+	font-size: 14pt;
+}
 .editProfile {
 	/* you can use 
 	the FF plugin: Web Developer -> Information -> View Color Information 

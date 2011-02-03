@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Jan 31, 2011 10:22:31 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 2, 2011 6:15:19 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -44,10 +44,10 @@ public class User implements java.io.Serializable, Domain {
 	private Boolean gendermale;
 	private Date birthdate;
 	private String profession;
-	private String status;
-	private Date statusmodifedtime;
-	private String description;
 	private String avatarlocation;
+	private String note;
+	private Date notemodifedtime;
+	private String description;
 	private Date lastlogin;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -68,8 +68,8 @@ public class User implements java.io.Serializable, Domain {
 	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
-			String profession, String status, Date statusmodifedtime,
-			String description, String avatarlocation, Date lastlogin,
+			String profession, String avatarlocation, String note,
+			Date notemodifedtime, String description, Date lastlogin,
 			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
@@ -82,10 +82,10 @@ public class User implements java.io.Serializable, Domain {
 		this.gendermale = gendermale;
 		this.birthdate = birthdate;
 		this.profession = profession;
-		this.status = status;
-		this.statusmodifedtime = statusmodifedtime;
-		this.description = description;
 		this.avatarlocation = avatarlocation;
+		this.note = note;
+		this.notemodifedtime = notemodifedtime;
+		this.description = description;
 		this.lastlogin = lastlogin;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -205,23 +205,32 @@ public class User implements java.io.Serializable, Domain {
 		this.profession = profession;
 	}
 
-	@Column(name = "status", length = 128)
-	public String getStatus() {
-		return this.status;
+	@Column(name = "avatarlocation", length = 128)
+	public String getAvatarlocation() {
+		return this.avatarlocation;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
+	}
+
+	@Column(name = "note", length = 128)
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "statusmodifedtime", length = 19)
-	public Date getStatusmodifedtime() {
-		return this.statusmodifedtime;
+	@Column(name = "notemodifedtime", length = 19)
+	public Date getNotemodifedtime() {
+		return this.notemodifedtime;
 	}
 
-	public void setStatusmodifedtime(Date statusmodifedtime) {
-		this.statusmodifedtime = statusmodifedtime;
+	public void setNotemodifedtime(Date notemodifedtime) {
+		this.notemodifedtime = notemodifedtime;
 	}
 
 	@Column(name = "description", length = 128)
@@ -231,15 +240,6 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Column(name = "avatarlocation", length = 128)
-	public String getAvatarlocation() {
-		return this.avatarlocation;
-	}
-
-	public void setAvatarlocation(String avatarlocation) {
-		this.avatarlocation = avatarlocation;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
