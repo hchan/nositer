@@ -26,6 +26,25 @@ public class Location extends FieldSet {
 	private ZipcodeComboBox zipcode;
 	private LayoutContainer geographyCode;
 	private RadioGroup country;
+	private Radio canRadio;
+	private Radio usaRadio;
+	
+	public Radio getCanRadio() {
+		return canRadio;
+	}
+
+	public void setCanRadio(Radio canRadio) {
+		this.canRadio = canRadio;
+	}
+
+	public Radio getUsaRadio() {
+		return usaRadio;
+	}
+
+	public void setUsaRadio(Radio usaRadio) {
+		this.usaRadio = usaRadio;
+	}
+
 	public RadioGroup getCountry() {
 		return country;
 	}
@@ -96,15 +115,15 @@ public class Location extends FieldSet {
 				geographyCode.layout();
 			}
 		});
-		Radio can = new Radio();
-		can.setValue(true);
-		can.setBoxLabel("Canada");
-		can.setData(COUNTRYCODE, COUNTRYCODE_CAN);
-		Radio usa = new Radio();
-		usa.setBoxLabel(COUNTRYCODE_USA);
-		usa.setData(COUNTRYCODE, COUNTRYCODE_USA);
-		country.add(can);
-		country.add(usa);
+		canRadio = new Radio();
+		canRadio.setValue(true);
+		canRadio.setBoxLabel("Canada");
+		canRadio.setData(COUNTRYCODE, COUNTRYCODE_CAN);
+		usaRadio = new Radio();
+		usaRadio.setBoxLabel(COUNTRYCODE_USA);
+		usaRadio.setData(COUNTRYCODE, COUNTRYCODE_USA);
+		country.add(canRadio);
+		country.add(usaRadio);
 		add(country, new VBoxLayoutData(new Margins(5, 0, 0, 5)));
 		add(geographyCode, new VBoxLayoutData(new Margins(5, 0, 0, 5)));
 		setHeight(80);

@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 2, 2011 6:15:20 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 3, 2011 6:11:56 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -241,28 +241,7 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.userHasGroups = userHasGroups;
 	}
 
-	public ArrayList<String> getColumnNames() {
-		ArrayList<String> retval = new ArrayList<String>();
-		retval.add("id");
-		retval.add("zipcode");
-		retval.add("postalcode");
-		retval.add("countrycode");
-		retval.add("login");
-		retval.add("firstname");
-		retval.add("lastname");
-		retval.add("password");
-		retval.add("email");
-		retval.add("gendermale");
-		retval.add("birthdate");
-		retval.add("profession");
-		retval.add("avatarlocation");
-		retval.add("note");
-		retval.add("notemodifedtime");
-		retval.add("description");
-		retval.add("lastlogin");
-		retval.add("createdtime");
-		retval.add("modifiedtime");
-		retval.add("userHasGroups");
-		return retval;
+	public enum ColumnType {
+		id, zipcode, postalcode, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, createdtime, modifiedtime, userHasGroups,
 	}
 }

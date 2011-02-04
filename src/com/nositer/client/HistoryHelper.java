@@ -41,10 +41,10 @@ public class HistoryHelper {
 			leftPanel.getProfile().expand();		
 			leftPanel.getNavigationTree().select(leftPanel.getViewProfileNavigationItem());
 			leftPanel.doViewProfile();
-		} else if (historyToken.equals(EDITPROFILE.toString())) {
+		} else if (historyToken.equals(EDITBASICPROFILE.toString())) {
 			leftPanel.getProfile().expand();		
-			leftPanel.getNavigationTree().select(leftPanel.getEditProfileNavigationItem());
-			leftPanel.doEditProfile();
+			leftPanel.getNavigationTree().select(leftPanel.getEditBasicProfileNavigationItem());
+			leftPanel.doEditBasicProfile();
 		}
 	}
 }

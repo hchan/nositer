@@ -1,10 +1,15 @@
 package com.nositer.util;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.beanlib.hibernate3.Hibernate3BeanReplicator;
 import net.sf.beanlib.hibernate3.Hibernate3DtoCopier;
+import net.sf.beanlib.hibernate3.Hibernate3JavaBeanReplicator;
+import net.sf.beanlib.provider.BeanTransformer;
+import net.sf.beanlib.provider.replicator.BeanReplicator;
+import net.sf.beanlib.spi.DetailedPropertyFilter;
 
 import com.nositer.client.dto.DTO;
 import com.nositer.hibernate.Domain;
@@ -27,6 +32,26 @@ public class BeanConversion {
 	public static <T> T copyDTO2Domain (DTO dto, Class<T> toClass) {
 		Hibernate3DtoCopier dtoCopier = new Hibernate3DtoCopier();
 		return dtoCopier.hibernate2dto(toClass, dto, null, null);
+	}
+	
+	public static void copyDTO2Domain(DTO dto, Domain domain, final ArrayList<String> columnNames) {
+		
+		BeanTransformer beanTransformer = new BeanTransformer();
+		beanTransformer = beanTransformer.initDetailedPropertyFilter(new DetailedPropertyFilter() {
+			
+			@Override
+			public boolean propagate(String propertyName, Object fromBean,
+					Method readerMethod, Object toBean, Method setterMethod) {
+				boolean retval = false;
+				if (columnNames.contains(propertyName)) {
+					retval = true;
+				}
+				return retval;
+			}
+		});
+		BeanReplicator beanReplicator = new BeanReplicator(beanTransformer);
+		beanReplicator.populate(dto, domain);
+		
 	}
 	
 	public static <T> ArrayList<T> copyDomain2DTO (List<? extends Domain> domainList, Class<T> toClass) {

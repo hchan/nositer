@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 2, 2011 6:15:20 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 3, 2011 6:11:56 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -83,13 +83,7 @@ public class UserHasGroup implements java.io.Serializable, IsSerializable,
 		this.modifiedtime = modifiedtime;
 	}
 
-	public ArrayList<String> getColumnNames() {
-		ArrayList<String> retval = new ArrayList<String>();
-		retval.add("id");
-		retval.add("group");
-		retval.add("user");
-		retval.add("createdtime");
-		retval.add("modifiedtime");
-		return retval;
+	public enum ColumnType {
+		id, group, user, createdtime, modifiedtime,
 	}
 }

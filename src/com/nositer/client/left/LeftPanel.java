@@ -11,10 +11,8 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.History;
 import com.nositer.client.HistoryTokenHelper;
-import com.nositer.client.editprofile.EditProfile;
+import com.nositer.client.editprofile.EditBasicProfile;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.top.TopPanel;
-import com.nositer.client.viewprofile.ViewProfile;
 import com.nositer.client.viewprofile.ViewProfileTabPanel;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -26,7 +24,7 @@ public class LeftPanel extends ContentPanel {
 	private ContentPanel profile;
 	private ContentPanel groups;
 	private NavigationItem viewProfileNavigationItem;
-	private NavigationItem editProfileNavigationItem;
+	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem myGroups;
 	private NavigationItem manageGroups;
 	private NavigationItem myIwantTos;
@@ -42,13 +40,13 @@ public class LeftPanel extends ContentPanel {
 		this.viewProfileNavigationItem = viewProfileNavigationItem;
 	}
 
-	public NavigationItem getEditProfileNavigationItem() {
-		return editProfileNavigationItem;
+	public NavigationItem getEditBasicProfileNavigationItem() {
+		return editBasicProfileNavigationItem;
 	}
 
-	public void setEditProfileNavigationItem(
+	public void setEditBasicProfileNavigationItem(
 			NavigationItem editProfileNavigationItem) {
-		this.editProfileNavigationItem = editProfileNavigationItem;
+		this.editBasicProfileNavigationItem = editProfileNavigationItem;
 	}
 
 	public AccordionLayout getAccordionLayout() {
@@ -123,9 +121,9 @@ public class LeftPanel extends ContentPanel {
 		profile.setStyleName("navigationPanel");
 		profile.setHeading("Profile");	
 		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
-		editProfileNavigationItem = navigationTree.createNavigationItem("Edit Profile");
+		editBasicProfileNavigationItem = navigationTree.createNavigationItem("Edit Basic Profile");
 		profile.add(viewProfileNavigationItem);
-		profile.add(editProfileNavigationItem);
+		profile.add(editBasicProfileNavigationItem);
 		this.add(profile);
 
 		// Groups
@@ -168,15 +166,15 @@ public class LeftPanel extends ContentPanel {
 		viewProfileNavigationItem.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				doViewProfile();
+				//doViewProfile();
 				History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
 			}
 		});
-		editProfileNavigationItem.addListener(Events.OnClick, new Listener() {
+		editBasicProfileNavigationItem.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				doEditProfile();
-				History.newItem(HistoryTokenHelper.EDITPROFILE.toString());
+				//doEditProfile();
+				History.newItem(HistoryTokenHelper.EDITBASICPROFILE.toString());
 			}
 		});
 	}
@@ -186,9 +184,9 @@ public class LeftPanel extends ContentPanel {
 		setMainPanel(viewProfileTabPanel);
 	}
 
-	public void doEditProfile() {
-		EditProfile editProfile = new EditProfile();
-		setMainPanel(editProfile);
+	public void doEditBasicProfile() {
+		EditBasicProfile editBasicProfile = new EditBasicProfile();
+		setMainPanel(editBasicProfile);
 	}
 	
 	private void setMainPanel(Component component) {

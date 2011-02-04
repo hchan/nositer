@@ -10,15 +10,12 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.DatePicker;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.Radio;
-import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
@@ -39,7 +36,7 @@ import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
 import com.nositer.shared.ServiceBroker;
-
+@SuppressWarnings("unchecked")
 public class Register implements EntryPoint {
 
 	public static final String NOSITER_HOME_URL = "/Nositer.html";
@@ -60,8 +57,111 @@ public class Register implements EntryPoint {
 	private GenderRadioGroup genderRadioGroup;
 	private TextField<String> profession;
 	private DateField birthdate;
-
 	private ErrorPanel errorPanel;
+
+	public Button getSaveButton() {
+		return saveButton;
+	}
+
+	public void setSaveButton(Button saveButton) {
+		this.saveButton = saveButton;
+	}
+
+	public Button getCancelButton() {
+		return cancelButton;
+	}
+
+	public void setCancelButton(Button cancelButton) {
+		this.cancelButton = cancelButton;
+	}
+
+	public TextField<String> getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(TextField<String> firstName) {
+		this.firstName = firstName;
+	}
+
+	public TextField<String> getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(TextField<String> lastName) {
+		this.lastName = lastName;
+	}
+
+	public TextField<String> getLogin() {
+		return login;
+	}
+
+	public void setLogin(TextField<String> login) {
+		this.login = login;
+	}
+
+	public TextField<String> getPassword() {
+		return password;
+	}
+
+	public void setPassword(TextField<String> password) {
+		this.password = password;
+	}
+
+	public TextField<String> getPasswordAgain() {
+		return passwordAgain;
+	}
+
+	public void setPasswordAgain(TextField<String> passwordAgain) {
+		this.passwordAgain = passwordAgain;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public TextField<String> getEmail() {
+		return email;
+	}
+
+	public void setEmail(TextField<String> email) {
+		this.email = email;
+	}
+
+	public GenderRadioGroup getGenderRadioGroup() {
+		return genderRadioGroup;
+	}
+
+	public void setGenderRadioGroup(GenderRadioGroup genderRadioGroup) {
+		this.genderRadioGroup = genderRadioGroup;
+	}
+
+	public TextField<String> getProfession() {
+		return profession;
+	}
+
+	public void setProfession(TextField<String> profession) {
+		this.profession = profession;
+	}
+
+	public DateField getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(DateField birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public ErrorPanel getErrorPanel() {
+		return errorPanel;
+	}
+
+	public void setErrorPanel(ErrorPanel errorPanel) {
+		this.errorPanel = errorPanel;
+	}
 
 	public FormPanel getFormPanel() {
 		return formPanel;
@@ -131,6 +231,7 @@ public class Register implements EntryPoint {
 
 	private void populateMainPanel() {		
 		initFormPanel();
+		addButtons();
 		mainPanel.setLayout(new CenterLayout());
 		ContentPanel registrationPanel = new ContentPanel(new TableLayout(1));
 		registrationPanel.setWidth(500);
@@ -159,8 +260,6 @@ public class Register implements EntryPoint {
 		addRequiredFields();		
 		addOptionalFieldLabel();
 		addOptionalFields();
-
-		addButtons();
 		formPanel.setWidth(500);
 	}
 
@@ -285,6 +384,7 @@ public class Register implements EntryPoint {
 		formPanel.addButton(cancelButton);  
 	}
 
+
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();
 		addRequiredErrorIfNecessary(firstName, retval);
@@ -302,14 +402,14 @@ public class Register implements EntryPoint {
 		return retval;
 	}
 
-	private void addRequiredErrorIfNecessary(TextField<String> textField,
+	public void addRequiredErrorIfNecessary(TextField<String> textField,
 			ArrayList<String> retval) {
 		if (textField.getValue() == null) {
 			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
 		}
 	}
 
-	private User createDTO() {
+	public User createDTO() {
 		User retval = new User();
 		retval.setFirstname(firstName.getValue());
 		retval.setLastname(lastName.getValue());
@@ -325,7 +425,7 @@ public class Register implements EntryPoint {
 		}
 		retval.setEmail(email.getValue());
 		if (genderRadioGroup.getGender() != null) {
-			if (genderRadioGroup.getGender().equals(GenderRadioGroup.MALE)) {
+			if (genderRadioGroup.getGender().equals(GenderRadioGroup.GenderType.MALE)) {
 				retval.setGendermale(true);
 			} else {
 				retval.setGendermale(false);

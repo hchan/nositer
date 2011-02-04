@@ -141,7 +141,7 @@
 	font-weight: lighter;
 }
 
-.editProfile {
+.editBasicProfile {
 	/* you can use 
 	the FF plugin: Web Developer -> Information -> View Color Information 
 	to find a match
@@ -149,35 +149,35 @@
 	background: #dfe8f6;
 }
 
-.editProfile .x-panel-mr {
+.editBasicProfile .x-panel-mr {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-br {
+.editBasicProfile .x-panel-br {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-ml {
+.editBasicProfile .x-panel-ml {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-bl {
+.editBasicProfile .x-panel-bl {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-footer {
+.editBasicProfile .x-panel-footer {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-tl {
+.editBasicProfile .x-panel-tl {
 	width: 0px;
 	height: 0px;
 	line-height: 0px;
 	padding: 0px;
 	background: #dfe8f6 !important;
 }
-.editProfile .x-panel-tr {
+.editBasicProfile .x-panel-tr {
 	background: #dfe8f6;
 }
-.editProfile .x-panel-tc {
+.editBasicProfile .x-panel-tc {
 	width: 0px;
 	background: #dfe8f6;
 }
-.editProfile .x-panel-header {
+.editBasicProfile .x-panel-header {
 	background: #dfe8f6;
 }

@@ -11,5 +11,7 @@ import com.nositer.shared.GWTException;
 @RemoteServiceRelativePath("ServiceResolver.gwtrpc")
 public interface ProfileService extends RemoteService {
 	User getCurrentUser() throws GWTException;
+	User getCurrentUserForEditBasicProfile() throws GWTException;
+	void updateCurrentUserForEditBasicProfile(User user) throws GWTException;
 	void logout() throws GWTException;
 }

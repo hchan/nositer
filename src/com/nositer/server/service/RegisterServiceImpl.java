@@ -40,7 +40,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			throw new GWTException(e);
 		}
 		finally {
-			sess.close();
+			HibernateUtil.closeSession(sess);
 		}
 		return retval;
 	}
