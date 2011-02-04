@@ -13,7 +13,6 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.HistoryTokenHelper;
 import com.nositer.client.dto.generated.Postalcode;
@@ -36,7 +35,7 @@ public class EditBasicProfile extends LayoutContainer {
 	}
 
 	public void init() {
-		
+
 		register = new Register();
 		register.setErrorPanel(new ErrorPanel());
 		register.getErrorPanel().hide();
@@ -54,25 +53,24 @@ public class EditBasicProfile extends LayoutContainer {
 		formPanel.layout();
 
 		this.add(formPanel);
-		if (TopPanel.getInstance().getUser() != null) {
-			populate(TopPanel.getInstance().getUser());
-		} else {
-			AsyncCallback<User> callback = new AsyncCallback<User>() {
 
-				@Override
-				public void onFailure(Throwable caught) {
-					GWTUtil.log("", caught);
-				}
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
 
-				@Override
-				public void onSuccess(User result) {
-					if (result != null) {
-						populate(result);
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				if (result != null) {
+
+					populate(result);
 				}
-			};
-			ServiceBroker.profileService.getCurrentUser(callback);
-		}		
+			}
+		};
+		ServiceBroker.profileService.getCurrentUser(callback);
+
 	}
 
 
@@ -104,16 +102,19 @@ public class EditBasicProfile extends LayoutContainer {
 		}
 		register.getProfession().setValue(user.getProfession());
 		register.getBirthdate().setValue(user.getBirthdate());		
-	
+
 	}
 
-	private void initButtons() {
-		// Save
+	public void initButtons() {
+		initUpdateButton();
+		initCancelButton();
+	}
+	
+	// Save
+	public void initUpdateButton() {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		Button saveButton = new Button("Update");
 		formPanel.addButton(saveButton);  
-		
-		
 		register.getFormPanel().layout();
 		Listener saveListener = new Listener<BaseEvent>() {
 			@Override
@@ -123,7 +124,7 @@ public class EditBasicProfile extends LayoutContainer {
 					register.getErrorPanel().setErrors(errors);
 					register.getErrorPanel().show();					
 				} else {
-					User user = createDTO();
+					final User user = createDTO();
 					AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -135,6 +136,8 @@ public class EditBasicProfile extends LayoutContainer {
 
 						@Override
 						public void onSuccess(Void result) {
+							TopPanel.getInstance().setUser(user);
+							TopPanel.getInstance().setFirstLastName(user);
 							History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
 						}
 					};
@@ -143,8 +146,10 @@ public class EditBasicProfile extends LayoutContainer {
 			}
 		};
 		saveButton.addListener(Events.Select, saveListener);
-
-		// Cancel
+	}
+	
+	// Cancel
+	public void initCancelButton() {
 		Button cancelButton = new Button("Cancel");
 		formPanel.addButton(cancelButton);  
 		Listener cancelListener = new Listener<BaseEvent>() {

@@ -181,3 +181,11 @@
 .editBasicProfile .x-panel-header {
 	background: #dfe8f6;
 }
+
+.logout {
+	padding-right: 5px;
+	cursor: pointer;
+}
+.logout:hover {
+	background-color: #FF0000 !important;
+}

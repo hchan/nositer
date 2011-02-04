@@ -1,15 +1,13 @@
 package com.nositer.client.top;
 
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
+import com.extjs.gxt.ui.client.widget.Text;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.user.client.Window;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
@@ -18,6 +16,10 @@ import com.nositer.shared.ServiceBroker;
 public class TopPanel extends ContentPanel {	
 	private static TopPanel instance;
 	private User user;
+	private Label youAreLoggedOnAs;
+	private Label firstLastName;
+	private Logout logout;
+
 	public User getUser() {
 		return user;
 	}
@@ -36,6 +38,7 @@ public class TopPanel extends ContentPanel {
 
 	private BorderLayoutData topLayoutData;
 	private ContentPanel loggedInAs;
+	private HTMLPanel welcomePanel;
 	public ContentPanel getLoggedInAs() {
 		return loggedInAs;
 	}
@@ -52,7 +55,7 @@ public class TopPanel extends ContentPanel {
 		this.topLayoutData = topLayoutData;
 	}
 
-	
+
 
 	public TopPanel (BorderLayoutData topLayoutData) {		
 		this.topLayoutData = topLayoutData;
@@ -60,75 +63,60 @@ public class TopPanel extends ContentPanel {
 		instance = this;
 	}
 
+
 	public void init() {
 		setId("topPanel");
 		loggedInAs = new ContentPanel();
 		loggedInAs.setHeaderVisible(false);
 		loggedInAs.setBorders(false);
 		loggedInAs.setBodyBorder(false);
-		AsyncCallback<User> callback = new AsyncCallback<User>() {
+		loggedInAs.setLayout(new HBoxLayout());
+		youAreLoggedOnAs = new Label("You are logged in as:");
+		youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
+		loggedInAs.add(youAreLoggedOnAs);
+		firstLastName = new Label();
+		loggedInAs.add(firstLastName);	
+		firstLastName.setStyleName("firstLastName");
+		logout = new Logout();
 
-			@Override
-			public void onFailure(Throwable caught) {
-				GWTUtil.log("", caught);
-			}
+		HBoxLayoutData flex = new HBoxLayoutData(new Margins(0, 5, 0, 0));  
+		flex.setFlex(1);  
+		loggedInAs.add(new Text(), flex);  
+		loggedInAs.add(logout);
 
-			@Override
-			public void onSuccess(User result) {
-				if (result != null) {
-					user = result;
-					loggedInAs.setLayout(new HBoxLayout());
-					Label youAreLoggedOnAs = new Label("You are logged in as:");
-					youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
-					loggedInAs.add(youAreLoggedOnAs);
-					Label firstLastName = new Label(result.getFirstname() + " " + result.getLastname());
-					firstLastName.setStyleName("firstLastName");
-					loggedInAs.add(firstLastName);
-					loggedInAs.add(new Label("&nbsp;&nbsp"));
-					Anchor logout = new Anchor(new SafeHtml() {
-						
-						@Override
-						public String asString() {
-							return "(Log out)";
-						}
-					});
-					logout.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							logout();
-						}
-					});
-					loggedInAs.add(logout);
-					TopPanel.this.layout();
-				}
-			}
-		};
-		ServiceBroker.profileService.getCurrentUser(callback);
+
 		topLayoutData.setSize(50);
 		//topLayoutData.setCollapsible(true);
 		this.setHeaderVisible(false);
-		HTMLPanel htmlPanel = new HTMLPanel("Journey with us");
-		htmlPanel.setStyleName("welcomeDescription");
-		this.add(htmlPanel);
+		welcomePanel = new HTMLPanel("Journey with us");
+		welcomePanel.setStyleName("welcomeDescription");
+		this.add(welcomePanel);
 		this.add(loggedInAs);
+		initFirstLastName();
 	}
-	
-	public void logout() {
-		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
+	private void initFirstLastName() {
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
-				Window.Location.reload();
+			}
+			@Override
+			public void onSuccess(User result) {
+				if (result != null) {
+					user = result;		
+					setFirstLastName(user);					
+					TopPanel.this.layout();
+				}
 			}
 
-			@Override
-			public void onSuccess(Void result) {
-				Window.Location.reload();
-			}
-			
 		};
-		ServiceBroker.profileService.logout(callback);
+		ServiceBroker.profileService.getCurrentUser(callback);
 	}
+
+	public void setFirstLastName(User user) {
+		firstLastName.setText(user.getFirstname() + " " + user.getLastname());
+	}
+
+
 }
