@@ -30,7 +30,17 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem myIwantTos;
 	private ContentPanel iWantTo;
 	private NavigationItem manageIwantTos;
+	private NavigationItem changePasswordNavigationItem;
 	
+	public NavigationItem getChangePasswordNavigationItem() {
+		return changePasswordNavigationItem;
+	}
+
+	public void setChangePasswordNavigationItem(
+			NavigationItem changePasswordNavigationItem) {
+		this.changePasswordNavigationItem = changePasswordNavigationItem;
+	}
+
 	public NavigationItem getViewProfileNavigationItem() {
 		return viewProfileNavigationItem;
 	}
@@ -122,8 +132,10 @@ public class LeftPanel extends ContentPanel {
 		profile.setHeading("Profile");	
 		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
 		editBasicProfileNavigationItem = navigationTree.createNavigationItem("Edit Basic Profile");
+		changePasswordNavigationItem = navigationTree.createNavigationItem("Change Password");
 		profile.add(viewProfileNavigationItem);
 		profile.add(editBasicProfileNavigationItem);
+		profile.add(changePasswordNavigationItem);
 		this.add(profile);
 
 		// Groups
@@ -162,38 +174,18 @@ public class LeftPanel extends ContentPanel {
 		}
 	}
 
-	public void addListeners() {
-		viewProfileNavigationItem.addListener(Events.OnClick, new Listener() {
-			@Override
-			public void handleEvent(BaseEvent be) {
-				//doViewProfile();
-				History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
-			}
-		});
-		editBasicProfileNavigationItem.addListener(Events.OnClick, new Listener() {
-			@Override
-			public void handleEvent(BaseEvent be) {
-				//doEditProfile();
-				History.newItem(HistoryTokenHelper.EDITBASICPROFILE.toString());
-			}
-		});
-	}
-
-	public void doViewProfile() {
-		ViewProfileTabPanel viewProfileTabPanel = new ViewProfileTabPanel();				
-		setMainPanel(viewProfileTabPanel);
-	}
-
-	public void doEditBasicProfile() {
-		EditBasicProfile editBasicProfile = new EditBasicProfile();
-		setMainPanel(editBasicProfile);
+	public void addListeners() {		
+		addHistoryOnClick(viewProfileNavigationItem, HistoryTokenHelper.VIEWPROFILE.toString());
+		addHistoryOnClick(editBasicProfileNavigationItem, HistoryTokenHelper.EDITBASICPROFILE.toString());
+		addHistoryOnClick(changePasswordNavigationItem, HistoryTokenHelper.CHANGEPASSWORD.toString());
 	}
 	
-	private void setMainPanel(Component component) {
-		MainPanel.getInstance().removeAll();
-		MainPanel.getInstance().add(component);
-		MainPanel.getInstance().layout(true);
+	public void addHistoryOnClick(Component component, final String historyToken) {
+		component.addListener(Events.OnClick, new Listener() {
+			@Override
+			public void handleEvent(BaseEvent be) {				
+				History.newItem(historyToken);
+			}
+		});
 	}
-
-
 }

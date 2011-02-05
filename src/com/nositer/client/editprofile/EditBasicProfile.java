@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
@@ -22,6 +23,7 @@ import com.nositer.client.register.Register;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
+import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup.GenderType;
 import com.nositer.shared.ServiceBroker;
@@ -49,7 +51,9 @@ public class EditBasicProfile extends LayoutContainer {
 		this.setLayout(layout);
 		this.setHeight("100%");
 		this.setStyleName("editBasicProfile");
-
+		formPanel.remove(register.getLogin());
+		formPanel.remove(register.getPassword());
+		formPanel.remove(register.getPasswordAgain());
 		formPanel.layout();
 
 		this.add(formPanel);
@@ -75,9 +79,7 @@ public class EditBasicProfile extends LayoutContainer {
 
 
 	public void populate(User user) {
-		formPanel.remove(register.getLogin());
-		formPanel.remove(register.getPassword());
-		formPanel.remove(register.getPasswordAgain());
+
 		register.getFirstName().setValue(user.getFirstname());
 		register.getLastName().setValue(user.getLastname());
 		if (user.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
@@ -109,12 +111,12 @@ public class EditBasicProfile extends LayoutContainer {
 		initUpdateButton();
 		initCancelButton();
 	}
-	
-	// Save
+
+
 	public void initUpdateButton() {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
-		Button saveButton = new Button("Update");
-		formPanel.addButton(saveButton);  
+		Button button = new Button("Update");
+		formPanel.addButton(button);  
 		register.getFormPanel().layout();
 		Listener saveListener = new Listener<BaseEvent>() {
 			@Override
@@ -138,16 +140,21 @@ public class EditBasicProfile extends LayoutContainer {
 						public void onSuccess(Void result) {
 							TopPanel.getInstance().setUser(user);
 							TopPanel.getInstance().setFirstLastName(user);
-							History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
+							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
+								@Override
+								public void handleEvent(MessageBoxEvent be) {								
+									History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());									
+								}								
+							});							
 						}
 					};
 					ServiceBroker.profileService.updateCurrentUserForEditBasicProfile(user, callback);
 				}
 			}
 		};
-		saveButton.addListener(Events.Select, saveListener);
+		button.addListener(Events.Select, saveListener);
 	}
-	
+
 	// Cancel
 	public void initCancelButton() {
 		Button cancelButton = new Button("Cancel");
@@ -167,13 +174,13 @@ public class EditBasicProfile extends LayoutContainer {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();
-		register.addRequiredErrorIfNecessary(register.getFirstName(), retval);
-		register.addRequiredErrorIfNecessary(register.getLastName(), retval);
+		GWTUtil.addRequiredErrorIfNecessary(register.getFirstName(), retval);
+		GWTUtil.addRequiredErrorIfNecessary(register.getLastName(), retval);
 
 		if (register.getLocation().getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {
-			register.addRequiredErrorIfNecessary(register.getLocation().getPostalcode(), retval);
+			GWTUtil.addRequiredErrorIfNecessary(register.getLocation().getPostalcode(), retval);
 		} else {
-			register.addRequiredErrorIfNecessary(register.getLocation().getZipcode(), retval);
+			GWTUtil.addRequiredErrorIfNecessary(register.getLocation().getZipcode(), retval);
 		}
 		return retval;
 	}

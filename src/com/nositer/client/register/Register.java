@@ -237,15 +237,12 @@ public class Register implements EntryPoint {
 		registrationPanel.setWidth(500);
 		registrationPanel.setHeading("Registration");
 		errorPanel = new ErrorPanel();
+		errorPanel.init();
 		errorPanel.hide();
 		registrationPanel.add(errorPanel);
 		registrationPanel.add(formPanel);
 		mainPanel.add(registrationPanel);
 
-	}
-
-	public static String getRequiredFieldStyle() {
-		return "color: red; font-weight: bold";
 	}
 
 	public void initFormPanel() {
@@ -284,24 +281,24 @@ public class Register implements EntryPoint {
 	private void addRequiredFields() {
 		firstName = new TextField<String>();  
 		firstName.setFieldLabel("* Firstname");  
-		firstName.setLabelStyle(getRequiredFieldStyle());
+		firstName.setLabelStyle(GWTUtil.getRequiredFieldStyle());
 
 		lastName = new TextField<String>();  
 		lastName.setFieldLabel("* Lastname");  
-		lastName.setLabelStyle(getRequiredFieldStyle());
+		lastName.setLabelStyle(GWTUtil.getRequiredFieldStyle());
 
 		login = new TextField<String>();  
 		login.setFieldLabel("* Login name");  
-		login.setLabelStyle(getRequiredFieldStyle());
+		login.setLabelStyle(GWTUtil.getRequiredFieldStyle());
 
 		password = new TextField<String>();  
 		password.setFieldLabel("* Password");  
-		password.setLabelStyle(getRequiredFieldStyle());
+		password.setLabelStyle(GWTUtil.getRequiredFieldStyle());
 		password.setPassword(true);
 
 		passwordAgain = new TextField<String>();  
 		passwordAgain.setFieldLabel("* Password Again");  
-		passwordAgain.setLabelStyle(getRequiredFieldStyle());
+		passwordAgain.setLabelStyle(GWTUtil.getRequiredFieldStyle());
 		passwordAgain.setPassword(true);
 		location = new Location();				
 
@@ -387,26 +384,19 @@ public class Register implements EntryPoint {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();
-		addRequiredErrorIfNecessary(firstName, retval);
-		addRequiredErrorIfNecessary(lastName, retval);
-		addRequiredErrorIfNecessary(login, retval);
-		addRequiredErrorIfNecessary(password, retval);
+		GWTUtil.addRequiredErrorIfNecessary(firstName, retval);
+		GWTUtil.addRequiredErrorIfNecessary(lastName, retval);
+		GWTUtil.addRequiredErrorIfNecessary(login, retval);
+		GWTUtil.addRequiredErrorIfNecessary(password, retval);
 		if ((password.getValue() != null) && (!password.getValue().equals(passwordAgain.getValue()))) {
 			retval.add("Password and Password Again are not the same");
 		} 
 		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {
-			addRequiredErrorIfNecessary(location.getPostalcode(), retval);
+			GWTUtil.addRequiredErrorIfNecessary(location.getPostalcode(), retval);
 		} else {
-			addRequiredErrorIfNecessary(location.getZipcode(), retval);
+			GWTUtil.addRequiredErrorIfNecessary(location.getZipcode(), retval);
 		}
 		return retval;
-	}
-
-	public void addRequiredErrorIfNecessary(TextField<String> textField,
-			ArrayList<String> retval) {
-		if (textField.getValue() == null) {
-			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
-		}
 	}
 
 	public User createDTO() {

@@ -12,7 +12,7 @@ import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
-import com.nositer.client.register.Register;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.combobox.PostalcodeComboBox;
 import com.nositer.client.widget.combobox.ZipcodeComboBox;
 
@@ -86,11 +86,11 @@ public class Location extends FieldSet {
 	private void init() {	
 		postalcode = new PostalcodeComboBox();
 		postalcode.setFieldLabel("* Postal code");
-		postalcode.setStyleName(Register.getRequiredFieldStyle());
+		postalcode.setStyleName(GWTUtil.getRequiredFieldStyle());
 
 		zipcode = new ZipcodeComboBox();
 		zipcode.setFieldLabel("* Zip code");
-		zipcode.setStyleName(Register.getRequiredFieldStyle());
+		zipcode.setStyleName(GWTUtil.getRequiredFieldStyle());
 
 		initGeographyCode();
 

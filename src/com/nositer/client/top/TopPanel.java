@@ -75,13 +75,10 @@ public class TopPanel extends ContentPanel {
 		youAreLoggedOnAs.setStyleName("youAreLoggedOnAs");
 		loggedInAs.add(youAreLoggedOnAs);
 		firstLastName = new Label();
-		loggedInAs.add(firstLastName);	
+		HBoxLayoutData spacing = new HBoxLayoutData(new Margins(0, 5, 0, 0));  
+		loggedInAs.add(firstLastName, spacing);	
 		firstLastName.setStyleName("firstLastName");
 		logout = new Logout();
-
-		HBoxLayoutData flex = new HBoxLayoutData(new Margins(0, 5, 0, 0));  
-		flex.setFlex(1);  
-		loggedInAs.add(new Text(), flex);  
 		loggedInAs.add(logout);
 
 
@@ -105,7 +102,9 @@ public class TopPanel extends ContentPanel {
 			public void onSuccess(User result) {
 				if (result != null) {
 					user = result;		
-					setFirstLastName(user);					
+					setFirstLastName(user);	
+					TopPanel.this.loggedInAs.remove(logout);
+					TopPanel.this.loggedInAs.add(logout);
 					TopPanel.this.layout();
 				}
 			}
