@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 3, 2011 6:11:56 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 4, 2011 3:32:38 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -33,6 +33,7 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
+	public static final String TABLENAME = "postalcode";
 
 	public Postalcode() {
 	}
@@ -155,6 +156,6 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, code, description, city, province, provincecode, citytype, latitude, longitude, createdtime, modifiedtime, users,
+		id, code, description, city, province, provincecode, citytype, latitude, longitude, createdtime, modifiedtime,
 	}
 }

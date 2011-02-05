@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 3, 2011 6:11:56 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 4, 2011 3:32:38 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -28,6 +28,7 @@ public class Group implements java.io.Serializable, IsSerializable,
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
+	public static final String TABLENAME = "group";
 
 	public Group() {
 	}
@@ -99,6 +100,6 @@ public class Group implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, name, description, shortname, createdtime, modifiedtime, userHasGroups,
+		id, name, description, shortname, createdtime, modifiedtime,
 	}
 }

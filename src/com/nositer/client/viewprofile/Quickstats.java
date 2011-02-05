@@ -1,14 +1,21 @@
 package com.nositer.client.viewprofile;
 
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
+import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Avatar;
 
+/**
+ * 
+ * Contains form and avatar
+ *
+ */
 public class Quickstats extends LayoutContainer {
 	private LabelField firstname;	
 	private LabelField lastname;
@@ -47,7 +54,7 @@ public class Quickstats extends LayoutContainer {
 		this.setLayout(new HBoxLayout());
 		this.add(formContainer);
 		avatar = new Avatar();
-		this.add(avatar);
+		this.add(avatar, new HBoxLayoutData(new Margins(0, 0, 0, 5)));
 	}
 	
 	public void populate(User user) {

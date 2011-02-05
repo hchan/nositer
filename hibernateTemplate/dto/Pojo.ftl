@@ -25,7 +25,7 @@ import java.util.Set;
 
 <#if !pojo.isInterface()>
 <#include "PojoFields.ftl"/>
-
+<#include "StaticFields.ftl"/>
 <#include "PojoConstructors.ftl"/>
    
 <#include "PojoPropertyAccessors.ftl"/>

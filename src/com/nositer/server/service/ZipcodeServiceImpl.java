@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.service.ZipcodeService;
+import com.nositer.hibernate.CommonSql;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.shared.GWTException;
@@ -26,8 +27,8 @@ public class ZipcodeServiceImpl extends RemoteServiceServlet implements ZipcodeS
 		Transaction trx = null;
 		try {
 			trx = sess.beginTransaction();		   
-			List<com.nositer.hibernate.generated.domain.Zipcode> results = sess.createSQLQuery(SqlHelper.FINDZIPCODEBYCODE.sql()).addEntity(com.nositer.hibernate.generated.domain.Zipcode.class).
-			setInteger("OFFSET", offset).setInteger("LIMIT", limit).setString("CODE", query.toUpperCase().replace(" ", "") + "%").list();
+			List<com.nositer.hibernate.generated.domain.Zipcode> results = sess.createSQLQuery(SqlHelper.FINDZIPCODEBYCODE).addEntity(com.nositer.hibernate.generated.domain.Zipcode.class).
+			setInteger(CommonSql.OFFSET, offset).setInteger(CommonSql.LIMIT, limit).setString(Zipcode.ColumnType.code.toString(), query.toUpperCase().replace(" ", "") + "%").list();
 			retval = BeanConversion.copyDomain2DTO(results, Zipcode.class);
 			
 			trx.commit();

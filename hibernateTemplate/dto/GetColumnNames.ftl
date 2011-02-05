@@ -2,6 +2,8 @@
 
 public enum ColumnType {
 <#foreach field in pojo.getAllPropertiesIterator()><#t>
-${field.name},
+<#foreach column in field.getColumnIterator()>
+${column.name},
+</#foreach>
 </#foreach>
 }

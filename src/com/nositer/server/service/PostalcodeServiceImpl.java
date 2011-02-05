@@ -10,13 +10,14 @@ import org.hibernate.Transaction;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.service.PostalcodeService;
+import com.nositer.hibernate.CommonSql;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.webapp.Application;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 public class PostalcodeServiceImpl extends RemoteServiceServlet implements PostalcodeService {
 
 	@Override
@@ -25,9 +26,9 @@ public class PostalcodeServiceImpl extends RemoteServiceServlet implements Posta
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		try {
-			trx = sess.beginTransaction();		   
-			List<com.nositer.hibernate.generated.domain.Postalcode> results = sess.createSQLQuery(SqlHelper.FINDPOSTALCODEBYCODE.sql()).addEntity(com.nositer.hibernate.generated.domain.Postalcode.class).
-			setInteger("OFFSET", offset).setInteger("LIMIT", limit).setString("CODE", query.toUpperCase().replace(" ", "") + "%").list();
+			trx = sess.beginTransaction();		   			
+			List<com.nositer.hibernate.generated.domain.Postalcode> results = sess.createSQLQuery(SqlHelper.FINDPOSTALCODEBYCODE).addEntity(com.nositer.hibernate.generated.domain.Postalcode.class).
+			setInteger(CommonSql.OFFSET, offset).setInteger(CommonSql.LIMIT, limit).setString(Postalcode.ColumnType.code.toString(), query.toUpperCase().replace(" ", "") + "%").list();
 			retval = BeanConversion.copyDomain2DTO(results, Postalcode.class);
 			
 			trx.commit();

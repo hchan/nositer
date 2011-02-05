@@ -12,7 +12,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,9 +22,11 @@ import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.Postalcode;
 import com.nositer.hibernate.generated.domain.User;
 import com.nositer.hibernate.generated.domain.Zipcode;
+import com.nositer.server.service.ProfileServiceImpl;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 
+@SuppressWarnings("unchecked")
 public class AuthorizationFilter implements Filter {
 	public static final String LOGIN_URL = "/login";
 	public static final String PUBLIC_URL = "/public";
@@ -80,7 +81,7 @@ public class AuthorizationFilter implements Filter {
 
 
 	private void doSessionCheck(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		
 		com.nositer.client.dto.generated.User userDTO = null;
 		try {
 			userDTO = Application.getCurrentUser();
@@ -100,26 +101,15 @@ public class AuthorizationFilter implements Filter {
 			Session session = HibernateUtil.getSession();
 			Transaction trx = null;
 			try {
-				trx = session.beginTransaction();
-				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYEMAIL.sql()).addEntity(User.class).setString("LOGIN", login).list();
+				trx = session.beginTransaction();				
+				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYLOGIN).addEntity(User.class).setString(com.nositer.client.dto.generated.User.ColumnType.login.toString(), login).list();
 				if (results.size() == 0) {
 					doInvalidLoginPassword(request, response, chain);						
 				} else {
 					User userDomain = results.get(0);
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
-						com.nositer.client.dto.generated.User userDTO = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
-						
-						if (userDomain.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
-							Postalcode postalcodeDomain = userDomain.getPostalcode();
-							com.nositer.client.dto.generated.Postalcode postalcodeDTO = 
-								BeanConversion.copyDomain2DTO(postalcodeDomain, com.nositer.client.dto.generated.Postalcode.class);
-							userDTO.setPostalcode(postalcodeDTO);
-						} else {
-							Zipcode zipcodeDomain = userDomain.getZipcode();
-							com.nositer.client.dto.generated.Zipcode zipcodeDTO = BeanConversion.copyDomain2DTO(zipcodeDomain, com.nositer.client.dto.generated.Zipcode.class);
-							userDTO.setZipcode(zipcodeDTO);
-						}
-						
+						ProfileServiceImpl profileServiceImpl = new ProfileServiceImpl();
+						com.nositer.client.dto.generated.User userDTO = profileServiceImpl.getCurrentUser(userDomain);						
 						Application.setCurrentUser(userDTO);
 						userDomain.setLastlogin(new Date());
 						session.update(userDomain);

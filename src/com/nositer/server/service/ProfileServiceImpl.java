@@ -4,13 +4,20 @@ package com.nositer.server.service;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.Type;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.ProfileService;
+import com.nositer.client.widget.Location;
 import com.nositer.hibernate.HibernateUtil;
+import com.nositer.hibernate.SqlHelper;
+import com.nositer.hibernate.generated.domain.Postalcode;
+import com.nositer.hibernate.generated.domain.Zipcode;
 import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
@@ -39,26 +46,32 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 
 	@Override
 	public void updateCurrentUserForEditBasicProfile(User user) throws GWTException {
-
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		try {
 			trx = sess.beginTransaction();		
+			Integer postalcodeid = null;
+			Integer zipcodeid = null;
+			if (user.getPostalcode() != null) {
+				postalcodeid = user.getPostalcode().getId();
+			} else {
+				zipcodeid = user.getZipcode().getId();				
+			}
+			sess.createSQLQuery(SqlHelper.UPDATEBASICPROFILE).
+			setString(User.ColumnType.firstname.toString(), user.getFirstname()).
+			setString(User.ColumnType.lastname.toString(), user.getLastname()).
+			setParameter(User.ColumnType.postalcodeid.toString(), postalcodeid, new IntegerType()).		
+			setParameter(User.ColumnType.zipcodeid.toString(), zipcodeid, new IntegerType()).
+			setString(User.ColumnType.countrycode.toString(), user.getCountrycode()).
+			setString(User.ColumnType.email.toString(), user.getEmail()).
+			setBoolean(User.ColumnType.gendermale.toString(), user.getGendermale()).
+			setString(User.ColumnType.profession.toString(), user.getProfession()).
+			setDate(User.ColumnType.birthdate.toString(), user.getBirthdate()).
+			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			executeUpdate();
 			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, getCurrentUser().getId(), sess);
-			ArrayList<String> propertiesToCopy = new ArrayList<String>();
-			propertiesToCopy.add(User.ColumnType.firstname.toString());
-			propertiesToCopy.add(User.ColumnType.lastname.toString());
-			propertiesToCopy.add(User.ColumnType.countrycode.toString());
-			//propertiesToCopy.add(User.ColumnType.postalcode.toString());
-			propertiesToCopy.add(User.ColumnType.zipcode.toString());
-			propertiesToCopy.add(User.ColumnType.email.toString());
-			propertiesToCopy.add(User.ColumnType.gendermale.toString());
-			propertiesToCopy.add(User.ColumnType.profession.toString());
-			propertiesToCopy.add(User.ColumnType.birthdate.toString());
-			BeanConversion.copyDTO2Domain(user, userDomain, propertiesToCopy);
-			sess.saveOrUpdate(userDomain);
 			trx.commit();
-			user = BeanConversion.copyDomain2DTO(userDomain, User.class);
+			user = getCurrentUser(userDomain);
 			Application.setCurrentUser(user);
 		}
 		catch (Exception e) {
@@ -70,6 +83,23 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			HibernateUtil.closeSession(sess);
 		}
 
+	}
+	
+	public User getCurrentUser(com.nositer.hibernate.generated.domain.User userDomain) {
+		User retval = null;
+		retval = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
+		
+		if (userDomain.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
+			Postalcode postalcodeDomain = userDomain.getPostalcode();
+			com.nositer.client.dto.generated.Postalcode postalcodeDTO = 
+				BeanConversion.copyDomain2DTO(postalcodeDomain, com.nositer.client.dto.generated.Postalcode.class);
+			retval.setPostalcode(postalcodeDTO);
+		} else {
+			Zipcode zipcodeDomain = userDomain.getZipcode();
+			com.nositer.client.dto.generated.Zipcode zipcodeDTO = BeanConversion.copyDomain2DTO(zipcodeDomain, com.nositer.client.dto.generated.Zipcode.class);
+			retval.setZipcode(zipcodeDTO);
+		}
+		return retval;
 	}
 
 }
