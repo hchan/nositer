@@ -1,14 +1,9 @@
 package com.nositer.server.service;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.type.IntegerType;
-import org.hibernate.type.Type;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.User;
@@ -22,7 +17,6 @@ import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 import com.nositer.webapp.Application;
-import com.nositer.webapp.AuthorizationFilter;
 
 @SuppressWarnings("serial")
 public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileService {
@@ -84,11 +78,11 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		}
 
 	}
-	
+
 	public User getCurrentUser(com.nositer.hibernate.generated.domain.User userDomain) {
 		User retval = null;
 		retval = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
-		
+
 		if (userDomain.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
 			Postalcode postalcodeDomain = userDomain.getPostalcode();
 			com.nositer.client.dto.generated.Postalcode postalcodeDTO = 
@@ -100,6 +94,40 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			retval.setZipcode(zipcodeDTO);
 		}
 		return retval;
+	}
+
+	@Override
+	public void updatePasswordOfCurrentUser(String oldPassword,
+			String newPassword) throws GWTException {
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			String currentPassword = getCurrentUser().getPassword();
+			String oldPasswordEncrypted = Encrypt.cryptPassword(oldPassword);
+			if (currentPassword.equals(oldPasswordEncrypted)) {
+				String newPasswordEncrypted = Encrypt.cryptPassword(newPassword);
+				sess.createSQLQuery(SqlHelper.CHANGEPASSWORD).
+				setString(User.ColumnType.password.toString(), newPasswordEncrypted).			
+				setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+				executeUpdate();
+				trx.commit();
+				getCurrentUser().setPassword(newPasswordEncrypted);
+			} else {
+				throw new GWTException("Old Password entered is not correct");
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
+
 	}
 
 }

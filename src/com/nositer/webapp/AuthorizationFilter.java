@@ -16,14 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.nositer.client.widget.Location;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
-import com.nositer.hibernate.generated.domain.Postalcode;
 import com.nositer.hibernate.generated.domain.User;
-import com.nositer.hibernate.generated.domain.Zipcode;
 import com.nositer.server.service.ProfileServiceImpl;
-import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 
 @SuppressWarnings("unchecked")

@@ -14,4 +14,7 @@ public interface ProfileServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void getCurrentUserForEditBasicProfile(AsyncCallback<User> callback);
+
+	void updatePasswordOfCurrentUser(String oldPassword, String newPassword,
+			AsyncCallback<Void> callback);
 }

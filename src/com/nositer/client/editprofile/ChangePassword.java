@@ -6,6 +6,7 @@ import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
@@ -15,6 +16,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.HistoryTokenHelper;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
+import com.nositer.client.widget.InfoMessageBox;
+import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class ChangePassword extends LayoutContainer {
 	
@@ -91,11 +94,15 @@ public class ChangePassword extends LayoutContainer {
 
 						@Override
 						public void onSuccess(Void result) {
-						
-							History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
+							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
+								@Override
+								public void handleEvent(MessageBoxEvent be) {								
+									History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());									
+								}								
+							});										
 						}
 					};
-					//ServiceBroker.profileService.updateCurrentUserForEditBasicProfile(user, callback);
+					ServiceBroker.profileService.updatePasswordOfCurrentUser(oldPassword.getValue(), password.getValue(), callback);
 				}
 			}
 		};

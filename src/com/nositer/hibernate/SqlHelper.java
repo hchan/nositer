@@ -21,5 +21,8 @@ public class SqlHelper {
 		User.ColumnType.profession + "= :" + User.ColumnType.profession + ", " +
 		User.ColumnType.birthdate + "= :" + User.ColumnType.birthdate +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
-	
+	public static String CHANGEPASSWORD =
+		"update " + User.TABLENAME + " set " + 
+		User.ColumnType.password + "= :" + User.ColumnType.password +
+		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 }
