@@ -10,10 +10,7 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.History;
-import com.nositer.client.HistoryTokenHelper;
-import com.nositer.client.editprofile.EditBasicProfile;
-import com.nositer.client.main.MainPanel;
-import com.nositer.client.viewprofile.ViewProfileTabPanel;
+import com.nositer.client.history.HistoryToken;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class LeftPanel extends ContentPanel {
@@ -25,6 +22,7 @@ public class LeftPanel extends ContentPanel {
 	private ContentPanel groups;
 	private NavigationItem viewProfileNavigationItem;
 	private NavigationItem editBasicProfileNavigationItem;
+	private NavigationItem editAboutMeNavigationItem;
 	private NavigationItem myGroups;
 	private NavigationItem manageGroups;
 	private NavigationItem myIwantTos;
@@ -32,6 +30,15 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem manageIwantTos;
 	private NavigationItem changePasswordNavigationItem;
 	
+	public NavigationItem getEditAboutMeNavigationItem() {
+		return editAboutMeNavigationItem;
+	}
+
+	public void setEditAboutMeNavigationItem(
+			NavigationItem editAboutMeNavigationItem) {
+		this.editAboutMeNavigationItem = editAboutMeNavigationItem;
+	}
+
 	public NavigationItem getChangePasswordNavigationItem() {
 		return changePasswordNavigationItem;
 	}
@@ -133,9 +140,11 @@ public class LeftPanel extends ContentPanel {
 		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
 		editBasicProfileNavigationItem = navigationTree.createNavigationItem("Edit Basic Profile");
 		changePasswordNavigationItem = navigationTree.createNavigationItem("Change Password");
+		editAboutMeNavigationItem = navigationTree.createNavigationItem("Edit About Me");
 		profile.add(viewProfileNavigationItem);
 		profile.add(editBasicProfileNavigationItem);
 		profile.add(changePasswordNavigationItem);
+		profile.add(editAboutMeNavigationItem);
 		this.add(profile);
 
 		// Groups
@@ -175,9 +184,10 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	public void addListeners() {		
-		addHistoryOnClick(viewProfileNavigationItem, HistoryTokenHelper.VIEWPROFILE.toString());
-		addHistoryOnClick(editBasicProfileNavigationItem, HistoryTokenHelper.EDITBASICPROFILE.toString());
-		addHistoryOnClick(changePasswordNavigationItem, HistoryTokenHelper.CHANGEPASSWORD.toString());
+		addHistoryOnClick(viewProfileNavigationItem, HistoryToken.VIEWPROFILE.toString());
+		addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
+		addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
+		addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
 	}
 	
 	public void addHistoryOnClick(Component component, final String historyToken) {

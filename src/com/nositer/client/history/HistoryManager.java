@@ -1,4 +1,4 @@
-package com.nositer.client;
+package com.nositer.client.history;
 
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
@@ -6,14 +6,15 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.nositer.client.editprofile.ChangePassword;
+import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfileTabPanel;
 
-import static com.nositer.client.HistoryTokenHelper.*;
-public class HistoryHelper {
+import static com.nositer.client.history.HistoryToken.*;
+public class HistoryManager {
 	public static final String HOME = "";
 	
 	public static void addHistorySupport() {
@@ -54,6 +55,10 @@ public class HistoryHelper {
 			leftPanel.getProfile().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getChangePasswordNavigationItem());
 			setMainPanel(new ChangePassword());
+		} else if (historyToken.equals(EDITABOUTME.toString())) {
+			leftPanel.getProfile().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getEditAboutMeNavigationItem());
+			setMainPanel(new EditAboutMe());
 		}
 	}
 	

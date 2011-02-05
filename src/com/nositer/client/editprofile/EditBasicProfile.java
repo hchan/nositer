@@ -15,10 +15,10 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.HistoryTokenHelper;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
+import com.nositer.client.history.HistoryToken;
 import com.nositer.client.register.Register;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
@@ -143,7 +143,7 @@ public class EditBasicProfile extends LayoutContainer {
 							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								
-									History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());									
+									History.newItem(HistoryToken.VIEWPROFILE.toString());									
 								}								
 							});							
 						}
@@ -162,7 +162,7 @@ public class EditBasicProfile extends LayoutContainer {
 		Listener cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				History.newItem(HistoryTokenHelper.VIEWPROFILE.toString());
+				History.newItem(HistoryToken.VIEWPROFILE.toString());
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);

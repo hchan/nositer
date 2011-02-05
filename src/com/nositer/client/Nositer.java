@@ -7,10 +7,8 @@ import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
@@ -72,7 +70,7 @@ public class Nositer implements EntryPoint {
 		borderLayoutData.setMargins(new Margins(1));
 		instance = this;
 		RootPanel.get().add(viewport);		
-		HistoryHelper.addHistorySupport();
+		HistoryManager.addHistorySupport();
 	}
 
 	

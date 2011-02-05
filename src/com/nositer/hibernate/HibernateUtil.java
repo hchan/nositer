@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-
+@SuppressWarnings("unchecked")
 public class HibernateUtil{
 
 	private static SessionFactory sessionFactory;
@@ -33,12 +33,11 @@ public class HibernateUtil{
 		}
 	}
 
+	
 	public static <T extends Domain>T findByPrimaryKey (Class<T> clazz, int pk, Session session) {
 		return (T)session.get(clazz, new Integer(pk));
 	}
 	
-
-
 
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;

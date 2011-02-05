@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 4, 2011 3:32:38 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 5, 2011 2:24:03 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
