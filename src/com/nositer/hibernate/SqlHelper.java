@@ -28,6 +28,7 @@ public class SqlHelper {
 	public static String UPDATEABOUTME =
 		"update " + User.TABLENAME + " set " + 
 		User.ColumnType.note + "= :" + User.ColumnType.note + ", " +
+		User.ColumnType.notemodifedtime + "= :" + User.ColumnType.notemodifedtime + ", " +
 		User.ColumnType.description + "= :" + User.ColumnType.description +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 }

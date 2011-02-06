@@ -1,6 +1,8 @@
 package com.nositer.server.service;
 
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.type.IntegerType;
@@ -154,6 +156,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			String cleanDescription = HTMLPurifier.getCleanHTML(description);
 			sess.createSQLQuery(SqlHelper.UPDATEABOUTME).
 			setString(User.ColumnType.note.toString(), cleanNote).
+			setDate(User.ColumnType.notemodifedtime.toString(), new Date()).
 			setString(User.ColumnType.description.toString(), cleanDescription).		
 			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
 			executeUpdate();

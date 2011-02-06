@@ -189,3 +189,13 @@
 .logout:hover {
 	background-color: #FF0000 !important;
 }
+
+.profileDescription ol {
+    list-style-type:decimal;
+    padding-left:40px;
+}
+
+.profileDescription ul {
+    list-style-type:disc
+    padding-left:40px;
+}
