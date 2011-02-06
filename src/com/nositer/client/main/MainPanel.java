@@ -1,10 +1,13 @@
 package com.nositer.client.main;
 
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.nositer.client.widget.Resizable;
 
 public class MainPanel extends ContentPanel {
 	private static MainPanel instance;
+	private BorderLayoutData mainLayoutData;
 	public static MainPanel getInstance() {
 		return instance;
 	}
@@ -13,7 +16,6 @@ public class MainPanel extends ContentPanel {
 		MainPanel.instance = instance;
 	}
 
-	private BorderLayoutData mainLayoutData;
 
 	public BorderLayoutData getMainLayoutData() {
 		return mainLayoutData;
@@ -33,5 +35,16 @@ public class MainPanel extends ContentPanel {
 	public void init() {
 		this.setHeaderVisible(false);
 		this.setHeading("Nos Iter - Journey with us");
+	}
+	
+	@Override
+	protected void onResize(int width, int height) {		
+		super.onResize(width, height);
+		for (Component component : getItems()) {
+			if (component instanceof Resizable) {
+				Resizable resizable = (Resizable)component;
+				resizable.resize();
+			}
+		}
 	}
 }

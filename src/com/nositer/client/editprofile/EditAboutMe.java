@@ -22,9 +22,10 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
+import com.nositer.client.widget.Resizable;
 import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class EditAboutMe extends LayoutContainer {
+public class EditAboutMe extends LayoutContainer implements Resizable {
 
 	private FormPanel formPanel;
 	private TextField<String> note;
@@ -82,6 +83,7 @@ public class EditAboutMe extends LayoutContainer {
 		description.setValue(user.getDescription());
 	}
 	
+	@Override
 	public void resize() {
 		formPanel.setWidth(this.getWidth());
 		setDescriptionHeight();
