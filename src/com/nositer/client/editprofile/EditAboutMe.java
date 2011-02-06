@@ -7,15 +7,12 @@ import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
-import com.extjs.gxt.ui.client.util.Size;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.AnchorLayout;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -53,10 +50,12 @@ public class EditAboutMe extends LayoutContainer {
 		errorPanel.hide();
 		note = new TextField<String>();
 		note.setFieldLabel("Quick Note");  
+		note.setLabelStyle("font-size: 14px; font-weight: bold;");
 		description = new HtmlEditor();
 		setDescriptionHeight();
 		
 		description.setFieldLabel("About Me");
+		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
 		formPanel.add(note, new FormData("100%"));
 		formPanel.add(description, new FormData("100%"));	
@@ -65,15 +64,23 @@ public class EditAboutMe extends LayoutContainer {
 		initButtons();		
 	}
 	
+	public void resize() {
+		formPanel.setWidth(this.getWidth());
+		setDescriptionHeight();
+	}
+	
 	private void setDescriptionHeight() {
-		description.setHeight(MainPanel.getInstance().getHeight() - 150);
+		int heightOfComponents = 150;
+		if (errorPanel.isRendered() && !errorPanel.isHidden()) {
+			heightOfComponents = heightOfComponents + errorPanel.getHeight();
+		}
+		description.setHeight(MainPanel.getInstance().getHeight() - heightOfComponents);
 	}
 
 	@Override
 	protected void onWindowResize(int width, int height) {
 		super.onWindowResize(width, height);
-		formPanel.setWidth(this.getWidth());
-		setDescriptionHeight();
+		resize();
 	}
 
 	public void initButtons() {
@@ -93,7 +100,8 @@ public class EditAboutMe extends LayoutContainer {
 				ArrayList<String> errors = getErrors();
 				if (errors.size() > 0) {
 					errorPanel.setErrors(errors);
-					errorPanel.show();					
+					errorPanel.show();		
+					resize();
 				} else {
 
 					AsyncCallback<Void> callback = new AsyncCallback<Void>() {
@@ -102,6 +110,7 @@ public class EditAboutMe extends LayoutContainer {
 							errorPanel.clearErrorMessages();
 							errorPanel.addErrorMessage(caught.getMessage());
 							errorPanel.show();
+							resize();
 							GWTUtil.log("", caught);
 						}
 
@@ -115,7 +124,7 @@ public class EditAboutMe extends LayoutContainer {
 							});										
 						}
 					};
-					//ServiceBroker.profileService.updatePasswordOfCurrentUser(oldPassword.getValue(), password.getValue(), callback);
+					ServiceBroker.profileService.updateAboutMeOfCurrentUser(note.getValue(), description.getValue(), callback);
 				}
 			}
 		};

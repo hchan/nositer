@@ -24,7 +24,19 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 	@Override
 	public User getCurrentUser() throws GWTException {
 		User retval = null;
-		retval = Application.getCurrentUser();
+		Session sess = HibernateUtil.getSession();
+		try {
+			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, Application.getCurrentUser().getId(), sess);
+			retval = getCurrentUser(userDomain);
+			Application.setCurrentUser(retval);
+		} 
+		catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}		
 		return retval;
 	}
 
@@ -128,6 +140,34 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			HibernateUtil.closeSession(sess);
 		}
 
+	}
+
+	@Override
+	public void updateAboutMeOfCurrentUser(String note, String description)
+	throws GWTException {
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			String cleanNote = note;
+			String cleanDescription = description;
+			sess.createSQLQuery(SqlHelper.UPDATEABOUTME).
+			setString(User.ColumnType.note.toString(), cleanNote).
+			setString(User.ColumnType.description.toString(), cleanDescription).		
+			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			executeUpdate();
+			trx.commit();
+		}
+		catch (GWTException e) {
+			throw e;
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
 	}
 
 }

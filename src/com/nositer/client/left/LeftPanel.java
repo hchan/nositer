@@ -2,14 +2,11 @@ package com.nositer.client.left;
 
 import java.util.Iterator;
 
-import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.Events;
-import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
-import com.google.gwt.user.client.History;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -184,18 +181,9 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	public void addListeners() {		
-		addHistoryOnClick(viewProfileNavigationItem, HistoryToken.VIEWPROFILE.toString());
-		addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
-		addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
-		addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
-	}
-	
-	public void addHistoryOnClick(Component component, final String historyToken) {
-		component.addListener(Events.OnClick, new Listener() {
-			@Override
-			public void handleEvent(BaseEvent be) {				
-				History.newItem(historyToken);
-			}
-		});
+		HistoryManager.addHistoryOnClick(viewProfileNavigationItem, HistoryToken.VIEWPROFILE.toString());
+		HistoryManager.addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
+		HistoryManager.addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
+		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
 	}
 }

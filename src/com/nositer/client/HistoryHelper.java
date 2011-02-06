@@ -1,23 +1,19 @@
-package com.nositer.client.history;
+package com.nositer.client;
 
-import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.Events;
-import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.nositer.client.editprofile.ChangePassword;
-import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfileTabPanel;
 
-import static com.nositer.client.history.HistoryToken.*;
-public class HistoryManager {
+import static com.nositer.client.HistoryTokenHelper.*;
+public class HistoryHelper {
 	public static final String HOME = "";
 	
 	public static void addHistorySupport() {
@@ -58,10 +54,6 @@ public class HistoryManager {
 			leftPanel.getProfile().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getChangePasswordNavigationItem());
 			setMainPanel(new ChangePassword());
-		} else if (historyToken.equals(EDITABOUTME.toString())) {
-			leftPanel.getProfile().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getEditAboutMeNavigationItem());
-			setMainPanel(new EditAboutMe());
 		}
 	}
 	
@@ -71,15 +63,6 @@ public class HistoryManager {
 		MainPanel.getInstance().removeAll();
 		MainPanel.getInstance().add(component);
 		MainPanel.getInstance().layout(true);
-	}
-
-	public static void addHistoryOnClick(Component component, final String historyToken) {
-		component.addListener(Events.OnClick, new Listener() {
-			@Override
-			public void handleEvent(BaseEvent be) {				
-				History.newItem(historyToken);
-			}
-		});
 	}
 
 }

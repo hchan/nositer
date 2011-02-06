@@ -1,5 +1,6 @@
-#Wed Jan 12 13:38:11 GMT-08:00 2011
+#Sat Feb 05 19:15:13 PST 2011
 eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=
 launchConfigExternalUrlPrefix=
 warSrcDir=war
 warSrcDirIsOutput=true

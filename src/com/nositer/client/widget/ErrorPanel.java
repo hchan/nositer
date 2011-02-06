@@ -13,6 +13,31 @@ public class ErrorPanel extends LayoutContainer {
 
 	private Label header;
 	private LayoutContainer errorMessages;
+	private boolean hidden = false;
+	
+	public Label getHeader() {
+		return header;
+	}
+
+	public void setHeader(Label header) {
+		this.header = header;
+	}
+
+	public LayoutContainer getErrorMessages() {
+		return errorMessages;
+	}
+
+	public void setErrorMessages(LayoutContainer errorMessages) {
+		this.errorMessages = errorMessages;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public ErrorPanel() {
 		//init();
@@ -59,11 +84,13 @@ public class ErrorPanel extends LayoutContainer {
 	
 	@Override
 	public void hide() {
+		hidden = true;
 		super.hide();
 	}
 	
 	@Override
 	public void show() {
+		hidden = false;
 		super.show();
 		this.layout();
 		this.el().fadeIn(FxConfig.NONE);
