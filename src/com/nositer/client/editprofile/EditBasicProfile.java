@@ -57,9 +57,7 @@ public class EditBasicProfile extends LayoutContainer {
 		formPanel.layout();
 
 		this.add(formPanel);
-
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
@@ -68,13 +66,11 @@ public class EditBasicProfile extends LayoutContainer {
 			@Override
 			public void onSuccess(User result) {
 				if (result != null) {
-
 					populate(result);
 				}
 			}
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
-
 	}
 
 

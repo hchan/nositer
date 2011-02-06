@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
@@ -28,9 +29,7 @@ public class EditAboutMe extends LayoutContainer {
 	private FormPanel formPanel;
 	private TextField<String> note;
 	private HtmlEditor description;
-
 	private ErrorPanel errorPanel;
-	private Button cancelButton;
 	public EditAboutMe() {
 		init();
 	}
@@ -61,7 +60,26 @@ public class EditAboutMe extends LayoutContainer {
 		formPanel.add(description, new FormData("100%"));	
 		
 		this.add(formPanel);
-		initButtons();		
+		initButtons();	
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				if (result != null) {
+					populate(result);
+				}
+			}
+		};
+		ServiceBroker.profileService.getCurrentUser(callback);
+	}
+	
+	private void populate(User user) {
+		note.setValue(user.getNote());
+		description.setValue(user.getDescription());
 	}
 	
 	public void resize() {
@@ -133,7 +151,7 @@ public class EditAboutMe extends LayoutContainer {
 
 	// Cancel
 	public void initCancelButton() {
-		cancelButton = new Button("Cancel");
+		Button cancelButton = new Button("Cancel");
 		formPanel.addButton(cancelButton);  
 		Listener cancelListener = new Listener<BaseEvent>() {
 			@Override
