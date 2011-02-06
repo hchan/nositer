@@ -16,6 +16,7 @@ import com.nositer.hibernate.generated.domain.Zipcode;
 import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
+import com.nositer.util.HTMLPurifier;
 import com.nositer.webapp.Application;
 
 @SuppressWarnings("serial")
@@ -149,8 +150,8 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		Transaction trx = null;
 		try {
 			trx = sess.beginTransaction();		
-			String cleanNote = note;
-			String cleanDescription = description;
+			String cleanNote = HTMLPurifier.getCleanHTML(note);
+			String cleanDescription = HTMLPurifier.getCleanHTML(description);
 			sess.createSQLQuery(SqlHelper.UPDATEABOUTME).
 			setString(User.ColumnType.note.toString(), cleanNote).
 			setString(User.ColumnType.description.toString(), cleanDescription).		

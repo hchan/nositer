@@ -17,9 +17,4 @@ public class ServiceBroker {
 	public static final ZipcodeServiceAsync zipcodeService = GWT.create(ZipcodeService.class);
 	
 	
-	
-	
-	// Not used
-	public static final String JSONSERVICEDIR = "/jsonservice";
-	public static final String POSTALCODEJSONSERVICE = JSONSERVICEDIR + "/postalcode.jsp";
 }
