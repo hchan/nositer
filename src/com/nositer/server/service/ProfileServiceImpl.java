@@ -78,10 +78,10 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			setDate(User.ColumnType.birthdate.toString(), user.getBirthdate()).
 			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
 			executeUpdate();
-			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, getCurrentUser().getId(), sess);
+			//com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, getCurrentUser().getId(), sess);
 			trx.commit();
-			user = getCurrentUser(userDomain);
-			Application.setCurrentUser(user);
+			//user = getCurrentUser(userDomain);
+			//Application.setCurrentUser(user);
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
@@ -127,7 +127,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 				setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
 				executeUpdate();
 				trx.commit();
-				getCurrentUser().setPassword(newPasswordEncrypted);
+				//getCurrentUser().setPassword(newPasswordEncrypted);
 			} else {
 				throw new GWTException("Old Password entered is not correct");
 			}

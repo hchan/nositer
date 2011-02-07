@@ -4,12 +4,13 @@ import java.util.Iterator;
 
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({})
 public class LeftPanel extends ContentPanel {
 	private static LeftPanel instance;
 	private BorderLayoutData leftLayoutData;
@@ -26,6 +27,9 @@ public class LeftPanel extends ContentPanel {
 	private ContentPanel iWantTo;
 	private NavigationItem manageIwantTos;
 	private NavigationItem changePasswordNavigationItem;
+	private ContentPanel images;
+	private NavigationItem uploadImagesNavigationItem;
+	private NavigationItem manageImagesNavigationItem;
 	
 	public NavigationItem getEditAboutMeNavigationItem() {
 		return editAboutMeNavigationItem;
@@ -131,9 +135,7 @@ public class LeftPanel extends ContentPanel {
 		setLayout(accordionLayout);
 		
 		// Profile
-		profile = new ContentPanel();
-		profile.setStyleName("navigationPanel");
-		profile.setHeading("Profile");	
+		profile = createNavigationContentPanel("Profile", this);	
 		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
 		editBasicProfileNavigationItem = navigationTree.createNavigationItem("Edit Basic Profile");
 		changePasswordNavigationItem = navigationTree.createNavigationItem("Change Password");
@@ -142,32 +144,43 @@ public class LeftPanel extends ContentPanel {
 		profile.add(editBasicProfileNavigationItem);
 		profile.add(changePasswordNavigationItem);
 		profile.add(editAboutMeNavigationItem);
-		this.add(profile);
-
+		
+		
+		// Images
+		images = createNavigationContentPanel("Images", this);
+		uploadImagesNavigationItem = navigationTree.createNavigationItem("Upload Images");
+		manageImagesNavigationItem = navigationTree.createNavigationItem("Manage Images");
+		images.add(uploadImagesNavigationItem);
+		images.add(manageImagesNavigationItem);
+		
 		// Groups
-		groups = new ContentPanel();
-		profile.setStyleName("navigationPanel");
-		groups.setHeading("Groups");	
+		groups = createNavigationContentPanel("Groups", this);	
 		myGroups = navigationTree.createNavigationItem("My Groups");
 		manageGroups = navigationTree.createNavigationItem("Manage Groups");
 		groups.add(myGroups);
 		groups.add(manageGroups);
-		this.add(groups);
+		
 
 		// I want to ...
-		iWantTo = new ContentPanel();
-		iWantTo.setStyleName("navigationPanel");
-		iWantTo.setHeading("I want to ...");	
+		iWantTo = createNavigationContentPanel("I want to ...", this);	
 		myIwantTos = navigationTree.createNavigationItem("My I want to's ...");
 		manageIwantTos = navigationTree.createNavigationItem("Manage I want to's ...");
 		iWantTo.add(myIwantTos);
 		iWantTo.add(manageIwantTos);
-		this.add(iWantTo);
+		
 		
 		
 		collapseAccordion();
 		this.layout();
 		addListeners();
+	}
+	
+	public ContentPanel createNavigationContentPanel(String heading, LayoutContainer container) {
+		ContentPanel retval = new ContentPanel();
+		retval.setStyleName("navigationPanel");
+		retval.setHeading(heading);
+		container.add(retval);
+		return retval;
 	}
 
 	private void collapseAccordion() {		
@@ -185,5 +198,7 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
 		HistoryManager.addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
 		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
+		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
+		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
 	}
 }

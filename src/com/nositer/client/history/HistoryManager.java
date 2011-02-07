@@ -17,6 +17,8 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfileTabPanel;
 
 import static com.nositer.client.history.HistoryToken.*;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class HistoryManager {
 	public static final String HOME = "";
 	
@@ -73,6 +75,7 @@ public class HistoryManager {
 		MainPanel.getInstance().layout(true);
 	}
 
+	
 	public static void addHistoryOnClick(Component component, final String historyToken) {
 		component.addListener(Events.OnClick, new Listener() {
 			@Override
