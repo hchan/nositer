@@ -46,4 +46,22 @@ public class GWTUtil {
 			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
 		}
 	}
+
+
+	public native static void loadjscssfile(String filename, String filetype) /*-{
+		 if (filetype=="js"){
+		  var fileref=$doc.createElement('script')
+		  fileref.setAttribute("type","text/javascript")
+		  fileref.setAttribute("src", filename)
+		 }
+		 else if (filetype=="css"){
+		  var fileref=$doc.createElement("link")
+		  fileref.setAttribute("rel", "stylesheet")
+		  fileref.setAttribute("type", "text/css")
+		  fileref.setAttribute("href", filename)
+		 }
+		 if (typeof fileref!="undefined") {
+		  $doc.getElementsByTagName("head")[0].appendChild(fileref)
+		}
+	}-*/;
 }

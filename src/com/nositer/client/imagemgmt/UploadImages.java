@@ -7,18 +7,13 @@ import org.swfupload.client.UploadBuilder;
 import org.swfupload.client.event.UploadProgressHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.MultiUploader;
-
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.shared.ServiceBroker;
 
@@ -30,16 +25,35 @@ public class UploadImages extends LayoutContainer {
 	}
 
 	public void init() {
-
-
+		
+		GWTUtil.loadjscssfile("/public/swf/swfupload.js", "js");
 		// The placeholder to be replaced by the swfupload control
 		// This could also be provided statically by your host HTML page
-		HtmlContainer htmlContainer = new HtmlContainer("abc");
+		HtmlContainer htmlContainer = new HtmlContainer("CCC");
+		//("var swfu; window.onload = function () { swfu = new SWFUpload({ upload_url : \"http://www.swfupload.org/upload.php\", flash_url : \"http://www.swfupload.org/swfupload.swf\", file_size_limit : \"20 MB\" }); };");
 		htmlContainer.setId("swfupload");
 		this.setMonitorWindowResize(true);
 		this.add(htmlContainer);
 
-		AsyncCallback<Void> callback = new  AsyncCallback<Void>() {
+		AsyncCallback<String> callbackWithSessionId = new  AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				doUploadInit(result);
+			}
+
+		};
+		uploadButton = new Button("Upload");
+		this.add(uploadButton);
+		//ServiceBroker.securityService.getSessionId(callbackWithSessionId);
+		
+		
+		AsyncCallback<Void> callbackNoop = new AsyncCallback<Void> () {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -48,14 +62,12 @@ public class UploadImages extends LayoutContainer {
 
 			@Override
 			public void onSuccess(Void result) {
-				doUploadInit();
+				doUploadInit("ABC");
+				
 			}
-
+			
 		};
-		uploadButton = new Button("Upload");
-		this.add(uploadButton);
-		ServiceBroker.noopService.noop(callback);
-
+		ServiceBroker.noopService.noop(callbackNoop);
 	}
 
 
@@ -63,24 +75,25 @@ public class UploadImages extends LayoutContainer {
 	    builder.@org.swfupload.client.UploadBuilder::settings['flash_url'] = url;
 	  }-*/;
 	
-	public void doUploadInit() {
+	public void doUploadInit(String sessionId) {
 
 		final UploadBuilder builder = new UploadBuilder();
 
 		// Configure which file types may be selected
+		
 		builder.setFileTypes("*.asf;*.wma;*.wmv;*.avi;*.flv;*.swf;*.mpg;*.mpeg;*.mp4;*.mov;*.m4v;*.aac;*.mp3;*.wav;*.png;*.jpg;*.jpeg;*.gif");
 		builder.setFileTypesDescription("Images, Video & Sound");
 
 		setFlashURL(builder, "/public/swf/swfupload.swf");
-		builder.setUploadURL("/upload");
+		//builder.setUploadURL("/upload" + ";JSESSIONID=" + sessionId);
 
 		// Configure the button to display
 		builder.setButtonPlaceholderID("swfupload");
-		//builder.setButtonImageURL("XPButtonUploadText_61x22.png");
+		builder.setButtonImageURL("/public/image/bol.png");
 		builder.setButtonWidth(61);
 		builder.setButtonHeight(22);
-		builder.setButtonText("<span class=\"label\">Browse</span>");
-		builder.setButtonTextStyle(".label { color: #000000; font-family: sans font-size: 16pt; }");
+		builder.setButtonText("<span class=\"uploadBrowse\">Browse</span>");
+		builder.setButtonTextStyle(".uploadBrowse { color: #000000; font-family: sans font-size: 16pt; }");
 		builder.setButtonTextLeftPadding(7);
 		builder.setButtonTextTopPadding(4);
 
@@ -116,7 +129,7 @@ public class UploadImages extends LayoutContainer {
 
 
 		final SWFUpload upload = builder.build();
-
+		
 		uploadButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
 
 
