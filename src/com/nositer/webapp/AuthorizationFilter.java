@@ -20,6 +20,7 @@ import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.User;
 import com.nositer.server.service.ProfileServiceImpl;
+import com.nositer.shared.Global;
 import com.nositer.util.Encrypt;
 
 @SuppressWarnings("unchecked")
@@ -59,13 +60,18 @@ public class AuthorizationFilter implements Filter {
 					doLoginRequest(request, response, chain);
 				} else if (urlStr.startsWith(REGISTER_PREFIX) || urlStr.equals(REGISTER_URL)) {
 					doRegisterRequest(request, response, chain);
+				} else if (urlStr.startsWith(Global.UPLOADURL)) {
+					chain.doFilter(request, response);
 				} else {
 					doSessionCheck(request, response, chain);
 				}
 			} else {
 				chain.doFilter(request, response);
 			}
-		} finally {
+		} catch (Exception e) {
+			Application.log.error("", e);
+		}
+		finally {
 			perThreadRequest.set(null);
 			perThreadResponse.set(null);
 		}

@@ -64,4 +64,8 @@ public class GWTUtil {
 		  $doc.getElementsByTagName("head")[0].appendChild(fileref)
 		}
 	}-*/;
+	
+	public native static int getFlashVersion()  /*-{
+		return $wnd.getFlashVersion();
+	}-*/;
 }

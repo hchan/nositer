@@ -68,6 +68,16 @@
 		<servlet-name>UploadServlet</servlet-name>
 		<servlet-class>com.nositer.server.servlet.UploadServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
+		<servlet-class>com.nositer.server.servlet.CurrentUserAsJsonServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
+		<url-pattern>/currentuserasjson</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>

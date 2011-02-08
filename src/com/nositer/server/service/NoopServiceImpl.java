@@ -8,14 +8,10 @@ import com.nositer.client.service.NoopService;
 public class NoopServiceImpl extends RemoteServiceServlet implements NoopService {
 
 	@Override
-	public void noop() {
+	public void noop(int sleep) {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(sleep);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
-
-	
+	}	
 }

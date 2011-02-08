@@ -8,5 +8,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("ServiceResolver.gwtrpc")
 public interface NoopService extends RemoteService {	
-	void noop();
+	void noop(int sleep);
 }

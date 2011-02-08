@@ -15,9 +15,12 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.shared.Global;
 import com.nositer.shared.ServiceBroker;
 
 public class UploadImages extends LayoutContainer {
+	public static String SWFUPLOADDIR = "/public/swfupload";
+	public static String SWFUPLOADSLOT = "swfupload";
 	private Button uploadButton;
 
 	public UploadImages() {
@@ -26,12 +29,10 @@ public class UploadImages extends LayoutContainer {
 
 	public void init() {
 		
-		GWTUtil.loadjscssfile("/public/swf/swfupload.js", "js");
 		// The placeholder to be replaced by the swfupload control
 		// This could also be provided statically by your host HTML page
 		HtmlContainer htmlContainer = new HtmlContainer("CCC");
-		//("var swfu; window.onload = function () { swfu = new SWFUpload({ upload_url : \"http://www.swfupload.org/upload.php\", flash_url : \"http://www.swfupload.org/swfupload.swf\", file_size_limit : \"20 MB\" }); };");
-		htmlContainer.setId("swfupload");
+		htmlContainer.setId(SWFUPLOADSLOT);
 		this.setMonitorWindowResize(true);
 		this.add(htmlContainer);
 
@@ -50,24 +51,8 @@ public class UploadImages extends LayoutContainer {
 		};
 		uploadButton = new Button("Upload");
 		this.add(uploadButton);
-		//ServiceBroker.securityService.getSessionId(callbackWithSessionId);
+		ServiceBroker.securityService.getSessionId(callbackWithSessionId);
 		
-		
-		AsyncCallback<Void> callbackNoop = new AsyncCallback<Void> () {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				GWTUtil.log("", caught);
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				doUploadInit("ABC");
-				
-			}
-			
-		};
-		ServiceBroker.noopService.noop(callbackNoop);
 	}
 
 
@@ -76,7 +61,7 @@ public class UploadImages extends LayoutContainer {
 	  }-*/;
 	
 	public void doUploadInit(String sessionId) {
-
+		GWTUtil.log("Flash Version: " + GWTUtil.getFlashVersion());
 		final UploadBuilder builder = new UploadBuilder();
 
 		// Configure which file types may be selected
@@ -84,11 +69,16 @@ public class UploadImages extends LayoutContainer {
 		builder.setFileTypes("*.asf;*.wma;*.wmv;*.avi;*.flv;*.swf;*.mpg;*.mpeg;*.mp4;*.mov;*.m4v;*.aac;*.mp3;*.wav;*.png;*.jpg;*.jpeg;*.gif");
 		builder.setFileTypesDescription("Images, Video & Sound");
 
-		setFlashURL(builder, "/public/swf/swfupload.swf");
-		//builder.setUploadURL("/upload" + ";JSESSIONID=" + sessionId);
+		if (GWTUtil.getFlashVersion() >= 10) {
+			setFlashURL(builder, SWFUPLOADDIR + "/swfupload.swf");
+		} else {
+			setFlashURL(builder, SWFUPLOADDIR + "/swfupload_fp9.swf");
+		}
+		builder.setUploadURL(Global.UPLOADURL + "?" + Global.UPLOADCREDENTIALKEY + "=" + sessionId);
+		                                   
 
 		// Configure the button to display
-		builder.setButtonPlaceholderID("swfupload");
+		builder.setButtonPlaceholderID(SWFUPLOADSLOT);
 		builder.setButtonImageURL("/public/image/bol.png");
 		builder.setButtonWidth(61);
 		builder.setButtonHeight(22);
