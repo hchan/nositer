@@ -11,6 +11,7 @@ import com.google.gwt.user.client.History;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
+import com.nositer.client.imagemgmt.UploadImages;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
@@ -64,6 +65,10 @@ public class HistoryManager {
 			leftPanel.getProfile().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getEditAboutMeNavigationItem());
 			setMainPanel(new EditAboutMe());
+		} else if (historyToken.equals(UPLOADIMAGES.toString())) {
+			leftPanel.getImages().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getUploadImagesNavigationItem());
+			setMainPanel(new UploadImages());
 		}
 	}
 	

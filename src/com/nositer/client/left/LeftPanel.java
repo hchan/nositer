@@ -10,7 +10,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 
-@SuppressWarnings({})
+
 public class LeftPanel extends ContentPanel {
 	private static LeftPanel instance;
 	private BorderLayoutData leftLayoutData;
@@ -31,6 +31,72 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem uploadImagesNavigationItem;
 	private NavigationItem manageImagesNavigationItem;
 	
+	public NavigationItem getMyGroups() {
+		return myGroups;
+	}
+
+	public void setMyGroups(NavigationItem myGroups) {
+		this.myGroups = myGroups;
+	}
+
+	public NavigationItem getManageGroups() {
+		return manageGroups;
+	}
+
+	public void setManageGroups(NavigationItem manageGroups) {
+		this.manageGroups = manageGroups;
+	}
+
+	public NavigationItem getMyIwantTos() {
+		return myIwantTos;
+	}
+
+	public void setMyIwantTos(NavigationItem myIwantTos) {
+		this.myIwantTos = myIwantTos;
+	}
+
+	public ContentPanel getiWantTo() {
+		return iWantTo;
+	}
+
+	public void setiWantTo(ContentPanel iWantTo) {
+		this.iWantTo = iWantTo;
+	}
+
+	public NavigationItem getManageIwantTos() {
+		return manageIwantTos;
+	}
+
+	public void setManageIwantTos(NavigationItem manageIwantTos) {
+		this.manageIwantTos = manageIwantTos;
+	}
+
+	public ContentPanel getImages() {
+		return images;
+	}
+
+	public void setImages(ContentPanel images) {
+		this.images = images;
+	}
+
+	public NavigationItem getUploadImagesNavigationItem() {
+		return uploadImagesNavigationItem;
+	}
+
+	public void setUploadImagesNavigationItem(
+			NavigationItem uploadImagesNavigationItem) {
+		this.uploadImagesNavigationItem = uploadImagesNavigationItem;
+	}
+
+	public NavigationItem getManageImagesNavigationItem() {
+		return manageImagesNavigationItem;
+	}
+
+	public void setManageImagesNavigationItem(
+			NavigationItem manageImagesNavigationItem) {
+		this.manageImagesNavigationItem = manageImagesNavigationItem;
+	}
+
 	public NavigationItem getEditAboutMeNavigationItem() {
 		return editAboutMeNavigationItem;
 	}
