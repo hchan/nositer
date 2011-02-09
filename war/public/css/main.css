@@ -199,3 +199,7 @@
     list-style-type:disc
     padding-left:40px;
 }
+
+.selectedFolder input {
+	color: green !important;
+}

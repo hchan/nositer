@@ -3,8 +3,6 @@ package com.nositer.server.service;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-
+import org.apache.commons.io.FilenameUtils;
 
 import com.extjs.gxt.ui.client.Style.SortDir;
 import com.extjs.gxt.ui.client.data.RemoteSortTreeLoadConfig;
@@ -31,10 +29,12 @@ import com.nositer.webapp.Application;
 public class FileServiceImpl extends RemoteServiceServlet implements FileService {
 
 	private File root;
+	private String rootDir;
 	private FilenameFilter filter;
 	private HashMap<File, String> idMap = new HashMap<File, String>();
 	private int counter = 0;
 	private User user;
+	
 	public FileServiceImpl() {
 		user = Application.getCurrentUser();
 		filter = new FilenameFilter() {
@@ -43,9 +43,17 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 			}
 		};
 	}
+	
+	public String getUserRelativePath(String absolutePath) {
+		String retval = absolutePath;
+		retval = absolutePath.substring(root.getAbsolutePath().length());
+		retval = FilenameUtils.separatorsToUnix(retval);
+		return retval;
+	}
 
 	public List<FileModel> getImageFolderChildren(FileModel folder) {
-		root = new File(MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()));
+		rootDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId());
+		root = new File(rootDir);
 		try {
 			createDirsIfNecessary();
 		} catch (IOException e) {
@@ -56,17 +64,21 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		if (folder == null) {
 			files = root.listFiles(filter);
 		} else {
-			File f = new File(folder.getPath());
+			File f = new File(rootDir + "/" + folder.getPath());
 			files = f.listFiles(filter);
 		}
 
 		List<FileModel> models = new ArrayList<FileModel>();
 		for (File f : files) {
 			FileModel m = null;
-			if (f.isDirectory()) {
-				m = new FolderModel(f.getName(), f.getAbsolutePath());
+			if (f.isDirectory()) {			
+				m = new FolderModel(f.getName(), 
+						getUserRelativePath(f.getAbsolutePath()));
+				//f.getAbsolutePath());
 			} else {
-				m = new FileModel(f.getName(), f.getAbsolutePath());
+				m = new FileModel(f.getName(), 
+						getUserRelativePath(f.getAbsolutePath()));
+				//f.getAbsolutePath());
 				m.set("size", f.length());
 				m.set("date", new Date(f.lastModified()));
 			}
@@ -91,28 +103,25 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	private void createDirsIfNecessary() throws IOException {
-		if (!root.exists()) {
-			FileUtils.forceMkdir(root);
-			
-		}
+	
 		File privateImageDir = new File(MessageFormat.format(Global.USERPRIVATEIMAGEDIRTEMPLATE, user.getId()));
 		if (!privateImageDir.exists()) {
-			privateImageDir.mkdir();
+			FileUtils.forceMkdir(privateImageDir);
 		}
 		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICIMAGEDIRTEMPLATE, user.getId()));
 		if (!publicImageDir.exists()) {
-			publicImageDir.mkdir();
+			FileUtils.forceMkdir(publicImageDir);
 		}
 	}
 
 	public List<FileModel> getImageFolderChildren(final RemoteSortTreeLoadConfig loadConfig) {
-	
+
 		List<FileModel> models = getImageFolderChildren((FileModel) loadConfig.getParent());
 		final String prop = loadConfig.getSortField();
 		final boolean desc = loadConfig.getSortDir() == SortDir.DESC;
 		if (prop != null) {
 			Collections.sort(models, new Comparator<FileModel>() {
-				
+
 				public int compare(FileModel o1, FileModel o2) {
 					boolean m1Folder = o1 instanceof FolderModel;
 					boolean m2Folder = o2 instanceof FolderModel;

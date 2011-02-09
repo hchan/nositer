@@ -6,21 +6,19 @@ import java.util.List;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.data.BaseTreeLoader;
 import com.extjs.gxt.ui.client.data.ModelData;
-import com.extjs.gxt.ui.client.data.ModelKeyProvider;
 import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.data.TreeLoader;
+import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.store.StoreSorter;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.button.ToolButton;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.extjs.gxt.ui.client.widget.tips.ToolTipConfig;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -29,6 +27,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 
 public class FileDirectoryTreeGrid extends LayoutContainer {
+
+	private SelectedFolderPanel selectedFolderPanel;
 
 	public FileDirectoryTreeGrid() {
 		init();
@@ -56,6 +56,8 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 			public boolean hasChildren(FileModel parent) {  
 				return parent instanceof FolderModel;  
 			}  
+			
+			
 		};  
 
 		// trees store  
@@ -95,9 +97,45 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		cp.setFrame(true);  
 		cp.setSize(600, 300);  
 
-		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm);  
+		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
+			@Override
+			protected boolean hasChildren(ModelData model) {
+				boolean retval = false;
+				if (model instanceof FolderModel) {
+					// never treat a folder to be a leaf
+					retval = true;
+				} else {
+					retval = super.hasChildren(model);
+				}
+				
+				return retval;
+			}
+			
+			@Override
+			public boolean isLeaf(ModelData model) {
+				boolean retval = false;
+				if (model instanceof FolderModel) {
+					// never treat a folder to be a leaf
+					retval = false;
+				} else {
+					retval = super.isLeaf(model);
+				}
+				
+				return retval;
+			}
+			
+			@Override
+			protected void onClick(GridEvent<ModelData> e) {
+				super.onClick(e);
+				if (e.getModel() instanceof FolderModel) {
+					FolderModel folderModel = (FolderModel)e.getModel();
+					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());
+				}
+			}
+		};  
 		
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
+
 		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
 		
 		// stateful components need a defined id  
@@ -115,12 +153,14 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
+		tree.setCaching(false);
 		
 		tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
 		cp.add(tree);  
 
+		
 		//ToolTipConfig config = new ToolTipConfig();  
 		//config.setTitle("Example Information");  
 		//config.setShowDelay(1);  
@@ -133,7 +173,10 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 
 		// cp.getHeader().addTool(btn);  
 
+		selectedFolderPanel = new SelectedFolderPanel();
+		cp.setBottomComponent(selectedFolderPanel);
 		add(cp);  
+		
 	}  
 
 }

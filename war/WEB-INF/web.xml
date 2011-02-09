@@ -50,6 +50,9 @@
 	<listener>
 		<listener-class>com.nositer.webapp.HibernateListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.nositer.webapp.BootstrapListener</listener-class>
+	</listener>
 
 
 	<!-- Servlets -->
