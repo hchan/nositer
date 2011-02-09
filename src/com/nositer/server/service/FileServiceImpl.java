@@ -27,6 +27,7 @@ import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
 
+@SuppressWarnings({"unchecked", "rawtypes", "serial"})
 public class FileServiceImpl extends RemoteServiceServlet implements FileService {
 
 	private File root;
@@ -36,9 +37,6 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	private User user;
 	public FileServiceImpl() {
 		user = Application.getCurrentUser();
-		
-		
-		
 		filter = new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return !name.startsWith(".");
@@ -51,6 +49,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		try {
 			createDirsIfNecessary();
 		} catch (IOException e) {
+			Application.log.error("", e);
 			throw new GWTException(e);
 		}
 		File[] files = null;
@@ -113,7 +112,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		final boolean desc = loadConfig.getSortDir() == SortDir.DESC;
 		if (prop != null) {
 			Collections.sort(models, new Comparator<FileModel>() {
-				@SuppressWarnings({"unchecked", "rawtypes"})
+				
 				public int compare(FileModel o1, FileModel o2) {
 					boolean m1Folder = o1 instanceof FolderModel;
 					boolean m2Folder = o2 instanceof FolderModel;

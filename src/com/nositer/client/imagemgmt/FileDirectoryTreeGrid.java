@@ -89,23 +89,29 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 
 		ContentPanel cp = new ContentPanel();  
 		cp.setBodyBorder(false);  
-		cp.setHeading("Async TreeGrid");  
+		cp.setHeading("Images");  
 		cp.setButtonAlign(HorizontalAlignment.CENTER);  
 		cp.setLayout(new FitLayout());  
 		cp.setFrame(true);  
 		cp.setSize(600, 300);  
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm);  
-		tree.setStateful(true);  
+		
+		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
+		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
+		
 		// stateful components need a defined id  
-		tree.setId("statefullasynctreegrid");  
+		 //tree.setStateful(true);  
+		//tree.setId("uploadImagesTree");  
+		/*
 		store.setKeyProvider(new ModelKeyProvider<FileModel>() {  
 
 			public String getKey(FileModel model) {  
 				return model.<String> get("id");  
 			}  
 
-		});  
+		});
+		*/  
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createStyle("icon-page"));  
 		tree.setSize(400, 400);  
@@ -113,14 +119,14 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		tree.setTrackMouseOver(false);  
 		cp.add(tree);  
 
-		ToolTipConfig config = new ToolTipConfig();  
-		config.setTitle("Example Information");  
-		config.setShowDelay(1);  
-		config.setText("In this example state has been enabled for the treegrid. When enabled, the expand state of the treegrid is "  
-				+ "saved and restored using the StateManager. Try refreshing the browser after expanding some nodes in the "  
-				+ "treegrid. Notice that this works with asynchronous loading of nodes.");  
+		//ToolTipConfig config = new ToolTipConfig();  
+		//config.setTitle("Example Information");  
+		//config.setShowDelay(1);  
+		//config.setText("In this example state has been enabled for the treegrid. When enabled, the expand state of the treegrid is "  
+		//		+ "saved and restored using the StateManager. Try refreshing the browser after expanding some nodes in the "  
+		//		+ "treegrid. Notice that this works with asynchronous loading of nodes.");  
 
-		ToolButton btn = new ToolButton("x-tool-help");  
+		//ToolButton btn = new ToolButton("x-tool-help");  
 		//btn.setToolTip(config);  
 
 		// cp.getHeader().addTool(btn);  
