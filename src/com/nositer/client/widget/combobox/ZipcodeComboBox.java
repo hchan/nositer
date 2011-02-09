@@ -1,8 +1,8 @@
 package com.nositer.client.widget.combobox;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Zipcode;
-import com.nositer.shared.ServiceBroker;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
 public class ZipcodeComboBox extends ComboBoxPlus<Zipcode> {

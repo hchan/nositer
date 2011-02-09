@@ -8,10 +8,10 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.shared.ServiceBroker;
 
 public class ViewProfileTabPanel extends TabPanel {
 

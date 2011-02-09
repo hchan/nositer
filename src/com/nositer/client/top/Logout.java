@@ -7,8 +7,8 @@ import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class Logout extends LayoutContainer {
 	private Label logoutLabel;

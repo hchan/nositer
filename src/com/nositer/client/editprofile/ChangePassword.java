@@ -13,11 +13,11 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
-import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class ChangePassword extends LayoutContainer {
 	

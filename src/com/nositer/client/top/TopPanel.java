@@ -9,9 +9,9 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.shared.ServiceBroker;
 
 public class TopPanel extends ContentPanel {	
 	private static TopPanel instance;

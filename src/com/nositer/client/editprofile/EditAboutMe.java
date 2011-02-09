@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -23,7 +24,6 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Resizable;
-import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class EditAboutMe extends LayoutContainer implements Resizable {
 

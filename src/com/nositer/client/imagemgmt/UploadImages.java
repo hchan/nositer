@@ -14,12 +14,11 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.shared.Global;
-import com.nositer.shared.ServiceBroker;
 
 public class UploadImages extends LayoutContainer {
-	public static String SWFUPLOADDIR = "/public/swfupload";
 	public static String SWFUPLOADSLOT = "swfupload";
 	private Button uploadButton;
 
@@ -28,10 +27,12 @@ public class UploadImages extends LayoutContainer {
 	}
 
 	public void init() {
-		
+		FileDirectoryTreeGrid fileDirectoryTreeGrid = new FileDirectoryTreeGrid();
+		add(fileDirectoryTreeGrid);
+
 		// The placeholder to be replaced by the swfupload control
 		// This could also be provided statically by your host HTML page
-		HtmlContainer htmlContainer = new HtmlContainer("CCC");
+		HtmlContainer htmlContainer = new HtmlContainer("");
 		htmlContainer.setId(SWFUPLOADSLOT);
 		this.setMonitorWindowResize(true);
 		this.add(htmlContainer);
@@ -45,37 +46,46 @@ public class UploadImages extends LayoutContainer {
 
 			@Override
 			public void onSuccess(String result) {
-				doUploadInit(result);
+				doSWFUploadInit(result);
 			}
 
 		};
 		uploadButton = new Button("Upload");
 		this.add(uploadButton);
 		ServiceBroker.securityService.getSessionId(callbackWithSessionId);
-		
+
 	}
 
 
 	public native void setFlashURL(UploadBuilder builder, String url) /*-{
 	    builder.@org.swfupload.client.UploadBuilder::settings['flash_url'] = url;
 	  }-*/;
-	
-	public void doUploadInit(String sessionId) {
-		GWTUtil.log("Flash Version: " + GWTUtil.getFlashVersion());
+
+
+	public String getFlashURL() {
+		String retval = null;
+		if (GWTUtil.getFlashVersion() >= 10) {
+			retval = Global.SWFLOADDIRFLASHPLAYER10;
+		} else {
+			retval = Global.SWFLOADDIRFLASHPLAYER9;
+		}
+		return retval;
+	}
+
+	public void doSWFUploadInit(String sessionId) {
+		
 		final UploadBuilder builder = new UploadBuilder();
 
 		// Configure which file types may be selected
-		
+
 		builder.setFileTypes("*.asf;*.wma;*.wmv;*.avi;*.flv;*.swf;*.mpg;*.mpeg;*.mp4;*.mov;*.m4v;*.aac;*.mp3;*.wav;*.png;*.jpg;*.jpeg;*.gif");
 		builder.setFileTypesDescription("Images, Video & Sound");
 
-		if (GWTUtil.getFlashVersion() >= 10) {
-			setFlashURL(builder, SWFUPLOADDIR + "/swfupload.swf");
-		} else {
-			setFlashURL(builder, SWFUPLOADDIR + "/swfupload_fp9.swf");
-		}
+
+		setFlashURL(builder, getFlashURL());
+
 		builder.setUploadURL(Global.UPLOADURL + "?" + Global.UPLOADCREDENTIALKEY + "=" + sessionId);
-		                                   
+
 
 		// Configure the button to display
 		builder.setButtonPlaceholderID(SWFUPLOADSLOT);
@@ -119,7 +129,7 @@ public class UploadImages extends LayoutContainer {
 
 
 		final SWFUpload upload = builder.build();
-		
+
 		uploadButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
 
 

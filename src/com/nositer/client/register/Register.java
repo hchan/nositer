@@ -26,6 +26,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
@@ -35,7 +36,6 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
-import com.nositer.shared.ServiceBroker;
 @SuppressWarnings("unchecked")
 public class Register implements EntryPoint {
 

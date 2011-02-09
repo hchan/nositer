@@ -15,6 +15,7 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
@@ -26,7 +27,6 @@ import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup.GenderType;
-import com.nositer.shared.ServiceBroker;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class EditBasicProfile extends LayoutContainer {
 	private Register register;
