@@ -97,7 +97,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm);  
 		
-		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
+		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
 		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
 		
 		// stateful components need a defined id  
@@ -113,7 +113,9 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		});
 		*/  
 		tree.setBorders(true);  
-		tree.getStyle().setLeafIcon(IconHelper.createStyle("icon-page"));  
+		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
+		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
+		
 		tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  

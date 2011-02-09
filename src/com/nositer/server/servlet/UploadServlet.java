@@ -3,6 +3,7 @@ package com.nositer.server.servlet;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -66,7 +67,7 @@ public class UploadServlet extends HttpServlet {
 
 
 					InputStream in = item.getInputStream();
-					FileOutputStream fos = new FileOutputStream("/temp/tempupload" + "/" + item.getName());
+					FileOutputStream fos = new FileOutputStream(MessageFormat.format(Global.USERPUBLICIMAGEDIRTEMPLATE, user.getId()) + "/" + item.getName());
 					byte buf[]=new byte[1024];
 					int len;
 					while ((len=in.read(buf)) > 0) {
