@@ -30,6 +30,7 @@ import com.nositer.client.ServiceBroker;
 
 public class UploadQueue extends LayoutContainer {
 	private SWFUploadContainer swfUploadContainer;
+	private ContentPanel contentPanel;
 
 	public SWFUploadContainer getSwfUploadContainer() {
 		return swfUploadContainer;
@@ -47,108 +48,13 @@ public class UploadQueue extends LayoutContainer {
 		FlowLayout layout = new FlowLayout();
 		layout.setMargins(new Margins(0, 10, 0, 0));
 		setLayout(layout);  
-		// data proxy  
-		RpcProxy<List<FileModel>> proxy = new RpcProxy<List<FileModel>>() {  
-			@Override
-			protected void load(Object loadConfig,
-					AsyncCallback<List<FileModel>> callback) {
-				ServiceBroker.fileService.getImageFolderChildren((FileModel) loadConfig, callback);  
-			}  
-		};  
-
-		// tree loader  
-		final TreeLoader<FileModel> loader = new BaseTreeLoader<FileModel>(proxy) {  
-			@Override  
-			public boolean hasChildren(FileModel parent) {  
-				return parent instanceof FolderModel;  
-			}  
-		};  
-
-		// trees store  
-		final TreeStore<FileModel> store = new TreeStore<FileModel>(loader);  
-		store.setStoreSorter(new StoreSorter<FileModel>() {  
-
-			@Override  
-			public int compare(Store<FileModel> store, FileModel m1, FileModel m2, String property) {  
-				boolean m1Folder = m1 instanceof FolderModel;  
-				boolean m2Folder = m2 instanceof FolderModel;  
-
-				if (m1Folder && !m2Folder) {  
-					return -1;  
-				} else if (!m1Folder && m2Folder) {  
-					return 1;  
-				}  
-
-				return super.compare(store, m1, m2, property);  
-			}  
-		});  
-
-		ColumnConfig name = new ColumnConfig("name", "Name",50);  
-		name.setRenderer(new TreeGridCellRenderer<ModelData>());  
-
-		//ColumnConfig date = new ColumnConfig("date", "Date", 100);  
-		//date.setDateTimeFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)); 
-
-		//ColumnConfig size = new ColumnConfig("size", "Size", 100);  
-
-		ColumnModel cm = new ColumnModel(Arrays.asList(name));  
-
-		ContentPanel cp = new ContentPanel();  
-		cp.setBodyBorder(false);  
-		cp.setHeading("Upload Queue");  
-		cp.setButtonAlign(HorizontalAlignment.CENTER);  
-		cp.setLayout(new FitLayout());  
-		cp.setFrame(true);  
-
-		cp.setHeight(FileDirectoryTreeGrid.HEIGHT - 7);  
-
-		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
-
-
-		};  
-
-		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
-
-		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
-
-		// stateful components need a defined id  
-		//tree.setStateful(true);  
-		//tree.setId("uploadImagesTree");  
-		/*
-		store.setKeyProvider(new ModelKeyProvider<FileModel>() {  
-
-			public String getKey(FileModel model) {  
-				return model.<String> get("id");  
-			}  
-
-		});
-		 */  
-		tree.setBorders(true);  
-		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
-		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
-		tree.setCaching(false);
-
-		tree.setHeight(FileDirectoryTreeGrid.HEIGHT);
-		tree.setAutoExpandColumn("name");  
-		tree.setTrackMouseOver(false);  
-		//cp.add(tree);  
-
-
-		//ToolTipConfig config = new ToolTipConfig();  
-		//config.setTitle("Example Information");  
-		//config.setShowDelay(1);  
-		//config.setText("In this example state has been enabled for the treegrid. When enabled, the expand state of the treegrid is "  
-		//		+ "saved and restored using the StateManager. Try refreshing the browser after expanding some nodes in the "  
-		//		+ "treegrid. Notice that this works with asynchronous loading of nodes.");  
-
-		//ToolButton btn = new ToolButton("x-tool-help");  
-		//btn.setToolTip(config);  
-
-		// cp.getHeader().addTool(btn);  
-
+		contentPanel = new ContentPanel();
+		contentPanel.setHeading("Upload Queue");
+		contentPanel.setFrame(true);
+		contentPanel.setHeight(FileDirectoryTreeGrid.HEIGHT - 7);
 		swfUploadContainer = new SWFUploadContainer();
-		cp.setBottomComponent(swfUploadContainer);
-		add(cp);  
+		contentPanel.setBottomComponent(swfUploadContainer);
+		add(contentPanel);  
 
 	}  
 }

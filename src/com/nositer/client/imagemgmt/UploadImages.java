@@ -40,7 +40,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
 public class UploadImages extends LayoutContainer implements Resizable {
-
+	public static int FILESIZELIMIT = 5; // MB
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
@@ -128,9 +128,8 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setButtonImageURL("/public/image/spyGlass.png");
 		builder.setButtonWidth(180);
 		builder.setButtonHeight(20);
-		int fileSizeLimit = 5;
-		builder.setFileSizeLimit(fileSizeLimit);
-		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + fileSizeLimit + " MB Max)</span></span>");
+		builder.setFileSizeLimit(FILESIZELIMIT);
+		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + FILESIZELIMIT + " MB Max)</span></span>");
 		builder.setButtonTextStyle(".uploadBrowse { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .fileSize {font-size: 10pt;}");
 		builder.setButtonTextLeftPadding(18);
 		builder.setButtonTextTopPadding(0);
