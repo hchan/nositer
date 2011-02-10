@@ -128,7 +128,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setButtonImageURL("/public/image/spyGlass.png");
 		builder.setButtonWidth(180);
 		builder.setButtonHeight(20);
-		int fileSizeLimit = 2;
+		int fileSizeLimit = 5;
 		builder.setFileSizeLimit(fileSizeLimit);
 		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + fileSizeLimit + " MB Max)</span></span>");
 		builder.setButtonTextStyle(".uploadBrowse { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .fileSize {font-size: 10pt;}");
