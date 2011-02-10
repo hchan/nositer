@@ -100,7 +100,7 @@ public class UploadQueue extends LayoutContainer {
 		cp.setLayout(new FitLayout());  
 		cp.setFrame(true);  
 
-		cp.setHeight(295);  
+		cp.setHeight(FileDirectoryTreeGrid.HEIGHT - 7);  
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
 

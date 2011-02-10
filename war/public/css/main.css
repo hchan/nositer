@@ -203,3 +203,14 @@
 .selectedFolder input {
 	color: green !important;
 }
+
+.uploadBrowseContainer { 
+	display: inline;
+	border: 1px solid #7FAAFF;;	
+	background-color: #C5D9FF;
+	padding: 3px;
+	position: relative;
+	float: left;
+	
+	
+}
