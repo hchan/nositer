@@ -13,6 +13,7 @@ import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.store.StoreSorter;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
@@ -27,17 +28,25 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 
-public class FileDirectoryTreeGrid extends LayoutContainer {
+public class UploadQueue extends LayoutContainer {
+	private SWFUploadContainer swfUploadContainer;
 
-	private SelectedFolderPanel selectedFolderPanel;
+	public SWFUploadContainer getSwfUploadContainer() {
+		return swfUploadContainer;
+	}
 
-	public FileDirectoryTreeGrid() {
+	public void setSwfUploadContainer(SWFUploadContainer swfUploadContainer) {
+		this.swfUploadContainer = swfUploadContainer;
+	}
+
+	public UploadQueue() {
 		init();
 	}
 
 	private void init() {
-
-		setLayout(new FlowLayout(10));  
+		FlowLayout layout = new FlowLayout();
+		layout.setMargins(new Margins(0, 10, 0, 0));
+		setLayout(layout);  
 		// data proxy  
 		RpcProxy<List<FileModel>> proxy = new RpcProxy<List<FileModel>>() {  
 			@Override
@@ -74,54 +83,36 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 			}  
 		});  
 
-		ColumnConfig name = new ColumnConfig("name", "Name", 100);  
+		ColumnConfig name = new ColumnConfig("name", "Name",50);  
 		name.setRenderer(new TreeGridCellRenderer<ModelData>());  
 
-		ColumnConfig date = new ColumnConfig("date", "Date", 100);  
-		date.setDateTimeFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)); 
+		//ColumnConfig date = new ColumnConfig("date", "Date", 100);  
+		//date.setDateTimeFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)); 
 
-		ColumnConfig size = new ColumnConfig("size", "Size", 100);  
+		//ColumnConfig size = new ColumnConfig("size", "Size", 100);  
 
-		ColumnModel cm = new ColumnModel(Arrays.asList(name, date, size));  
+		ColumnModel cm = new ColumnModel(Arrays.asList(name));  
 
 		ContentPanel cp = new ContentPanel();  
 		cp.setBodyBorder(false);  
-		cp.setHeading("My Images");  
+		cp.setHeading("Upload Queue");  
 		cp.setButtonAlign(HorizontalAlignment.CENTER);  
 		cp.setLayout(new FitLayout());  
 		cp.setFrame(true);  
-		cp.setSize(400, 300);
-		
+
+		cp.setHeight(295);  
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
 
-			@Override
-			protected AbstractImagePrototype calculateIconStyle(ModelData model) {
-				AbstractImagePrototype retval = null;
-				if (model instanceof FolderModel && isLeaf(model)) {
-					retval = IconHelper.createPath("/public/image/emptyFolder.png");
-				} else {
-					retval = super.calculateIconStyle(model);
-				}
-				return retval;
-			}
-			
-			@Override
-			protected void onClick(GridEvent<ModelData> e) {
-				super.onClick(e);
-				if (e.getModel() instanceof FolderModel) {
-					FolderModel folderModel = (FolderModel)e.getModel();
-					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
-				}
-			}
+
 		};  
-		
+
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
 
 		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
-		
+
 		// stateful components need a defined id  
-		 //tree.setStateful(true);  
+		//tree.setStateful(true);  
 		//tree.setId("uploadImagesTree");  
 		/*
 		store.setKeyProvider(new ModelKeyProvider<FileModel>() {  
@@ -131,18 +122,18 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 			}  
 
 		});
-		*/  
+		 */  
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
-		
+
 		tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
-		cp.add(tree);  
+		//cp.add(tree);  
 
-		
+
 		//ToolTipConfig config = new ToolTipConfig();  
 		//config.setTitle("Example Information");  
 		//config.setShowDelay(1);  
@@ -155,10 +146,9 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 
 		// cp.getHeader().addTool(btn);  
 
-		selectedFolderPanel = new SelectedFolderPanel();
-		cp.setBottomComponent(selectedFolderPanel);
+		swfUploadContainer = new SWFUploadContainer();
+		cp.setBottomComponent(swfUploadContainer);
 		add(cp);  
-		
-	}  
 
+	}  
 }
