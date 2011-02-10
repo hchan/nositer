@@ -84,7 +84,7 @@ public class EditAboutMe extends LayoutContainer implements Resizable {
 	}
 	
 	@Override
-	public void resize() {
+	public void resize(int width, int height) {
 		formPanel.setWidth(this.getWidth());
 		setDescriptionHeight();
 	}
@@ -97,11 +97,7 @@ public class EditAboutMe extends LayoutContainer implements Resizable {
 		description.setHeight(MainPanel.getInstance().getHeight() - heightOfComponents);
 	}
 
-	@Override
-	protected void onWindowResize(int width, int height) {
-		super.onWindowResize(width, height);
-		resize();
-	}
+	
 
 	public void initButtons() {
 		initUpdateButton();
@@ -121,7 +117,7 @@ public class EditAboutMe extends LayoutContainer implements Resizable {
 				if (errors.size() > 0) {
 					errorPanel.setErrors(errors);
 					errorPanel.show();		
-					resize();
+					resize(0,0);
 				} else {
 
 					AsyncCallback<Void> callback = new AsyncCallback<Void>() {
@@ -130,7 +126,7 @@ public class EditAboutMe extends LayoutContainer implements Resizable {
 							errorPanel.clearErrorMessages();
 							errorPanel.addErrorMessage(caught.getMessage());
 							errorPanel.show();
-							resize();
+							resize(0,0);
 							GWTUtil.log("", caught);
 						}
 
@@ -164,7 +160,11 @@ public class EditAboutMe extends LayoutContainer implements Resizable {
 		cancelButton.addListener(Events.Select, cancelListener);
 	}
 
-
+	@Override
+	protected void onWindowResize(int width, int height) {
+		super.onWindowResize(width, height);
+		resize(width, height);
+	}
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();		

@@ -29,23 +29,26 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
-public class UploadImages extends LayoutContainer {
+public class UploadImages extends LayoutContainer implements Resizable {
 
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
+	private FileDirectoryTreeGrid fileDirectoryTreeGrid;
 	public UploadImages() {
 		init();
 	}
 
 	public void init() {
 		TableLayout layout = new TableLayout(2);
-		layout.setWidth("100%");
+		layout.setWidth("98%");
 		this.setLayout(layout);
-		FileDirectoryTreeGrid fileDirectoryTreeGrid = new FileDirectoryTreeGrid();
+		fileDirectoryTreeGrid = new FileDirectoryTreeGrid();
 		add(fileDirectoryTreeGrid);
 		uploadQueue = new UploadQueue();
 
@@ -76,11 +79,16 @@ public class UploadImages extends LayoutContainer {
 		uploadButton.setAutoWidth(true);
 		uploadButtonContainer.add(uploadButton, new FlowData(0, 0, 0, 10));
 		this.add(uploadButtonContainer);
-		layout();
+	
+		resize(0,0);
 		ServiceBroker.securityService.getSessionId(callbackWithSessionId);
 
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - 430);
+	}
 
 
 	

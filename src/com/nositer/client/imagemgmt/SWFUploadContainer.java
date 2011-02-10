@@ -28,7 +28,7 @@ public class SWFUploadContainer extends LayoutContainer {
 	}
 
 	private void init() {
-		swfuploadSlot = new HtmlContainer("CCC");
+		swfuploadSlot = new HtmlContainer("Initializing...");
 		swfuploadSlot.setId(SWFUPLOADSLOT);
 		this.add(swfuploadSlot);
 	}

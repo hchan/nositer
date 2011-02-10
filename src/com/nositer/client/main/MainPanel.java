@@ -43,7 +43,7 @@ public class MainPanel extends ContentPanel {
 		for (Component component : getItems()) {
 			if (component instanceof Resizable) {
 				Resizable resizable = (Resizable)component;
-				resizable.resize();
+				resizable.resize(width, height);
 			}
 		}
 	}
