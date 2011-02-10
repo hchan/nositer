@@ -29,6 +29,8 @@ import com.nositer.client.ServiceBroker;
 
 public class FileDirectoryTreeGrid extends LayoutContainer {
 
+	public static final int HEIGHT = 300;
+	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
 
 	public FileDirectoryTreeGrid() {
@@ -90,7 +92,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		cp.setButtonAlign(HorizontalAlignment.CENTER);  
 		cp.setLayout(new FitLayout());  
 		cp.setFrame(true);  
-		cp.setSize(400, 300);
+		cp.setSize(WIDTH, HEIGHT);
 		
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {

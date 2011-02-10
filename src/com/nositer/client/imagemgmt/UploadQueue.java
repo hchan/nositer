@@ -128,7 +128,7 @@ public class UploadQueue extends LayoutContainer {
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
 
-		tree.setSize(400, 400);  
+		tree.setHeight(FileDirectoryTreeGrid.HEIGHT);
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
 		//cp.add(tree);  

@@ -46,7 +46,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 
 	public void init() {
 		TableLayout layout = new TableLayout(2);
-		layout.setWidth("98%");
+		layout.setWidth("100%");
 		this.setLayout(layout);
 		fileDirectoryTreeGrid = new FileDirectoryTreeGrid();
 		add(fileDirectoryTreeGrid);
@@ -87,7 +87,8 @@ public class UploadImages extends LayoutContainer implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - 430);
+		int spacing = 30;
+		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - FileDirectoryTreeGrid.WIDTH - spacing);
 	}
 
 
