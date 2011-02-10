@@ -24,6 +24,7 @@ import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 
 public class FileDirectoryTreeGrid extends LayoutContainer {
@@ -37,12 +38,8 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 	private void init() {
 
 		setLayout(new FlowLayout(10));  
-
-
 		// data proxy  
 		RpcProxy<List<FileModel>> proxy = new RpcProxy<List<FileModel>>() {  
-
-
 			@Override
 			protected void load(Object loadConfig,
 					AsyncCallback<List<FileModel>> callback) {
@@ -56,8 +53,6 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 			public boolean hasChildren(FileModel parent) {  
 				return parent instanceof FolderModel;  
 			}  
-			
-			
 		};  
 
 		// trees store  
@@ -98,29 +93,15 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		cp.setSize(600, 300);  
 
 		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
+
 			@Override
-			protected boolean hasChildren(ModelData model) {
-				boolean retval = false;
-				if (model instanceof FolderModel) {
-					// never treat a folder to be a leaf
-					retval = true;
+			protected AbstractImagePrototype calculateIconStyle(ModelData model) {
+				AbstractImagePrototype retval = null;
+				if (model instanceof FolderModel && isLeaf(model)) {
+					retval = IconHelper.createPath("/public/image/emptyFolder.png");
 				} else {
-					retval = super.hasChildren(model);
+					retval = super.calculateIconStyle(model);
 				}
-				
-				return retval;
-			}
-			
-			@Override
-			public boolean isLeaf(ModelData model) {
-				boolean retval = false;
-				if (model instanceof FolderModel) {
-					// never treat a folder to be a leaf
-					retval = false;
-				} else {
-					retval = super.isLeaf(model);
-				}
-				
 				return retval;
 			}
 			
@@ -129,7 +110,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 				super.onClick(e);
 				if (e.getModel() instanceof FolderModel) {
 					FolderModel folderModel = (FolderModel)e.getModel();
-					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());
+					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
 				}
 			}
 		};  
