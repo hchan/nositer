@@ -33,6 +33,7 @@ import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -49,7 +50,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
-	private FileDirectoryTreeGrid fileDirectoryTreeGrid;
+	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private static UploadImages instance;
 	private SWFUpload swfUpload;
 	public UploadImages() {
@@ -61,8 +62,8 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		TableLayout layout = new TableLayout(2);
 		layout.setWidth("100%");
 		this.setLayout(layout);
-		fileDirectoryTreeGrid = new FileDirectoryTreeGrid();
-		add(fileDirectoryTreeGrid);
+		fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer();
+		add(fileDirectoryTreeGridContainer);
 		uploadQueue = new UploadQueue();
 
 		add(uploadQueue);
@@ -101,7 +102,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		int spacing = 30;
-		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - FileDirectoryTreeGrid.WIDTH - spacing);
+		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - FileDirectoryTreeGridContainer.WIDTH - spacing);
 		uploadQueue.getGrid().getView().layout();
 	}
 
@@ -198,44 +199,70 @@ public class UploadImages extends LayoutContainer implements Resizable {
 			@Override
 			public void onFileQueueError(FileQueueErrorEvent event) {
 				FileModel fileModel = new FileModel(event.getFile().getName(), "");
+				fileModel.set(FileModel.Attribute.id.toString(), event.getFile().getId());
 				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
 				fileModel.set(FileModel.Attribute.errorMessage.toString(), event.getMessage());
 				uploadQueue.addRow(fileModel);
 			}});
 
-		
+
 		builder.setUploadCompleteHandler(new UploadCompleteHandler() {
 
 			@Override
 			public void onUploadComplete(UploadCompleteEvent e) {
 				GWTUtil.log(e.getFile().getName() + " has been uploaded");
-				swfUpload.startUpload();
+				
+				FileModel fileModel = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFolderModel();
+				//fileDirectoryTreeGridContainer.getTree().findNode( fileDirectoryTreeGridContainer.getSelectedFolderPanel().getModel()).setExpanded(true);
+				// fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().relo
+				 TreeNode treeNode = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode();
+				 treeNode.setLeaf(false);
+				 treeNode.setExpanded(false);
+				 treeNode.setExpanded(true);
+				 /*
+				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
+				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
+				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
+				 fileDirectoryTreeGridContainer.getTree().getSelectionModel().select(fileModel, false);
+				 fileDirectoryTreeGridContainer.getTree().getSelectionModel().refresh();
+				 */
+				 swfUpload.startUpload();
 			}
-			
+
 		});
-		 swfUpload = builder.build();
-		
+		swfUpload = builder.build();
+
 		uploadButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
 
 
-				if (fileDirectoryTreeGrid.getSelectedFolderPanel().getSelectedFolder().getValue() == null) {
+				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() == null) {
 					AlertMessageBox.show("Warning", "You must select a folder to upload to", null);
 				} else if (uploadQueue.getGrid().getStore().getCount() == 0) {
 					AlertMessageBox.show("Warning", "The Upload Queue is empty.\nClick on Select Images to Browse for local files", null);
-				}
+				} else {
 
-				swfUpload.setUploadURL(Global.UPLOADURL + "?" + 
-						Global.UPLOADCREDENTIALKEY + "=" + sessionId + "&" +
-						"uploadDir=" + URL.encode(fileDirectoryTreeGrid.getSelectedFolderPanel().getSelectedFolder().getValue())
-				);
-				
-				swfUpload.startUpload();
+					swfUpload.setUploadURL(Global.UPLOADURL + "?" + 
+							Global.UPLOADCREDENTIALKEY + "=" + sessionId + "&" +
+							"uploadDir=" + URL.encode(fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue())
+					);
+
+					swfUpload.startUpload();
+				}
 			}
 		});
 
-
+		uploadQueue.getClearAll().addListener(Events.Select,  new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent be) {
+				for (int i = 0; i < uploadQueue.getGrid().getStore().getCount(); i++) {
+					FileModel fileModel = uploadQueue.getGrid().getStore().getAt(i);
+					swfUpload.cancelUpload((String)fileModel.get(FileModel.Attribute.id.toString()), false);
+				}
+				uploadQueue.getGrid().getStore().removeAll();
+			}
+		});
 
 
 		// Attach any other handlers and custom logic here

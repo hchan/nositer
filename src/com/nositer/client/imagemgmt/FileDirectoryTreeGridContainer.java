@@ -27,12 +27,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 
-public class FileDirectoryTreeGrid extends LayoutContainer {
+public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 	public static final int HEIGHT = 300;
 	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
-	private TreeGrid<ModelData> tree;
+	private MyTreeGrid tree;
 
 	public SelectedFolderPanel getSelectedFolderPanel() {
 		return selectedFolderPanel;
@@ -42,15 +42,15 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		this.selectedFolderPanel = selectedFolderPanel;
 	}
 
-	public TreeGrid<ModelData> getTree() {
+	public MyTreeGrid getTree() {
 		return tree;
 	}
 
-	public void setTree(TreeGrid<ModelData> tree) {
+	public void setTree(MyTreeGrid tree) {
 		this.tree = tree;
 	}
 
-	public FileDirectoryTreeGrid() {
+	public FileDirectoryTreeGridContainer() {
 		init();
 	}
 
@@ -110,37 +110,28 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		cp.setLayout(new FitLayout());  
 		cp.setFrame(true);  
 		cp.setSize(WIDTH, HEIGHT);
-		
 
-		tree = new TreeGrid<ModelData>(store, cm) {
 
-			@Override
-			protected AbstractImagePrototype calculateIconStyle(ModelData model) {
-				AbstractImagePrototype retval = null;
-				if (model instanceof FolderModel && isLeaf(model)) {
-					retval = IconHelper.createPath("/public/image/emptyFolder.png");
-				} else {
-					retval = super.calculateIconStyle(model);
-				}
-				return retval;
-			}
-			
+		tree = new MyTreeGrid(store, cm) {
+
 			@Override
 			protected void onClick(GridEvent<ModelData> e) {
 				super.onClick(e);
 				if (e.getModel() instanceof FolderModel) {
 					FolderModel folderModel = (FolderModel)e.getModel();
 					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
+					selectedFolderPanel.setFolderModel(folderModel);
+					selectedFolderPanel.setTreeNode(this.findNode(folderModel));
 				}
 			}
 		};  
-		
+
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
 
 		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
-		
+
 		// stateful components need a defined id  
-		 //tree.setStateful(true);  
+		//tree.setStateful(true);  
 		//tree.setId("uploadImagesTree");  
 		/*
 		store.setKeyProvider(new ModelKeyProvider<FileModel>() {  
@@ -150,18 +141,18 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 			}  
 
 		});
-		*/  
+		 */  
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
-		
+
 		//tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
 		cp.add(tree);  
 
-		
+
 		//ToolTipConfig config = new ToolTipConfig();  
 		//config.setTitle("Example Information");  
 		//config.setShowDelay(1);  
@@ -177,7 +168,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		selectedFolderPanel = new SelectedFolderPanel();
 		cp.setBottomComponent(selectedFolderPanel);
 		add(cp);  
-		
+
 	}  
 
 }

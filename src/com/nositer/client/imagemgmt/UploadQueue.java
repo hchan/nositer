@@ -11,10 +11,12 @@ import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridViewConfig;
+import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.widget.AlertMessageBox;
 
@@ -24,9 +26,26 @@ public class UploadQueue extends LayoutContainer {
 	private ContentPanel contentPanel;
 	private Grid<FileModel> grid;
 	private ListStore<FileModel> store;
+	private Button clearAll;
 
 	public ContentPanel getContentPanel() {
 		return contentPanel;
+	}
+
+	public ListStore<FileModel> getStore() {
+		return store;
+	}
+
+	public void setStore(ListStore<FileModel> store) {
+		this.store = store;
+	}
+
+	public Button getClearAll() {
+		return clearAll;
+	}
+
+	public void setClearAll(Button clearAll) {
+		this.clearAll = clearAll;
 	}
 
 	public void setContentPanel(ContentPanel contentPanel) {
@@ -60,11 +79,17 @@ public class UploadQueue extends LayoutContainer {
 		contentPanel = new ContentPanel();
 		contentPanel.setHeading("Upload Queue");
 		contentPanel.setFrame(true);
-		contentPanel.setHeight(FileDirectoryTreeGrid.HEIGHT - 7);
+		contentPanel.setHeight(FileDirectoryTreeGridContainer.HEIGHT - 7);
 		initGrid();
 		swfUploadContainer = new SWFUploadContainer();
 		contentPanel.add(grid);
-		contentPanel.setBottomComponent(swfUploadContainer);
+		LayoutContainer bottomComponent = new LayoutContainer(new FlowLayout());
+		bottomComponent.add(swfUploadContainer);
+		clearAll = new Button("Clear All");
+		
+		clearAll.setHeight(28);
+		bottomComponent.add(clearAll, new FlowData(0, 0, 0, 200));
+		contentPanel.setBottomComponent(bottomComponent);
 		add(contentPanel);  
 		layout();
 	}
@@ -75,7 +100,7 @@ public class UploadQueue extends LayoutContainer {
 		ColumnModel cm = new ColumnModel(Arrays.asList(name, size));  
 		store = new ListStore<FileModel>(); 
 		grid = new Grid<FileModel>(store, cm);  
-		grid.setHeight(FileDirectoryTreeGrid.HEIGHT - 84);
+		grid.setHeight(FileDirectoryTreeGridContainer.HEIGHT - 84);
 		grid.setBorders(true);
 		grid.setAutoExpandColumn("name");  
 		grid.setAutoExpandMax(5000);

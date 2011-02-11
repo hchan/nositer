@@ -17,7 +17,7 @@ public class SWFUploadContainer extends LayoutContainer {
 		this.setStyleName("uploadBrowseContainer");
 		swfuploadSlot = new HtmlContainer("Initializing...");
 		swfuploadSlot.setId(SWFUPLOADSLOT);
-		this.add(swfuploadSlot);
+		this.add(swfuploadSlot);		
 	}
 
 	
