@@ -9,7 +9,9 @@ import org.swfupload.client.event.DebugHandler;
 import org.swfupload.client.event.DialogStartHandler;
 import org.swfupload.client.event.FileQueueErrorHandler;
 import org.swfupload.client.event.FileQueuedHandler;
+import org.swfupload.client.event.UploadCompleteHandler;
 import org.swfupload.client.event.UploadProgressHandler;
+import org.swfupload.client.event.UploadStartHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
 import org.swfupload.client.event.DebugHandler.DebugEvent;
 import org.swfupload.client.event.UploadProgressHandler.UploadProgressEvent;
@@ -31,12 +33,14 @@ import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.layout.TableData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
@@ -47,6 +51,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 	private LayoutContainer uploadButtonContainer;
 	private FileDirectoryTreeGrid fileDirectoryTreeGrid;
 	private static UploadImages instance;
+	private SWFUpload swfUpload;
 	public UploadImages() {
 		init();
 		instance = this;
@@ -114,7 +119,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		return retval;
 	}
 
-	public void doSWFUploadInit(String sessionId) {		
+	public void doSWFUploadInit(final String sessionId) {		
 		final UploadBuilder builder = new UploadBuilder();
 		// Configure which file types may be selected
 		builder.setFileTypes("*.png;*.jpg;*.jpeg;*.gif");
@@ -124,7 +129,9 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		//setFlashURL(builder, getFlashURL());
 		setUploadBuilderSettings(builder, "flash_url", getFlashURL());
 
-		builder.setUploadURL(Global.UPLOADURL + "?" + Global.UPLOADCREDENTIALKEY + "=" + sessionId);
+		// upload URL
+		builder.setUploadURL(Global.UPLOADURL + "?" + 
+				Global.UPLOADCREDENTIALKEY + "=" + sessionId);
 
 
 		// Configure the button to display
@@ -137,8 +144,8 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setButtonTextStyle(".uploadBrowse { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .fileSize {font-size: 10pt;}");
 		builder.setButtonTextLeftPadding(18);
 		builder.setButtonTextTopPadding(0);
-		
-		
+
+
 		builder.setWindowMode(WindowMode.TRANSPARENT);
 		// Use ButtonAction.SELECT_FILE to only allow selection of a single file
 		builder.setButtonAction(ButtonAction.SELECT_FILES);
@@ -186,7 +193,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
 				uploadQueue.addRow(fileModel);
 			}});
-		
+
 		builder.setFileQueueErrorHandler(new FileQueueErrorHandler() {
 			@Override
 			public void onFileQueueError(FileQueueErrorEvent event) {
@@ -196,16 +203,35 @@ public class UploadImages extends LayoutContainer implements Resizable {
 				uploadQueue.addRow(fileModel);
 			}});
 
-		final SWFUpload upload = builder.build();
+		
+		builder.setUploadCompleteHandler(new UploadCompleteHandler() {
 
-
+			@Override
+			public void onUploadComplete(UploadCompleteEvent e) {
+				GWTUtil.log(e.getFile().getName() + " has been uploaded");
+				swfUpload.startUpload();
+			}
+			
+		});
+		 swfUpload = builder.build();
+		
 		uploadButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
-
-
 			@Override
 			public void handleEvent(BaseEvent be) {
 
-				upload.startUpload();
+
+				if (fileDirectoryTreeGrid.getSelectedFolderPanel().getSelectedFolder().getValue() == null) {
+					AlertMessageBox.show("Warning", "You must select a folder to upload to", null);
+				} else if (uploadQueue.getGrid().getStore().getCount() == 0) {
+					AlertMessageBox.show("Warning", "The Upload Queue is empty.\nClick on Select Images to Browse for local files", null);
+				}
+
+				swfUpload.setUploadURL(Global.UPLOADURL + "?" + 
+						Global.UPLOADCREDENTIALKEY + "=" + sessionId + "&" +
+						"uploadDir=" + URL.encode(fileDirectoryTreeGrid.getSelectedFolderPanel().getSelectedFolder().getValue())
+				);
+				
+				swfUpload.startUpload();
 			}
 		});
 

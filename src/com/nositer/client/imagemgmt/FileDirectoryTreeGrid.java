@@ -34,6 +34,22 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 	private SelectedFolderPanel selectedFolderPanel;
 	private TreeGrid<ModelData> tree;
 
+	public SelectedFolderPanel getSelectedFolderPanel() {
+		return selectedFolderPanel;
+	}
+
+	public void setSelectedFolderPanel(SelectedFolderPanel selectedFolderPanel) {
+		this.selectedFolderPanel = selectedFolderPanel;
+	}
+
+	public TreeGrid<ModelData> getTree() {
+		return tree;
+	}
+
+	public void setTree(TreeGrid<ModelData> tree) {
+		this.tree = tree;
+	}
+
 	public FileDirectoryTreeGrid() {
 		init();
 	}

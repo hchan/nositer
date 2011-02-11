@@ -12,10 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.nositer.client.dto.generated.User;
 import com.nositer.shared.Global;
@@ -23,25 +27,26 @@ import com.nositer.webapp.Application;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 public class UploadServlet extends HttpServlet {
 
-	private long FILE_SIZE_LIMIT = 20 * 1024 * 1024; // 20 MiB
+	//private long FILE_SIZE_LIMIT = 20 * 1024 * 1024; // 20 MiB
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		doPost(req, resp);
 	}
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-	throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		User user = null;
+		String uploadDir = null;
 		try {
 			user = getUseridViaHttpCall(req, resp);
+			uploadDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + "/" + req.getParameter("uploadDir");
 			ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
-			fileUpload.setSizeMax(FILE_SIZE_LIMIT);
+			//fileUpload.setSizeMax(FILE_SIZE_LIMIT);
 
 			List<FileItem> items = fileUpload.parseRequest(req);
 
@@ -58,17 +63,19 @@ public class UploadServlet extends HttpServlet {
 				}
 				 */
 				if (!item.isFormField()) {
+					/*
 					if (item.getSize() > FILE_SIZE_LIMIT) {
 						resp.sendError(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
 						"File size excedes limit");
 
 						return;
 					}
-
+					*/
 
 					InputStream in = item.getInputStream();
-					FileOutputStream fos = new FileOutputStream(MessageFormat.format(Global.USERPUBLICIMAGEDIRTEMPLATE, user.getId()) + "/" + item.getName());
-					byte buf[]=new byte[1024];
+
+					FileOutputStream fos = new FileOutputStream(uploadDir + "/" + item.getName());
+					byte buf[] = new byte[1024];
 					int len;
 					while ((len=in.read(buf)) > 0) {
 						fos.write(buf,0,len);
