@@ -139,4 +139,16 @@ public class UploadQueue extends LayoutContainer {
 	public void addRow (FileModel fileModel) {
 		store.add(fileModel);
 	}
+
+	public void removeRow(String id) {
+		for (int i = 0; i < store.getCount(); i++) {
+			FileModel fileModel = store.getAt(i);
+			String currentId = fileModel.get(FileModel.Attribute.id.toString());
+			if (id.equals(currentId)) {
+				store.remove(fileModel);
+				break;
+			}
+		}
+		
+	}
 }

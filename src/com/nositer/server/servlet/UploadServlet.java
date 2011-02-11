@@ -44,7 +44,11 @@ public class UploadServlet extends HttpServlet {
 		String uploadDir = null;
 		try {
 			user = getUseridViaHttpCall(req, resp);
-			uploadDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + "/" + req.getParameter("uploadDir");
+			String uploadDirFromRequest = req.getParameter("uploadDir");
+			performSecurityCheck(uploadDirFromRequest);
+			uploadDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
+		
+			
 			ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
 			//fileUpload.setSizeMax(FILE_SIZE_LIMIT);
 
@@ -90,6 +94,12 @@ public class UploadServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			Application.log.debug("", e);
+		}
+	}
+
+	private void performSecurityCheck(String uploadDirFromRequest) throws Exception {
+		if (uploadDirFromRequest.indexOf("..") != -1) {
+			throw new Exception("uploadDirFromRequest contains '..' (parent dir)");
 		}
 	}
 

@@ -6,36 +6,22 @@ import org.swfupload.client.SWFUpload.ButtonAction;
 import org.swfupload.client.SWFUpload.WindowMode;
 import org.swfupload.client.UploadBuilder;
 import org.swfupload.client.event.DebugHandler;
-import org.swfupload.client.event.DialogStartHandler;
 import org.swfupload.client.event.FileQueueErrorHandler;
 import org.swfupload.client.event.FileQueuedHandler;
 import org.swfupload.client.event.UploadCompleteHandler;
 import org.swfupload.client.event.UploadProgressHandler;
-import org.swfupload.client.event.UploadStartHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
-import org.swfupload.client.event.DebugHandler.DebugEvent;
-import org.swfupload.client.event.UploadProgressHandler.UploadProgressEvent;
-import org.swfupload.client.event.UploadSuccessHandler.UploadSuccessEvent;
 
-import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.IconHelper;
-import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
-import com.extjs.gxt.ui.client.widget.layout.FitData;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
-import com.extjs.gxt.ui.client.widget.layout.RowLayout;
-import com.extjs.gxt.ui.client.widget.layout.TableData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
@@ -45,6 +31,7 @@ import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
+@SuppressWarnings("rawtypes")
 public class UploadImages extends LayoutContainer implements Resizable {
 	public static int FILESIZELIMIT = 5000; //kB
 	private Button uploadButton;
@@ -150,7 +137,6 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setWindowMode(WindowMode.TRANSPARENT);
 		// Use ButtonAction.SELECT_FILE to only allow selection of a single file
 		builder.setButtonAction(ButtonAction.SELECT_FILES);
-
 		builder.setUploadProgressHandler(new UploadProgressHandler() {
 
 			public void onUploadProgress(UploadProgressEvent e) {
@@ -177,58 +163,55 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		}); 
 
 		builder.setDebugHandler(new DebugHandler() {
-
 			@Override
 			public void onDebug(DebugEvent e) {
 				GWTUtil.log(e.toString());
 				GWTUtil.log(e.getMessage());
 			}
-
 		});
 
 		builder.setFileQueuedHandler(new FileQueuedHandler() {
-
 			@Override
-			public void onFileQueued(FileQueuedEvent event) {			
-				FileModel fileModel = new FileModel(event.getFile().getName(), "");
-				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
+			public void onFileQueued(FileQueuedEvent event) {	
+				GWTUtil.log(event.getFile().getName() + " has been queued");
+				GWTUtil.log(event.getFile().getId() + " has been queued");
+				FileModel fileModel = new FileModel(event.getFile());
 				uploadQueue.addRow(fileModel);
-			}});
+			}
+		});
 
 		builder.setFileQueueErrorHandler(new FileQueueErrorHandler() {
 			@Override
 			public void onFileQueueError(FileQueueErrorEvent event) {
-				FileModel fileModel = new FileModel(event.getFile().getName(), "");
-				fileModel.set(FileModel.Attribute.id.toString(), event.getFile().getId());
-				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
+				FileModel fileModel = new FileModel(event.getFile());				
 				fileModel.set(FileModel.Attribute.errorMessage.toString(), event.getMessage());
 				uploadQueue.addRow(fileModel);
 			}});
 
 
 		builder.setUploadCompleteHandler(new UploadCompleteHandler() {
-
 			@Override
 			public void onUploadComplete(UploadCompleteEvent e) {
 				GWTUtil.log(e.getFile().getName() + " has been uploaded");
-				
-				FileModel fileModel = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFolderModel();
+				GWTUtil.log(e.getFile().getId() + " (id) has been uploaded");
+				//FileModel fileModel = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFolderModel();
 				//fileDirectoryTreeGridContainer.getTree().findNode( fileDirectoryTreeGridContainer.getSelectedFolderPanel().getModel()).setExpanded(true);
 				// fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().relo
-				 TreeNode treeNode = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode();
-				 treeNode.setLeaf(false);
-				 treeNode.setExpanded(false);
-				 treeNode.setExpanded(true);
-				 /*
+				TreeNode treeNode = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode();
+				treeNode.setLeaf(false);
+				treeNode.setExpanded(false);
+				treeNode.setExpanded(true);
+				
+				uploadQueue.removeRow(e.getFile().getId());
+				/*
 				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
 				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
 				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);
 				 fileDirectoryTreeGridContainer.getTree().getSelectionModel().select(fileModel, false);
 				 fileDirectoryTreeGridContainer.getTree().getSelectionModel().refresh();
 				 */
-				 swfUpload.startUpload();
+				swfUpload.startUpload();
 			}
-
 		});
 		swfUpload = builder.build();
 

@@ -1,6 +1,8 @@
 package com.nositer.client.imagemgmt;
 
 
+import org.swfupload.client.File;
+
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -18,6 +20,13 @@ public class FileModel extends BaseModelData implements IsSerializable {
 	public FileModel(String name, String path) {
 		setName(name);
 		setPath(path);
+	}
+
+	public FileModel(File file) {
+		setName(file.getName());
+		set(FileModel.Attribute.id.toString(), file.getId().toString());
+		set(FileModel.Attribute.size.toString(), file.getSize());
+		//set(FileModel.Attribute.errorMessage.toString(), file.getMessage());
 	}
 
 	public void setName(String name) {
