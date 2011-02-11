@@ -79,16 +79,16 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 				m = new FileModel(f.getName(), 
 						getUserRelativePath(f.getAbsolutePath()));
 				//f.getAbsolutePath());
-				m.set("size", f.length());
-				m.set("date", new Date(f.lastModified()));
+				m.set(FileModel.Attribute.size.toString(), f.length());
+				m.set(FileModel.Attribute.date.toString(), new Date(f.lastModified()));
 			}
 
 			if (idMap.containsKey(f)) {
-				m.set("id", idMap.get(f));
+				m.set(FileModel.Attribute.id.toString(), idMap.get(f));
 			} else {
 				String id = String.valueOf(counter++);
 				idMap.put(f, id);
-				m.set("id", id);
+				m.set(FileModel.Attribute.id.toString(), id);
 			}
 
 			models.add(m);

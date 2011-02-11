@@ -7,6 +7,7 @@ import org.swfupload.client.SWFUpload.WindowMode;
 import org.swfupload.client.UploadBuilder;
 import org.swfupload.client.event.DebugHandler;
 import org.swfupload.client.event.DialogStartHandler;
+import org.swfupload.client.event.FileQueueErrorHandler;
 import org.swfupload.client.event.FileQueuedHandler;
 import org.swfupload.client.event.UploadProgressHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
@@ -40,7 +41,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
 public class UploadImages extends LayoutContainer implements Resizable {
-	public static int FILESIZELIMIT = 5; // MB
+	public static int FILESIZELIMIT = 5000; //kB
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
@@ -132,7 +133,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setButtonWidth(180);
 		builder.setButtonHeight(20);
 		builder.setFileSizeLimit(FILESIZELIMIT);
-		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + FILESIZELIMIT + " MB Max)</span></span>");
+		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + FILESIZELIMIT/1000 + " MB Max)</span></span>");
 		builder.setButtonTextStyle(".uploadBrowse { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .fileSize {font-size: 10pt;}");
 		builder.setButtonTextLeftPadding(18);
 		builder.setButtonTextTopPadding(0);
@@ -180,10 +181,19 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		builder.setFileQueuedHandler(new FileQueuedHandler() {
 
 			@Override
-			public void onFileQueued(FileQueuedEvent event) {
-				GWTUtil.log("size: " + event.getFile().getSize());
-				GWTUtil.log(event.getFile().getName());
-				GWTUtil.log(event.getFile().getId());
+			public void onFileQueued(FileQueuedEvent event) {			
+				FileModel fileModel = new FileModel(event.getFile().getName(), "");
+				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
+				uploadQueue.addRow(fileModel);
+			}});
+		
+		builder.setFileQueueErrorHandler(new FileQueueErrorHandler() {
+			@Override
+			public void onFileQueueError(FileQueueErrorEvent event) {
+				FileModel fileModel = new FileModel(event.getFile().getName(), "");
+				fileModel.set(FileModel.Attribute.size.toString(), event.getFile().getSize());
+				fileModel.set(FileModel.Attribute.errorMessage.toString(), event.getMessage());
+				uploadQueue.addRow(fileModel);
 			}});
 
 		final SWFUpload upload = builder.build();
