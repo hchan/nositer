@@ -1,4 +1,4 @@
-package com.nositer.client.imagemgmt;
+package com.nositer.client.uploadimages;
 
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.GridEvent;

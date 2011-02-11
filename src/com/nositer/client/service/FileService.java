@@ -5,7 +5,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.RemoteSortTreeLoadConfig;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.nositer.client.imagemgmt.FileModel;
+import com.nositer.client.uploadimages.FileModel;
 
 /**
  * Example <code>RemoteService</code>.

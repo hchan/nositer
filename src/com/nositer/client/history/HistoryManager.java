@@ -11,9 +11,10 @@ import com.google.gwt.user.client.History;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
-import com.nositer.client.imagemgmt.UploadImages;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
+import com.nositer.client.manageimages.ManageImages;
+import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfileTabPanel;
 
@@ -29,10 +30,8 @@ public class HistoryManager {
 			public void onValueChange(ValueChangeEvent<String> event) {
 				String historyToken = event.getValue();
 				onHistoryChanged(historyToken);
-			}
-			
+			}			
 		});
-
 	}
 
 	public static void doOnModuleLoadHistoryToken() {
@@ -69,7 +68,13 @@ public class HistoryManager {
 			leftPanel.getImages().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getUploadImagesNavigationItem());
 			setMainPanel(new UploadImages());
+		} else if (historyToken.equals(MANAGEIMAGES.toString())) {
+			leftPanel.getImages().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getManageImagesNavigationItem());
+			setMainPanel(new ManageImages());
 		}
+		
+		
 	}
 	
 

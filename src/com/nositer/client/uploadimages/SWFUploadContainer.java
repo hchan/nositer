@@ -1,4 +1,4 @@
-package com.nositer.client.imagemgmt;
+package com.nositer.client.uploadimages;
 
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;

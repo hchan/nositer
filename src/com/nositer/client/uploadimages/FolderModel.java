@@ -1,4 +1,4 @@
-package com.nositer.client.imagemgmt;
+package com.nositer.client.uploadimages;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

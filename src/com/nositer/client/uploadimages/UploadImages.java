@@ -1,4 +1,4 @@
-package com.nositer.client.imagemgmt;
+package com.nositer.client.uploadimages;
 
 import org.swfupload.client.File;
 import org.swfupload.client.SWFUpload;
