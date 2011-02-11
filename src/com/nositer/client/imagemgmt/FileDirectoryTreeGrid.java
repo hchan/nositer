@@ -32,6 +32,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 	public static final int HEIGHT = 300;
 	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
+	private TreeGrid<ModelData> tree;
 
 	public FileDirectoryTreeGrid() {
 		init();
@@ -95,7 +96,7 @@ public class FileDirectoryTreeGrid extends LayoutContainer {
 		cp.setSize(WIDTH, HEIGHT);
 		
 
-		TreeGrid<ModelData> tree = new TreeGrid<ModelData>(store, cm) {
+		tree = new TreeGrid<ModelData>(store, cm) {
 
 			@Override
 			protected AbstractImagePrototype calculateIconStyle(ModelData model) {

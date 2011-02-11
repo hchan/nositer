@@ -45,8 +45,10 @@ public class UploadImages extends LayoutContainer implements Resizable {
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
 	private FileDirectoryTreeGrid fileDirectoryTreeGrid;
+	private static UploadImages instance;
 	public UploadImages() {
 		init();
+		instance = this;
 	}
 
 	public void init() {
@@ -94,6 +96,7 @@ public class UploadImages extends LayoutContainer implements Resizable {
 	public void resize(int width, int height) {
 		int spacing = 30;
 		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - FileDirectoryTreeGrid.WIDTH - spacing);
+		uploadQueue.getGrid().getView().layout();
 	}
 
 	public native void setUploadBuilderSettings(UploadBuilder builder, String key, String value) /*-{
