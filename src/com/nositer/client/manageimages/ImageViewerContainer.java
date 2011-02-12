@@ -1,8 +1,10 @@
 package com.nositer.client.manageimages;
 
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 
 public class ImageViewerContainer extends LayoutContainer {
@@ -19,6 +21,6 @@ public class ImageViewerContainer extends LayoutContainer {
 		imageContainer = new HtmlContainer("abc");
 		
 		contentPanel.add(imageContainer);
-		this.add(contentPanel);
+		this.add(contentPanel, new FlowData(new Margins(0, 15, 5, 5)));
 	}
 }

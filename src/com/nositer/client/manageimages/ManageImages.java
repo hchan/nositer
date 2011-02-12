@@ -1,7 +1,6 @@
 package com.nositer.client.manageimages;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
-import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
@@ -21,6 +20,7 @@ public class ManageImages extends LayoutContainer implements Resizable {
 	public void init() {
 		BorderLayout layout = new BorderLayout();
 		contentPanel = new ContentPanel();
+		contentPanel.setHeaderVisible(false);
 		contentPanel.setHeight(MainPanel.getInstance().getHeight());
 		contentPanel.setWidth(MainPanel.getInstance().getWidth());
 		contentPanel.setLayout(layout);
@@ -45,7 +45,7 @@ public class ManageImages extends LayoutContainer implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		fileDirectoryTreeGridContainer.getContentPanel().setWidth(fileDirectoryTreeGridContainer.getWidth());
-		
+		contentPanel.setWidth(MainPanel.getInstance().getWidth());
 	}
 
 }
