@@ -13,10 +13,11 @@ public class ManageImages extends LayoutContainer implements Resizable {
 	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private ImageViewerContainer imageViewerContainer;
 	private ContentPanel contentPanel;
+
 	public ManageImages() {
 		init();
 	}
-	
+
 	public void init() {
 		BorderLayout layout = new BorderLayout();
 		contentPanel = new ContentPanel();
@@ -29,19 +30,27 @@ public class ManageImages extends LayoutContainer implements Resizable {
 				resize(0,0);
 			};
 		};
-		//fileDirectoryTreeGridContainer.getContentPanel().setWidth(fileDirectoryTreeGridContainer.getWidth());
-		
-		imageViewerContainer = new ImageViewerContainer();
-		BorderLayoutData eastBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 
-		eastBorderLayoutData.setSplit(true);
-		contentPanel.add(fileDirectoryTreeGridContainer, eastBorderLayoutData);
+		fileDirectoryTreeGridContainer.getContentPanel().setWidth(MainPanel.getInstance().getWidth()/2);
+		fileDirectoryTreeGridContainer.setWidth(MainPanel.getInstance().getWidth()/2);
+
+		imageViewerContainer = new ImageViewerContainer();
+		//imageViewerContainer.setWidth(MainPanel.getInstance().getWidth()/2 - 10);
+		//imageViewerContainer.getContentPanel().setWidth(MainPanel.getInstance().getWidth()/2 - 10);
+
+
+		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
+		westBorderLayoutData.setSize(MainPanel.getInstance().getWidth()/2);
+		westBorderLayoutData.setSplit(true);
+		contentPanel.add(fileDirectoryTreeGridContainer, westBorderLayoutData);
 		BorderLayoutData centerBorderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerBorderLayoutData.setSplit(true);
 		contentPanel.add(imageViewerContainer, centerBorderLayoutData);
+
+
 		add(contentPanel);
 	}
-	
+
 	@Override
 	public void resize(int width, int height) {
 		fileDirectoryTreeGridContainer.getContentPanel().setWidth(fileDirectoryTreeGridContainer.getWidth());

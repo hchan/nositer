@@ -70,7 +70,7 @@ $(document).ready(
 <DIV class="loginDescription">
 <H1>Nos Iter</H1>
 <DIV style="font-style: italic; display: inline">translation (from Latin)</DIV>: Journey with us<BR />
-Nos iter is about connecting you to others by reaching into common groups and telling them want you want to do<BR/>
+Nos Iter is about connecting you to others by reaching into common groups and telling them want you want to do<BR/>
 So you may have answered the question "What I am doing" ... at Nos Iter we go one step further
 by inviting others to journey with us by asking:<BR/> 
 "I want to ..."<BR/>

@@ -10,6 +10,22 @@ import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 public class ImageViewerContainer extends LayoutContainer {
 	private ContentPanel contentPanel;
 	private HtmlContainer imageContainer;
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public HtmlContainer getImageContainer() {
+		return imageContainer;
+	}
+
+	public void setImageContainer(HtmlContainer imageContainer) {
+		this.imageContainer = imageContainer;
+	}
+
 	public ImageViewerContainer() {
 		init();
 	}
