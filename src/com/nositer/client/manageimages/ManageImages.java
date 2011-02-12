@@ -31,13 +31,8 @@ public class ManageImages extends LayoutContainer implements Resizable {
 			};
 		};
 
-		fileDirectoryTreeGridContainer.getContentPanel().setWidth(MainPanel.getInstance().getWidth()/2);
-		fileDirectoryTreeGridContainer.setWidth(MainPanel.getInstance().getWidth()/2);
-
 		imageViewerContainer = new ImageViewerContainer();
-		//imageViewerContainer.setWidth(MainPanel.getInstance().getWidth()/2 - 10);
-		//imageViewerContainer.getContentPanel().setWidth(MainPanel.getInstance().getWidth()/2 - 10);
-
+	
 
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 		westBorderLayoutData.setSize(MainPanel.getInstance().getWidth()/2);
