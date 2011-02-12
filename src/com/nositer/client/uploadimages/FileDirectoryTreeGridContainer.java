@@ -33,6 +33,15 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
 	private MyTreeGrid tree;
+	private ContentPanel contentPanel;
+
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
 
 	public SelectedFolderPanel getSelectedFolderPanel() {
 		return selectedFolderPanel;
@@ -103,13 +112,13 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 		ColumnModel cm = new ColumnModel(Arrays.asList(name, date, size));  
 
-		ContentPanel cp = new ContentPanel();  
-		cp.setBodyBorder(false);  
-		cp.setHeading("My Images");  
-		cp.setButtonAlign(HorizontalAlignment.CENTER);  
-		cp.setLayout(new FitLayout());  
-		cp.setFrame(true);  
-		cp.setSize(WIDTH, HEIGHT);
+		contentPanel = new ContentPanel();  
+		contentPanel.setBodyBorder(false);  
+		contentPanel.setHeading("My Images");  
+		contentPanel.setButtonAlign(HorizontalAlignment.CENTER);  
+		contentPanel.setLayout(new FitLayout());  
+		contentPanel.setFrame(true);  
+		contentPanel.setSize(WIDTH, HEIGHT);
 
 
 		tree = new MyTreeGrid(store, cm) {
@@ -150,7 +159,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		//tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
-		cp.add(tree);  
+		contentPanel.add(tree);  
 
 
 		//ToolTipConfig config = new ToolTipConfig();  
@@ -166,8 +175,8 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		// cp.getHeader().addTool(btn);  
 
 		selectedFolderPanel = new SelectedFolderPanel();
-		cp.setBottomComponent(selectedFolderPanel);
-		add(cp);  
+		contentPanel.setBottomComponent(selectedFolderPanel);
+		add(contentPanel);  
 
 	}  
 
