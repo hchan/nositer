@@ -79,7 +79,7 @@ public class UploadQueue extends LayoutContainer {
 		contentPanel = new ContentPanel();
 		contentPanel.setHeading("Upload Queue");
 		contentPanel.setFrame(true);
-		contentPanel.setHeight(FileDirectoryTreeGridContainer.HEIGHT - 7);
+		contentPanel.setHeight(FileDirectoryTreeGridContainer.HEIGHT);
 		initGrid();
 		swfUploadContainer = new SWFUploadContainer();
 		contentPanel.add(grid);

@@ -31,12 +31,13 @@ public class ImageViewerContainer extends LayoutContainer {
 	}
 
 	private void init() {
-		setLayout(new FlowLayout(10));  
+		setLayout(new FlowLayout(0));  
 		contentPanel = new ContentPanel();
 		contentPanel.setHeading("Image Viewer");
+		contentPanel.setFrame(true);
 		imageContainer = new HtmlContainer("abc");
 		
 		contentPanel.add(imageContainer);
-		this.add(contentPanel, new FlowData(new Margins(0, 15, 5, 5)));
+		this.add(contentPanel, new FlowData(new Margins(0, 0, 0, 0)));
 	}
 }
