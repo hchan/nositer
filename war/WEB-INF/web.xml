@@ -59,24 +59,28 @@
 	<servlet>
 		<servlet-name>GwtServiceResolver</servlet-name>
 		<servlet-class>com.google.gwt.user.server.rpc.GwtServiceResolver</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>uploadServlet</servlet-name>
-		<!-- This is the default servlet, it puts files in session -->
-		<servlet-class>gwtupload.server.UploadServlet</servlet-class>
-	</servlet>
+	</servlet>	
 
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
 		<servlet-class>com.nositer.server.servlet.UploadServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
 		<servlet-class>com.nositer.server.servlet.CurrentUserAsJsonServlet</servlet-class>
 	</servlet>
-	
+
+	<servlet>
+		<servlet-name>imageServlet</servlet-name>
+		<servlet-class>com.nositer.server.servlet.ImageServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>imageServlet</servlet-name>
+		<url-pattern>/userfile/*</url-pattern>
+	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
 		<url-pattern>/currentuserasjson</url-pattern>
@@ -90,11 +94,6 @@
 	<servlet-mapping>
 		<servlet-name>GwtServiceResolver</servlet-name>
 		<url-pattern>*.gwtrpc</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>uploadServlet</servlet-name>
-		<url-pattern>*.gupld</url-pattern>
 	</servlet-mapping>
 
 
