@@ -19,12 +19,10 @@ import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 
 public class FileDirectoryTreeGridContainer extends LayoutContainer {
@@ -63,7 +61,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		init();
 	}
 
-	private void init() {
+	protected void init() {
 
 		setLayout(new FlowLayout(10));  
 		// data proxy  

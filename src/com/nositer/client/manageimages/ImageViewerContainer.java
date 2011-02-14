@@ -35,7 +35,7 @@ public class ImageViewerContainer extends LayoutContainer {
 		contentPanel = new ContentPanel();
 		contentPanel.setHeading("Image Viewer");
 		contentPanel.setFrame(true);
-		imageContainer = new HtmlContainer("abc");
+		imageContainer = new HtmlContainer("No Image Selected");
 		
 		contentPanel.add(imageContainer);
 		this.add(contentPanel, new FlowData(new Margins(0, 0, 0, 0)));
