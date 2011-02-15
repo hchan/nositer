@@ -1,5 +1,6 @@
 package com.nositer.client.uploadimages;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +24,9 @@ import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.core.java.util.Collections;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.util.TreeNodeHelper;
 
 public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
@@ -32,6 +35,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 	private SelectedFolderPanel selectedFolderPanel;
 	private MyTreeGrid tree;
 	private ContentPanel contentPanel;
+
 
 	public ContentPanel getContentPanel() {
 		return contentPanel;
@@ -75,10 +79,13 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 		// tree loader  
 		final TreeLoader<FileModel> loader = new BaseTreeLoader<FileModel>(proxy) {  
+
 			@Override  
 			public boolean hasChildren(FileModel parent) {  
 				return parent instanceof FolderModel;  
-			}  
+			} 
+
+			
 		};  
 
 		// trees store  
@@ -178,4 +185,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 	}  
 
+	public void refreshSelectedTreeNode() {
+		TreeNodeHelper.refreh(getSelectedFolderPanel().getTreeNode());
+	}
 }

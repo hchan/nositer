@@ -6,6 +6,7 @@ import com.extjs.gxt.ui.client.data.RemoteSortTreeLoadConfig;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.nositer.client.uploadimages.FileModel;
+import com.nositer.shared.GWTException;
 
 /**
  * Example <code>RemoteService</code>.
@@ -28,5 +29,7 @@ public interface FileService extends RemoteService {
    * @return the children
    */
   public List<FileModel> getImageFolderChildren(RemoteSortTreeLoadConfig loadConfig);
+  
+  public void createFolder(String folder) throws GWTException;
 
 }

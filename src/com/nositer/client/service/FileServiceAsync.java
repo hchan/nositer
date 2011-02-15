@@ -14,4 +14,6 @@ public interface FileServiceAsync {
 	void getImageFolderChildren(RemoteSortTreeLoadConfig loadConfig,
 			AsyncCallback<List<FileModel>> callback);
 
+	void createFolder(String folder, AsyncCallback<Void> callback);
+
 }

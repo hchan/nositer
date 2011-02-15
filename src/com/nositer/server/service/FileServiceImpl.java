@@ -115,7 +115,6 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	public List<FileModel> getImageFolderChildren(final RemoteSortTreeLoadConfig loadConfig) {
-
 		List<FileModel> models = getImageFolderChildren((FileModel) loadConfig.getParent());
 		final String prop = loadConfig.getSortField();
 		final boolean desc = loadConfig.getSortDir() == SortDir.DESC;
@@ -147,6 +146,17 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		}
 
 		return models;
+	}
+
+	@Override
+	public void createFolder(String folder) throws GWTException {
+		try {
+			String fullFolderPath = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + folder;
+			FileUtils.forceMkdir(new File(fullFolderPath));
+		} catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException("Server Error");
+		}
 	}
 
 }

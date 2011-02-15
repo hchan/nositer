@@ -27,6 +27,7 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.util.TreeNodeHelper;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
@@ -197,10 +198,8 @@ public class UploadImages extends LayoutContainer implements Resizable {
 				//FileModel fileModel = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFolderModel();
 				//fileDirectoryTreeGridContainer.getTree().findNode( fileDirectoryTreeGridContainer.getSelectedFolderPanel().getModel()).setExpanded(true);
 				// fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().relo
-				TreeNode treeNode = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode();
-				treeNode.setLeaf(false);
-				treeNode.setExpanded(false);
-				treeNode.setExpanded(true);
+				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
+				
 				
 				uploadQueue.removeRow(e.getFile().getId());
 				/*

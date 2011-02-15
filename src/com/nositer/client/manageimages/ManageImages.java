@@ -13,9 +13,43 @@ public class ManageImages extends LayoutContainer implements Resizable {
 	private FileDirectoryTreeGridContainer fileManager;
 	private ImageViewerContainer imageViewerContainer;
 	private ContentPanel contentPanel;
+	private static ManageImages instance;
+	
+	public FileDirectoryTreeGridContainer getFileManager() {
+		return fileManager;
+	}
+
+	public void setFileManager(FileDirectoryTreeGridContainer fileManager) {
+		this.fileManager = fileManager;
+	}
+
+	public ImageViewerContainer getImageViewerContainer() {
+		return imageViewerContainer;
+	}
+
+	public void setImageViewerContainer(ImageViewerContainer imageViewerContainer) {
+		this.imageViewerContainer = imageViewerContainer;
+	}
+
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public static ManageImages getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(ManageImages instance) {
+		ManageImages.instance = instance;
+	}
 
 	public ManageImages() {
 		init();
+		instance = this;
 	}
 
 	public void init() {
