@@ -81,10 +81,7 @@ public class FileMenuBar extends MenuBar {
 						if (models != null) {
 							for (ModelData modelData : models) {
 								FileModel fileModel = (FileModel) modelData;
-								GWTUtil.log("folderName: " + folderName);
-								if (fileModel != null) {
-									GWTUtil.log("fileModel: " + fileModel.getName());
-								}
+								
 								if (fileModel != null && folderName.equals(fileModel.getName())) {
 									ManageImages.getInstance().getFileManager().getTree().getSelectionModel().select(fileModel, false);
 									ManageImages.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());

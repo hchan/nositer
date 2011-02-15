@@ -148,12 +148,28 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		return models;
 	}
 
+	public static boolean isValidFileName(String fileName) {
+		boolean retval = false;
+		String validCharsPattern = "^([A-Za-z0-9_\\.])+$";
+		retval = fileName.matches(validCharsPattern);
+		if (retval) {
+			retval = !fileName.matches(".*\\.\\..*");
+		}
+		return retval;
+	}
+	
 	@Override
 	public void createFolder(String folder) throws GWTException {
 		try {
+			String baseName = FilenameUtils.getBaseName(folder);
+			if (!isValidFileName(baseName)) {
+				throw new GWTException(baseName + " has illegal characters");
+			}
 			String fullFolderPath = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + folder;
 			FileUtils.forceMkdir(new File(fullFolderPath));
-		} catch (Exception e) {
+		} catch (GWTException e) {
+			throw e;
+		} catch (Exception e) {	
 			Application.log.error("", e);
 			throw new GWTException("Server Error");
 		}
