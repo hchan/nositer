@@ -36,14 +36,14 @@ public class ImageResizer{
 			
 
 			BufferedImage image = ImageIO
-			.read(new File("c:/temp/emptyFolder_32.png"));
+			.read(new File("c:/temp/unknownavatar.png"));
 					
 
 			ImageIO.write(
 					//resizeTrick(image, image.getWidth(), image.getHeight()),
 					resize(image, 16, 16),
 					"png",
-					new File("c:/temp/emptyFolder.png"));
+					new File("c:/temp/avataricon.png"));
 							
 		} catch (IOException e) {
 			e.printStackTrace();

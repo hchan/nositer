@@ -140,45 +140,20 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 			}
 		};  
 
-		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));
+		
 
-		//tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/bol.png"));
-
-		// stateful components need a defined id  
-		//tree.setStateful(true);  
-		//tree.setId("uploadImagesTree");  
-		/*
-		store.setKeyProvider(new ModelKeyProvider<FileModel>() {  
-
-			public String getKey(FileModel model) {  
-				return model.<String> get("id");  
-			}  
-
-		});
-		 */  
+		
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
 
-		//tree.setSize(400, 400);  
 		tree.setAutoExpandColumn("name");  
 		tree.setTrackMouseOver(false);  
 		contentPanel.add(tree);  
 
 
-		//ToolTipConfig config = new ToolTipConfig();  
-		//config.setTitle("Example Information");  
-		//config.setShowDelay(1);  
-		//config.setText("In this example state has been enabled for the treegrid. When enabled, the expand state of the treegrid is "  
-		//		+ "saved and restored using the StateManager. Try refreshing the browser after expanding some nodes in the "  
-		//		+ "treegrid. Notice that this works with asynchronous loading of nodes.");  
-
-		//ToolButton btn = new ToolButton("x-tool-help");  
-		//btn.setToolTip(config);  
-
-		// cp.getHeader().addTool(btn);  
-
+		
 		selectedFolderPanel = new SelectedFolderPanel();
 		contentPanel.setBottomComponent(selectedFolderPanel);
 		add(contentPanel);  

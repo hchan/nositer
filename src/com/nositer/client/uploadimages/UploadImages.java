@@ -20,19 +20,17 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
-import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.client.util.TreeNodeHelper;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
-@SuppressWarnings("rawtypes")
+
 public class UploadImages extends LayoutContainer implements Resizable {
 	public static int FILESIZELIMIT = 5000; //kB
 	private Button uploadButton;

@@ -9,6 +9,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.shared.Global;
@@ -69,6 +70,8 @@ public class ImageViewerMenuBar extends MenuBar {
 
 						@Override
 						public void onSuccess(Object result) {
+							TopPanel.getInstance().getUser().setAvatarlocation(ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
+							ManageImages.getInstance().getFileManager().refreshSelectedTreeNode();
 							InfoMessageBox.show("Avatar updated");
 						}
 						
