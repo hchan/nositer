@@ -3,6 +3,8 @@ package com.nositer.client;
 import com.google.gwt.core.client.GWT;
 import com.nositer.client.service.FileService;
 import com.nositer.client.service.FileServiceAsync;
+import com.nositer.client.service.LookupcodeService;
+import com.nositer.client.service.LookupcodeServiceAsync;
 import com.nositer.client.service.NoopService;
 import com.nositer.client.service.NoopServiceAsync;
 import com.nositer.client.service.PostalcodeService;
@@ -24,4 +26,5 @@ public class ServiceBroker {
 	public static final NoopServiceAsync noopService = GWT.create(NoopService.class);
 	public static final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 	public static final FileServiceAsync fileService = GWT.create(FileService.class);
+	public static final LookupcodeServiceAsync lookupService = GWT.create(LookupcodeService.class);
 }

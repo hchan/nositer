@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 5, 2011 9:43:22 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 16, 2011 2:11:04 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -23,7 +23,9 @@ public class User implements java.io.Serializable, IsSerializable,
 
 	private Integer id;
 	private Zipcode zipcode;
+	private Relationshipcode relationshipcode;
 	private Postalcode postalcode;
+	private Integer titlecodeid;
 	private String countrycode;
 	private String login;
 	private String firstname;
@@ -41,7 +43,13 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
+	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
+			0);
 	public static final String TABLENAME = "user";
+
+	public String getTablename() {
+		return TABLENAME;
+	}
 
 	public User() {
 	}
@@ -55,14 +63,19 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.password = password;
 	}
 
-	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
+	public User(Zipcode zipcode, Relationshipcode relationshipcode,
+			Postalcode postalcode, Integer titlecodeid, String countrycode,
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
 			String profession, String avatarlocation, String note,
 			Date notemodifedtime, String description, Date lastlogin,
-			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			Date createdtime, Date modifiedtime,
+			Set<UserHasGroup> userHasGroups,
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
 		this.zipcode = zipcode;
+		this.relationshipcode = relationshipcode;
 		this.postalcode = postalcode;
+		this.titlecodeid = titlecodeid;
 		this.countrycode = countrycode;
 		this.login = login;
 		this.firstname = firstname;
@@ -80,6 +93,7 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
+		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
 	}
 
 	public Integer getId() {
@@ -98,12 +112,28 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.zipcode = zipcode;
 	}
 
+	public Relationshipcode getRelationshipcode() {
+		return this.relationshipcode;
+	}
+
+	public void setRelationshipcode(Relationshipcode relationshipcode) {
+		this.relationshipcode = relationshipcode;
+	}
+
 	public Postalcode getPostalcode() {
 		return this.postalcode;
 	}
 
 	public void setPostalcode(Postalcode postalcode) {
 		this.postalcode = postalcode;
+	}
+
+	public Integer getTitlecodeid() {
+		return this.titlecodeid;
+	}
+
+	public void setTitlecodeid(Integer titlecodeid) {
+		this.titlecodeid = titlecodeid;
 	}
 
 	public String getCountrycode() {
@@ -242,7 +272,16 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.userHasGroups = userHasGroups;
 	}
 
+	public Set<UserHasSecurityquestioncode> getUserHasSecurityquestioncodes() {
+		return this.userHasSecurityquestioncodes;
+	}
+
+	public void setUserHasSecurityquestioncodes(
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
+		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
+	}
+
 	public enum ColumnType {
-		id, zipcodeid, postalcodeid, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, createdtime, modifiedtime,
+		id, zipcodeid, relationshipcodeid, postalcodeid, titlecodeid, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, createdtime, modifiedtime,
 	}
 }

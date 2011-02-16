@@ -21,7 +21,11 @@ import java.util.HashSet;
 import java.util.Set;
 <#assign classbody>
 @SuppressWarnings("serial")
-<#include "PojoTypeDeclaration.ftl"/> , IsSerializable, BeanModelTag, DTO {
+<#include "PojoTypeDeclaration.ftl"/> , IsSerializable, BeanModelTag, DTO
+<#if pojo.getDeclarationName()?ends_with("code") && !pojo.getDeclarationName()?contains("Has")>
+, Lookupcode
+</#if> 
+{
 
 <#if !pojo.isInterface()>
 <#include "PojoFields.ftl"/>

@@ -140,7 +140,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 				int limit = DEFAULTLIMIT;
 				int offset = basePagingLoadConfig.get("offset");
 				String query = (basePagingLoadConfig.get("query"));
-				if (!doServiceWithRPC(basePagingLoadConfig, callback)) {				
+				if (!doServiceWithRPC(basePagingLoadConfig, callback)) {					
 					doServiceWithRPC(offset, limit, query, callback);
 				}
 			}			
@@ -148,9 +148,10 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		return retval;
 	}
 	
-	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {
+	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {		
 		return false;
 	}
+	
 	public boolean doServiceWithRPC(BasePagingLoadConfig basePagingLoadConfig, AsyncCallback callback) {
 		return false;
 	}

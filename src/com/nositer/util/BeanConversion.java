@@ -14,6 +14,7 @@ import net.sf.beanlib.spi.DetailedPropertyFilter;
 import com.nositer.client.dto.DTO;
 import com.nositer.hibernate.Domain;
 
+@SuppressWarnings("unchecked")
 public class BeanConversion {
 	static {
 		net.sf.beanlib.hibernate.UnEnhancer.setDefaultCheckCGLib(false);
@@ -68,5 +69,22 @@ public class BeanConversion {
 			retval.add(copyDTO2Domain(dto, toClass));		
 		}
 		return retval;	
+	}
+	
+
+	public static Class<? extends Domain> getDomainClass(Class<? extends DTO> dtoClass) throws ClassNotFoundException {
+		Class<? extends Domain> retval = null;
+		// Domain: com.nositer.hibernate.generated.domain
+		// DTO: com.nositer.client.dto.generated;
+		retval = (Class<? extends Domain>) Class.forName(dtoClass.getName().replace("client.dto.generated", "hibernate.generated.domain"));
+		return retval;
+	}
+	
+	public static Class<? extends DTO> getDTOClass(Class<? extends Domain> domainClass) throws ClassNotFoundException {
+		Class<? extends DTO> retval = null;
+		// Domain: com.nositer.hibernate.generated.domain
+		// DTO: com.nositer.client.dto.generated;
+		retval = (Class<? extends DTO>) Class.forName(domainClass.getName().replace("hibernate.generated.domain", "client.dto.generated"));
+		return retval;
 	}
 }

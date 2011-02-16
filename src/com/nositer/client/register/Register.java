@@ -35,6 +35,7 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.combobox.SalutationcodeComboBox;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
 @SuppressWarnings("unchecked")
 public class Register implements EntryPoint {
@@ -58,6 +59,7 @@ public class Register implements EntryPoint {
 	private TextField<String> profession;
 	private DateField birthdate;
 	private ErrorPanel errorPanel;
+	private SalutationcodeComboBox salutation;
 
 	public Button getSaveButton() {
 		return saveButton;
@@ -219,7 +221,7 @@ public class Register implements EntryPoint {
 		BorderLayout borderLayout = new BorderLayout();
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
-		topPanel = new TopPanel(topLayoutData);		
+		topPanel = new TopPanel(topLayoutData, false);		
 		BorderLayoutData mainLayoutData = new BorderLayoutData(LayoutRegion.CENTER);  
 		mainPanel = new MainPanel(mainLayoutData);
 		mainPanel.setScrollMode(Scroll.AUTO);
@@ -264,6 +266,10 @@ public class Register implements EntryPoint {
 		email = new TextField<String>();
 		email.setFieldLabel("Email");		
 
+		salutation = new SalutationcodeComboBox();
+		salutation.setForceSelection(false);
+		salutation.setFieldLabel("Salutation");
+		
 		genderRadioGroup = new GenderRadioGroup();
 
 		profession = new TextField<String>();
@@ -273,6 +279,7 @@ public class Register implements EntryPoint {
 		birthdate.setFieldLabel("Birthdate (yyyy-MM-dd)");
 
 		formPanel.add(email);
+		formPanel.add(salutation);
 		formPanel.add(genderRadioGroup);
 		formPanel.add(profession);
 		formPanel.add(birthdate);

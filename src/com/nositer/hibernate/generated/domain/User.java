@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 5, 2011 9:43:21 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 16, 2011 2:11:04 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -34,7 +34,9 @@ public class User implements java.io.Serializable, Domain {
 
 	private Integer id;
 	private Zipcode zipcode;
+	private Relationshipcode relationshipcode;
 	private Postalcode postalcode;
+	private Integer titlecodeid;
 	private String countrycode;
 	private String login;
 	private String firstname;
@@ -52,6 +54,8 @@ public class User implements java.io.Serializable, Domain {
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
+	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
+			0);
 
 	public User() {
 	}
@@ -65,14 +69,19 @@ public class User implements java.io.Serializable, Domain {
 		this.password = password;
 	}
 
-	public User(Zipcode zipcode, Postalcode postalcode, String countrycode,
+	public User(Zipcode zipcode, Relationshipcode relationshipcode,
+			Postalcode postalcode, Integer titlecodeid, String countrycode,
 			String login, String firstname, String lastname, String password,
 			String email, Boolean gendermale, Date birthdate,
 			String profession, String avatarlocation, String note,
 			Date notemodifedtime, String description, Date lastlogin,
-			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			Date createdtime, Date modifiedtime,
+			Set<UserHasGroup> userHasGroups,
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
 		this.zipcode = zipcode;
+		this.relationshipcode = relationshipcode;
 		this.postalcode = postalcode;
+		this.titlecodeid = titlecodeid;
 		this.countrycode = countrycode;
 		this.login = login;
 		this.firstname = firstname;
@@ -90,6 +99,7 @@ public class User implements java.io.Serializable, Domain {
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
+		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
 	}
 
 	@Id
@@ -114,6 +124,16 @@ public class User implements java.io.Serializable, Domain {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "relationshipcodeid")
+	public Relationshipcode getRelationshipcode() {
+		return this.relationshipcode;
+	}
+
+	public void setRelationshipcode(Relationshipcode relationshipcode) {
+		this.relationshipcode = relationshipcode;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postalcodeid")
 	public Postalcode getPostalcode() {
 		return this.postalcode;
@@ -121,6 +141,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setPostalcode(Postalcode postalcode) {
 		this.postalcode = postalcode;
+	}
+
+	@Column(name = "titlecodeid")
+	public Integer getTitlecodeid() {
+		return this.titlecodeid;
+	}
+
+	public void setTitlecodeid(Integer titlecodeid) {
+		this.titlecodeid = titlecodeid;
 	}
 
 	@Column(name = "countrycode", nullable = false, length = 3)
@@ -279,6 +308,16 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setUserHasGroups(Set<UserHasGroup> userHasGroups) {
 		this.userHasGroups = userHasGroups;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserHasSecurityquestioncode> getUserHasSecurityquestioncodes() {
+		return this.userHasSecurityquestioncodes;
+	}
+
+	public void setUserHasSecurityquestioncodes(
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
+		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
 	}
 
 }

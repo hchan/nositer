@@ -1,4 +1,5 @@
 package com.nositer.hibernate;
+import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.*;
 
 import static com.nositer.hibernate.CommonSql.*;
@@ -35,4 +36,11 @@ public class SqlHelper {
 		"update " + User.TABLENAME + " set " + 
 		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+	
+	
+	public static String createLookupSQL (String tablename) {
+		String retval = null;
+		retval = "select * from " + tablename + " where " + Lookupcode.CODE + " like " + ":" + Lookupcode.CODE + " " + PARAMETERIZEDLIMITCLAUSE;
+		return retval;
+	}
 }
