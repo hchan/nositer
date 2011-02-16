@@ -12,4 +12,5 @@ public class Global {
 	
 	public static final String SWFLOADDIRFLASHPLAYER10 = "/public/swfupload/swfupload.swf";
 	public static final String SWFLOADDIRFLASHPLAYER9 = "/public/swfupload/swfupload_fp9.swf";
+	public static final String USER_URL_PREFIX = "/userfile";
 }

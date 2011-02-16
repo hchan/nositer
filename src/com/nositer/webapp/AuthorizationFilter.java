@@ -30,7 +30,6 @@ public class AuthorizationFilter implements Filter {
 	public static final String REGISTER_URL = "/Register.html";
 	public static final String REGISTER_PREFIX = "/register";
 	public static final String USER_SESSION_KEY = "user";
-	public static final String USER_FILE_PREFIX = "/userfile";
 	private static final ThreadLocal<HttpServletRequest> perThreadRequest = new ThreadLocal<HttpServletRequest>();
 	private static final ThreadLocal<HttpServletResponse> perThreadResponse = new ThreadLocal<HttpServletResponse>();
 
@@ -63,7 +62,7 @@ public class AuthorizationFilter implements Filter {
 					doRegisterRequest(request, response, chain);
 				} else if (urlStr.startsWith(Global.UPLOADURL)) {
 					chain.doFilter(request, response);
-				} else if (urlStr.startsWith(USER_FILE_PREFIX)) {
+				} else if (urlStr.startsWith(Global.USER_URL_PREFIX)) {
 					chain.doFilter(request, response);
 				} else {
 					doSessionCheck(request, response, chain);

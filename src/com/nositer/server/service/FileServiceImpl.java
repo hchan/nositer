@@ -166,7 +166,11 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 				throw new GWTException(baseName + " has illegal characters");
 			}
 			String fullFolderPath = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + folder;
-			FileUtils.forceMkdir(new File(fullFolderPath));
+			File dirToCreate = new File(fullFolderPath);
+			if (dirToCreate.exists()) {
+				throw new GWTException(baseName + " already exists");
+			}
+			dirToCreate.mkdir();
 		} catch (GWTException e) {
 			throw e;
 		} catch (Exception e) {	
