@@ -216,7 +216,7 @@
     padding-left:40px;
 }
 
-.selectedFolder input {
+.selectedFile input {
 	color: green !important;
 }
 
@@ -232,4 +232,13 @@
 .uploadError {
 	font-weight: bold;
 	background: red !important;
+}
+
+.imageViewer {
+	border: 1px solid black;
+}
+
+.image50percent {
+	width: 50%;
+	height: 50%;
 }

@@ -5,7 +5,7 @@ import com.nositer.client.uploadimages.FileDirectoryTreeGridContainer;
 import com.nositer.client.uploadimages.FileModel;
 
 public class FileManager extends FileDirectoryTreeGridContainer {
-	private FileMenuBar fileMenuBar;
+	private FileManagerMenuBar fileManagerMenuBar;
 
 	public FileManager() {
 		super();
@@ -15,8 +15,8 @@ public class FileManager extends FileDirectoryTreeGridContainer {
 	protected void init() {
 		super.init();
 		setLayout(new FlowLayout(0));  
-		fileMenuBar = new FileMenuBar();
-		getContentPanel().setTopComponent(fileMenuBar);
+		fileManagerMenuBar = new FileManagerMenuBar();
+		getContentPanel().setTopComponent(fileManagerMenuBar);
 	}
 	
 	@Override

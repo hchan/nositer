@@ -44,9 +44,9 @@ public class SelectedFilePanel extends FormPanel {
 		this.setLabelWidth(100);
 		this.setWidth("100%");
 		selectedFile = new TextField<String>();
-		selectedFile.setFieldLabel("Selected Folder");
+		selectedFile.setFieldLabel("Selected File");
 		selectedFile.setEnabled(false);
-		selectedFile.setStyleName("selectedFolder");
+		selectedFile.setStyleName("selectedFile");
 		this.add(selectedFile, new FormData("100%"));
 	}
 

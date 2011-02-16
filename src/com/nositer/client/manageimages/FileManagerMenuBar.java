@@ -23,12 +23,12 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.PromptMessageBox;
 
-public class FileMenuBar extends MenuBar {
+public class FileManagerMenuBar extends MenuBar {
 
 	private MenuBarItem file;
 	private MenuItem createFolder;
 
-	public FileMenuBar() {
+	public FileManagerMenuBar() {
 		Menu subMenu = new Menu();
 		initCreateFolder();
 		subMenu.add(createFolder);

@@ -12,7 +12,7 @@ public class SelectedFolderPanel extends SelectedFilePanel {
 	public void setSelectedFolder(TextField<String> selectedFolder) {
 		this.selectedFile = selectedFolder;
 	}
-	
+
 	public FolderModel getFolderModel() {
 		return fileModel;
 	}
@@ -21,5 +21,9 @@ public class SelectedFolderPanel extends SelectedFilePanel {
 		this.fileModel = folderModel;
 	}
 
-	
+	@Override
+	public void init() {		
+		super.init();
+		selectedFile.setFieldLabel("Selected Folder");
+	}
 }
