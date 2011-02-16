@@ -10,6 +10,7 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Avatar;
+import com.nositer.shared.Global;
 
 /**
  * 
@@ -80,9 +81,9 @@ public class Quickstats extends LayoutContainer {
 		}
 
 		if (user.getAvatarlocation() == null) { 
-			avatar.setPathToImage(ImageHelper.UNKNOWNAVATAR);
+			avatar.setPathToImage(Global.UNKNOWNAVATAR);
 		} else {
-			avatar.setPathToImage(user.getAvatarlocation());
+			avatar.setPathToImage(ImageHelper.getUserImagePathURL(user.getAvatarlocation()));
 		}
 	}
 	

@@ -20,4 +20,7 @@ public interface ProfileServiceAsync {
 
 	void updateAboutMeOfCurrentUser(String note, String description,
 			AsyncCallback<Void> callback);
+
+	void updateAvatarOfCurrentUser(String avatarlocation,
+			AsyncCallback<Void> callback);
 }

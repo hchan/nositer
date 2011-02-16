@@ -10,6 +10,7 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.uploadimages.FileModel;
 import com.nositer.client.uploadimages.FolderModel;
 import com.nositer.client.uploadimages.SelectedFilePanel;
+import com.nositer.client.util.ImageHelper;
 import com.nositer.shared.Global;
 
 public class ImageViewerContainer extends LayoutContainer {
@@ -64,14 +65,14 @@ public class ImageViewerContainer extends LayoutContainer {
 
 
 	public void setImage(FileModel fileModel) {
-		String imageUrl = Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + fileModel.getPath();
+		String imageUrl = ImageHelper.getUserImagePathURL(fileModel.getPath());
 		imageContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
 	}
 
 
 
 	public void setImage(String fileModelPath, String widthAndHeight) {
-		String imageUrl = Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + fileModelPath;
+		String imageUrl = ImageHelper.getUserImagePathURL(fileModelPath);
 		String style = "";
 		if (widthAndHeight != null) {
 			style = "STYLE='width:" + widthAndHeight + ";height:" + widthAndHeight + "'";

@@ -137,8 +137,10 @@
 
 .avatar {
 	border-style:outset;
-	border-width: 5px;
-	border-color: blue;
+	border-width: 1px;
+	border-color: black;
+	width: 200px;
+	height: 200px;
 }
 
 .profileLabelField {

@@ -174,4 +174,29 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		}
 	}
 
+	@Override
+	public void updateAvatarOfCurrentUser(String avatarlocation)
+			throws GWTException {
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();				
+			sess.createSQLQuery(SqlHelper.UPDATEAVATAR).
+			setString(User.ColumnType.avatarlocation.toString(), avatarlocation).				
+			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			executeUpdate();
+			trx.commit();
+		}
+		catch (GWTException e) {
+			throw e;
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
+	}
+
 }

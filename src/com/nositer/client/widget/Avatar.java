@@ -1,25 +1,24 @@
 package com.nositer.client.widget;
 
+import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.ui.HTML;
 
 public class Avatar extends LayoutContainer {
-	private HTML html;
+	private HtmlContainer htmlContainer;
 
 	public Avatar() {
 		init();
 	}
 
 	private void init() {
-		html = new HTML();
-		
-		html.setStyleName("avatar");
+		htmlContainer = new HtmlContainer();
 		this.setLayout(new FitLayout());
-		this.add(html);
+		this.add(htmlContainer);
 	}
 
 	public void setPathToImage(String pathToImage) {
-		html.setHTML("<IMG SRC='" + pathToImage + "'/>");
+		htmlContainer.setHtml("<IMG SRC='" + pathToImage + "' CLASS='avatar'/>");
 	}
 }

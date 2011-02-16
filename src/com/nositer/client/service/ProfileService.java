@@ -15,5 +15,6 @@ public interface ProfileService extends RemoteService {
 	void updateCurrentUserForEditBasicProfile(User user) throws GWTException;
 	void updatePasswordOfCurrentUser(String oldPassword, String newPassword) throws GWTException;
 	void updateAboutMeOfCurrentUser(String note, String description) throws GWTException;
+	void updateAvatarOfCurrentUser(String avatarlocation) throws GWTException;
 	void logout() throws GWTException;
 }

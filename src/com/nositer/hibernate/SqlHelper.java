@@ -31,4 +31,8 @@ public class SqlHelper {
 		User.ColumnType.notemodifedtime + "= :" + User.ColumnType.notemodifedtime + ", " +
 		User.ColumnType.description + "= :" + User.ColumnType.description +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+	public static String UPDATEAVATAR =
+		"update " + User.TABLENAME + " set " + 
+		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
+		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 }

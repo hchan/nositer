@@ -14,4 +14,6 @@ public class Global {
 	public static final String SWFLOADDIRFLASHPLAYER9 = "/public/swfupload/swfupload_fp9.swf";
 	public static final String USER_URL_PREFIX = "/userfile";
 	public static final String AVATAR_WIDTHHEIGHT = "200"; // in px
+	public static final String PUBLICBASEDIR = "/public/image";
+	public static final String UNKNOWNAVATAR = PUBLICBASEDIR + "/unknownavatar.png";
 }

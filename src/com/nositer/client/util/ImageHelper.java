@@ -1,10 +1,14 @@
 package com.nositer.client.util;
 
+import com.nositer.client.top.TopPanel;
+import com.nositer.shared.Global;
+
+
 public class ImageHelper {
-	public static final String IMAGEBASEDIR = "/image";
-	public static final String USERBASEDIR = IMAGEBASEDIR + "/u";
-	public static final String USERAVATAR = USERBASEDIR + "/avatar.png";
-	public static final String PUBLICBASEDIR = "/public/image";
-	public static final String UNKNOWNAVATAR = PUBLICBASEDIR + "/unknownavatar.png";
-	public static final String GROUPBASEDIR = IMAGEBASEDIR + "/g";
+	
+	public static String getUserImagePathURL (String fileModelPath) {
+		String retval = "";
+		retval = Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + fileModelPath;
+		return retval;
+	}
 }
