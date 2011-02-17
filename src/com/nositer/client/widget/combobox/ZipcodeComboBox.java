@@ -2,6 +2,7 @@ package com.nositer.client.widget.combobox;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
@@ -18,7 +19,8 @@ public class ZipcodeComboBox extends ComboBoxPlus<Zipcode> {
 	
 	@Override
 	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {
-		ServiceBroker.zipcodeService.getZipcodes(offset, limit, query, callback);
+		//ServiceBroker.zipcodeService.getZipcodes(offset, limit, query, callback);
+		ServiceBroker.lookupService.getCodes(Zipcode.class.getName(), offset, limit, query, callback);		
 		return true;
 	}
 	

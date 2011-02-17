@@ -3,6 +3,7 @@ package com.nositer.client.widget.combobox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.Salutationcode;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
 public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
@@ -18,7 +19,8 @@ public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {
 	
 	@Override
 	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {
-		ServiceBroker.postalcodeService.getPostalcodes(offset, limit, query, callback);
+		//ServiceBroker.postalcodeService.getPostalcodes(offset, limit, query, callback);
+		ServiceBroker.lookupService.getCodes(Postalcode.class.getName(), offset, limit, query, callback);
 		return true;
 	}
 	

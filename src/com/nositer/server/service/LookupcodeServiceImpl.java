@@ -23,28 +23,7 @@ import com.nositer.webapp.Application;
 public class LookupcodeServiceImpl extends RemoteServiceServlet implements LookupcodeService {
 
 	
-	public ArrayList<Postalcode> getPostalcodes(int offset, int limit, String query) throws GWTException {
-		ArrayList<Postalcode> retval = new ArrayList<Postalcode>();
-		Session sess = HibernateUtil.getSession();
-		Transaction trx = null;
-		try {
-			trx = sess.beginTransaction();		   			
-			List<com.nositer.hibernate.generated.domain.Postalcode> results = sess.createSQLQuery(SqlHelper.FINDPOSTALCODEBYCODE).addEntity(com.nositer.hibernate.generated.domain.Postalcode.class).
-			setInteger(CommonSql.OFFSET, offset).setInteger(CommonSql.LIMIT, limit).setString(Postalcode.ColumnType.code.toString(), query.toUpperCase().replace(" ", "") + "%").list();
-			retval = BeanConversion.copyDomain2DTO(results, Postalcode.class);
-			
-			trx.commit();
-		}
-		catch (Exception e) {
-			HibernateUtil.rollbackTransaction(trx);			 
-			Application.log.error("", e);
-			throw new GWTException(e);
-		}
-		finally {
-			sess.close();
-		}
-		return retval;
-	}
+	
 
 	@Override
 	public ArrayList<? extends Lookupcode> getCodes(String clazzName,

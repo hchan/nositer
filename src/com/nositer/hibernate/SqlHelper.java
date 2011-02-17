@@ -6,10 +6,6 @@ import static com.nositer.hibernate.CommonSql.*;
 public class SqlHelper {
 	public static String FINDUSERBYLOGIN = 
 		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login;
-	public static String FINDPOSTALCODEBYCODE =
-		"select * from " + Postalcode.TABLENAME + " where " + Postalcode.ColumnType.code + " like " + ":" + Postalcode.ColumnType.code + " " + PARAMETERIZEDLIMITCLAUSE;
-	public static String FINDZIPCODEBYCODE =
-		"select * from " + Zipcode.TABLENAME + " where " + Zipcode.ColumnType.code + " like " + ":" + Zipcode.ColumnType.code + " " + PARAMETERIZEDLIMITCLAUSE;
 	public static String UPDATEBASICPROFILE =
 		"update " + User.TABLENAME + " set " +
 		User.ColumnType.firstname + "= :" + User.ColumnType.firstname + ", " +

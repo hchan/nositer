@@ -39,6 +39,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		this.setPageSize(DEFAULTLIMIT);
 		initPagingToolBar();
 		this.setForceSelection(true);	
+		// if you want to hide the scrollbar on the right: setHideTrigger(true);
 	}
 
 	public void initAsLookupTable() {
