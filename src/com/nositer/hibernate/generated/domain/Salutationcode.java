@@ -2,17 +2,21 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 16, 2011 2:11:04 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +35,7 @@ public class Salutationcode implements java.io.Serializable, Domain {
 	private String description;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Set<User> users = new HashSet<User>(0);
 
 	public Salutationcode() {
 	}
@@ -40,11 +45,12 @@ public class Salutationcode implements java.io.Serializable, Domain {
 	}
 
 	public Salutationcode(String code, String description, Date createdtime,
-			Date modifiedtime) {
+			Date modifiedtime, Set<User> users) {
 		this.code = code;
 		this.description = description;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.users = users;
 	}
 
 	@Id
@@ -94,6 +100,15 @@ public class Salutationcode implements java.io.Serializable, Domain {
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "salutationcode")
+	public Set<User> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 }

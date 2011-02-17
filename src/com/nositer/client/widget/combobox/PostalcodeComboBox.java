@@ -3,7 +3,6 @@ package com.nositer.client.widget.combobox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
-import com.nositer.client.dto.generated.Salutationcode;
 
 @SuppressWarnings({"rawtypes", "unchecked"}) 
 public class PostalcodeComboBox extends ComboBoxPlus<Postalcode> {

@@ -17,7 +17,6 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
@@ -29,6 +28,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.Relationshipcode;
+import com.nositer.client.dto.generated.Salutationcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.main.MainPanel;
@@ -36,6 +37,7 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.combobox.RelationshipcodeComboBox;
 import com.nositer.client.widget.combobox.SalutationcodeComboBox;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
 @SuppressWarnings("unchecked")
@@ -61,7 +63,8 @@ public class Register implements EntryPoint {
 	private DateField birthdate;
 	private ErrorPanel errorPanel;
 	private SalutationcodeComboBox salutation;
-
+	private RelationshipcodeComboBox relationship;
+	
 	public Button getSaveButton() {
 		return saveButton;
 	}
@@ -271,6 +274,9 @@ public class Register implements EntryPoint {
 		salutation.setForceSelection(false);		
 		salutation.setFieldLabel("Salutation");
 				
+		relationship = new RelationshipcodeComboBox();
+		relationship.setForceSelection(false);		
+		relationship.setFieldLabel("Relationship Status");
 		
 		genderRadioGroup = new GenderRadioGroup();
 
@@ -282,6 +288,7 @@ public class Register implements EntryPoint {
 
 		formPanel.add(email);
 		formPanel.add(salutation);
+		formPanel.add(relationship);
 		formPanel.add(genderRadioGroup);
 		formPanel.add(profession);
 		formPanel.add(birthdate);
@@ -422,6 +429,17 @@ public class Register implements EntryPoint {
 			Zipcode zipcode = location.getZipcode().getBean();			
 			retval.setZipcode(zipcode);
 		}
+		
+		if (salutation.getValue() != null) {
+			Salutationcode salutationcode = salutation.getBean();
+			retval.setSalutationcode(salutationcode);
+		}
+		
+		if (relationship.getValue() != null) {
+			Relationshipcode relationshipcode = relationship.getBean();
+			retval.setRelationshipcode(relationshipcode);
+		}
+		
 		retval.setEmail(email.getValue());
 		if (genderRadioGroup.getGender() != null) {
 			if (genderRadioGroup.getGender().equals(GenderRadioGroup.GenderType.MALE)) {

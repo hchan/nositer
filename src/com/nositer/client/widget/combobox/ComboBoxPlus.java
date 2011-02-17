@@ -23,11 +23,8 @@ import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ListView;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.generated.Postalcode;
 @SuppressWarnings({"rawtypes", "unchecked"}) 
 public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {

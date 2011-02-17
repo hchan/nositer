@@ -61,6 +61,8 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			trx = sess.beginTransaction();		
 			Integer postalcodeid = null;
 			Integer zipcodeid = null;
+			Integer salutationcodeid = null;
+			Integer relationshipcodeid = null;
 			if (user.getPostalcode() != null) {
 				postalcodeid = user.getPostalcode().getId();
 			} else {
@@ -71,6 +73,8 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			setString(User.ColumnType.lastname.toString(), user.getLastname()).
 			setParameter(User.ColumnType.postalcodeid.toString(), postalcodeid, new IntegerType()).		
 			setParameter(User.ColumnType.zipcodeid.toString(), zipcodeid, new IntegerType()).
+			setParameter(User.ColumnType.salutationcodeid.toString(), salutationcodeid, new IntegerType()).
+			setParameter(User.ColumnType.relationshipcodeid.toString(), relationshipcodeid, new IntegerType()).
 			setString(User.ColumnType.countrycode.toString(), user.getCountrycode()).
 			setString(User.ColumnType.email.toString(), user.getEmail()).
 			setBoolean(User.ColumnType.gendermale.toString(), user.getGendermale()).

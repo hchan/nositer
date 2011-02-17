@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 16, 2011 2:11:04 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -26,6 +26,7 @@ public class Salutationcode implements java.io.Serializable, IsSerializable,
 	private String description;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Set<User> users = new HashSet<User>(0);
 	public static final String TABLENAME = "salutationcode";
 
 	public String getTablename() {
@@ -40,11 +41,12 @@ public class Salutationcode implements java.io.Serializable, IsSerializable,
 	}
 
 	public Salutationcode(String code, String description, Date createdtime,
-			Date modifiedtime) {
+			Date modifiedtime, Set<User> users) {
 		this.code = code;
 		this.description = description;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.users = users;
 	}
 
 	public Integer getId() {
@@ -85,6 +87,14 @@ public class Salutationcode implements java.io.Serializable, IsSerializable,
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	public Set<User> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 	public enum ColumnType {
