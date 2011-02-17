@@ -76,8 +76,12 @@ public class Quickstats extends LayoutContainer {
 				genderStr = "Female";
 			}
 		}
-		salutation.setValue(user.getSalutationcode().getCode());
-		relationship.setValue(user.getRelationshipcode().getCode());
+		if (user.getSalutationcode() != null) {
+			salutation.setValue(user.getSalutationcode().getCode());
+		}
+		if (user.getRelationshipcode() != null) {
+			relationship.setValue(user.getRelationshipcode().getCode());
+		}
 		gender.setValue(genderStr);
 		birthdate.setValue(GWTUtil.getFormattedDate(user.getBirthdate()));
 		profession.setValue(user.getProfession());

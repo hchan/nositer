@@ -70,6 +70,12 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			} else {
 				zipcodeid = user.getZipcode().getId();				
 			}
+			if (user.getSalutationcode() != null) {
+				salutationcodeid = user.getSalutationcode().getId();
+			}
+			if (user.getRelationshipcode() != null) {
+				relationshipcodeid = user.getRelationshipcode().getId();
+			}
 			sess.createSQLQuery(SqlHelper.UPDATEBASICPROFILE).
 			setString(User.ColumnType.firstname.toString(), user.getFirstname()).
 			setString(User.ColumnType.lastname.toString(), user.getLastname()).
@@ -114,14 +120,18 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			com.nositer.client.dto.generated.Zipcode zipcodeDTO = BeanConversion.copyDomain2DTO(zipcodeDomain, com.nositer.client.dto.generated.Zipcode.class);
 			retval.setZipcode(zipcodeDTO);
 		}
-		
+
 		com.nositer.hibernate.generated.domain.Salutationcode salutationcodeDomain = userDomain.getSalutationcode();
-		Salutationcode salutationcodeDTO = BeanConversion.copyDomain2DTO(salutationcodeDomain, com.nositer.client.dto.generated.Salutationcode.class);
-		retval.setSalutationcode(salutationcodeDTO);
-		
+		if (salutationcodeDomain != null) {
+			Salutationcode salutationcodeDTO = BeanConversion.copyDomain2DTO(salutationcodeDomain, com.nositer.client.dto.generated.Salutationcode.class);
+			retval.setSalutationcode(salutationcodeDTO);
+		}
+
 		com.nositer.hibernate.generated.domain.Relationshipcode relationshipcodeDomain = userDomain.getRelationshipcode();
-		Relationshipcode relationshipcodeDTO = BeanConversion.copyDomain2DTO(relationshipcodeDomain, com.nositer.client.dto.generated.Relationshipcode.class);
-		retval.setRelationshipcode(relationshipcodeDTO);
+		if (relationshipcodeDomain != null) {
+			Relationshipcode relationshipcodeDTO = BeanConversion.copyDomain2DTO(relationshipcodeDomain, com.nositer.client.dto.generated.Relationshipcode.class);
+			retval.setRelationshipcode(relationshipcodeDTO);
+		}
 		return retval;
 	}
 
@@ -190,7 +200,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 
 	@Override
 	public void updateAvatarOfCurrentUser(String avatarlocation)
-			throws GWTException {
+	throws GWTException {
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		try {

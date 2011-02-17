@@ -65,6 +65,22 @@ public class Register implements EntryPoint {
 	private SalutationcodeComboBox salutation;
 	private RelationshipcodeComboBox relationship;
 	
+	public SalutationcodeComboBox getSalutation() {
+		return salutation;
+	}
+
+	public void setSalutation(SalutationcodeComboBox salutation) {
+		this.salutation = salutation;
+	}
+
+	public RelationshipcodeComboBox getRelationship() {
+		return relationship;
+	}
+
+	public void setRelationship(RelationshipcodeComboBox relationship) {
+		this.relationship = relationship;
+	}
+
 	public Button getSaveButton() {
 		return saveButton;
 	}

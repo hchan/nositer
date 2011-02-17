@@ -35,7 +35,8 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		setMinChars(1);
 		this.setPageSize(DEFAULTLIMIT);
 		initPagingToolBar();
-		this.setForceSelection(true);	
+		this.setForceSelection(true);
+		setTriggerAction(TriggerAction.ALL); // i.e. if TriggerAction.QUERY is set and Salutation is Mr, then clicking on the down arrow will show Mr and Mrs.  but if TriggerAction.ALL, then Dr, Prof and Rev will also show
 		// if you want to hide the scrollbar on the right: setHideTrigger(true);
 	}
 

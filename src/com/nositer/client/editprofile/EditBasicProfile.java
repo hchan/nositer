@@ -17,6 +17,8 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.Relationshipcode;
+import com.nositer.client.dto.generated.Salutationcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.history.HistoryToken;
@@ -90,6 +92,18 @@ public class EditBasicProfile extends LayoutContainer {
 			register.getLocation().getZipcode().setRawValue(user.getZipcode().getCode());
 		}
 
+		if (user.getSalutationcode() != null) {
+			BeanModel salutationModel = BeanModelLookup.get().getFactory(Salutationcode.class).createModel(user.getSalutationcode());
+			register.getSalutation().setValue(salutationModel);
+			register.getSalutation().setRawValue(user.getSalutationcode().getCode());
+		}
+
+		if (user.getRelationshipcode() != null) {
+			BeanModel relationshipModel = BeanModelLookup.get().getFactory(Relationshipcode.class).createModel(user.getRelationshipcode());
+			register.getRelationship().setValue(relationshipModel);
+			register.getRelationship().setRawValue(user.getRelationshipcode().getCode());
+		}
+		
 		register.getEmail().setValue(user.getEmail());
 		if (user.getGendermale() != null) {
 			if (user.getGendermale()) {
