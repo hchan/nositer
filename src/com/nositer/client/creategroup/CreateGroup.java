@@ -31,10 +31,11 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 
 	private void addLabel(String labelName) {
 		FlowLayout flowLayout = new FlowLayout();
-		flowLayout.setMargins(new Margins(10, 0, 10, 0));
+		flowLayout.setMargins(new Margins(0, 0, 10, 0));
 		LayoutContainer layoutContainer = new LayoutContainer(flowLayout);
 		Label label = new Label(labelName);
 		layoutContainer.add(label);
+		layoutContainer.setStyleName("formHeading");
 		formPanel.add(layoutContainer);
 	}
 }
