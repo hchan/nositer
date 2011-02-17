@@ -21,6 +21,8 @@ public class Quickstats extends LayoutContainer {
 	private LabelField firstname;	
 	private LabelField lastname;
 	private LabelField location;
+	private LabelField salutation;
+	private LabelField relationship;
 	private LabelField email;
 	private LabelField gender;
 	private LabelField birthdate;
@@ -39,6 +41,8 @@ public class Quickstats extends LayoutContainer {
 		firstname = createProfileLabelField("First name");
 		lastname = createProfileLabelField("Last name");
 		location = createProfileLabelField("Location");
+		salutation = createProfileLabelField("Salutation");
+		relationship = createProfileLabelField("Status");
 		email = createProfileLabelField("Email");
 		gender = createProfileLabelField("Gender");
 		birthdate = createProfileLabelField("Birth Date");		
@@ -47,6 +51,8 @@ public class Quickstats extends LayoutContainer {
 		formContainer.add(firstname);
 		formContainer.add(lastname);		
 		formContainer.add(location);
+		formContainer.add(salutation);
+		formContainer.add(relationship);
 		formContainer.add(email);
 		formContainer.add(gender);
 		formContainer.add(birthdate);
@@ -70,6 +76,8 @@ public class Quickstats extends LayoutContainer {
 				genderStr = "Female";
 			}
 		}
+		salutation.setValue(user.getSalutationcode().getCode());
+		relationship.setValue(user.getRelationshipcode().getCode());
 		gender.setValue(genderStr);
 		birthdate.setValue(GWTUtil.getFormattedDate(user.getBirthdate()));
 		profession.setValue(user.getProfession());

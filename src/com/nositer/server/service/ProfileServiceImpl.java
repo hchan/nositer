@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.hibernate.type.IntegerType;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.nositer.client.dto.generated.Relationshipcode;
+import com.nositer.client.dto.generated.Salutationcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.ProfileService;
 import com.nositer.client.widget.Location;
@@ -112,6 +114,14 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			com.nositer.client.dto.generated.Zipcode zipcodeDTO = BeanConversion.copyDomain2DTO(zipcodeDomain, com.nositer.client.dto.generated.Zipcode.class);
 			retval.setZipcode(zipcodeDTO);
 		}
+		
+		com.nositer.hibernate.generated.domain.Salutationcode salutationcodeDomain = userDomain.getSalutationcode();
+		Salutationcode salutationcodeDTO = BeanConversion.copyDomain2DTO(salutationcodeDomain, com.nositer.client.dto.generated.Salutationcode.class);
+		retval.setSalutationcode(salutationcodeDTO);
+		
+		com.nositer.hibernate.generated.domain.Relationshipcode relationshipcodeDomain = userDomain.getRelationshipcode();
+		Relationshipcode relationshipcodeDTO = BeanConversion.copyDomain2DTO(relationshipcodeDomain, com.nositer.client.dto.generated.Relationshipcode.class);
+		retval.setRelationshipcode(relationshipcodeDTO);
 		return retval;
 	}
 
