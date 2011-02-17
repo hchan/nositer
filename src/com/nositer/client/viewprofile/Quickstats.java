@@ -61,7 +61,7 @@ public class Quickstats extends LayoutContainer {
 		this.setLayout(new HBoxLayout());
 		this.add(formContainer);
 		avatar = new Avatar();
-		this.add(avatar, new HBoxLayoutData(new Margins(0, 0, 0, 5)));
+		this.add(avatar, new HBoxLayoutData(new Margins(0, 0, 0, 15)));
 	}
 	
 	public void populate(User user) {

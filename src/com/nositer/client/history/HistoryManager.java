@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.nositer.client.creategroup.CreateGroup;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
@@ -72,6 +73,10 @@ public class HistoryManager {
 			leftPanel.getImages().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageImagesNavigationItem());
 			setMainPanel(new ManageImages());
+		} else if (historyToken.equals(CREATEGROUP.toString())) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getCreateGroup());
+			setMainPanel(new CreateGroup());
 		}
 		
 		

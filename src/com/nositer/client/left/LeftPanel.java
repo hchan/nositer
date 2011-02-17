@@ -23,6 +23,7 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem editAboutMeNavigationItem;
 	private NavigationItem myGroups;
 	private NavigationItem manageGroups;
+	private NavigationItem createGroup;
 	private NavigationItem myIwantTos;
 	private ContentPanel iWantTo;
 	private NavigationItem manageIwantTos;
@@ -31,6 +32,14 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem uploadImagesNavigationItem;
 	private NavigationItem manageImagesNavigationItem;
 	
+	public NavigationItem getCreateGroup() {
+		return createGroup;
+	}
+
+	public void setCreateGroup(NavigationItem createGroup) {
+		this.createGroup = createGroup;
+	}
+
 	public NavigationItem getMyGroups() {
 		return myGroups;
 	}
@@ -223,9 +232,10 @@ public class LeftPanel extends ContentPanel {
 		groups = createNavigationContentPanel("Groups", this);	
 		myGroups = navigationTree.createNavigationItem("My Groups");
 		manageGroups = navigationTree.createNavigationItem("Manage Groups");
+		createGroup = navigationTree.createNavigationItem("Create Group");
 		groups.add(myGroups);
 		groups.add(manageGroups);
-		
+		groups.add(createGroup);
 
 		// I want to ...
 		iWantTo = createNavigationContentPanel("I want to ...", this);	
@@ -266,5 +276,6 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
 		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
 		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
+		HistoryManager.addHistoryOnClick(createGroup, HistoryToken.CREATEGROUP.toString());
 	}
 }
