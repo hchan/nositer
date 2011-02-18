@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 17, 2011 4:04:51 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -22,8 +22,13 @@ public class Group implements java.io.Serializable, IsSerializable,
 		BeanModelTag, DTO {
 
 	private Integer id;
+	private Zipcode zipcode;
+	private User user;
+	private Postalcode postalcode;
+	private String countrycodeid;
 	private String name;
 	private String description;
+	private String avatarlocation;
 	private String shortname;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -37,10 +42,22 @@ public class Group implements java.io.Serializable, IsSerializable,
 	public Group() {
 	}
 
-	public Group(String name, String description, String shortname,
-			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+	public Group(User user, String countrycodeid) {
+		this.user = user;
+		this.countrycodeid = countrycodeid;
+	}
+
+	public Group(Zipcode zipcode, User user, Postalcode postalcode,
+			String countrycodeid, String name, String description,
+			String avatarlocation, String shortname, Date createdtime,
+			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+		this.zipcode = zipcode;
+		this.user = user;
+		this.postalcode = postalcode;
+		this.countrycodeid = countrycodeid;
 		this.name = name;
 		this.description = description;
+		this.avatarlocation = avatarlocation;
 		this.shortname = shortname;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -53,6 +70,38 @@ public class Group implements java.io.Serializable, IsSerializable,
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Zipcode getZipcode() {
+		return this.zipcode;
+	}
+
+	public void setZipcode(Zipcode zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Postalcode getPostalcode() {
+		return this.postalcode;
+	}
+
+	public void setPostalcode(Postalcode postalcode) {
+		this.postalcode = postalcode;
+	}
+
+	public String getCountrycodeid() {
+		return this.countrycodeid;
+	}
+
+	public void setCountrycodeid(String countrycodeid) {
+		this.countrycodeid = countrycodeid;
 	}
 
 	public String getName() {
@@ -69,6 +118,14 @@ public class Group implements java.io.Serializable, IsSerializable,
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAvatarlocation() {
+		return this.avatarlocation;
+	}
+
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
 	}
 
 	public String getShortname() {
@@ -104,6 +161,6 @@ public class Group implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, name, description, shortname, createdtime, modifiedtime,
+		id, zipcodeid, userid, postalcodeid, countrycodeid, name, description, avatarlocation, shortname, createdtime, modifiedtime,
 	}
 }

@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 17, 2011 4:04:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -53,6 +53,7 @@ public class User implements java.io.Serializable, Domain {
 	private Date lastlogin;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Set<Group> groups = new HashSet<Group>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
 			0);
@@ -76,7 +77,7 @@ public class User implements java.io.Serializable, Domain {
 			Date birthdate, String profession, String avatarlocation,
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Date createdtime, Date modifiedtime,
-			Set<UserHasGroup> userHasGroups,
+			Set<Group> groups, Set<UserHasGroup> userHasGroups,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
 		this.salutationcode = salutationcode;
 		this.zipcode = zipcode;
@@ -98,6 +99,7 @@ public class User implements java.io.Serializable, Domain {
 		this.lastlogin = lastlogin;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.groups = groups;
 		this.userHasGroups = userHasGroups;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
 	}
@@ -300,6 +302,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Group> getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

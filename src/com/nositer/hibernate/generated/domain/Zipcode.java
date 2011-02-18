@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 17, 2011 4:04:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -41,6 +41,7 @@ public class Zipcode implements java.io.Serializable, Domain {
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
+	private Set<Group> groups = new HashSet<Group>(0);
 
 	public Zipcode() {
 	}
@@ -52,7 +53,7 @@ public class Zipcode implements java.io.Serializable, Domain {
 	public Zipcode(String code, String description, String latitude,
 			String longitude, String city, String state, String county,
 			String zipClass, Date createdtime, Date modifiedtime,
-			Set<User> users) {
+			Set<User> users, Set<Group> groups) {
 		this.code = code;
 		this.description = description;
 		this.latitude = latitude;
@@ -64,6 +65,7 @@ public class Zipcode implements java.io.Serializable, Domain {
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.users = users;
+		this.groups = groups;
 	}
 
 	@Id
@@ -176,6 +178,15 @@ public class Zipcode implements java.io.Serializable, Domain {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "zipcode")
+	public Set<Group> getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
 	}
 
 }

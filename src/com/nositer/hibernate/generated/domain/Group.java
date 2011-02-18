@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 16, 2011 5:09:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 17, 2011 4:04:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,8 +32,13 @@ import javax.persistence.TemporalType;
 public class Group implements java.io.Serializable, Domain {
 
 	private Integer id;
+	private Zipcode zipcode;
+	private User user;
+	private Postalcode postalcode;
+	private String countrycodeid;
 	private String name;
 	private String description;
+	private String avatarlocation;
 	private String shortname;
 	private Date createdtime;
 	private Date modifiedtime;
@@ -40,10 +47,22 @@ public class Group implements java.io.Serializable, Domain {
 	public Group() {
 	}
 
-	public Group(String name, String description, String shortname,
-			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+	public Group(User user, String countrycodeid) {
+		this.user = user;
+		this.countrycodeid = countrycodeid;
+	}
+
+	public Group(Zipcode zipcode, User user, Postalcode postalcode,
+			String countrycodeid, String name, String description,
+			String avatarlocation, String shortname, Date createdtime,
+			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+		this.zipcode = zipcode;
+		this.user = user;
+		this.postalcode = postalcode;
+		this.countrycodeid = countrycodeid;
 		this.name = name;
 		this.description = description;
+		this.avatarlocation = avatarlocation;
 		this.shortname = shortname;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
@@ -59,6 +78,45 @@ public class Group implements java.io.Serializable, Domain {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "zipcodeid")
+	public Zipcode getZipcode() {
+		return this.zipcode;
+	}
+
+	public void setZipcode(Zipcode zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userid", nullable = false)
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "postalcodeid")
+	public Postalcode getPostalcode() {
+		return this.postalcode;
+	}
+
+	public void setPostalcode(Postalcode postalcode) {
+		this.postalcode = postalcode;
+	}
+
+	@Column(name = "countrycodeid", nullable = false, length = 3)
+	public String getCountrycodeid() {
+		return this.countrycodeid;
+	}
+
+	public void setCountrycodeid(String countrycodeid) {
+		this.countrycodeid = countrycodeid;
 	}
 
 	@Column(name = "name", length = 128)
@@ -77,6 +135,15 @@ public class Group implements java.io.Serializable, Domain {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Column(name = "avatarlocation", length = 128)
+	public String getAvatarlocation() {
+		return this.avatarlocation;
+	}
+
+	public void setAvatarlocation(String avatarlocation) {
+		this.avatarlocation = avatarlocation;
 	}
 
 	@Column(name = "shortname", length = 128)

@@ -1,6 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <HTML>
 <head>
+<title>Nos Iter</title>
 <link rel="stylesheet" type="text/css" href="/public/css/main.css" />
 <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript">
