@@ -143,6 +143,11 @@
 	height: 200px;
 }
 
+.avatarSelector {
+	font-size: 14px; 
+	font-weight: bold;
+}
+
 .profileLabelField {
 	font-weight: bold;	
 }

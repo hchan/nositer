@@ -25,6 +25,7 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.util.TreeNodeHelper;
+import com.nositer.client.widget.SelectedFolderPanel;
 
 public class FileDirectoryTreeGridContainer extends LayoutContainer {
 

@@ -25,6 +25,7 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.AvatarSelector;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Resizable;
@@ -34,6 +35,8 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	private TextField<String> name;
 	private HtmlEditor description;
 	private ErrorPanel errorPanel;
+	private AvatarSelector avatarSelector;
+	
 	public CreateGroup() {
 		init();
 	}
@@ -54,6 +57,11 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		name = new TextField<String>();
 		name.setFieldLabel("Name");  
 		name.setLabelStyle("font-size: 14px; font-weight: bold;");
+		
+		
+		avatarSelector = new AvatarSelector();
+		
+		
 		description = new HtmlEditor();
 		setDescriptionHeight();
 		
@@ -62,10 +70,14 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		formPanel.add(errorPanel);
 		addLabel("Create Group");
 		formPanel.add(name, new FormData("100%"));
+		FormData formDataAvatarSelector = new FormData();
+		formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
+		formPanel.add(avatarSelector, formDataAvatarSelector);
 		formPanel.add(description, new FormData("100%"));	
 		
 		this.add(formPanel);
 		initButtons();	
+		/*
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -80,6 +92,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 			}
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
+		*/
 	}
 	
 	private void populate(User user) {

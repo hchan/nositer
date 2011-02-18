@@ -1,6 +1,7 @@
-package com.nositer.client.uploadimages;
+package com.nositer.client.widget;
 
 import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.nositer.client.uploadimages.FolderModel;
 
 
 public class SelectedFolderPanel extends SelectedFilePanel {
