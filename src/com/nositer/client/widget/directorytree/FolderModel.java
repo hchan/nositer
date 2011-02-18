@@ -1,4 +1,4 @@
-package com.nositer.client.uploadimages;
+package com.nositer.client.widget.directorytree;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

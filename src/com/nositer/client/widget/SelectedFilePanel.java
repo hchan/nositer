@@ -4,13 +4,13 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
-import com.nositer.client.uploadimages.FolderModel;
+import com.nositer.client.widget.directorytree.FileModel;
 
 @SuppressWarnings("rawtypes")
 public class SelectedFilePanel extends FormPanel {
 
 	protected TextField<String> selectedFile;
-	protected FolderModel fileModel;
+	protected FileModel fileModel;
 	
 	private TreeNode treeNode;
 	
@@ -27,11 +27,11 @@ public class SelectedFilePanel extends FormPanel {
 		this.selectedFile = selectedFile;
 	}
 
-	public FolderModel getFileModel() {
+	public FileModel getFileModel() {
 		return fileModel;
 	}
 
-	public void setFileModel(FolderModel fileModel) {
+	public void setFileModel(FileModel fileModel) {
 		this.fileModel = fileModel;
 	}
 

@@ -18,10 +18,10 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.uploadimages.FileModel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.PromptMessageBox;
+import com.nositer.client.widget.directorytree.FileModel;
 
 public class FileManagerMenuBar extends MenuBar {
 

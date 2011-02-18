@@ -28,6 +28,8 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.shared.Global;
 
 

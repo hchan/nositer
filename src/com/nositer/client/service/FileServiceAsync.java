@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.data.RemoteSortTreeLoadConfig;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.uploadimages.FileModel;
+import com.nositer.client.widget.directorytree.FileModel;
 
 public interface FileServiceAsync {
 

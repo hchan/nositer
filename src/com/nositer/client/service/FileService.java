@@ -5,7 +5,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.RemoteSortTreeLoadConfig;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.nositer.client.uploadimages.FileModel;
+import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.shared.GWTException;
 
 /**

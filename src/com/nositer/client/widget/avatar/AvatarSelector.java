@@ -1,4 +1,4 @@
-package com.nositer.client.widget;
+package com.nositer.client.widget.avatar;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -13,8 +13,8 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
-import com.nositer.client.uploadimages.FileDirectoryTreeGridContainer;
-import com.nositer.client.uploadimages.FolderModel;
+import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.FolderModel;
 
 
 @SuppressWarnings("rawtypes")
@@ -79,13 +79,8 @@ public class AvatarSelector extends LayoutContainer {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				Window window = new Window();
-				FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer();
-				window.setHeading("Select Avatar");
-				window.add(fileDirectoryTreeGridContainer);
-				window.setModal(true);
-				window.setBlinkModal(true);
-				window.show();
+				AvatarSelectorWindow avatarSelectorWindow = new AvatarSelectorWindow();				
+				avatarSelectorWindow.show();
 			}
 		});
 	}

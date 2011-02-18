@@ -1,4 +1,4 @@
-package com.nositer.client.uploadimages;
+package com.nositer.client.widget.directorytree;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +25,7 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.util.TreeNodeHelper;
+import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.SelectedFolderPanel;
 
 public class FileDirectoryTreeGridContainer extends LayoutContainer {
@@ -32,6 +33,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 	public static final int HEIGHT = 300;
 	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
+	private SelectedFilePanel selectedFilePanel;
 	private MyTreeGrid tree;
 	private ContentPanel contentPanel;
 
@@ -52,6 +54,14 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		this.selectedFolderPanel = selectedFolderPanel;
 	}
 
+	public SelectedFilePanel getSelectedFilePanel() {
+		return selectedFilePanel;
+	}
+
+	public void setSelectedFilePanel(SelectedFilePanel selectedFilePanel) {
+		this.selectedFilePanel = selectedFilePanel;
+	}
+
 	public MyTreeGrid getTree() {
 		return tree;
 	}
@@ -60,11 +70,16 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		this.tree = tree;
 	}
 
+	// default uses selectedFolderPanel
 	public FileDirectoryTreeGridContainer() {
-		init();
+		this(false);
 	}
 
-	protected void init() {
+	public FileDirectoryTreeGridContainer(boolean useSelectedFilePanel) {
+		init(useSelectedFilePanel);
+	}
+
+	protected void init(boolean useSelectedFilePanel) {
 
 		setLayout(new FlowLayout(10));  
 		// data proxy  
@@ -84,7 +99,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 				return parent instanceof FolderModel;  
 			} 
 
-			
+
 		};  
 
 		// trees store  
@@ -135,15 +150,20 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
 					selectedFolderPanel.setFolderModel(folderModel);
 					selectedFolderPanel.setTreeNode(this.findNode(folderModel));
+					doFolderModelClick(folderModel);
 				} else {
+					FileModel fileModel = (FileModel)e.getModel();
+					selectedFilePanel.getSelectedFile().setValue(fileModel.getPath());
+					selectedFilePanel.setFileModel(fileModel);
+					selectedFilePanel.setTreeNode(this.findNode(fileModel));
 					doFileModelClick((FileModel) e.getModel());
 				}
 			}
 		};  
 
-		
 
-		
+
+
 		tree.setBorders(true);  
 		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
@@ -154,9 +174,13 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		contentPanel.add(tree);  
 
 
-		
 		selectedFolderPanel = new SelectedFolderPanel();
-		contentPanel.setBottomComponent(selectedFolderPanel);
+		selectedFilePanel = new SelectedFilePanel();
+		if (useSelectedFilePanel) {
+			contentPanel.setBottomComponent(selectedFilePanel);
+		} else {
+			contentPanel.setBottomComponent(selectedFolderPanel);
+		}
 		add(contentPanel);  
 
 	}  
@@ -164,9 +188,13 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 	public void refreshSelectedTreeNode() {
 		TreeNodeHelper.refreh(getSelectedFolderPanel().getTreeNode());
 	}
-	
-	
+
+
 	public void doFileModelClick(FileModel fileModel) {
-		
+
+	}
+
+	public void doFolderModelClick(FolderModel folderModel) {
+
 	}
 }

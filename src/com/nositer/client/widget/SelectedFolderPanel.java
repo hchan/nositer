@@ -1,7 +1,7 @@
 package com.nositer.client.widget;
 
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.nositer.client.uploadimages.FolderModel;
+import com.nositer.client.widget.directorytree.FolderModel;
 
 
 public class SelectedFolderPanel extends SelectedFilePanel {
@@ -15,7 +15,7 @@ public class SelectedFolderPanel extends SelectedFilePanel {
 	}
 
 	public FolderModel getFolderModel() {
-		return fileModel;
+		return (FolderModel)fileModel;
 	}
 
 	public void setFolderModel(FolderModel folderModel) {

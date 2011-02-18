@@ -9,7 +9,7 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
-import com.nositer.client.widget.Avatar;
+import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.shared.Global;
 
 /**

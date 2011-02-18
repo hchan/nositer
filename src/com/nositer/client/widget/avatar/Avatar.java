@@ -1,4 +1,4 @@
-package com.nositer.client.widget;
+package com.nositer.client.widget.avatar;
 
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
