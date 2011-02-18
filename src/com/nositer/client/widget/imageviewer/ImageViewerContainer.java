@@ -1,4 +1,4 @@
-package com.nositer.client.manageimages;
+package com.nositer.client.widget.imageviewer;
 
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;

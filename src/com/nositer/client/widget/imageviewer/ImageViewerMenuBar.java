@@ -1,4 +1,4 @@
-package com.nositer.client.manageimages;
+package com.nositer.client.widget.imageviewer;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -9,6 +9,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.manageimages.ManageImages;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.InfoMessageBox;

@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.imageviewer.ImageViewerContainer;
 
 public class ManageImages extends LayoutContainer implements Resizable {
 	private FileDirectoryTreeGridContainer fileManager;
