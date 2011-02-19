@@ -62,12 +62,14 @@ public class ManageImages extends LayoutContainer implements Resizable {
 		contentPanel.setWidth(MainPanel.getInstance().getWidth());
 		contentPanel.setLayout(layout);
 		fileManager = new FileManager() {
+			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
 			};
 		};
 		
 		imageViewerContainer = new ImageViewerContainer() {
+			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
 			};
