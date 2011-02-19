@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.imageviewer.ImageViewerContainer;
 
@@ -37,7 +38,11 @@ public class AvatarSelectorWindow extends Window {
 		};
 		
 		fileDirectoryTreeGridContainer.setLayout(new FlowLayout(0));
-		imageViewerContainer = new ImageViewerContainer();
+		imageViewerContainer = new ImageViewerContainer() {
+			protected void onResize(int width, int height) {
+				AvatarSelectorWindow.this.onResize(AvatarSelectorWindow.this.getWidth(), AvatarSelectorWindow.this.getHeight());
+			};
+		};
 		
 		setHeading("Select Avatar");
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
@@ -59,6 +64,11 @@ public class AvatarSelectorWindow extends Window {
 		super.onResize(width, height);
 		fileDirectoryTreeGridContainer.getContentPanel().setSize(fileDirectoryTreeGridContainer.getWidth(), 
 				height-35);
+		imageViewerContainer.setHeight(height-35);
+		imageViewerContainer.getContentPanel().setHeight(height-35);
+		
+		
+		imageViewerContainer.getSelectedFilePanel().setWidth(imageViewerContainer.getWidth() - 10);
 		//contentPanel.setSize(width, height);
 		//fileDirectoryTreeGridContainer.setHeight(height);
 		//fileDirectoryTreeGridContainer.getContentPanel().setHeight(height);

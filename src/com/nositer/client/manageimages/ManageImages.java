@@ -67,7 +67,12 @@ public class ManageImages extends LayoutContainer implements Resizable {
 			};
 		};
 		
-		imageViewerContainer = new ImageViewerContainer();
+		imageViewerContainer = new ImageViewerContainer() {
+			protected void onResize(int width, int height) {
+				resize(0,0);
+			};
+		};
+	
 	
 
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
