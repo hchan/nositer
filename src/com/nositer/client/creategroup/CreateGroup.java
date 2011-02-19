@@ -117,17 +117,17 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	
 
 	public void initButtons() {
-		initUpdateButton();
+		initSaveButton();
 		initCancelButton();
 	}
 
 
-	public void initUpdateButton() {
+	public void initSaveButton() {
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
-		Button button = new Button("Update");
+		Button button = new Button("Save");
 		formPanel.addButton(button);  
 
-		Listener saveListener = new Listener<BaseEvent>() {
+		Listener<BaseEvent> saveListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				ArrayList<String> errors = getErrors();
@@ -168,7 +168,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	public void initCancelButton() {
 		Button cancelButton = new Button("Cancel");
 		formPanel.addButton(cancelButton);  
-		Listener cancelListener = new Listener<BaseEvent>() {
+		Listener<BaseEvent> cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				History.newItem(HistoryToken.VIEWPROFILE.toString());
