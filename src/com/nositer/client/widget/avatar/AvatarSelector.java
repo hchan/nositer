@@ -79,7 +79,7 @@ public class AvatarSelector extends LayoutContainer {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				AvatarSelectorWindow avatarSelectorWindow = new AvatarSelectorWindow();				
+				AvatarSelectorWindow avatarSelectorWindow = new AvatarSelectorWindow(AvatarSelector.this);				
 				avatarSelectorWindow.show();
 			}
 		});
