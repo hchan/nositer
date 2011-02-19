@@ -26,6 +26,22 @@ public class AvatarSelector extends LayoutContainer {
 	protected Button button;
 	
 	
+	public Label getSelectAvatar() {
+		return selectAvatar;
+	}
+
+	public void setSelectAvatar(Label selectAvatar) {
+		this.selectAvatar = selectAvatar;
+	}
+
+	public Button getButton() {
+		return button;
+	}
+
+	public void setButton(Button button) {
+		this.button = button;
+	}
+
 	public TreeNode getTreeNode() {
 		return treeNode;
 	}

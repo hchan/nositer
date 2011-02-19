@@ -21,6 +21,7 @@ import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -137,7 +138,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 					resize(0,0);
 				} else {
 
-					AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+					AsyncCallback<Group> callback = new AsyncCallback<Group>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							errorPanel.clearErrorMessages();
@@ -148,8 +149,8 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 						}
 
 						@Override
-						public void onSuccess(Void result) {
-							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
+						public void onSuccess(Group result) {
+							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								
 									History.newItem(HistoryToken.VIEWPROFILE.toString());									
@@ -157,11 +158,19 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 							});										
 						}
 					};
-					ServiceBroker.profileService.updateAboutMeOfCurrentUser(name.getValue(), description.getValue(), callback);
+					ServiceBroker.groupService.createGroup(createGroupDTO(), callback);
 				}
 			}
 		};
 		button.addListener(Events.Select, saveListener);
+	}
+	
+	private Group createGroupDTO() {
+		Group retval = new Group();
+		retval.setName(name.getValue());
+		retval.setDescription(description.getValue());
+		retval.setAvatarlocation(avatarSelector.getSelectedFile().getValue());
+		return retval;
 	}
 
 	// Cancel
