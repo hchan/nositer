@@ -107,7 +107,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	}
 	
 	private void setDescriptionHeight() {
-		int heightOfComponents = 150;
+		int heightOfComponents = 200;
 		if (errorPanel.isRendered() && !errorPanel.isHidden()) {
 			heightOfComponents = heightOfComponents + errorPanel.getHeight();
 		}
