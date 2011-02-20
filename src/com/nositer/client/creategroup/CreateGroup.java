@@ -34,6 +34,7 @@ import com.nositer.client.widget.avatar.AvatarSelector;
 public class CreateGroup extends LayoutContainer implements Resizable {
 	private FormPanel formPanel;
 	private TextField<String> name;
+	private TextField<String> tagname;
 	private HtmlEditor description;
 	private ErrorPanel errorPanel;
 	private AvatarSelector avatarSelector;
@@ -55,13 +56,15 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		errorPanel = new ErrorPanel();
 		errorPanel.setStyleAttribute("margin-bottom", "5px");
 		errorPanel.hide();
+		tagname = new TextField<String>();
+		tagname.setFieldLabel("* Tag Name");
+		tagname.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
+
 		name = new TextField<String>();
 		name.setFieldLabel("Name");  
 		name.setLabelStyle("font-size: 14px; font-weight: bold;");
 		
-		
 		avatarSelector = new AvatarSelector();
-		
 		
 		description = new HtmlEditor();
 		setDescriptionHeight();
@@ -70,6 +73,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
 		addLabel("Create Group");
+		formPanel.add(tagname, new FormData("100%"));
 		formPanel.add(name, new FormData("100%"));
 		FormData formDataAvatarSelector = new FormData();
 		formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
@@ -108,7 +112,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	}
 	
 	private void setDescriptionHeight() {
-		int heightOfComponents = 200;
+		int heightOfComponents = 250;
 		if (errorPanel.isRendered() && !errorPanel.isHidden()) {
 			heightOfComponents = heightOfComponents + errorPanel.getHeight();
 		}
@@ -168,6 +172,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	private Group createGroupDTO() {
 		Group retval = new Group();
 		retval.setName(name.getValue());
+		retval.setTagname(tagname.getValue());
 		retval.setDescription(description.getValue());
 		retval.setAvatarlocation(avatarSelector.getSelectedFile().getValue());
 		return retval;
@@ -194,6 +199,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();		
+		GWTUtil.addRequiredErrorIfNecessary(tagname, retval);		
 		return retval;
 	}
 

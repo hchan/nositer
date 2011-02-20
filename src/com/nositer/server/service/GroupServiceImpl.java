@@ -3,6 +3,7 @@ package com.nositer.server.service;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
@@ -28,7 +29,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			String description = group.getDescription();
 			group.setDescription(HTMLPurifier.getCleanHTML(description));
 			User user = Application.getCurrentUser();
-			group.setTagname("TODO");
+			String tagname = group.getTagname();
+			if (!isValidTagname(tagname)) {
+				throw new GWTException("Tagname contains must be consist of alpha-numeric characters or _");
+			}
+			group.setTagname(tagname);
 			group.setUser(user);
 			group.setPostalcode(user.getPostalcode());
 			group.setZipcode(user.getZipcode());
@@ -39,6 +44,13 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
 			
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (ConstraintViolationException e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			throw new GWTException("Tagname: " + group.getTagname() + " is already taken");
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
@@ -52,5 +64,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 	
 	
+	public static boolean isValidTagname(String tagname) {
+		boolean retval = false;
+		String validCharsPattern = "^([A-Za-z0-9_\\.])+$";
+		retval = tagname.matches(validCharsPattern);		
+		return retval;
+	}
 
 }
