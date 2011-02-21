@@ -15,6 +15,7 @@ public class SqlHelper {
 		User.ColumnType.zipcodeid + "= :" + User.ColumnType.zipcodeid + ", " +
 		User.ColumnType.salutationcodeid + "= :" + User.ColumnType.salutationcodeid + ", " +
 		User.ColumnType.relationshipcodeid + "= :" + User.ColumnType.relationshipcodeid + ", " +
+		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation + ", " +
 		User.ColumnType.email + "= :" + User.ColumnType.email + ", " +
 		User.ColumnType.gendermale + "= :" + User.ColumnType.gendermale + ", " +
 		User.ColumnType.profession + "= :" + User.ColumnType.profession + ", " +

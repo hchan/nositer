@@ -30,8 +30,8 @@ import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup.GenderType;
+
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class EditBasicProfile extends LayoutContainer implements Resizable {
 	private Register register;
@@ -186,7 +186,9 @@ public class EditBasicProfile extends LayoutContainer implements Resizable {
 	}
 
 	private User createDTO() {
-		return register.createDTO();
+		User retval = register.createDTO();
+		retval.setAvatarlocation(register.getAvatarSelector().getSelectedFile().getValue());
+		return retval;
 	}
 
 	public ArrayList<String> getErrors() {

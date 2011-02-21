@@ -84,6 +84,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			setParameter(User.ColumnType.salutationcodeid.toString(), salutationcodeid, new IntegerType()).
 			setParameter(User.ColumnType.relationshipcodeid.toString(), relationshipcodeid, new IntegerType()).
 			setString(User.ColumnType.countrycode.toString(), user.getCountrycode()).
+			setString(User.ColumnType.avatarlocation.toString(), user.getAvatarlocation()).
 			setString(User.ColumnType.email.toString(), user.getEmail()).
 			setBoolean(User.ColumnType.gendermale.toString(), user.getGendermale()).
 			setString(User.ColumnType.profession.toString(), user.getProfession()).
