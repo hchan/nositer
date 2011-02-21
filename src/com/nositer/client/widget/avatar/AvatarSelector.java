@@ -7,13 +7,11 @@ import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
-import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FolderModel;
 
 
@@ -24,8 +22,18 @@ public class AvatarSelector extends LayoutContainer {
 	protected TreeNode treeNode;
 	protected Label selectAvatar;
 	protected Button button;
+	protected HBoxLayoutData hBoxSelectedFileLayoutData;
 	
 	
+	public HBoxLayoutData gethBoxSelectedFileLayoutData() {
+		return hBoxSelectedFileLayoutData;
+	}
+
+	public void sethBoxSelectedFileLayoutData(
+			HBoxLayoutData hBoxSelectedFileLayoutData) {
+		this.hBoxSelectedFileLayoutData = hBoxSelectedFileLayoutData;
+	}
+
 	public Label getSelectAvatar() {
 		return selectAvatar;
 	}
@@ -69,12 +77,13 @@ public class AvatarSelector extends LayoutContainer {
 	
 
 	public void init() {
-		this.setLayout(new HBoxLayout());
-		HBoxLayoutData hBoxLayoutData = new HBoxLayoutData();
-		hBoxLayoutData.setMargins(new Margins(0, 1, 0, 10));
+		this.setLayout(new HBoxLayout());		
+		hBoxSelectedFileLayoutData = new HBoxLayoutData();
+		hBoxSelectedFileLayoutData.setMargins(new Margins(0, 1, 0, 10));
 		this.setWidth(400);
 		selectAvatar = new Label("Select Avatar:");
 		selectAvatar.setStyleName("avatarSelector");
+		
 		selectedFile = new TextField<String>();
 		selectedFile.setWidth(200);
 		selectedFile.setEnabled(false);
@@ -84,7 +93,7 @@ public class AvatarSelector extends LayoutContainer {
 		
 		
 		this.add(selectAvatar);
-		this.add(selectedFile, hBoxLayoutData);
+		this.add(selectedFile, hBoxSelectedFileLayoutData);
 		this.add(button);
 	}
 	

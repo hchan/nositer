@@ -37,6 +37,7 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.combobox.RelationshipcodeComboBox;
 import com.nositer.client.widget.combobox.SalutationcodeComboBox;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
@@ -64,7 +65,16 @@ public class Register implements EntryPoint {
 	private ErrorPanel errorPanel;
 	private SalutationcodeComboBox salutation;
 	private RelationshipcodeComboBox relationship;
+	private AvatarSelector avatarSelector;
 	
+	public AvatarSelector getAvatarSelector() {
+		return avatarSelector;
+	}
+
+	public void setAvatarSelector(AvatarSelector avatarSelector) {
+		this.avatarSelector = avatarSelector;
+	}
+
 	public SalutationcodeComboBox getSalutation() {
 		return salutation;
 	}
@@ -283,6 +293,11 @@ public class Register implements EntryPoint {
 	}
 
 	private void addOptionalFields() {
+		avatarSelector = new AvatarSelector();
+		avatarSelector.gethBoxSelectedFileLayoutData().setMargins(new Margins(0, 1, 5, 78));
+		avatarSelector.getSelectAvatar().setStyleName("avatarSelectorBasicProfile");
+		avatarSelector.hide();
+		
 		email = new TextField<String>();
 		email.setFieldLabel("Email");		
 
@@ -302,6 +317,7 @@ public class Register implements EntryPoint {
 		birthdate = new DateField();
 		birthdate.setFieldLabel("Birthdate (yyyy-MM-dd)");
 
+		formPanel.add(avatarSelector);
 		formPanel.add(email);
 		formPanel.add(salutation);
 		formPanel.add(relationship);

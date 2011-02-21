@@ -22,15 +22,18 @@ import com.nositer.client.dto.generated.Salutationcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.register.Register;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup.GenderType;
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class EditBasicProfile extends LayoutContainer {
+public class EditBasicProfile extends LayoutContainer implements Resizable {
 	private Register register;
 	private FormPanel formPanel;
 
@@ -45,7 +48,11 @@ public class EditBasicProfile extends LayoutContainer {
 		register.getErrorPanel().hide();
 		this.add(register.getErrorPanel());
 		register.initFormPanel();
+		
 		formPanel = register.getFormPanel();
+		register.getAvatarSelector().show();
+	
+		
 		initButtons();
 		TableLayout layout = new TableLayout(1);
 		//layout.setHeight("100%");
@@ -193,5 +200,11 @@ public class EditBasicProfile extends LayoutContainer {
 			GWTUtil.addRequiredErrorIfNecessary(register.getLocation().getZipcode(), retval);
 		}
 		return retval;
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		setSize(MainPanel.getInstance().getWidth(), MainPanel.getInstance().getHeight());
+		
 	}
 }

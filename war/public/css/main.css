@@ -148,6 +148,11 @@
 	font-weight: bold;
 }
 
+.avatarSelectorBasicProfile {
+	font: 12px tahoma,arial,helvetica,sans-serif;
+	top: 5px !important;	
+}
+
 .profileLabelField {
 	font-weight: bold;	
 }
