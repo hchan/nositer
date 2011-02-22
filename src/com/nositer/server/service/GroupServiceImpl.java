@@ -1,6 +1,8 @@
 package com.nositer.server.service;
 
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -69,6 +71,13 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		String validCharsPattern = "^([A-Za-z0-9_\\.])+$";
 		retval = tagname.matches(validCharsPattern);		
 		return retval;
+	}
+
+
+	@Override
+	public ArrayList<Group> getMyGroups() throws GWTException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RPC;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.User;
 import com.nositer.server.service.ProfileServiceImpl;
+import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.util.Encrypt;
 
@@ -84,14 +87,21 @@ public class AuthorizationFilter implements Filter {
 	}
 
 
-	private void doSessionCheck(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+	private void doSessionCheck(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException, SerializationException {
 		
 		com.nositer.client.dto.generated.User userDTO = null;
 		try {
 			userDTO = Application.getCurrentUser();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			Application.log.error("", e);
+		}
 		if (userDTO == null) {
-			forwardToLoginPage(request, response, chain);
+			String requestURI = request.getRequestURI();
+			if (requestURI.indexOf("ServiceResolover.gwtrpc") != -1) {
+				doTimeout(request, response, chain);
+			} else {			
+				forwardToLoginPage(request, response, chain);
+			}
 		}
 		else {
 			chain.doFilter(request, response);
@@ -144,7 +154,11 @@ public class AuthorizationFilter implements Filter {
 	private void doInvalidLoginPassword (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {		
 		response.getWriter().print("<?xml version=\"1.0\" encoding=\"utf-8\" ?><RESULTS><ERRORS>Invalid login/password</ERRORS></RESULTS>\n");
 	}
-
+	private void doTimeout (HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException, SerializationException {		
+		String encodedResponseForFailure = "";
+		encodedResponseForFailure = RPC.encodeResponseForFailure(null, new GWTException("Timed out"));
+		response.getWriter().print(encodedResponseForFailure);
+	}
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	}
