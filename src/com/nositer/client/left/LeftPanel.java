@@ -277,5 +277,6 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
 		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
 		HistoryManager.addHistoryOnClick(createGroup, HistoryToken.CREATEGROUP.toString());
+		HistoryManager.addHistoryOnClick(myGroups, HistoryToken.MYGROUPS.toString());
 	}
 }

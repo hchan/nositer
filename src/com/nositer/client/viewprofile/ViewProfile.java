@@ -1,49 +1,77 @@
 package com.nositer.client.viewprofile;
 
-import com.extjs.gxt.ui.client.Style.Orientation;
-import com.extjs.gxt.ui.client.util.Margins;
-import com.extjs.gxt.ui.client.widget.HtmlContainer;
-import com.extjs.gxt.ui.client.widget.Label;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.layout.RowData;
-import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.extjs.gxt.ui.client.Style.Scroll;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.widget.TabItem;
+import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.top.TopPanel;
+import com.nositer.client.util.GWTUtil;
 
-public class ViewProfile extends LayoutContainer {
-	private Quickstats quickStats;
-	private Note note;
-	private Label descriptionLabel;
-	private HtmlContainer description;
+public class ViewProfile extends TabPanel {
 
-	public void populate(User user) {
-		quickStats.populate(user);	
-		note.populate(user);
-		if (user.getDescription() != null) {
-			description.setHtml(user.getDescription());
-		}
+	private TabItem profileTabItem;
+	public TabItem getProfileTabItem() {
+		return profileTabItem;
+	}
+
+	public void setProfileTabItem(TabItem profileTabItem) {
+		this.profileTabItem = profileTabItem;
 	}
 
 	public ViewProfile() {
 		init();
 	}
 
-	private void init() {
-		//this.setAutoHeight(true);
-		//this.setAutoWidth(true);
-		setHeight(100000);
-		setWidth(100000);
-		this.setLayout(new RowLayout(Orientation.VERTICAL));
-		quickStats = new Quickstats();
-		this.add(quickStats, new RowData(-1, -1, new Margins(5)));
-		note = new Note();
-		this.add(note, new RowData(-1, -1, new Margins(5)));
-		descriptionLabel = new Label("About me");
-		descriptionLabel.setStyleName("profileDescriptionLabel");
-		this.add(descriptionLabel, new RowData(-1, -1, new Margins(5)));
-		description = new HtmlContainer();
-		description.setStyleName("profileDescription");
-		this.add(description, new RowData(-1, -1, new Margins(5)));
-	}
+	public void init() {
+		setAutoHeight(true);
+		setAutoWidth(true);
 
-	
+
+		profileTabItem = new TabItem("My Profile");  
+
+		profileTabItem.setClosable(false);
+
+		/*
+		TableLayout layout = new TableLayout(1);
+		layout.setHeight("100%");
+		layout.setWidth("100%");
+		 */
+		FitLayout layout = new FitLayout();
+		profileTabItem.setLayout(layout);
+
+
+		profileTabItem.setScrollMode(Scroll.AUTO);
+		profileTabItem.addListener(Events.Select, new Listener<ComponentEvent>() {  
+			public void handleEvent(ComponentEvent be) {  
+				final ViewProfileContainer viewProfile = new ViewProfileContainer();
+				AsyncCallback<User> callback = new AsyncCallback<User>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						GWTUtil.log("", caught);
+					}
+
+					@Override
+					public void onSuccess(User result) {
+						if (result != null) {
+							TopPanel.getInstance().setUser(result);
+							TopPanel.getInstance().setFirstLastName(result);
+							viewProfile.populate(TopPanel.getInstance().getUser());
+							profileTabItem.add(viewProfile);
+							ViewProfile.this.layout();
+						}
+					}
+				};
+				ServiceBroker.profileService.getCurrentUser(callback);
+
+			}
+		});  
+		add(profileTabItem);
+	}  
 }
