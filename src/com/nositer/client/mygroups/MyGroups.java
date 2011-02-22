@@ -1,14 +1,39 @@
 package com.nositer.client.mygroups;
 
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.nositer.client.widget.Resizable;
+import com.extjs.gxt.ui.client.Style.Scroll;
+import com.extjs.gxt.ui.client.widget.TabItem;
+import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 
-public class MyGroups extends LayoutContainer implements Resizable {
+public class MyGroups extends TabPanel {
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+	private TabItem myGroupsItem;
+
+
+	public TabItem getMyGroupsItem() {
+		return myGroupsItem;
 	}
 
+	public void setMyGroupsItem(TabItem myGroupsItem) {
+		this.myGroupsItem = myGroupsItem;
+	}
+
+	public MyGroups() {
+		init();
+	}
+
+	public void init() {
+		setAutoHeight(true);
+		setAutoWidth(true);
+
+		myGroupsItem = new TabItem("My Groups");  
+		myGroupsItem.setClosable(false);
+		FitLayout layout = new FitLayout();
+		myGroupsItem.setLayout(layout);
+
+
+		myGroupsItem.setScrollMode(Scroll.AUTO);
+		
+		add(myGroupsItem);
+	}  
 }
