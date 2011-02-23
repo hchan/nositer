@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -81,6 +81,16 @@ public class Group implements java.io.Serializable, IsSerializable,
 		this.zipcode = zipcode;
 	}
 
+	private Integer zipcodeid;
+
+	public Integer getZipcodeid() {
+		return this.zipcodeid;
+	}
+
+	public void setZipcodeid(Integer zipcodeid) {
+		this.zipcodeid = zipcodeid;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
@@ -89,12 +99,32 @@ public class Group implements java.io.Serializable, IsSerializable,
 		this.user = user;
 	}
 
+	private Integer userid;
+
+	public Integer getUserid() {
+		return this.userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
+
 	public Postalcode getPostalcode() {
 		return this.postalcode;
 	}
 
 	public void setPostalcode(Postalcode postalcode) {
 		this.postalcode = postalcode;
+	}
+
+	private Integer postalcodeid;
+
+	public Integer getPostalcodeid() {
+		return this.postalcodeid;
+	}
+
+	public void setPostalcodeid(Integer postalcodeid) {
+		this.postalcodeid = postalcodeid;
 	}
 
 	public String getTagname() {

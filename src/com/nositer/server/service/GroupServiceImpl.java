@@ -83,17 +83,31 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		User user = null;
 		Transaction trx = null;
 		try {
-			user = Application.getCurrentUser();
+			//user = Application.getCurrentUser();
+			user = new User();
+			user.setId(1); //temp hack
+			
 			trx = sess.beginTransaction();		
 			
 		
 			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(
 					SqlHelper.FINDMYGROUPS).		
 					addEntity(com.nositer.hibernate.generated.domain.Group.class).
-			setInteger(Group.ColumnType.userid.toString(), user.getId()).
+			setInteger(Group.ColumnType.userid.toString(), 
+					user.getId()
+					).
 			list();
 		
-			retval = BeanConversion.copyDomain2DTO(results, Group.class);			
+			retval = BeanConversion.copyDomain2DTO(results, Group.class);		
+			/*
+			int i = 0;
+			for (com.nositer.hibernate.generated.domain.Group groupDomain : results) {
+				Group groupDTO = retval.get(i);
+				User userDTO = new User();
+				groupDTO.setUser(userDTO);
+				i++;
+			}
+			*/
 		}
 		catch (GWTException e) {
 			throw e;

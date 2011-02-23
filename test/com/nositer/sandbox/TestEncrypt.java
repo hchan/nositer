@@ -1,4 +1,4 @@
-package com.nositer.hibernate;
+package com.nositer.sandbox;
 
 import com.nositer.util.Encrypt;
 

@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -125,6 +125,14 @@ public class User implements java.io.Serializable, Domain {
 		this.salutationcode = salutationcode;
 	}
 
+	public Integer getSalutationcodeid() {
+		return getSalutationcode().getId();
+	}
+
+	public void setSalutationcodeid(Integer salutationcodeid) {
+		getSalutationcode().setId(salutationcodeid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "zipcodeid")
 	public Zipcode getZipcode() {
@@ -133,6 +141,14 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setZipcode(Zipcode zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public Integer getZipcodeid() {
+		return getZipcode().getId();
+	}
+
+	public void setZipcodeid(Integer zipcodeid) {
+		getZipcode().setId(zipcodeid);
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -145,6 +161,14 @@ public class User implements java.io.Serializable, Domain {
 		this.relationshipcode = relationshipcode;
 	}
 
+	public Integer getRelationshipcodeid() {
+		return getRelationshipcode().getId();
+	}
+
+	public void setRelationshipcodeid(Integer relationshipcodeid) {
+		getRelationshipcode().setId(relationshipcodeid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postalcodeid")
 	public Postalcode getPostalcode() {
@@ -153,6 +177,14 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setPostalcode(Postalcode postalcode) {
 		this.postalcode = postalcode;
+	}
+
+	public Integer getPostalcodeid() {
+		return getPostalcode().getId();
+	}
+
+	public void setPostalcodeid(Integer postalcodeid) {
+		getPostalcode().setId(postalcodeid);
 	}
 
 	@Column(name = "countrycode", nullable = false, length = 3)

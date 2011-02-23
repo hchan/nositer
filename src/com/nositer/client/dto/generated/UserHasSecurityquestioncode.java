@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -67,12 +67,32 @@ public class UserHasSecurityquestioncode implements java.io.Serializable,
 		this.securityquestioncode = securityquestioncode;
 	}
 
+	private Integer securityquestioncodeid;
+
+	public Integer getSecurityquestioncodeid() {
+		return this.securityquestioncodeid;
+	}
+
+	public void setSecurityquestioncodeid(Integer securityquestioncodeid) {
+		this.securityquestioncodeid = securityquestioncodeid;
+	}
+
 	public User getUser() {
 		return this.user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	private Integer userid;
+
+	public Integer getUserid() {
+		return this.userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
 
 	public Date getCreatedtime() {

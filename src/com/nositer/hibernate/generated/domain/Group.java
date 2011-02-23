@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -92,6 +92,14 @@ public class Group implements java.io.Serializable, Domain {
 		this.zipcode = zipcode;
 	}
 
+	public Integer getZipcodeid() {
+		return getZipcode().getId();
+	}
+
+	public void setZipcodeid(Integer zipcodeid) {
+		getZipcode().setId(zipcodeid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
 	public User getUser() {
@@ -102,6 +110,14 @@ public class Group implements java.io.Serializable, Domain {
 		this.user = user;
 	}
 
+	public Integer getUserid() {
+		return getUser().getId();
+	}
+
+	public void setUserid(Integer userid) {
+		getUser().setId(userid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postalcodeid")
 	public Postalcode getPostalcode() {
@@ -110,6 +126,14 @@ public class Group implements java.io.Serializable, Domain {
 
 	public void setPostalcode(Postalcode postalcode) {
 		this.postalcode = postalcode;
+	}
+
+	public Integer getPostalcodeid() {
+		return getPostalcode().getId();
+	}
+
+	public void setPostalcodeid(Integer postalcodeid) {
+		getPostalcode().setId(postalcodeid);
 	}
 
 	@Column(name = "tagname", unique = true, nullable = false, length = 64)

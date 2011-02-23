@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -75,6 +75,14 @@ public class UserHasSecurityquestioncode implements java.io.Serializable,
 		this.securityquestioncode = securityquestioncode;
 	}
 
+	public Integer getSecurityquestioncodeid() {
+		return getSecurityquestioncode().getId();
+	}
+
+	public void setSecurityquestioncodeid(Integer securityquestioncodeid) {
+		getSecurityquestioncode().setId(securityquestioncodeid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
 	public User getUser() {
@@ -83,6 +91,14 @@ public class UserHasSecurityquestioncode implements java.io.Serializable,
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getUserid() {
+		return getUser().getId();
+	}
+
+	public void setUserid(Integer userid) {
+		getUser().setId(userid);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

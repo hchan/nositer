@@ -2,7 +2,7 @@ package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
 
-// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -71,6 +71,14 @@ public class UserHasGroup implements java.io.Serializable, Domain {
 		this.group = group;
 	}
 
+	public Integer getGroupid() {
+		return getGroup().getId();
+	}
+
+	public void setGroupid(Integer groupid) {
+		getGroup().setId(groupid);
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
 	public User getUser() {
@@ -79,6 +87,14 @@ public class UserHasGroup implements java.io.Serializable, Domain {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getUserid() {
+		return getUser().getId();
+	}
+
+	public void setUserid(Integer userid) {
+		getUser().setId(userid);
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
