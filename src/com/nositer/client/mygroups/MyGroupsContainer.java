@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.data.BaseListLoader;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
@@ -26,10 +27,11 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.combobox.ComboBoxPlus;
 
 
-public class MyGroupsContainer extends LayoutContainer {
+public class MyGroupsContainer extends LayoutContainer implements Resizable {
 
 	public MyGroupsContainer() {
 		init();
@@ -46,14 +48,13 @@ public class MyGroupsContainer extends LayoutContainer {
 			}
 		};  
 		// loader  
-		final BasePagingLoader<PagingLoadResult<ModelData>> loader = new BasePagingLoader<PagingLoadResult<ModelData>>(  
+		final BaseListLoader<PagingLoadResult<ModelData>> loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
 		loader.setRemoteSort(true);  
 
 		ListStore<BeanModel> store = new ListStore<BeanModel>(loader);  
 
-		final PagingToolBar toolBar = new PagingToolBar(50);  
-		toolBar.bind(loader);  
+		
 
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
 		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 150));  
@@ -67,7 +68,7 @@ public class MyGroupsContainer extends LayoutContainer {
 		Grid<BeanModel> grid = new Grid<BeanModel>(store, cm);  
 		grid.addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  
 			public void handleEvent(GridEvent<BeanModel> be) {  
-				loader.load(0, ComboBoxPlus.FICTITIOUSCOUNT);  
+				loader.load();
 			}  
 		});  
 		grid.setLoadMask(true);  
@@ -82,13 +83,19 @@ public class MyGroupsContainer extends LayoutContainer {
 		panel.setButtonAlign(HorizontalAlignment.CENTER);  
 
 		
-		//panel.setLayout(new FitLayout());  
-		//panel.add(grid);
+		panel.setLayout(new FitLayout());  
+		panel.add(grid);
 		
 		panel.setSize(600, 350);  
 	//	panel.setBottomComponent(toolBar);  
-		setHeight(100);
-		setWidth(100);
-		add(new Button("HELLO"));  
+		setAutoHeight(true);
+		setAutoWidth(true);
+		add(panel);  
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
 	}
 }
