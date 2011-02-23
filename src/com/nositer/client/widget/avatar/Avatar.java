@@ -6,10 +6,31 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 
 public class Avatar extends LayoutContainer {
 	private HtmlContainer htmlContainer;
+	private String pathToImage;
+	
+	public HtmlContainer getHtmlContainer() {
+		return htmlContainer;
+	}
+
+	public void setHtmlContainer(HtmlContainer htmlContainer) {
+		this.htmlContainer = htmlContainer;
+	}
+
+	public String getPathToImage() {
+		return pathToImage;
+	}
 
 	public Avatar() {
 		init();
 	}
+	
+	public Avatar(String pathToImage) {
+		this.pathToImage = pathToImage;
+		init();
+		setPathToImage(pathToImage);
+	}
+	
+	
 
 	private void init() {
 		htmlContainer = new HtmlContainer();
