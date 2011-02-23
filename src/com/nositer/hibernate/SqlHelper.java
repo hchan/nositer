@@ -35,7 +35,8 @@ public class SqlHelper {
 		"update " + User.TABLENAME + " set " + 
 		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
-	
+	public static String FINDMYGROUPS =
+		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid;
 	
 	public static String createLookupSQL (String tablename) {
 		String retval = null;

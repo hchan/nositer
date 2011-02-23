@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 18, 2011 8:00:06 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -34,7 +34,7 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
 	private Set<Group> groups = new HashSet<Group>(0);
-	public static final String TABLENAME = "postalcode";
+	public static final String TABLENAME = "nositer.postalcode";
 
 	public String getTablename() {
 		return TABLENAME;

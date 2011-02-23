@@ -2,6 +2,7 @@ package com.nositer.server.service;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,12 +13,13 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.GroupService;
 import com.nositer.hibernate.HibernateUtil;
+import com.nositer.hibernate.SqlHelper;
 import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.HTMLPurifier;
 import com.nositer.webapp.Application;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 public class GroupServiceImpl extends RemoteServiceServlet implements GroupService {
 
 
@@ -76,8 +78,35 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 	@Override
 	public ArrayList<Group> getMyGroups() throws GWTException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Group> retval = new ArrayList<Group>();
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			
+		
+			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(
+					SqlHelper.FINDMYGROUPS).		
+					addEntity(com.nositer.hibernate.generated.domain.Group.class).
+			setInteger(Group.ColumnType.userid.toString(), user.getId()).
+			list();
+		
+			retval = BeanConversion.copyDomain2DTO(results, Group.class);			
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
 	}
 
 }

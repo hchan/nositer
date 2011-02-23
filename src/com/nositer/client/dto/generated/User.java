@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 18, 2011 8:00:06 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 22, 2011 3:59:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -46,7 +46,7 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
 			0);
-	public static final String TABLENAME = "user";
+	public static final String TABLENAME = "nositer.user";
 
 	public String getTablename() {
 		return TABLENAME;

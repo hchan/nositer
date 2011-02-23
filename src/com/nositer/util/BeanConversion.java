@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sf.beanlib.hibernate3.Hibernate3BeanReplicator;
 import net.sf.beanlib.hibernate3.Hibernate3DtoCopier;
-import net.sf.beanlib.hibernate3.Hibernate3JavaBeanReplicator;
 import net.sf.beanlib.provider.BeanTransformer;
 import net.sf.beanlib.provider.replicator.BeanReplicator;
 import net.sf.beanlib.spi.DetailedPropertyFilter;
