@@ -7,6 +7,7 @@ ${package_name?substring(0, package_name?last_index_of("."))}
 ${parent_package_name?substring(0, parent_package_name?last_index_of("."))}
 </#assign>
 import ${grandparent_package_name}.*;
+import javax.persistence.Transient;
 <#else>
 ${pojo.getPackageDeclaration()}     
 </#if>

@@ -1,8 +1,9 @@
 package com.nositer.hibernate.generated.domain;
 
 import com.nositer.hibernate.*;
+import javax.persistence.Transient;
 
-// Generated Feb 23, 2011 1:53:09 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 2:14:07 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -92,8 +93,14 @@ public class Group implements java.io.Serializable, Domain {
 		this.zipcode = zipcode;
 	}
 
+	@Transient
 	public Integer getZipcodeid() {
-		return getZipcode().getId();
+		Integer retval = null;
+		try {
+			retval = getZipcode().getId();
+		} catch (Exception e) {
+		}
+		return retval;
 	}
 
 	public void setZipcodeid(Integer zipcodeid) {
@@ -110,8 +117,14 @@ public class Group implements java.io.Serializable, Domain {
 		this.user = user;
 	}
 
+	@Transient
 	public Integer getUserid() {
-		return getUser().getId();
+		Integer retval = null;
+		try {
+			retval = getUser().getId();
+		} catch (Exception e) {
+		}
+		return retval;
 	}
 
 	public void setUserid(Integer userid) {
@@ -128,8 +141,14 @@ public class Group implements java.io.Serializable, Domain {
 		this.postalcode = postalcode;
 	}
 
+	@Transient
 	public Integer getPostalcodeid() {
-		return getPostalcode().getId();
+		Integer retval = null;
+		try {
+			retval = getPostalcode().getId();
+		} catch (Exception e) {
+		}
+		return retval;
 	}
 
 	public void setPostalcodeid(Integer postalcodeid) {

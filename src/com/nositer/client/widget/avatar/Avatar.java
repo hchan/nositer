@@ -39,6 +39,14 @@ public class Avatar extends LayoutContainer {
 	}
 
 	public void setPathToImage(String pathToImage) {
-		htmlContainer.setHtml("<IMG SRC='" + pathToImage + "' CLASS='avatar'/>");
+		setPathToImage(pathToImage, "avatar");		
+	}
+	
+	public void setPathToSmallImage(String pathToImage) {
+		setPathToImage(pathToImage, "avatarSmall");		
+	}
+	
+	private void setPathToImage(String pathToImage, String className) {
+		htmlContainer.setHtml("<IMG SRC='" + pathToImage + "' CLASS='" + className + "'/>");
 	}
 }

@@ -1,5 +1,7 @@
 package com.nositer.hibernate;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -13,7 +15,11 @@ public class TestGroup {
 	public static void main(String[] args) {
 		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();
 		
-		groupServiceImpl.getMyGroups();
+		ArrayList<com.nositer.client.dto.generated.Group> myGroups = groupServiceImpl.getMyGroups();
+		for (com.nositer.client.dto.generated.Group group : myGroups) {
+			System.out.println(group.getName());
+			System.out.println(group.getUserid());
+		}
 	}
 	
 	
@@ -25,7 +31,7 @@ public class TestGroup {
 			trx = sess.beginTransaction();
 			Group group = HibernateUtil.findByPrimaryKey(Group.class, 1, sess);
 			System.out.println(group.getName());
-			System.out.println(group.getUser().getFirstname());
+			System.out.println(group.getUserid());
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		

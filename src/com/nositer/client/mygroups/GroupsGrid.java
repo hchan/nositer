@@ -2,7 +2,6 @@ package com.nositer.client.mygroups;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.extjs.gxt.ui.client.data.BaseListLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
@@ -24,17 +23,15 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.avatar.Avatar;
-import com.nositer.shared.Global;
 
+@SuppressWarnings("rawtypes")
 public class GroupsGrid extends Grid<BeanModel> {
 
 	private RpcProxy<ArrayList<Group>> proxy;
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
-
 
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
@@ -66,9 +63,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		disableTextSelection(true);
 		init();
 	}
-
-
-
+	
 	private GridCellRenderer getAvatarGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
@@ -80,19 +75,15 @@ public class GroupsGrid extends Grid<BeanModel> {
 				try {
 					BeanModel beanModel = (BeanModel) model;
 					Group group = beanModel.getBean();
-					retval.setPathToImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation(), group.getUser()));
-					//Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + group.getAvatarlocation());
+					retval.setPathToSmallImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation(), group.getUserid()));
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
 				return retval;
 			}  
 		};
-
 		return retval;
 	}
-
-
 
 	public void init() {
 		addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  
