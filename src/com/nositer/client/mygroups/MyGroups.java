@@ -38,8 +38,8 @@ public class MyGroups extends TabPanel implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		Resizable resizable = null;
-		if (this.getSelectedItem() instanceof Resizable) {
-			resizable = (Resizable)this.getSelectedItem();
+		if (this.getSelectedItem().getItems().get(0) instanceof Resizable) {
+			resizable = (Resizable)this.getSelectedItem().getItems().get(0);
 			resizable.resize(width, height);
 		}
 	}  

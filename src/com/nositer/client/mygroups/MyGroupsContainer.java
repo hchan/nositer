@@ -27,11 +27,15 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.combobox.ComboBoxPlus;
 
 
 public class MyGroupsContainer extends LayoutContainer implements Resizable {
+
+	private ContentPanel contentPanel;
+	private Grid<BeanModel> grid;
 
 	public MyGroupsContainer() {
 		init();
@@ -65,7 +69,7 @@ public class MyGroupsContainer extends LayoutContainer implements Resizable {
 
 		ColumnModel cm = new ColumnModel(columns);  
 
-		Grid<BeanModel> grid = new Grid<BeanModel>(store, cm);  
+		grid = new Grid<BeanModel>(store, cm);  
 		grid.addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  
 			public void handleEvent(GridEvent<BeanModel> be) {  
 				loader.load();
@@ -74,28 +78,30 @@ public class MyGroupsContainer extends LayoutContainer implements Resizable {
 		grid.setLoadMask(true);  
 		grid.setBorders(true);  
 		grid.setAutoExpandColumn("name");  
-		grid.setSize(600, 350);
+		//grid.setSize(600, 350);
 		
-		ContentPanel panel = new ContentPanel();  
-		panel.setFrame(true);  
-		panel.setCollapsible(true);  
-		panel.setAnimCollapse(false);  
-		panel.setButtonAlign(HorizontalAlignment.CENTER);  
-
+		contentPanel = new ContentPanel();  
+		contentPanel.setFrame(true);  
+		contentPanel.setCollapsible(true);  
+		contentPanel.setAnimCollapse(false);  
+		contentPanel.setButtonAlign(HorizontalAlignment.CENTER);  
+		contentPanel.setHeaderVisible(false);
 		
-		panel.setLayout(new FitLayout());  
-		panel.add(grid);
+		contentPanel.setLayout(new FitLayout());  
+		contentPanel.add(grid);
 		
-		panel.setSize(600, 350);  
+		//contentPanel.setSize(600, 350);  
 	//	panel.setBottomComponent(toolBar);  
 		setAutoHeight(true);
 		setAutoWidth(true);
-		add(panel);  
+		resize(0,0);
+		add(contentPanel);  
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
+		//grid.setSize(MainPanel.getInstance().getWidth()-15, MainPanel.getInstance().getHeight()-30);
 	}
 }
