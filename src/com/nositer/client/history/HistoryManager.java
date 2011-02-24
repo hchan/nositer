@@ -82,9 +82,12 @@ public class HistoryManager {
 		} else if (historyToken.equals(MYGROUPS.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
-			setMainPanel(new MyGroups());
+			setMainPanel(MyGroups.getInstance(true));
 		} else if (historyToken.startsWith(MYGROUPS.toString() + SUBTOKENSEPARATOR)) {
-			//	TODO
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
+			setMainPanel(MyGroups.getInstance(true));
+			MyGroups.getInstance(true).showTab(getSubHistoryToken());
 		}
 	}
 
@@ -111,5 +114,12 @@ public class HistoryManager {
 		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
 		newHistoryToken += SUBTOKENSEPARATOR + subHistoryToken;
 		History.newItem(newHistoryToken);		
+	}
+	
+	public static String getSubHistoryToken() {
+		String retval = null;
+		retval = History.getToken();
+		retval = retval.replaceAll(".*" + SUBTOKENSEPARATOR, "");
+		return retval;
 	}
 }

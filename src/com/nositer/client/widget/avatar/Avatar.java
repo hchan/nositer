@@ -52,5 +52,6 @@ public class Avatar extends LayoutContainer {
 			pathToImage = Global.UNKNOWNAVATAR;
 		}
 		htmlContainer.setHtml("<IMG SRC='" + pathToImage + "' CLASS='" + className + "'/>");
+		setStyleName(className);
 	}
 }

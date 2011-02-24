@@ -109,4 +109,37 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
+
+	@Override
+	public Group getGroupByTagname(String tagname) throws GWTException {
+		Group retval = null;
+		Session sess = HibernateUtil.getSession();
+	
+		Transaction trx = null;
+		try {
+			
+			trx = sess.beginTransaction();		
+			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.Group.class).
+			setString(Group.ColumnType.tagname.toString(), tagname).list();
+			if (results.size() == 0) {				
+				retval = null;
+			} else {
+				com.nositer.hibernate.generated.domain.Group groupDomain = results.get(0);
+				retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
+
 }

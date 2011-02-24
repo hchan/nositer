@@ -37,6 +37,8 @@ public class SqlHelper {
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 	public static String FINDMYGROUPS =
 		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid;
+	public static String FINDGROUPBYTAGNAME =
+		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.tagname + " = :" + Group.ColumnType.tagname;
 	
 	public static String createLookupSQL (String tablename) {
 		String retval = null;

@@ -11,4 +11,6 @@ public interface GroupServiceAsync {
 
 	void getMyGroups(AsyncCallback<ArrayList<Group>> callback);
 
+	void getGroupByTagname(String tagname, AsyncCallback<Group> callback);
+
 }

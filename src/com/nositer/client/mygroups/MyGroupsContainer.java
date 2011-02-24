@@ -13,7 +13,7 @@ import com.nositer.client.widget.Resizable;
 public class MyGroupsContainer extends LayoutContainer implements Resizable {
 
 	private ContentPanel contentPanel;
-	private Grid<BeanModel> groupsGrid;
+	private GroupsGrid groupsGrid;
 
 	public MyGroupsContainer() {
 		init();

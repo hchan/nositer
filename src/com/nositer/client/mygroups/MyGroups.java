@@ -9,7 +9,30 @@ public class MyGroups extends TabPanel implements Resizable {
 
 	private TabItem myGroupsItem;
 	private MyGroupsContainer myGroupsContainer;
+	private static MyGroups instance;
 
+	public MyGroupsContainer getMyGroupsContainer() {
+		return myGroupsContainer;
+	}
+
+	public void setMyGroupsContainer(MyGroupsContainer myGroupsContainer) {
+		this.myGroupsContainer = myGroupsContainer;
+	}
+	
+
+	public static MyGroups getInstance(boolean createIfNecessary) {
+		MyGroups retval = null;
+		if (instance != null) {
+			retval = instance;
+		} else if (createIfNecessary) {
+			retval = new MyGroups();			
+		}
+		return retval;
+	}
+	
+	public static void setInstance(MyGroups instance) {
+		MyGroups.instance = instance;
+	}
 
 	public TabItem getMyGroupsItem() {
 		return myGroupsItem;
@@ -33,6 +56,17 @@ public class MyGroups extends TabPanel implements Resizable {
 		myGroupsContainer = new MyGroupsContainer();
 		myGroupsItem.add(myGroupsContainer);
 		add(myGroupsItem);
+		instance = this;
+	}
+	
+	public void showTab(String tabId) {
+		TabItem tabItem = findItem(tabId, false);
+		if (tabItem == null) {
+			tabItem = new GroupTabItem(tabId);
+			
+			add(tabItem);
+		}
+		setSelection(tabItem);
 	}
 
 	@Override

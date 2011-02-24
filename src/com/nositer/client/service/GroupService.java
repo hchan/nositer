@@ -14,4 +14,5 @@ import com.nositer.shared.GWTException;
 public interface GroupService extends RemoteService {
 	Group createGroup(Group group) throws GWTException;
 	ArrayList<Group> getMyGroups() throws GWTException;
+	Group getGroupByTagname(String tagname) throws GWTException;
 }
