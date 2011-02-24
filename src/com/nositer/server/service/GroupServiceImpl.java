@@ -37,7 +37,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			if (!isValidTagname(tagname)) {
 				throw new GWTException("Tagname contains must be consist of alpha-numeric characters or _");
 			}
-			group.setTagname(tagname);
+			group.setTagname(tagname);		
 			group.setUser(user);
 			group.setPostalcode(user.getPostalcode());
 			group.setZipcode(user.getZipcode());

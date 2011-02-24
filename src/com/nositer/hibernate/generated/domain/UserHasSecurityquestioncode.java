@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Feb 23, 2011 2:14:07 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 4:15:19 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -86,9 +86,14 @@ public class UserHasSecurityquestioncode implements java.io.Serializable,
 		return retval;
 	}
 
-	public void setSecurityquestioncodeid(Integer securityquestioncodeid) {
-		getSecurityquestioncode().setId(securityquestioncodeid);
-	}
+	/*
+	 @Transient
+	 public void setSecurityquestioncodeid (Integer securityquestioncodeid) {
+	 if (getSecurityquestioncode() != null) {
+	 getSecurityquestioncode().setId(securityquestioncodeid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
@@ -110,9 +115,14 @@ public class UserHasSecurityquestioncode implements java.io.Serializable,
 		return retval;
 	}
 
-	public void setUserid(Integer userid) {
-		getUser().setId(userid);
-	}
+	/*
+	 @Transient
+	 public void setUserid (Integer userid) {
+	 if (getUser() != null) {
+	 getUser().setId(userid);
+	 }
+	 }
+	 */
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createdtime", length = 19)

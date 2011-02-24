@@ -9,9 +9,14 @@ public Integer get${column.name?capitalize}() {
        }
        return retval;
 }
-public void set${column.name?capitalize} (Integer ${column.name}) {
-       get${property.name?capitalize}().setId(${column.name});
-}
 
+/*
+@Transient
+public void set${column.name?capitalize} (Integer ${column.name}) {
+       if (get${property.name?capitalize}() != null) {
+              get${property.name?capitalize}().setId(${column.name});
+       }
+}
+*/
 </#foreach>
 </#if>

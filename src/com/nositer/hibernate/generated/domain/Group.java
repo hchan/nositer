@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Feb 23, 2011 2:14:07 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 4:15:19 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -103,9 +103,14 @@ public class Group implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setZipcodeid(Integer zipcodeid) {
-		getZipcode().setId(zipcodeid);
-	}
+	/*
+	 @Transient
+	 public void setZipcodeid (Integer zipcodeid) {
+	 if (getZipcode() != null) {
+	 getZipcode().setId(zipcodeid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
@@ -127,9 +132,14 @@ public class Group implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setUserid(Integer userid) {
-		getUser().setId(userid);
-	}
+	/*
+	 @Transient
+	 public void setUserid (Integer userid) {
+	 if (getUser() != null) {
+	 getUser().setId(userid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postalcodeid")
@@ -151,9 +161,14 @@ public class Group implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setPostalcodeid(Integer postalcodeid) {
-		getPostalcode().setId(postalcodeid);
-	}
+	/*
+	 @Transient
+	 public void setPostalcodeid (Integer postalcodeid) {
+	 if (getPostalcode() != null) {
+	 getPostalcode().setId(postalcodeid);
+	 }
+	 }
+	 */
 
 	@Column(name = "tagname", unique = true, nullable = false, length = 64)
 	public String getTagname() {

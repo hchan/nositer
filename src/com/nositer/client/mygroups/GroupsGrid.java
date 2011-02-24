@@ -46,22 +46,29 @@ public class GroupsGrid extends Grid<BeanModel> {
 		loader.setRemoteSort(true);  
 		store = new ListStore<BeanModel>(loader);  
 
-		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
-		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 150));  
-		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.ColumnType.avatarlocation.toString(), "Avatar", 150);
-		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
-		columns.add(avatarColumnConfig);  
-		ColumnConfig date = new ColumnConfig(Group.ColumnType.createdtime.toString(), "Created On", 100);  
-		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
-		columns.add(date);  
-
-		cm = new ColumnModel(columns);  
+		cm = createColumnModel();
 		this.view = new GridView();
 		disabledStyle = null;
 		baseStyle = "x-grid-panel";
 		setSelectionModel(new GridSelectionModel<BeanModel>());
 		disableTextSelection(true);
 		init();
+	}
+	
+	public ColumnModel createColumnModel() {
+		ColumnModel retval = null;
+		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
+		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.ColumnType.avatarlocation.toString(), "Avatar", 50);
+		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
+		columns.add(avatarColumnConfig);  
+		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 100));
+		columns.add(new ColumnConfig(Group.ColumnType.tagname.toString(), "Tag Name", 100));
+		columns.add(new ColumnConfig(Group.ColumnType.description.toString(), "Description", 200));  
+		ColumnConfig date = new ColumnConfig(Group.ColumnType.createdtime.toString(), "Created On", 100);  
+		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
+		columns.add(date);  
+		retval = new ColumnModel(columns);
+		return retval;
 	}
 	
 	private GridCellRenderer getAvatarGridCellRenderer() {
@@ -93,6 +100,6 @@ public class GroupsGrid extends Grid<BeanModel> {
 		});  
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn("name");  
+		setAutoExpandColumn(Group.ColumnType.description.toString());  
 	}
 }

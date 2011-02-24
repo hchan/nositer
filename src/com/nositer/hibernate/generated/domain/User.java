@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Feb 23, 2011 2:14:07 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 23, 2011 4:15:19 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -136,9 +136,14 @@ public class User implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setSalutationcodeid(Integer salutationcodeid) {
-		getSalutationcode().setId(salutationcodeid);
-	}
+	/*
+	 @Transient
+	 public void setSalutationcodeid (Integer salutationcodeid) {
+	 if (getSalutationcode() != null) {
+	 getSalutationcode().setId(salutationcodeid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "zipcodeid")
@@ -160,9 +165,14 @@ public class User implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setZipcodeid(Integer zipcodeid) {
-		getZipcode().setId(zipcodeid);
-	}
+	/*
+	 @Transient
+	 public void setZipcodeid (Integer zipcodeid) {
+	 if (getZipcode() != null) {
+	 getZipcode().setId(zipcodeid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "relationshipcodeid")
@@ -184,9 +194,14 @@ public class User implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setRelationshipcodeid(Integer relationshipcodeid) {
-		getRelationshipcode().setId(relationshipcodeid);
-	}
+	/*
+	 @Transient
+	 public void setRelationshipcodeid (Integer relationshipcodeid) {
+	 if (getRelationshipcode() != null) {
+	 getRelationshipcode().setId(relationshipcodeid);
+	 }
+	 }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postalcodeid")
@@ -208,9 +223,14 @@ public class User implements java.io.Serializable, Domain {
 		return retval;
 	}
 
-	public void setPostalcodeid(Integer postalcodeid) {
-		getPostalcode().setId(postalcodeid);
-	}
+	/*
+	 @Transient
+	 public void setPostalcodeid (Integer postalcodeid) {
+	 if (getPostalcode() != null) {
+	 getPostalcode().setId(postalcodeid);
+	 }
+	 }
+	 */
 
 	@Column(name = "countrycode", nullable = false, length = 3)
 	public String getCountrycode() {
