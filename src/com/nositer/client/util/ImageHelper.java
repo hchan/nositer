@@ -14,8 +14,10 @@ public class ImageHelper {
 	}
 	
 	public static String getUserImagePathURL (String relativePath, Integer userid) {
-		String retval = "";
-		retval = Global.USER_URL_PREFIX + "/" + userid + "/image" + relativePath;
+		String retval = null;
+		if (relativePath != null && userid != null) {
+			retval = Global.USER_URL_PREFIX + "/" + userid + "/image" + relativePath;
+		}
 		return retval;
 	}
 }
