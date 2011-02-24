@@ -28,6 +28,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
@@ -123,6 +124,17 @@ public class GroupsGrid extends Grid<BeanModel> {
 		});
 		setView(groupingView);
 
+		addListener(Events.OnClick, new Listener<GridEvent<BeanModel>>() {  
+
+		    @Override
+		    public void handleEvent(GridEvent<BeanModel> be) {  
+		    	BeanModel beanModel = be.getGrid().getSelectionModel().getSelectedItem();
+		    	Group group = beanModel.getBean();		    	
+		    	HistoryManager.addSubHistoryToken(group.getTagname());
+		    }
+		});
+
+		
 		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
 		groupingStore.groupBy(Group.ColumnType.userid.toString());
 		addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  

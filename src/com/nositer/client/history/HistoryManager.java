@@ -25,6 +25,7 @@ import static com.nositer.client.history.HistoryToken.*;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class HistoryManager {
 	public static final String HOME = "";
+	public static final String SUBTOKENSEPARATOR = "-";
 	
 	public static void addHistorySupport() {
 		doOnModuleLoadHistoryToken();
@@ -82,20 +83,20 @@ public class HistoryManager {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
 			setMainPanel(new MyGroups());
+		} else if (historyToken.startsWith(MYGROUPS.toString() + SUBTOKENSEPARATOR)) {
+			//	TODO
 		}
-		
-		
 	}
-	
 
-	
+
+
 	public static void setMainPanel(Component component) {
 		MainPanel.getInstance().removeAll();
 		MainPanel.getInstance().add(component);
 		MainPanel.getInstance().layout(true);
 	}
 
-	
+
 	public static void addHistoryOnClick(Component component, final String historyToken) {
 		component.addListener(Events.OnClick, new Listener() {
 			@Override
@@ -105,4 +106,10 @@ public class HistoryManager {
 		});
 	}
 
+	public static void addSubHistoryToken(String subHistoryToken) {		
+		String historyToken = History.getToken();
+		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
+		newHistoryToken += SUBTOKENSEPARATOR + subHistoryToken;
+		History.newItem(newHistoryToken);		
+	}
 }
