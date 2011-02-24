@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 23, 2011 4:15:19 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 24, 2011 10:21:16 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;

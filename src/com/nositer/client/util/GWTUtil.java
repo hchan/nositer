@@ -3,6 +3,7 @@ package com.nositer.client.util;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -46,7 +47,12 @@ public class GWTUtil {
 			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
 		}
 	}
-
+	public static void addRequiredErrorIfNecessary(HtmlEditor htmlEditor,
+			ArrayList<String> retval) {
+		if (htmlEditor.getValue()  == null) {
+			retval.add(htmlEditor.getFieldLabel().replace("* ", "") + " is required");
+		}
+	}
 
 	public native static void loadjscssfile(String filename, String filetype) /*-{
 		 if (filetype=="js"){

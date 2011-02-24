@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 23, 2011 4:15:19 PM by Hibernate Tools 3.2.4.GA
+// Generated Feb 24, 2011 10:21:16 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -42,10 +42,13 @@ public class Group implements java.io.Serializable, IsSerializable,
 	public Group() {
 	}
 
-	public Group(User user, String tagname, String countrycode) {
+	public Group(User user, String tagname, String countrycode, String name,
+			String description) {
 		this.user = user;
 		this.tagname = tagname;
 		this.countrycode = countrycode;
+		this.name = name;
+		this.description = description;
 	}
 
 	public Group(Zipcode zipcode, User user, Postalcode postalcode,

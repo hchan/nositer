@@ -8,14 +8,13 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.util.Margins;
-import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
@@ -61,16 +60,16 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		tagname.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
 
 		name = new TextField<String>();
-		name.setFieldLabel("Name");  
-		name.setLabelStyle("font-size: 14px; font-weight: bold;");
+		name.setFieldLabel("* Name");
+		name.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
 		
 		avatarSelector = new AvatarSelector();
 		
 		description = new HtmlEditor();
 		setDescriptionHeight();
 		
-		description.setFieldLabel("Description");
-		description.setLabelStyle("font-size: 14px; font-weight: bold;");
+		description.setFieldLabel("* Description");
+		description.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
 		formPanel.add(errorPanel);
 		addLabel("Create Group");
 		formPanel.add(tagname, new FormData("100%"));
@@ -199,7 +198,9 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();		
-		GWTUtil.addRequiredErrorIfNecessary(tagname, retval);		
+		GWTUtil.addRequiredErrorIfNecessary(tagname, retval);
+		GWTUtil.addRequiredErrorIfNecessary(name, retval);		
+		GWTUtil.addRequiredErrorIfNecessary(description, retval);		
 		return retval;
 	}
 
