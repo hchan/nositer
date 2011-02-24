@@ -11,27 +11,34 @@ import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.ListView;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
+import com.extjs.gxt.ui.client.widget.grid.GridGroupRenderer;
 import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.GridView;
+import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
+import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.avatar.Avatar;
 
 @SuppressWarnings("rawtypes")
 public class GroupsGrid extends Grid<BeanModel> {
-
+	
 	private RpcProxy<ArrayList<Group>> proxy;
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
+	private GroupingView groupingView;
 
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
@@ -43,8 +50,10 @@ public class GroupsGrid extends Grid<BeanModel> {
 		};  
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
-		loader.setRemoteSort(true);  
-		store = new ListStore<BeanModel>(loader);  
+		loader.setRemoteSort(false);  
+		store = new GroupingStore<BeanModel>(loader);  
+
+
 
 		cm = createColumnModel();
 		this.view = new GridView();
@@ -54,14 +63,14 @@ public class GroupsGrid extends Grid<BeanModel> {
 		disableTextSelection(true);
 		init();
 	}
-	
+
 	public ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
 		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.ColumnType.avatarlocation.toString(), "Avatar", 50);
 		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
 		columns.add(avatarColumnConfig);  
-		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 100));
+		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 100));		
 		columns.add(new ColumnConfig(Group.ColumnType.tagname.toString(), "Tag Name", 100));
 		columns.add(new ColumnConfig(Group.ColumnType.description.toString(), "Description", 200));  
 		ColumnConfig date = new ColumnConfig(Group.ColumnType.createdtime.toString(), "Created On", 100);  
@@ -70,7 +79,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		retval = new ColumnModel(columns);
 		return retval;
 	}
-	
+
 	private GridCellRenderer getAvatarGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
@@ -93,6 +102,29 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 
 	public void init() {
+		groupingView = new GroupingView();
+		groupingView.setForceFit(true);
+		//groupingView.setShowGroupedColumn(false);
+		groupingView.setGroupRenderer(new GridGroupRenderer() {
+
+			@Override
+			public String render(GroupColumnData data) {
+				BeanModel beanModel   = (BeanModel) data.models.get(0);
+				Group group = beanModel.getBean();
+				String text = null;
+				if (group.getUserid().equals(TopPanel.getInstance().getUser().getId())) {
+					text = "Groups I own";
+				} else {
+					text = "Groups I am subscribed too";
+				}
+				String length = data.models.size() == 1 ? "Item" : "Items";  				
+				return text + ": (" + data.models.size() + " " + length + ")";  
+			}
+		});
+		setView(groupingView);
+
+		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
+		groupingStore.groupBy(Group.ColumnType.userid.toString());
 		addListener(Events.Attach, new Listener<GridEvent<BeanModel>>() {  
 			public void handleEvent(GridEvent<BeanModel> be) {  
 				store.getLoader().load();
