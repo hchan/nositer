@@ -122,4 +122,10 @@ public class HistoryManager {
 		retval = retval.replaceAll(".*" + SUBTOKENSEPARATOR, "");
 		return retval;
 	}
+
+	public static void removeSubHistoryToken() {
+		String historyToken = History.getToken();
+		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
+		History.newItem(newHistoryToken);		
+	}
 }

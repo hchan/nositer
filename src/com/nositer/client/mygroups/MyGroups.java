@@ -60,10 +60,10 @@ public class MyGroups extends TabPanel implements Resizable {
 	}
 	
 	public void showTab(String tabId) {
-		TabItem tabItem = findItem(tabId, false);
+		TabItem tabItem = null;
+		tabItem = findItem(tabId, false);
 		if (tabItem == null) {
-			tabItem = new GroupTabItem(tabId);
-			
+			tabItem = new GroupTabItem(tabId);			
 			add(tabItem);
 		}
 		setSelection(tabItem);

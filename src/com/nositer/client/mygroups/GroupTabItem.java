@@ -1,7 +1,10 @@
 package com.nositer.client.mygroups;
 
+import com.bea.xml.stream.events.BaseEvent;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
@@ -15,6 +18,7 @@ import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
@@ -33,6 +37,14 @@ public class GroupTabItem extends TabItem implements Resizable{
 
 	public void init() {
 		setClosable(true);
+		addListener(Events.Close, new Listener() {
+
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				HistoryManager.removeSubHistoryToken();
+			}
+		
+		});
 		VBoxLayout layout = new VBoxLayout(VBoxLayoutAlign.CENTER);
 		setLayout(new FitLayout());
 		contentPanel = new ContentPanel();
@@ -69,6 +81,8 @@ public class GroupTabItem extends TabItem implements Resizable{
 		add(contentPanel);
 
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
+		
+		
 	}
 
 	@Override
