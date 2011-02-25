@@ -1,18 +1,12 @@
 package com.nositer.client.mygroups;
 
-import com.bea.xml.stream.events.BaseEvent;
-import com.extjs.gxt.ui.client.Style.LayoutRegion;
-import com.extjs.gxt.ui.client.Style.Orientation;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.TabItem;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -25,6 +19,7 @@ import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.Avatar;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class GroupTabItem extends TabItem implements Resizable{
 	private HtmlContainer description;
 	private ContentPanel contentPanel;
@@ -37,14 +32,8 @@ public class GroupTabItem extends TabItem implements Resizable{
 
 	public void init() {
 		setClosable(true);
-		addListener(Events.Close, new Listener() {
-
-			@Override
-			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.removeSubHistoryToken();
-			}
+		addDefaultListeners();
 		
-		});
 		VBoxLayout layout = new VBoxLayout(VBoxLayoutAlign.CENTER);
 		setLayout(new FitLayout());
 		contentPanel = new ContentPanel();
@@ -68,7 +57,6 @@ public class GroupTabItem extends TabItem implements Resizable{
 			public void onSuccess(Group result) {
 				GroupTabItem.this.setText(result.getName());
 				description.setHtml(result.getDescription());
-				//description.setHeight(300);
 				avatar.setPathToImage(ImageHelper.getUserImagePathURL(result.getAvatarlocation()));
 				resize(0,0);
 			}
@@ -83,6 +71,22 @@ public class GroupTabItem extends TabItem implements Resizable{
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
 		
 		
+	}
+
+
+	private void addDefaultListeners() {
+		addListener(Events.Close, new Listener() {
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				HistoryManager.removeSubHistoryToken();
+			}
+		});
+		addListener(Events.Select, new Listener() {
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				HistoryManager.addSubHistoryToken(GroupTabItem.this.getItemId());
+			}
+		});
 	}
 
 	@Override
