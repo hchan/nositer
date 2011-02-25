@@ -59,7 +59,7 @@
 	<servlet>
 		<servlet-name>GwtServiceResolver</servlet-name>
 		<servlet-class>com.google.gwt.user.server.rpc.GwtServiceResolver</servlet-class>
-	</servlet>	
+	</servlet>
 
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
@@ -102,4 +102,7 @@
 		<welcome-file>Nositer.html</welcome-file>
 	</welcome-file-list>
 
+	<session-config>
+		<session-timeout>0</session-timeout>
+	</session-config>
 </web-app>

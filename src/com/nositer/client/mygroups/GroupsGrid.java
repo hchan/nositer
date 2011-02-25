@@ -41,6 +41,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
 	private GroupingView groupingView;
 
+
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
 			@Override
@@ -48,7 +49,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 					AsyncCallback<ArrayList<Group>> callback) {
 				ServiceBroker.groupService.getMyGroups(callback);  
 			}
-		};  
+		};  		
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
 		loader.setRemoteSort(false);  
@@ -137,5 +138,10 @@ public class GroupsGrid extends Grid<BeanModel> {
 		setLoadMask(true);  
 		setBorders(true);  
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
+				
+	}
+
+	public void refresh() {
+		store.getLoader().load();
 	}
 }
