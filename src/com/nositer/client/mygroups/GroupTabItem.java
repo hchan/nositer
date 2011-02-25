@@ -85,6 +85,7 @@ public class GroupTabItem extends TabItem implements Resizable{
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
 				HistoryManager.addSubHistoryToken(GroupTabItem.this.getItemId());
+				resize(0,0);
 			}
 		});
 	}

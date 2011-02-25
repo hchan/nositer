@@ -1,7 +1,5 @@
 package com.nositer.util.json;
 
-import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.JspWriter;

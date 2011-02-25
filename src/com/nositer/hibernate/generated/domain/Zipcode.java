@@ -1,26 +1,22 @@
 package com.nositer.hibernate.generated.domain;
 
-import com.nositer.hibernate.*;
-import javax.persistence.Transient;
-
-// Generated Feb 24, 2011 10:21:16 AM by Hibernate Tools 3.2.4.GA
-// Enhanced by Henry
-//import java.util.List;
-//import java.util.ArrayList;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.nositer.hibernate.Domain;
 
 @SuppressWarnings("serial")
 /**

@@ -1,18 +1,12 @@
 package com.nositer.client.dto.generated;
 
-import com.nositer.client.dto.*;
-
-// Generated Feb 24, 2011 10:21:16 AM by Hibernate Tools 3.2.4.GA
-// Enhanced by Henry
-
-//import com.extjs.gxt.ui.client.data.BaseModelData;
-import com.google.gwt.user.client.rpc.IsSerializable;
-import com.extjs.gxt.ui.client.data.BeanModelTag;
-//import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.extjs.gxt.ui.client.data.BeanModelTag;
+import com.google.gwt.user.client.rpc.IsSerializable;
+import com.nositer.client.dto.DTO;
 
 @SuppressWarnings("serial")
 /**

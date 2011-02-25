@@ -1,8 +1,9 @@
 package com.nositer.hibernate;
-import com.nositer.client.dto.Lookupcode;
-import com.nositer.client.dto.generated.*;
+import static com.nositer.hibernate.CommonSql.PARAMETERIZEDLIMITCLAUSE;
 
-import static com.nositer.hibernate.CommonSql.*;
+import com.nositer.client.dto.Lookupcode;
+import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.User;
 public class SqlHelper {
 	public static String FINDUSERBYLOGIN = 
 		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login;

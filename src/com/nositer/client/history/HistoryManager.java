@@ -1,5 +1,14 @@
 package com.nositer.client.history;
 
+import static com.nositer.client.history.HistoryToken.CHANGEPASSWORD;
+import static com.nositer.client.history.HistoryToken.CREATEGROUP;
+import static com.nositer.client.history.HistoryToken.EDITABOUTME;
+import static com.nositer.client.history.HistoryToken.EDITBASICPROFILE;
+import static com.nositer.client.history.HistoryToken.MANAGEIMAGES;
+import static com.nositer.client.history.HistoryToken.MYGROUPS;
+import static com.nositer.client.history.HistoryToken.UPLOADIMAGES;
+import static com.nositer.client.history.HistoryToken.VIEWPROFILE;
+
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -19,8 +28,6 @@ import com.nositer.client.mygroups.MyGroups;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfile;
-
-import static com.nositer.client.history.HistoryToken.*;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class HistoryManager {
@@ -87,6 +94,7 @@ public class HistoryManager {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
 			setMainPanel(MyGroups.getInstance(true));
+			
 			MyGroups.getInstance(true).showTab(getSubHistoryToken());
 		}
 	}

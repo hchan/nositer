@@ -6,12 +6,9 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.directorytree.FileModel;
-import com.nositer.client.widget.directorytree.FolderModel;
-import com.nositer.shared.Global;
 
 public class ImageViewerContainer extends LayoutContainer {
 	private ContentPanel contentPanel;

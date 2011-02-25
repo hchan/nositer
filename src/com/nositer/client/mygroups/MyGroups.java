@@ -1,10 +1,14 @@
 package com.nositer.client.mygroups;
 
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.widget.Resizable;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class MyGroups extends TabPanel implements Resizable {
 
 	private TabItem myGroupsItem;
@@ -46,11 +50,19 @@ public class MyGroups extends TabPanel implements Resizable {
 		init();
 	}
 
+	
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
 		myGroupsItem = new TabItem("My Groups");  
 		myGroupsItem.setClosable(false);
+		myGroupsItem.addListener(Events.Select, new Listener() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				resize(0,0);
+				
+			}});
 		FitLayout layout = new FitLayout();
 		myGroupsItem.setLayout(layout);
 		myGroupsContainer = new MyGroupsContainer();
@@ -66,6 +78,7 @@ public class MyGroups extends TabPanel implements Resizable {
 			tabItem = new GroupTabItem(tabId);			
 			add(tabItem);
 		}
+		
 		setSelection(tabItem);
 	}
 
