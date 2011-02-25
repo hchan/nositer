@@ -7,11 +7,12 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class MyGroups extends TabPanel implements Resizable {
 
-	private TabItem myGroupsItem;
+	private TabItemPlus myGroupsItem;
 	private MyGroupsContainer myGroupsContainer;
 	private static MyGroups instance;
 
@@ -38,11 +39,11 @@ public class MyGroups extends TabPanel implements Resizable {
 		MyGroups.instance = instance;
 	}
 
-	public TabItem getMyGroupsItem() {
+	public TabItemPlus getMyGroupsItem() {
 		return myGroupsItem;
 	}
 
-	public void setMyGroupsItem(TabItem myGroupsItem) {
+	public void setMyGroupsItem(TabItemPlus myGroupsItem) {
 		this.myGroupsItem = myGroupsItem;
 	}
 
@@ -54,7 +55,14 @@ public class MyGroups extends TabPanel implements Resizable {
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-		myGroupsItem = new TabItem("My Groups");  
+		myGroupsItem = new TabItemPlus("My Groups") {
+
+			@Override
+			public void resize(int width, int height) {
+				
+			}
+			
+		};  
 		myGroupsItem.setClosable(false);
 		myGroupsItem.addListener(Events.Select, new Listener() {
 

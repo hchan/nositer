@@ -1,26 +1,22 @@
 package com.nositer.client.mygroups;
 
-import com.extjs.gxt.ui.client.event.Events;
-import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.history.HistoryManager;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.TabItemPlus;
 import com.nositer.client.widget.avatar.Avatar;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class GroupTabItem extends TabItem implements Resizable{
+public class GroupTabItem extends TabItemPlus implements Resizable{
 	private HtmlContainer description;
 	private ContentPanel contentPanel;
 	private Avatar avatar;
@@ -31,6 +27,7 @@ public class GroupTabItem extends TabItem implements Resizable{
 	}
 
 	public void init() {
+		setText("Loading...");
 		setClosable(true);
 		addDefaultListeners();
 		
@@ -74,21 +71,7 @@ public class GroupTabItem extends TabItem implements Resizable{
 	}
 
 
-	private void addDefaultListeners() {
-		addListener(Events.Close, new Listener() {
-			@Override
-			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.removeSubHistoryToken();
-			}
-		});
-		addListener(Events.Select, new Listener() {
-			@Override
-			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.addSubHistoryToken(GroupTabItem.this.getItemId());
-				resize(0,0);
-			}
-		});
-	}
+
 
 	@Override
 	protected void onWindowResize(int width, int height) {
