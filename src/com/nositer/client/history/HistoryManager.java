@@ -136,4 +136,8 @@ public class HistoryManager {
 		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
 		History.newItem(newHistoryToken);		
 	}
+	
+	public static void addHistory(String historyToken) {
+		History.newItem(historyToken);		
+	}
 }

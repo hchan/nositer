@@ -22,6 +22,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
@@ -68,8 +69,8 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		description = new HtmlEditor();
 		setDescriptionHeight();
 		
-		description.setFieldLabel("* Description");
-		description.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
+		description.setFieldLabel("Description");
+		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
 		addLabel("Create Group");
 		formPanel.add(tagname, new FormData("100%"));
@@ -152,11 +153,11 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 						}
 
 						@Override
-						public void onSuccess(Group result) {
+						public void onSuccess(final Group result) {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								
-									History.newItem(HistoryToken.VIEWPROFILE.toString());									
+									HistoryManager.addHistory(HistoryToken.MYGROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
 								}								
 							});										
 						}
@@ -184,7 +185,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		Listener<BaseEvent> cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				History.newItem(HistoryToken.VIEWPROFILE.toString());
+				HistoryManager.addHistory(HistoryToken.MYGROUPS.toString());		
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);
@@ -199,8 +200,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();		
 		GWTUtil.addRequiredErrorIfNecessary(tagname, retval);
-		GWTUtil.addRequiredErrorIfNecessary(name, retval);		
-		GWTUtil.addRequiredErrorIfNecessary(description, retval);		
+		GWTUtil.addRequiredErrorIfNecessary(name, retval);				
 		return retval;
 	}
 
