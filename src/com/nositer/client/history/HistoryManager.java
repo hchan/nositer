@@ -33,7 +33,7 @@ import com.nositer.client.viewprofile.ViewProfile;
 public class HistoryManager {
 	public static final String HOME = "";
 	public static final String SUBTOKENSEPARATOR = "-";
-	
+
 	public static void addHistorySupport() {
 		doOnModuleLoadHistoryToken();
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -93,18 +93,24 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(MYGROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
-			setMainPanel(MyGroups.getInstance(true));
-			
 			MyGroups.getInstance(true).showTab(getSubHistoryToken());
+			setMainPanel(MyGroups.getInstance(true));
+
 		}
 	}
 
 
 
 	public static void setMainPanel(Component component) {
-		MainPanel.getInstance().removeAll();
-		MainPanel.getInstance().add(component);
-		MainPanel.getInstance().layout(true);
+		Component curComponent = null;
+		if (MainPanel.getInstance().getItemCount() == 1) {
+			curComponent = MainPanel.getInstance().getItem(0);
+		}
+		if (!component.equals(curComponent)) {
+			MainPanel.getInstance().removeAll();
+			MainPanel.getInstance().add(component);
+			MainPanel.getInstance().layout(true);
+		}
 	}
 
 
@@ -123,7 +129,7 @@ public class HistoryManager {
 		newHistoryToken += SUBTOKENSEPARATOR + subHistoryToken;
 		History.newItem(newHistoryToken);		
 	}
-	
+
 	public static String getSubHistoryToken() {
 		String retval = null;
 		retval = History.getToken();
@@ -136,7 +142,7 @@ public class HistoryManager {
 		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
 		History.newItem(newHistoryToken);		
 	}
-	
+
 	public static void addHistory(String historyToken) {
 		History.newItem(historyToken);		
 	}

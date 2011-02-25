@@ -10,10 +10,13 @@ public abstract class TabItemPlus extends TabItem implements Resizable {
 	
 	public TabItemPlus() {
 		super();
+		addDefaultListeners();
 	}
 	
 	public TabItemPlus(String string) {
 		super(string);
+		setItemId(string);
+		addDefaultListeners();
 	}
 
 	public void addDefaultListeners() {

@@ -28,9 +28,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	public void init() {
 		setText("Loading...");
-		setClosable(true);
-		addDefaultListeners();
-		
+		setClosable(true);		
 		VBoxLayout layout = new VBoxLayout(VBoxLayoutAlign.CENTER);
 		setLayout(new FitLayout());
 		contentPanel = new ContentPanel();
@@ -52,7 +50,8 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 			@Override
 			public void onSuccess(Group result) {
-				GroupTabItem.this.setText(result.getName());
+				GroupTabItem.this.setText(
+						result.getName());
 				description.setHtml(result.getDescription());
 				avatar.setPathToImage(ImageHelper.getUserImagePathURL(result.getAvatarlocation()));
 				resize(0,0);

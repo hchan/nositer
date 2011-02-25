@@ -1,11 +1,16 @@
 package com.nositer.client.mygroups;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.nositer.client.history.HistoryManager;
+import com.nositer.client.history.HistoryToken;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
@@ -62,6 +67,18 @@ public class MyGroups extends TabPanel implements Resizable {
 				
 			}
 			
+			@Override
+			public void addDefaultListeners() {
+			
+				addListener(Events.Select, new Listener() {
+					@Override
+					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
+						HistoryManager.addHistory(HistoryToken.MYGROUPS.toString());
+						resize(0,0);
+					}
+				});
+			}
+			
 		};  
 		myGroupsItem.setClosable(false);
 		myGroupsItem.addListener(Events.Select, new Listener() {
@@ -85,9 +102,8 @@ public class MyGroups extends TabPanel implements Resizable {
 		if (tabItem == null) {
 			tabItem = new GroupTabItem(tabId);			
 			add(tabItem);
-		}
-		
-		setSelection(tabItem);
+		}	
+		setSelection(tabItem);		
 	}
 
 	@Override
