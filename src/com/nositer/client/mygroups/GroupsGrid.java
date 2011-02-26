@@ -14,6 +14,8 @@ import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.HtmlContainer;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
@@ -71,7 +73,9 @@ public class GroupsGrid extends Grid<BeanModel> {
 		columns.add(avatarColumnConfig);  
 		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 100));		
 		columns.add(new ColumnConfig(Group.ColumnType.tagname.toString(), "Tag Name", 100));
-		columns.add(new ColumnConfig(Group.ColumnType.description.toString(), "Description", 200));  
+		ColumnConfig descriptionColumnConfig = new ColumnConfig(Group.ColumnType.description.toString(), "Description", 200);
+		descriptionColumnConfig.setRenderer(getDescriptionGridCellRenderer());
+		columns.add(descriptionColumnConfig);  
 		ColumnConfig date = new ColumnConfig(Group.ColumnType.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
@@ -99,9 +103,32 @@ public class GroupsGrid extends Grid<BeanModel> {
 		};
 		return retval;
 	}
+	
+	private GridCellRenderer getDescriptionGridCellRenderer() {
+		GridCellRenderer retval = new GridCellRenderer() {
 
+			@Override
+			public Object render(ModelData model, String property,
+					ColumnData config, int rowIndex, int colIndex,
+					ListStore store, Grid grid) {
+				HtmlContainer retval = new HtmlContainer();
+				retval.setStyleName("myGroupsRow");
+				try {
+					BeanModel beanModel = (BeanModel) model;
+					Group group = beanModel.getBean();
+					retval.setHtml(group.getDescription());
+				} catch (Exception e) {
+					GWTUtil.log("", e);
+				}
+				return retval;
+			}  
+		};
+		return retval;
+	}
 	public void init() {
 		groupingView = new GroupingView();
+		
+		
 		groupingView.setForceFit(true);
 		//groupingView.setShowGroupedColumn(false);
 		groupingView.setGroupRenderer(new GridGroupRenderer() {
@@ -119,10 +146,12 @@ public class GroupsGrid extends Grid<BeanModel> {
 				String length = data.models.size() == 1 ? "Item" : "Items";  				
 				return text + ": (" + data.models.size() + " " + length + ")";  
 			}
+			
+			
 		});
 		setView(groupingView);
 
-		addListener(Events.OnClick, new Listener<GridEvent<BeanModel>>() {  
+		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
 			public void handleEvent(GridEvent<BeanModel> be) {  

@@ -266,3 +266,8 @@
 .formHeading {
 	font-size: 16pt;
 }
+
+.myGroupsRow {
+	height: 50px !important;
+	overflow: auto;
+}
