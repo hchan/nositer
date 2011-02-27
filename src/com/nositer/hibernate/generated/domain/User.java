@@ -1,15 +1,21 @@
 package com.nositer.hibernate.generated.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import com.nositer.hibernate.*;
+import javax.persistence.Transient;
+
+// Generated Feb 26, 2011 6:36:22 PM by Hibernate Tools 3.2.4.GA
+// Enhanced by Henry
+//import java.util.List;
+//import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,10 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-
-import com.nositer.hibernate.Domain;
 
 @SuppressWarnings("serial")
 /**
@@ -53,8 +56,10 @@ public class User implements java.io.Serializable, Domain {
 	private Date modifiedtime;
 	private Set<Group> groups = new HashSet<Group>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
+	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
 			0);
+	private Set<Blog> blogs = new HashSet<Blog>(0);
 
 	public User() {
 	}
@@ -76,7 +81,9 @@ public class User implements java.io.Serializable, Domain {
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Date createdtime, Date modifiedtime,
 			Set<Group> groups, Set<UserHasGroup> userHasGroups,
-			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
+			Set<Iwantto> iwanttos,
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
+			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
 		this.zipcode = zipcode;
 		this.relationshipcode = relationshipcode;
@@ -99,7 +106,9 @@ public class User implements java.io.Serializable, Domain {
 		this.modifiedtime = modifiedtime;
 		this.groups = groups;
 		this.userHasGroups = userHasGroups;
+		this.iwanttos = iwanttos;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
+		this.blogs = blogs;
 	}
 
 	@Id
@@ -397,6 +406,15 @@ public class User implements java.io.Serializable, Domain {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Iwantto> getIwanttos() {
+		return this.iwanttos;
+	}
+
+	public void setIwanttos(Set<Iwantto> iwanttos) {
+		this.iwanttos = iwanttos;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<UserHasSecurityquestioncode> getUserHasSecurityquestioncodes() {
 		return this.userHasSecurityquestioncodes;
 	}
@@ -404,6 +422,15 @@ public class User implements java.io.Serializable, Domain {
 	public void setUserHasSecurityquestioncodes(
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Blog> getBlogs() {
+		return this.blogs;
+	}
+
+	public void setBlogs(Set<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 }

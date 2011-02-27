@@ -18,6 +18,9 @@ public class LeftPanel extends ContentPanel {
 	private AccordionLayout accordionLayout;
 	private ContentPanel profile;
 	private ContentPanel groups;
+	private ContentPanel iwantto;
+	private ContentPanel blog;
+	private ContentPanel chat;
 	private NavigationItem viewProfileNavigationItem;
 	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem editAboutMeNavigationItem;
@@ -25,8 +28,7 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem manageGroups;
 	private NavigationItem createGroup;
 	private NavigationItem myIwantTos;
-	private ContentPanel iWantTo;
-	private NavigationItem manageIwantTos;
+	private NavigationItem createIwantTo;
 	private NavigationItem changePasswordNavigationItem;
 	private ContentPanel images;
 	private NavigationItem uploadImagesNavigationItem;
@@ -34,6 +36,38 @@ public class LeftPanel extends ContentPanel {
 	
 	public NavigationItem getCreateGroup() {
 		return createGroup;
+	}
+
+	public ContentPanel getIwantto() {
+		return iwantto;
+	}
+
+	public void setIwantto(ContentPanel iwantto) {
+		this.iwantto = iwantto;
+	}
+
+	public ContentPanel getBlog() {
+		return blog;
+	}
+
+	public void setBlog(ContentPanel blog) {
+		this.blog = blog;
+	}
+
+	public ContentPanel getChat() {
+		return chat;
+	}
+
+	public void setChat(ContentPanel chat) {
+		this.chat = chat;
+	}
+
+	public NavigationItem getCreateIwantTo() {
+		return createIwantTo;
+	}
+
+	public void setCreateIwantTo(NavigationItem createIwantTo) {
+		this.createIwantTo = createIwantTo;
 	}
 
 	public void setCreateGroup(NavigationItem createGroup) {
@@ -65,20 +99,14 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	public ContentPanel getiWantTo() {
-		return iWantTo;
+		return iwantto;
 	}
 
 	public void setiWantTo(ContentPanel iWantTo) {
-		this.iWantTo = iWantTo;
+		this.iwantto = iWantTo;
 	}
 
-	public NavigationItem getManageIwantTos() {
-		return manageIwantTos;
-	}
-
-	public void setManageIwantTos(NavigationItem manageIwantTos) {
-		this.manageIwantTos = manageIwantTos;
-	}
+	
 
 	public ContentPanel getImages() {
 		return images;
@@ -238,13 +266,17 @@ public class LeftPanel extends ContentPanel {
 		groups.add(createGroup);
 
 		// I want to ...
-		iWantTo = createNavigationContentPanel("I want to ...", this);	
+		iwantto = createNavigationContentPanel("I want to ...", this);	
 		myIwantTos = navigationTree.createNavigationItem("My I want to's ...");
-		manageIwantTos = navigationTree.createNavigationItem("Manage I want to's ...");
-		iWantTo.add(myIwantTos);
-		iWantTo.add(manageIwantTos);
+		createIwantTo = navigationTree.createNavigationItem("Create I want to...");
+		iwantto.add(myIwantTos);
+		iwantto.add(createIwantTo);
 		
+		// blog
+		blog = createNavigationContentPanel("Blog", this);	
 		
+		// chat
+		chat = createNavigationContentPanel("Chat", this);	
 		
 		collapseAccordion();
 		this.layout();

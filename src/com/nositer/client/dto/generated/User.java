@@ -1,12 +1,18 @@
 package com.nositer.client.dto.generated;
 
+import com.nositer.client.dto.*;
+
+// Generated Feb 26, 2011 6:36:23 PM by Hibernate Tools 3.2.4.GA
+// Enhanced by Henry
+
+//import com.extjs.gxt.ui.client.data.BaseModelData;
+import com.google.gwt.user.client.rpc.IsSerializable;
+import com.extjs.gxt.ui.client.data.BeanModelTag;
+//import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.extjs.gxt.ui.client.data.BeanModelTag;
-import com.google.gwt.user.client.rpc.IsSerializable;
-import com.nositer.client.dto.DTO;
 
 @SuppressWarnings("serial")
 /**
@@ -38,8 +44,10 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Date modifiedtime;
 	private Set<Group> groups = new HashSet<Group>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
+	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
 			0);
+	private Set<Blog> blogs = new HashSet<Blog>(0);
 	public static final String TABLENAME = "nositer.user";
 
 	public String getTablename() {
@@ -66,7 +74,9 @@ public class User implements java.io.Serializable, IsSerializable,
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Date createdtime, Date modifiedtime,
 			Set<Group> groups, Set<UserHasGroup> userHasGroups,
-			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
+			Set<Iwantto> iwanttos,
+			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
+			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
 		this.zipcode = zipcode;
 		this.relationshipcode = relationshipcode;
@@ -89,7 +99,9 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.modifiedtime = modifiedtime;
 		this.groups = groups;
 		this.userHasGroups = userHasGroups;
+		this.iwanttos = iwanttos;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
+		this.blogs = blogs;
 	}
 
 	public Integer getId() {
@@ -316,6 +328,14 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.userHasGroups = userHasGroups;
 	}
 
+	public Set<Iwantto> getIwanttos() {
+		return this.iwanttos;
+	}
+
+	public void setIwanttos(Set<Iwantto> iwanttos) {
+		this.iwanttos = iwanttos;
+	}
+
 	public Set<UserHasSecurityquestioncode> getUserHasSecurityquestioncodes() {
 		return this.userHasSecurityquestioncodes;
 	}
@@ -323,6 +343,14 @@ public class User implements java.io.Serializable, IsSerializable,
 	public void setUserHasSecurityquestioncodes(
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes) {
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
+	}
+
+	public Set<Blog> getBlogs() {
+		return this.blogs;
+	}
+
+	public void setBlogs(Set<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 	public enum ColumnType {

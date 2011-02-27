@@ -28,7 +28,9 @@
         <mapping class="com.nositer.hibernate.generated.domain.Relationshipcode" />
         <mapping class="com.nositer.hibernate.generated.domain.User" />
         <mapping class="com.nositer.hibernate.generated.domain.Zipcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.Blog" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
+        <mapping class="com.nositer.hibernate.generated.domain.Iwantto" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasSecurityquestioncode" />
         <mapping class="com.nositer.hibernate.generated.domain.Salutationcode" />
         <mapping class="com.nositer.hibernate.generated.domain.Group" />
