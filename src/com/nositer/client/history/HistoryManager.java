@@ -1,13 +1,7 @@
 package com.nositer.client.history;
 
-import static com.nositer.client.history.HistoryToken.CHANGEPASSWORD;
-import static com.nositer.client.history.HistoryToken.CREATEGROUP;
-import static com.nositer.client.history.HistoryToken.EDITABOUTME;
-import static com.nositer.client.history.HistoryToken.EDITBASICPROFILE;
-import static com.nositer.client.history.HistoryToken.MANAGEIMAGES;
-import static com.nositer.client.history.HistoryToken.MYGROUPS;
-import static com.nositer.client.history.HistoryToken.UPLOADIMAGES;
-import static com.nositer.client.history.HistoryToken.VIEWPROFILE;
+
+import static com.nositer.client.history.HistoryToken.*;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -18,6 +12,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.nositer.client.creategroup.CreateGroup;
+import com.nositer.client.createiwantto.CreateIWantTo;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
@@ -84,18 +79,21 @@ public class HistoryManager {
 			setMainPanel(new ManageImages());
 		} else if (historyToken.equals(CREATEGROUP.toString())) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getCreateGroup());
+			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
 			setMainPanel(new CreateGroup());
 		} else if (historyToken.equals(MYGROUPS.toString())) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
+			leftPanel.getNavigationTree().select(leftPanel.getMyGroupsNavigationItem());
 			setMainPanel(MyGroups.getInstance(true));
 		} else if (historyToken.startsWith(MYGROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getMyGroups());
+			leftPanel.getNavigationTree().select(leftPanel.getMyGroupsNavigationItem());
 			MyGroups.getInstance(true).showTab(getSubHistoryToken());
 			setMainPanel(MyGroups.getInstance(true));
-
+		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
+			leftPanel.getiWantTo().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getCreateIwantToNavigationItem());
+			setMainPanel(new CreateIWantTo());
 		}
 	}
 

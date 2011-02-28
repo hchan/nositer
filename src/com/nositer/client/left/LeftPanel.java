@@ -18,206 +18,243 @@ public class LeftPanel extends ContentPanel {
 	private AccordionLayout accordionLayout;
 	private ContentPanel profile;
 	private ContentPanel groups;
-	private ContentPanel iwantto;
+	private ContentPanel images;
+	private ContentPanel iWantTo;
 	private ContentPanel blog;
 	private ContentPanel chat;
 	private NavigationItem viewProfileNavigationItem;
 	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem editAboutMeNavigationItem;
-	private NavigationItem myGroups;
-	private NavigationItem manageGroups;
-	private NavigationItem createGroup;
-	private NavigationItem myIwantTos;
-	private NavigationItem createIwantTo;
+	private NavigationItem myGroupsNavigationItem;
+	private NavigationItem manageGroupsNavigationItem;
+	private NavigationItem createGroupNavigationItem;
+	private NavigationItem myIwantTosNavigationItem;
+	private NavigationItem createIwantToNavigationItem;
 	private NavigationItem changePasswordNavigationItem;
-	private ContentPanel images;
 	private NavigationItem uploadImagesNavigationItem;
 	private NavigationItem manageImagesNavigationItem;
 	
-	public NavigationItem getCreateGroup() {
-		return createGroup;
-	}
-
-	public ContentPanel getIwantto() {
-		return iwantto;
-	}
-
-	public void setIwantto(ContentPanel iwantto) {
-		this.iwantto = iwantto;
-	}
-
-	public ContentPanel getBlog() {
-		return blog;
-	}
-
-	public void setBlog(ContentPanel blog) {
-		this.blog = blog;
-	}
-
-	public ContentPanel getChat() {
-		return chat;
-	}
-
-	public void setChat(ContentPanel chat) {
-		this.chat = chat;
-	}
-
-	public NavigationItem getCreateIwantTo() {
-		return createIwantTo;
-	}
-
-	public void setCreateIwantTo(NavigationItem createIwantTo) {
-		this.createIwantTo = createIwantTo;
-	}
-
-	public void setCreateGroup(NavigationItem createGroup) {
-		this.createGroup = createGroup;
-	}
-
-	public NavigationItem getMyGroups() {
-		return myGroups;
-	}
-
-	public void setMyGroups(NavigationItem myGroups) {
-		this.myGroups = myGroups;
-	}
-
-	public NavigationItem getManageGroups() {
-		return manageGroups;
-	}
-
-	public void setManageGroups(NavigationItem manageGroups) {
-		this.manageGroups = manageGroups;
-	}
-
-	public NavigationItem getMyIwantTos() {
-		return myIwantTos;
-	}
-
-	public void setMyIwantTos(NavigationItem myIwantTos) {
-		this.myIwantTos = myIwantTos;
-	}
-
-	public ContentPanel getiWantTo() {
-		return iwantto;
-	}
-
-	public void setiWantTo(ContentPanel iWantTo) {
-		this.iwantto = iWantTo;
-	}
-
 	
+
+
+	public static LeftPanel getInstance() {
+		return instance;
+	}
+
+
+	public static void setInstance(LeftPanel instance) {
+		LeftPanel.instance = instance;
+	}
+
+
+	public BorderLayoutData getLeftLayoutData() {
+		return leftLayoutData;
+	}
+
+
+	public void setLeftLayoutData(BorderLayoutData leftLayoutData) {
+		this.leftLayoutData = leftLayoutData;
+	}
+
+
+	public NavigationTree getNavigationTree() {
+		return navigationTree;
+	}
+
+
+	public void setNavigationTree(NavigationTree navigationTree) {
+		this.navigationTree = navigationTree;
+	}
+
+
+	public AccordionLayout getAccordionLayout() {
+		return accordionLayout;
+	}
+
+
+	public void setAccordionLayout(AccordionLayout accordionLayout) {
+		this.accordionLayout = accordionLayout;
+	}
+
+
+	public ContentPanel getProfile() {
+		return profile;
+	}
+
+
+	public void setProfile(ContentPanel profile) {
+		this.profile = profile;
+	}
+
+
+	public ContentPanel getGroups() {
+		return groups;
+	}
+
+
+	public void setGroups(ContentPanel groups) {
+		this.groups = groups;
+	}
+
 
 	public ContentPanel getImages() {
 		return images;
 	}
 
+
 	public void setImages(ContentPanel images) {
 		this.images = images;
 	}
 
-	public NavigationItem getUploadImagesNavigationItem() {
-		return uploadImagesNavigationItem;
+
+	
+
+	public ContentPanel getiWantTo() {
+		return iWantTo;
 	}
 
-	public void setUploadImagesNavigationItem(
-			NavigationItem uploadImagesNavigationItem) {
-		this.uploadImagesNavigationItem = uploadImagesNavigationItem;
+
+	public void setiWantTo(ContentPanel iWantTo) {
+		this.iWantTo = iWantTo;
 	}
 
-	public NavigationItem getManageImagesNavigationItem() {
-		return manageImagesNavigationItem;
+
+	public ContentPanel getBlog() {
+		return blog;
 	}
 
-	public void setManageImagesNavigationItem(
-			NavigationItem manageImagesNavigationItem) {
-		this.manageImagesNavigationItem = manageImagesNavigationItem;
+
+	public void setBlog(ContentPanel blog) {
+		this.blog = blog;
 	}
 
-	public NavigationItem getEditAboutMeNavigationItem() {
-		return editAboutMeNavigationItem;
+
+	public ContentPanel getChat() {
+		return chat;
 	}
 
-	public void setEditAboutMeNavigationItem(
-			NavigationItem editAboutMeNavigationItem) {
-		this.editAboutMeNavigationItem = editAboutMeNavigationItem;
+
+	public void setChat(ContentPanel chat) {
+		this.chat = chat;
 	}
 
-	public NavigationItem getChangePasswordNavigationItem() {
-		return changePasswordNavigationItem;
-	}
-
-	public void setChangePasswordNavigationItem(
-			NavigationItem changePasswordNavigationItem) {
-		this.changePasswordNavigationItem = changePasswordNavigationItem;
-	}
 
 	public NavigationItem getViewProfileNavigationItem() {
 		return viewProfileNavigationItem;
 	}
+
 
 	public void setViewProfileNavigationItem(
 			NavigationItem viewProfileNavigationItem) {
 		this.viewProfileNavigationItem = viewProfileNavigationItem;
 	}
 
+
 	public NavigationItem getEditBasicProfileNavigationItem() {
 		return editBasicProfileNavigationItem;
 	}
 
+
 	public void setEditBasicProfileNavigationItem(
-			NavigationItem editProfileNavigationItem) {
-		this.editBasicProfileNavigationItem = editProfileNavigationItem;
+			NavigationItem editBasicProfileNavigationItem) {
+		this.editBasicProfileNavigationItem = editBasicProfileNavigationItem;
 	}
 
-	public AccordionLayout getAccordionLayout() {
-		return accordionLayout;
+
+	public NavigationItem getEditAboutMeNavigationItem() {
+		return editAboutMeNavigationItem;
 	}
 
-	public void setAccordionLayout(AccordionLayout accordionLayout) {
-		this.accordionLayout = accordionLayout;
+
+	public void setEditAboutMeNavigationItem(
+			NavigationItem editAboutMeNavigationItem) {
+		this.editAboutMeNavigationItem = editAboutMeNavigationItem;
 	}
 
-	public ContentPanel getProfile() {
-		return profile;
+
+	public NavigationItem getMyGroupsNavigationItem() {
+		return myGroupsNavigationItem;
 	}
 
-	public void setProfile(ContentPanel profile) {
-		this.profile = profile;
+
+	public void setMyGroupsNavigationItem(NavigationItem myGroupsNavigationItem) {
+		this.myGroupsNavigationItem = myGroupsNavigationItem;
 	}
 
-	public ContentPanel getGroups() {
-		return groups;
+
+	public NavigationItem getManageGroupsNavigationItem() {
+		return manageGroupsNavigationItem;
 	}
 
-	public void setGroups(ContentPanel groups) {
-		this.groups = groups;
+
+	public void setManageGroupsNavigationItem(
+			NavigationItem manageGroupsNavigationItem) {
+		this.manageGroupsNavigationItem = manageGroupsNavigationItem;
 	}
 
-	public static LeftPanel getInstance() {
-		return instance;
+
+	public NavigationItem getCreateGroupNavigationItem() {
+		return createGroupNavigationItem;
 	}
 
-	public static void setInstance(LeftPanel instance) {
-		LeftPanel.instance = instance;
+
+	public void setCreateGroupNavigationItem(
+			NavigationItem createGroupNavigationItem) {
+		this.createGroupNavigationItem = createGroupNavigationItem;
 	}
 
-	public NavigationTree getNavigationTree() {
-		return navigationTree;
+
+	public NavigationItem getMyIwantTosNavigationItem() {
+		return myIwantTosNavigationItem;
 	}
 
-	public void setNavigationTree(NavigationTree navigationTree) {
-		this.navigationTree = navigationTree;
+
+	public void setMyIwantTosNavigationItem(NavigationItem myIwantTosNavigationItem) {
+		this.myIwantTosNavigationItem = myIwantTosNavigationItem;
 	}
 
-	
 
-	public BorderLayoutData getLeftLayoutData() {
-		return leftLayoutData;
+	public NavigationItem getCreateIwantToNavigationItem() {
+		return createIwantToNavigationItem;
 	}
 
-	public void setLeftLayoutData(BorderLayoutData leftLayoutData) {
-		this.leftLayoutData = leftLayoutData;
+
+	public void setCreateIwantToNavigationItem(
+			NavigationItem createIwantToNavigationItem) {
+		this.createIwantToNavigationItem = createIwantToNavigationItem;
+	}
+
+
+	public NavigationItem getChangePasswordNavigationItem() {
+		return changePasswordNavigationItem;
+	}
+
+
+	public void setChangePasswordNavigationItem(
+			NavigationItem changePasswordNavigationItem) {
+		this.changePasswordNavigationItem = changePasswordNavigationItem;
+	}
+
+
+	public NavigationItem getUploadImagesNavigationItem() {
+		return uploadImagesNavigationItem;
+	}
+
+
+	public void setUploadImagesNavigationItem(
+			NavigationItem uploadImagesNavigationItem) {
+		this.uploadImagesNavigationItem = uploadImagesNavigationItem;
+	}
+
+
+	public NavigationItem getManageImagesNavigationItem() {
+		return manageImagesNavigationItem;
+	}
+
+
+	public void setManageImagesNavigationItem(
+			NavigationItem manageImagesNavigationItem) {
+		this.manageImagesNavigationItem = manageImagesNavigationItem;
 	}
 
 
@@ -258,19 +295,19 @@ public class LeftPanel extends ContentPanel {
 		
 		// Groups
 		groups = createNavigationContentPanel("Groups", this);	
-		myGroups = navigationTree.createNavigationItem("My Groups");
-		manageGroups = navigationTree.createNavigationItem("Manage Groups");
-		createGroup = navigationTree.createNavigationItem("Create Group");
-		groups.add(myGroups);
-		groups.add(manageGroups);
-		groups.add(createGroup);
+		myGroupsNavigationItem = navigationTree.createNavigationItem("My Groups");
+		manageGroupsNavigationItem = navigationTree.createNavigationItem("Manage Groups");
+		createGroupNavigationItem = navigationTree.createNavigationItem("Create Group");
+		groups.add(myGroupsNavigationItem);
+		groups.add(manageGroupsNavigationItem);
+		groups.add(createGroupNavigationItem);
 
 		// I want to ...
-		iwantto = createNavigationContentPanel("I want to ...", this);	
-		myIwantTos = navigationTree.createNavigationItem("My I want to's ...");
-		createIwantTo = navigationTree.createNavigationItem("Create I want to...");
-		iwantto.add(myIwantTos);
-		iwantto.add(createIwantTo);
+		iWantTo = createNavigationContentPanel("I want to ...", this);	
+		myIwantTosNavigationItem = navigationTree.createNavigationItem("My I want to's ...");
+		createIwantToNavigationItem = navigationTree.createNavigationItem("Create I want to...");
+		iWantTo.add(myIwantTosNavigationItem);
+		iWantTo.add(createIwantToNavigationItem);
 		
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
@@ -308,7 +345,8 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
 		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
 		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
-		HistoryManager.addHistoryOnClick(createGroup, HistoryToken.CREATEGROUP.toString());
-		HistoryManager.addHistoryOnClick(myGroups, HistoryToken.MYGROUPS.toString());
+		HistoryManager.addHistoryOnClick(createGroupNavigationItem, HistoryToken.CREATEGROUP.toString());
+		HistoryManager.addHistoryOnClick(myGroupsNavigationItem, HistoryToken.MYGROUPS.toString());
+		HistoryManager.addHistoryOnClick(createIwantToNavigationItem, HistoryToken.CREATEIWANTTO.toString());
 	}
 }
