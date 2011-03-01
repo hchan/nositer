@@ -1,6 +1,9 @@
 package com.nositer.server.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -9,11 +12,12 @@ import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.IWantToService;
 import com.nositer.hibernate.HibernateUtil;
+import com.nositer.hibernate.SqlHelper;
 import com.nositer.shared.GWTException;
 import com.nositer.util.BeanConversion;
 import com.nositer.webapp.Application;
 
-@SuppressWarnings({"serial"})
+@SuppressWarnings({"serial", "unchecked"})
 public class IWantToServiceImpl extends RemoteServiceServlet implements IWantToService {
 
 
@@ -46,5 +50,40 @@ public class IWantToServiceImpl extends RemoteServiceServlet implements IWantToS
 		}
 		return retval;
 	}
+
+	@Override
+	public ArrayList<Iwantto> getMyIWantTos() throws GWTException {
+		ArrayList<Iwantto> retval = new ArrayList<Iwantto>();
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			trx = sess.beginTransaction();					
+			List<com.nositer.hibernate.generated.domain.Iwantto> results = sess.createSQLQuery(
+					SqlHelper.FINDMYIWANTTOS).		
+					addEntity(com.nositer.hibernate.generated.domain.Iwantto.class).
+			setInteger(Iwantto.ColumnType.userid.toString(), 
+					user.getId()
+					).
+			list();
+		
+			retval = BeanConversion.copyDomain2DTO(results, Iwantto.class);					
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
+
+	
 	
 }

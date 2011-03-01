@@ -56,7 +56,7 @@ public class MyIWantTos extends TabPanel implements Resizable {
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-		myIWantTosItem = new TabItemPlus("My IWantTos") {
+		myIWantTosItem = new TabItemPlus("My I want To's") {
 
 			@Override
 			public void resize(int width, int height) {

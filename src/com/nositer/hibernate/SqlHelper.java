@@ -3,6 +3,7 @@ import static com.nositer.hibernate.CommonSql.PARAMETERIZEDLIMITCLAUSE;
 
 import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.User;
 public class SqlHelper {
 	public static String FINDUSERBYLOGIN = 
@@ -40,6 +41,9 @@ public class SqlHelper {
 		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid;
 	public static String FINDGROUPBYTAGNAME =
 		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.tagname + " = :" + Group.ColumnType.tagname;
+	public static String FINDMYIWANTTOS =
+		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid;
+	
 	
 	public static String createLookupSQL (String tablename) {
 		String retval = null;

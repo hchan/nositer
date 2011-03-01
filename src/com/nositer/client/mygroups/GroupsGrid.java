@@ -61,7 +61,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		disabledStyle = null;
 		baseStyle = "x-grid-panel";
 		setSelectionModel(new GridSelectionModel<BeanModel>());
-		disableTextSelection(true);
+		disableTextSelection(false);
 		init();
 	}
 
