@@ -348,5 +348,6 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(createGroupNavigationItem, HistoryToken.CREATEGROUP.toString());
 		HistoryManager.addHistoryOnClick(myGroupsNavigationItem, HistoryToken.MYGROUPS.toString());
 		HistoryManager.addHistoryOnClick(createIwantToNavigationItem, HistoryToken.CREATEIWANTTO.toString());
+		HistoryManager.addHistoryOnClick(myIwantTosNavigationItem, HistoryToken.MYIWANTTOS.toString());
 	}
 }
