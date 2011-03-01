@@ -5,6 +5,8 @@ import com.nositer.client.service.FileService;
 import com.nositer.client.service.FileServiceAsync;
 import com.nositer.client.service.GroupService;
 import com.nositer.client.service.GroupServiceAsync;
+import com.nositer.client.service.IWantToService;
+import com.nositer.client.service.IWantToServiceAsync;
 import com.nositer.client.service.LookupcodeService;
 import com.nositer.client.service.LookupcodeServiceAsync;
 import com.nositer.client.service.NoopService;
@@ -24,4 +26,5 @@ public class ServiceBroker {
 	public static final FileServiceAsync fileService = GWT.create(FileService.class);
 	public static final LookupcodeServiceAsync lookupService = GWT.create(LookupcodeService.class);
 	public static final GroupServiceAsync groupService = GWT.create(GroupService.class);
+	public static final IWantToServiceAsync iWantToService = GWT.create(IWantToService.class);
 }
