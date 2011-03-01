@@ -33,7 +33,7 @@ public class CreateIWantTo extends LayoutContainer implements Resizable {
 	private Label headingLabel;
 	private ContentPanel contentPanel;
 	private FormPanel formPanel;
-	private TextField<String> iWantTo;
+	private TextField<String> iWantToTextField;
 
 	public CreateIWantTo() {
 		init();
@@ -53,12 +53,13 @@ public class CreateIWantTo extends LayoutContainer implements Resizable {
 		contentPanel.add(headingLabel, new VBoxLayoutData(new Margins (5,5,5,5)));
 
 		formPanel = new FormPanel();
+		formPanel.setLabelWidth(55);
 		formPanel.setBodyBorder(false);
 		formPanel.setHeaderVisible(false);
 		formPanel.setLabelSeparator("");
-		iWantTo = new TextField<String>();
-		iWantTo.setFieldLabel("I want to ");
-		formPanel.add(iWantTo, new FormData("100%"));
+		iWantToTextField = new TextField<String>();
+		iWantToTextField.setFieldLabel("I want to ");
+		formPanel.add(iWantToTextField, new FormData("100%"));
 		addButtons();
 		contentPanel.add(formPanel, new VBoxLayoutData());//new Margins (5,5,5,5)));
 		add(contentPanel);
@@ -95,9 +96,10 @@ public class CreateIWantTo extends LayoutContainer implements Resizable {
 	}
 
 	
-	private Iwantto createIWantToDTO() {
-		// TODO Auto-generated method stub
-		return null;
+	private Iwantto createIWantToDTO() {		
+		Iwantto retval = new Iwantto();
+		retval.setDescription(iWantToTextField.getValue());
+		return retval;
 	}
 	
 	@Override
