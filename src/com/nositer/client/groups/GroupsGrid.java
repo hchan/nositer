@@ -38,6 +38,9 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.avatar.Avatar;
+import com.nositer.client.widget.menuitem.DeleteMenuItem;
+import com.nositer.client.widget.menuitem.EditMenuItem;
+import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 @SuppressWarnings("rawtypes")
 public class GroupsGrid extends Grid<BeanModel> {
@@ -46,7 +49,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
 	private GroupingView groupingView;
 	private Menu contextMenu;
-	
+
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
 			@Override
@@ -106,7 +109,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		};
 		return retval;
 	}
-	
+
 	private GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
@@ -132,8 +135,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 		contextMenu = new Menu();
 		setContextMenu(contextMenu);
 		groupingView = new GroupingView();
-		
-		
+
+
 		groupingView.setForceFit(true);
 		//groupingView.setShowGroupedColumn(false);
 		groupingView.setGroupRenderer(new GridGroupRenderer() {
@@ -143,7 +146,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				BeanModel beanModel   = (BeanModel) data.models.get(0);
 				Group group = beanModel.getBean();
 				String text = null;
-				if (group.getUserid().equals(TopPanel.getInstance().getUser().getId())) {
+				if (isGroupIOwn(group)) {
 					text = "Groups I own";
 				} else {
 					text = "Groups I am subscribed too";
@@ -151,29 +154,36 @@ public class GroupsGrid extends Grid<BeanModel> {
 				String length = data.models.size() == 1 ? "Item" : "Items";  				
 				return text + ": (" + data.models.size() + " " + length + ")";  
 			}
-			
-			
+
+
 		});
 		setView(groupingView);
 
 		addListeners();
-		
+
 		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
 		groupingStore.groupBy(Group.ColumnType.userid.toString());
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
-				
+
+	}
+
+
+	private boolean isGroupIOwn(Group group) {
+		boolean retval = false;
+		retval = group.getUserid().equals(TopPanel.getInstance().getUser().getId());
+		return retval;
 	}
 
 	private void addListeners() {
-		
+
 		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
 			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
-				
+
 				showContextMenu(gridEvent);
 			}
 		});
@@ -185,7 +195,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				showContextMenu(gridEvent);
 			}
 		});
-		
+
 		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
@@ -204,7 +214,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
-			MenuItem viewMenuItem = new MenuItem("View");
+			ViewMenuItem viewMenuItem = new ViewMenuItem();
 			SelectionListener<? extends MenuEvent> listener = new SelectionListener<MenuEvent>() {
 				@Override
 				public void componentSelected(MenuEvent ce) {
@@ -212,16 +222,23 @@ public class GroupsGrid extends Grid<BeanModel> {
 				}
 			};
 			viewMenuItem.addSelectionListener(listener);
+
+
 			contextMenu.add(viewMenuItem);		
-			
+			if (isGroupIOwn(group)) {
+				EditMenuItem editMenuItem = new EditMenuItem();
+				contextMenu.add(editMenuItem);
+				DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+				contextMenu.add(deleteMenuItem);
+			}
 			contextMenu.showAt(gridEvent.getClientX(), gridEvent.getClientY());
-			
+
 		} else {
 			gridEvent.setCancelled(true);
 		}
 	}
-		
-	
+
+
 
 	public void refresh() {
 		store.getLoader().load();
