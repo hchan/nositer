@@ -157,7 +157,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								
-									HistoryManager.addHistory(HistoryToken.MYGROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
+									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
 								}								
 							});										
 						}
@@ -185,7 +185,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		Listener<BaseEvent> cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.MYGROUPS.toString());		
+				HistoryManager.addHistory(HistoryToken.GROUPS.toString());		
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);

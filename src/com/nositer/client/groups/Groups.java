@@ -1,54 +1,58 @@
-package com.nositer.client.myiwanttos;
+package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class MyIWantTos extends TabPanel implements Resizable {
-	private TabItemPlus myIWantTosItem;
-	private MyIWantTosContainer myIWantTosContainer;
-	private static MyIWantTos instance;
+public class Groups extends TabPanel implements Resizable {
 
-	public MyIWantTosContainer getMyIWantTosContainer() {
-		return myIWantTosContainer;
+	private TabItemPlus groupsItem;
+	private GroupsContainer groupsContainer;
+	private static Groups instance;
+
+	public GroupsContainer getGroupsContainer() {
+		return groupsContainer;
 	}
 
-	public void setMyIWantTosContainer(MyIWantTosContainer myIWantTosContainer) {
-		this.myIWantTosContainer = myIWantTosContainer;
+	public void setGroupsContainer(GroupsContainer groupsContainer) {
+		this.groupsContainer = groupsContainer;
 	}
 	
 
-	public static MyIWantTos getInstance(boolean createIfNecessary) {
-		MyIWantTos retval = null;
+	public static Groups getInstance(boolean createIfNecessary) {
+		Groups retval = null;
 		if (instance != null) {
 			retval = instance;
 		} else if (createIfNecessary) {
-			retval = new MyIWantTos();			
+			retval = new Groups();			
 		}
 		return retval;
 	}
 	
-	public static void setInstance(MyIWantTos instance) {
-		MyIWantTos.instance = instance;
+	public static void setInstance(Groups instance) {
+		Groups.instance = instance;
 	}
 
-	public TabItemPlus getMyIWantTosItem() {
-		return myIWantTosItem;
+	public TabItemPlus getGroupsItem() {
+		return groupsItem;
 	}
 
-	public void setMyIWantTosItem(TabItemPlus myIWantTosItem) {
-		this.myIWantTosItem = myIWantTosItem;
+	public void setGroupsItem(TabItemPlus groupsItem) {
+		this.groupsItem = groupsItem;
 	}
 
-	public MyIWantTos() {
+	public Groups() {
 		init();
 	}
 
@@ -56,7 +60,7 @@ public class MyIWantTos extends TabPanel implements Resizable {
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-		myIWantTosItem = new TabItemPlus("My I want To's") {
+		groupsItem = new TabItemPlus("Groups") {
 
 			@Override
 			public void resize(int width, int height) {
@@ -69,15 +73,15 @@ public class MyIWantTos extends TabPanel implements Resizable {
 				addListener(Events.Select, new Listener() {
 					@Override
 					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
-						HistoryManager.addHistory(HistoryToken.MYIWANTTOS.toString());
+						HistoryManager.addHistory(HistoryToken.GROUPS.toString());
 						resize(0,0);
 					}
 				});
 			}
 			
 		};  
-		myIWantTosItem.setClosable(false);
-		myIWantTosItem.addListener(Events.Select, new Listener() {
+		groupsItem.setClosable(false);
+		groupsItem.addListener(Events.Select, new Listener() {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
@@ -85,10 +89,10 @@ public class MyIWantTos extends TabPanel implements Resizable {
 				
 			}});
 		FitLayout layout = new FitLayout();
-		myIWantTosItem.setLayout(layout);
-		myIWantTosContainer = new MyIWantTosContainer();
-		myIWantTosItem.add(myIWantTosContainer);
-		add(myIWantTosItem);
+		groupsItem.setLayout(layout);
+		groupsContainer = new GroupsContainer();
+		groupsItem.add(groupsContainer);
+		add(groupsItem);
 		instance = this;
 	}
 	
@@ -96,7 +100,7 @@ public class MyIWantTos extends TabPanel implements Resizable {
 		TabItem tabItem = null;
 		tabItem = findItem(tabId, false);
 		if (tabItem == null) {
-			tabItem = new IWantToTabItem(tabId);			
+			tabItem = new GroupTabItem(tabId);			
 			add(tabItem);
 		}	
 		setSelection(tabItem);		

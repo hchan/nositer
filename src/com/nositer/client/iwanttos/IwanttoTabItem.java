@@ -1,12 +1,11 @@
-package com.nositer.client.myiwanttos;
+package com.nositer.client.iwanttos;
 
-import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.widget.TabItemPlus;
 
-public class IWantToTabItem extends TabItemPlus {
+public class IwanttoTabItem extends TabItemPlus {
 
 	
-	public IWantToTabItem(String tabId) {
+	public IwanttoTabItem(String tabId) {
 		setItemId(tabId);
 		init();
 	}

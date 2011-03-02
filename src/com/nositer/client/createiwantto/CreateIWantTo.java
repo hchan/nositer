@@ -84,7 +84,7 @@ public class CreateIWantTo extends LayoutContainer implements Resizable {
 						InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
-								History.newItem(HistoryToken.MYIWANTTOS.toString());									
+								History.newItem(HistoryToken.IWANTTOS.toString());									
 							}								
 						});										
 					}

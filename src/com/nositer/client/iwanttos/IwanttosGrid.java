@@ -1,4 +1,4 @@
-package com.nositer.client.myiwanttos;
+package com.nositer.client.iwanttos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +24,12 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.history.HistoryManager;
 
-public class MyIWantTosGrid extends Grid<BeanModel> {
+public class IwanttosGrid extends Grid<BeanModel> {
 
 	private RpcProxy<ArrayList<Iwantto>> proxy;
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
 
-	public MyIWantTosGrid() {
+	public IwanttosGrid() {
 		proxy = new RpcProxy<ArrayList<Iwantto>>() {
 			@Override
 			protected void load(Object loadConfig,

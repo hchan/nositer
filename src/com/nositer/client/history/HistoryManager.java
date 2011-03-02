@@ -16,11 +16,11 @@ import com.nositer.client.createiwantto.CreateIWantTo;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
+import com.nositer.client.groups.Groups;
+import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
-import com.nositer.client.mygroups.MyGroups;
-import com.nositer.client.myiwanttos.MyIWantTos;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfile;
@@ -82,23 +82,23 @@ public class HistoryManager {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
 			setMainPanel(new CreateGroup());
-		} else if (historyToken.equals(MYGROUPS.toString())) {
+		} else if (historyToken.equals(GROUPS.toString())) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getMyGroupsNavigationItem());
-			setMainPanel(MyGroups.getInstance(true));
-		} else if (historyToken.startsWith(MYGROUPS.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			setMainPanel(Groups.getInstance(true));
+		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getMyGroupsNavigationItem());
-			MyGroups.getInstance(true).showTab(getSubHistoryToken());
-			setMainPanel(MyGroups.getInstance(true));
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showTab(getSubHistoryToken());
+			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
-			leftPanel.getiWantTo().expand();	
+			leftPanel.getIWantto().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateIwantToNavigationItem());
 			setMainPanel(new CreateIWantTo());
-		} else if (historyToken.equals(MYIWANTTOS.toString())) {
-			leftPanel.getiWantTo().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getMyIwantTosNavigationItem());
-			setMainPanel(new MyIWantTos());
+		} else if (historyToken.equals(IWANTTOS.toString())) {
+			leftPanel.getIWantto().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getIwanttosNavigationItem());
+			setMainPanel(IWanttos.getInstance(true));
 		}
 	}
 

@@ -19,16 +19,16 @@ public class LeftPanel extends ContentPanel {
 	private ContentPanel profile;
 	private ContentPanel groups;
 	private ContentPanel images;
-	private ContentPanel iWantTo;
+	private ContentPanel iwantto;
 	private ContentPanel blog;
 	private ContentPanel chat;
 	private NavigationItem viewProfileNavigationItem;
 	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem editAboutMeNavigationItem;
-	private NavigationItem myGroupsNavigationItem;
+	private NavigationItem groupsNavigationItem;
 	private NavigationItem manageGroupsNavigationItem;
 	private NavigationItem createGroupNavigationItem;
-	private NavigationItem myIwantTosNavigationItem;
+	private NavigationItem iwanttosNavigationItem;
 	private NavigationItem createIwantToNavigationItem;
 	private NavigationItem changePasswordNavigationItem;
 	private NavigationItem uploadImagesNavigationItem;
@@ -109,13 +109,13 @@ public class LeftPanel extends ContentPanel {
 
 	
 
-	public ContentPanel getiWantTo() {
-		return iWantTo;
+	public ContentPanel getIWantto() {
+		return iwantto;
 	}
 
 
-	public void setiWantTo(ContentPanel iWantTo) {
-		this.iWantTo = iWantTo;
+	public void setIwantto(ContentPanel iwantto) {
+		this.iwantto = iwantto;
 	}
 
 
@@ -172,13 +172,13 @@ public class LeftPanel extends ContentPanel {
 	}
 
 
-	public NavigationItem getMyGroupsNavigationItem() {
-		return myGroupsNavigationItem;
+	public NavigationItem getGroupsNavigationItem() {
+		return groupsNavigationItem;
 	}
 
 
-	public void setMyGroupsNavigationItem(NavigationItem myGroupsNavigationItem) {
-		this.myGroupsNavigationItem = myGroupsNavigationItem;
+	public void setGroupsNavigationItem(NavigationItem groupsNavigationItem) {
+		this.groupsNavigationItem = groupsNavigationItem;
 	}
 
 
@@ -204,13 +204,13 @@ public class LeftPanel extends ContentPanel {
 	}
 
 
-	public NavigationItem getMyIwantTosNavigationItem() {
-		return myIwantTosNavigationItem;
+	public NavigationItem getIwanttosNavigationItem() {
+		return iwanttosNavigationItem;
 	}
 
 
-	public void setMyIwantTosNavigationItem(NavigationItem myIwantTosNavigationItem) {
-		this.myIwantTosNavigationItem = myIwantTosNavigationItem;
+	public void setIwanttosNavigationItem(NavigationItem iwanttosNavigationItem) {
+		this.iwanttosNavigationItem = iwanttosNavigationItem;
 	}
 
 
@@ -295,19 +295,19 @@ public class LeftPanel extends ContentPanel {
 		
 		// Groups
 		groups = createNavigationContentPanel("Groups", this);	
-		myGroupsNavigationItem = navigationTree.createNavigationItem("My Groups");
+		groupsNavigationItem = navigationTree.createNavigationItem("My Groups");
 		manageGroupsNavigationItem = navigationTree.createNavigationItem("Manage Groups");
 		createGroupNavigationItem = navigationTree.createNavigationItem("Create Group");
-		groups.add(myGroupsNavigationItem);
+		groups.add(groupsNavigationItem);
 		groups.add(manageGroupsNavigationItem);
 		groups.add(createGroupNavigationItem);
 
 		// I want to ...
-		iWantTo = createNavigationContentPanel("I want to ...", this);	
-		myIwantTosNavigationItem = navigationTree.createNavigationItem("My I want to's ...");
+		iwantto = createNavigationContentPanel("I want to ...", this);	
+		iwanttosNavigationItem = navigationTree.createNavigationItem("My I want to's ...");
 		createIwantToNavigationItem = navigationTree.createNavigationItem("Create I want to...");
-		iWantTo.add(myIwantTosNavigationItem);
-		iWantTo.add(createIwantToNavigationItem);
+		iwantto.add(iwanttosNavigationItem);
+		iwantto.add(createIwantToNavigationItem);
 		
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
@@ -346,8 +346,8 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
 		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
 		HistoryManager.addHistoryOnClick(createGroupNavigationItem, HistoryToken.CREATEGROUP.toString());
-		HistoryManager.addHistoryOnClick(myGroupsNavigationItem, HistoryToken.MYGROUPS.toString());
+		HistoryManager.addHistoryOnClick(groupsNavigationItem, HistoryToken.GROUPS.toString());
 		HistoryManager.addHistoryOnClick(createIwantToNavigationItem, HistoryToken.CREATEIWANTTO.toString());
-		HistoryManager.addHistoryOnClick(myIwantTosNavigationItem, HistoryToken.MYIWANTTOS.toString());
+		HistoryManager.addHistoryOnClick(iwanttosNavigationItem, HistoryToken.IWANTTOS.toString());
 	}
 }

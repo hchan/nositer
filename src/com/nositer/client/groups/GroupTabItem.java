@@ -1,4 +1,4 @@
-package com.nositer.client.mygroups;
+package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;

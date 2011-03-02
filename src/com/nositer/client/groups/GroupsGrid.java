@@ -1,4 +1,4 @@
-package com.nositer.client.mygroups;
+package com.nositer.client.groups;
 
 import java.util.ArrayList;
 import java.util.List;

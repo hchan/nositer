@@ -1,4 +1,4 @@
-package com.nositer.client.mygroups;
+package com.nositer.client.iwanttos;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
@@ -13,26 +13,24 @@ import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 
-
-public class MyGroupsContainer extends LayoutContainer implements Resizable {
-
+public class IwanttosContainer extends LayoutContainer implements Resizable {
 	private ContentPanel contentPanel;
-	private GroupsGrid groupsGrid;
+	private IwanttosGrid iWantTosGrid;
 	private ToolBar toolBar;
 	
-	public MyGroupsContainer() {
+	public IwanttosContainer() {
 		init();
 	}
 
 	public void init() {
 		setLayout(new FitLayout());
-		groupsGrid = new GroupsGrid(); 
+		iWantTosGrid = new IwanttosGrid(); 
 		toolBar = new ToolBar();			
 		toolBar.add(new FillToolItem());
 		toolBar.add(new Button("Refresh", IconHelper.create("/public/image/refresh.gif"), new SelectionListener<ButtonEvent>() {
 			@Override
 			public void componentSelected(ButtonEvent ce) {
-				groupsGrid.refresh();
+				iWantTosGrid.refresh();
 			}
 		}));			
 		contentPanel = new ContentPanel();  
@@ -43,7 +41,7 @@ public class MyGroupsContainer extends LayoutContainer implements Resizable {
 		contentPanel.setHeaderVisible(false);
 		
 		contentPanel.setLayout(new FitLayout());  
-		contentPanel.add(groupsGrid);
+		contentPanel.add(iWantTosGrid);
 		contentPanel.setBottomComponent(toolBar);
 		
 		setAutoHeight(true);
