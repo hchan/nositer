@@ -26,7 +26,6 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem editAboutMeNavigationItem;
 	private NavigationItem groupsNavigationItem;
-	private NavigationItem manageGroupsNavigationItem;
 	private NavigationItem createGroupNavigationItem;
 	private NavigationItem iwanttosNavigationItem;
 	private NavigationItem createIwantToNavigationItem;
@@ -182,17 +181,6 @@ public class LeftPanel extends ContentPanel {
 	}
 
 
-	public NavigationItem getManageGroupsNavigationItem() {
-		return manageGroupsNavigationItem;
-	}
-
-
-	public void setManageGroupsNavigationItem(
-			NavigationItem manageGroupsNavigationItem) {
-		this.manageGroupsNavigationItem = manageGroupsNavigationItem;
-	}
-
-
 	public NavigationItem getCreateGroupNavigationItem() {
 		return createGroupNavigationItem;
 	}
@@ -295,16 +283,14 @@ public class LeftPanel extends ContentPanel {
 		
 		// Groups
 		groups = createNavigationContentPanel("Groups", this);	
-		groupsNavigationItem = navigationTree.createNavigationItem("My Groups");
-		manageGroupsNavigationItem = navigationTree.createNavigationItem("Manage Groups");
+		groupsNavigationItem = navigationTree.createNavigationItem("View Groups");
 		createGroupNavigationItem = navigationTree.createNavigationItem("Create Group");
-		groups.add(groupsNavigationItem);
-		groups.add(manageGroupsNavigationItem);
+		groups.add(groupsNavigationItem);		
 		groups.add(createGroupNavigationItem);
 
 		// I want to ...
 		iwantto = createNavigationContentPanel("I want to ...", this);	
-		iwanttosNavigationItem = navigationTree.createNavigationItem("My I want to's ...");
+		iwanttosNavigationItem = navigationTree.createNavigationItem("I want to's ...");
 		createIwantToNavigationItem = navigationTree.createNavigationItem("Create I want to...");
 		iwantto.add(iwanttosNavigationItem);
 		iwantto.add(createIwantToNavigationItem);
