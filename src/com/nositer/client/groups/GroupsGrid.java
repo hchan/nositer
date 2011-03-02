@@ -12,10 +12,11 @@ import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MenuEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
@@ -26,6 +27,8 @@ import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
 import com.extjs.gxt.ui.client.widget.grid.GroupingView;
+import com.extjs.gxt.ui.client.widget.menu.Menu;
+import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
@@ -42,8 +45,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 	private RpcProxy<ArrayList<Group>> proxy;
 	private BaseListLoader<PagingLoadResult<ModelData>> loader;
 	private GroupingView groupingView;
-
-
+	private Menu contextMenu;
+	
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
 			@Override
@@ -61,7 +64,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		disabledStyle = null;
 		baseStyle = "x-grid-panel";
 		setSelectionModel(new GridSelectionModel<BeanModel>());
-		disableTextSelection(false);
+		disableTextSelection(true);
 		init();
 	}
 
@@ -126,6 +129,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 	public void init() {
+		contextMenu = new Menu();
+		setContextMenu(contextMenu);
 		groupingView = new GroupingView();
 		
 		
@@ -151,16 +156,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 		});
 		setView(groupingView);
 
-		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
-
-			@Override
-			public void handleEvent(GridEvent<BeanModel> be) {  
-				BeanModel beanModel = be.getGrid().getSelectionModel().getSelectedItem();
-				Group group = beanModel.getBean();		    	
-				HistoryManager.addSubHistoryToken(group.getTagname());
-			}
-		});
-
+		addListeners();
+		
 		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
 		groupingStore.groupBy(Group.ColumnType.userid.toString());
 		store.getLoader().load();
@@ -169,6 +166,62 @@ public class GroupsGrid extends Grid<BeanModel> {
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
 				
 	}
+
+	private void addListeners() {
+		
+		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
+				
+				showContextMenu(gridEvent);
+			}
+		});
+
+		this.addListener(Events.ContextMenu,  new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
+				showContextMenu(gridEvent);
+			}
+		});
+		
+		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
+				BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
+				final Group group = beanModel.getBean();	
+				HistoryManager.addSubHistoryToken(group.getTagname());
+			}
+		});
+	}
+
+
+	private void showContextMenu(GridEvent<BeanModel> gridEvent) {
+		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
+		final Group group = beanModel.getBean();	
+		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			contextMenu.removeAll();
+			MenuItem viewMenuItem = new MenuItem("View");
+			SelectionListener<? extends MenuEvent> listener = new SelectionListener<MenuEvent>() {
+				@Override
+				public void componentSelected(MenuEvent ce) {
+					HistoryManager.addSubHistoryToken(group.getTagname());
+				}
+			};
+			viewMenuItem.addSelectionListener(listener);
+			contextMenu.add(viewMenuItem);		
+			
+			contextMenu.showAt(gridEvent.getClientX(), gridEvent.getClientY());
+			
+		} else {
+			gridEvent.setCancelled(true);
+		}
+	}
+		
+	
 
 	public void refresh() {
 		store.getLoader().load();
