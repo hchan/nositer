@@ -1,7 +1,6 @@
 package com.nositer.client;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
-import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.BorderLayoutEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -82,8 +81,6 @@ public class Nositer implements EntryPoint {
 	public void initLayoutContainer() {
 		layoutContainer = new LayoutContainer();	
 		borderLayout = new BorderLayout();
-		
-		
 	
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  

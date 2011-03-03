@@ -9,7 +9,6 @@ import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
-import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -34,6 +33,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.history.HistoryManager;
+import com.nositer.client.history.HistoryToken;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
@@ -43,7 +43,7 @@ import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
 import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes"})
 public class GroupsGrid extends Grid<BeanModel> {
 
 	private RpcProxy<ArrayList<Group>> proxy;
@@ -261,7 +261,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 
 	public void doEditGroup(Group group) {
-		HistoryManager.addSubHistoryToken(group.getTagname());
+		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + group.getTagname());
 	}
 
 	public void doDeleteGroup(final Group group) {
