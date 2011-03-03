@@ -13,6 +13,7 @@ import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MenuEvent;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
@@ -133,7 +134,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 	public void init() {
 		contextMenu = new Menu();
-	
+
 		setContextMenu(contextMenu);
 		groupingView = new GroupingView();
 
@@ -178,22 +179,26 @@ public class GroupsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	
+
 	private void addListeners() {
-		contextMenu.addListener(Events.OnClick, new Listener() {
+		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
 
 			@Override
-			public void handleEvent(BaseEvent be) {
-				int a = 5;
+			public void handleEvent(MenuEvent me) {
+				if (me.getMenu().getBounds(true).x == me.getClientX()) {
+					contextMenu.hide();
+					BeanModel beanModel = GroupsGrid.this.getSelectionModel().getSelectedItem();
+					final Group group = beanModel.getBean();	
+					doViewGroup(group);
+				}
 			}
-			});
-		
+		});
+
 		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
 			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
-				
-					showContextMenu(gridEvent);
+				showContextMenu(gridEvent);
 			}
 		});
 
@@ -205,13 +210,14 @@ public class GroupsGrid extends Grid<BeanModel> {
 			}
 		});
 
+		// sigh ... can't listen to single AND doubleclick - can listen to one of the two
 		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
 			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
 				BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
 				final Group group = beanModel.getBean();	
-				HistoryManager.addSubHistoryToken(group.getTagname());
+				doViewGroup(group);
 			}
 		});
 	}
