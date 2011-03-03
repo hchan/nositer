@@ -2,13 +2,18 @@ package com.nositer.client.left;
 
 import java.util.Iterator;
 
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
+import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.util.GWTUtil;
 
 
 public class LeftPanel extends ContentPanel {
@@ -253,12 +258,12 @@ public class LeftPanel extends ContentPanel {
 	}
 
 	
-	public void init() {
+	public void init() {				
 		navigationTree = new NavigationTree();
 		leftLayoutData.setSize(150);
-		leftLayoutData.setCollapsible(true);
+		leftLayoutData.setCollapsible(true);				
 		setHeading("Navigation");
-		accordionLayout = new AccordionLayout();
+		accordionLayout = new AccordionLayout();		
 		accordionLayout.setFill(false);
 		setLayout(accordionLayout);
 		

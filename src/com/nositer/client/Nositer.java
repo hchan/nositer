@@ -1,6 +1,10 @@
 package com.nositer.client;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.BorderLayoutEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Viewport;
@@ -24,6 +28,7 @@ public class Nositer implements EntryPoint {
 	private LeftPanel leftPanel;
 	private LayoutContainer layoutContainer;
 	private static Nositer instance;
+	private BorderLayout borderLayout;
 
 	public static Nositer getInstance() {
 		return instance;
@@ -76,7 +81,10 @@ public class Nositer implements EntryPoint {
 	
 	public void initLayoutContainer() {
 		layoutContainer = new LayoutContainer();	
-		BorderLayout borderLayout = new BorderLayout();
+		borderLayout = new BorderLayout();
+		
+		
+	
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
 		topPanel = new TopPanel(topLayoutData);	
@@ -86,7 +94,26 @@ public class Nositer implements EntryPoint {
 		mainPanel = new MainPanel(mainLayoutData);		
 		layoutContainer.add(topPanel, topLayoutData);
 		layoutContainer.add(leftPanel, leftLayoutData);
-		layoutContainer.add(mainPanel, mainLayoutData);				
+		layoutContainer.add(mainPanel, mainLayoutData);		
+		addListeners();
+	}
+	
+	private void addListeners() {
+		borderLayout.addListener(Events.Collapse, new Listener<BorderLayoutEvent>() {
+			@Override
+			public void handleEvent(BorderLayoutEvent borderLayoutEvent) {				
+				//topPanel.collapse();				
+				topPanel.hide();
+			}}
+		);
+		
+		borderLayout.addListener(Events.Expand, new Listener<BorderLayoutEvent>() {
+			@Override
+			public void handleEvent(BorderLayoutEvent borderLayoutEvent) {
+				//topPanel.expand();
+				topPanel.show();
+			}}
+		);
 	}
 }
 
