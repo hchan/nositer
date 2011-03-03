@@ -9,11 +9,11 @@ import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
+import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
-import com.extjs.gxt.ui.client.event.MenuEvent;
-import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
@@ -28,7 +28,6 @@ import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
 import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
-import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
@@ -41,8 +40,9 @@ import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
+import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class GroupsGrid extends Grid<BeanModel> {
 
 	private RpcProxy<ArrayList<Group>> proxy;
@@ -133,6 +133,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 	public void init() {
 		contextMenu = new Menu();
+	
 		setContextMenu(contextMenu);
 		groupingView = new GroupingView();
 
@@ -177,14 +178,22 @@ public class GroupsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
+	
 	private void addListeners() {
+		contextMenu.addListener(Events.OnClick, new Listener() {
 
+			@Override
+			public void handleEvent(BaseEvent be) {
+				int a = 5;
+			}
+			});
+		
 		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
 
 			@Override
 			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
-
-				showContextMenu(gridEvent);
+				
+					showContextMenu(gridEvent);
 			}
 		});
 
@@ -214,21 +223,24 @@ public class GroupsGrid extends Grid<BeanModel> {
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
-			ViewMenuItem viewMenuItem = new ViewMenuItem();
-			SelectionListener<? extends MenuEvent> listener = new SelectionListener<MenuEvent>() {
-				@Override
-				public void componentSelected(MenuEvent ce) {
-					HistoryManager.addSubHistoryToken(group.getTagname());
-				}
+			ViewMenuItem viewMenuItem = new ViewMenuItem() {
+				public void doSelect() {
+					doViewGroup(group);
+				};
 			};
-			viewMenuItem.addSelectionListener(listener);
-
-
 			contextMenu.add(viewMenuItem);		
 			if (isGroupIOwn(group)) {
-				EditMenuItem editMenuItem = new EditMenuItem();
+				EditMenuItem editMenuItem = new EditMenuItem() {
+					public void doSelect() {
+						doEditGroup(group);	
+					};
+				};
 				contextMenu.add(editMenuItem);
-				DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+				DeleteMenuItem deleteMenuItem = new DeleteMenuItem(){
+					public void doSelect() {
+						doDeleteGroup(group);	
+					};
+				};
 				contextMenu.add(deleteMenuItem);
 			}
 			contextMenu.showAt(gridEvent.getClientX(), gridEvent.getClientY());
@@ -238,7 +250,37 @@ public class GroupsGrid extends Grid<BeanModel> {
 		}
 	}
 
+	public void doViewGroup(Group group) {
+		HistoryManager.addSubHistoryToken(group.getTagname());
+	}
 
+	public void doEditGroup(Group group) {
+		HistoryManager.addSubHistoryToken(group.getTagname());
+	}
+
+	public void doDeleteGroup(final Group group) {
+		Listener<MessageBoxEvent> callback = new Listener<MessageBoxEvent>() {
+			@Override
+			public void handleEvent(MessageBoxEvent be) {
+				if (be.getButtonClicked().getText().equalsIgnoreCase("yes")) {
+					AsyncCallback<Void> deleteCallback = new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							GWTUtil.log("", caught);
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							refresh();
+						}						
+					};
+					ServiceBroker.groupService.deleteGroup(group, deleteCallback);
+				}			
+			}			
+		};
+		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + group.getName(), callback);
+	}
 
 	public void refresh() {
 		store.getLoader().load();

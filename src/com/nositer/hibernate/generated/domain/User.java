@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Feb 26, 2011 6:36:22 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class User implements java.io.Serializable, Domain {
 	private Date notemodifedtime;
 	private String description;
 	private Date lastlogin;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<Group> groups = new HashSet<Group>(0);
@@ -79,9 +80,9 @@ public class User implements java.io.Serializable, Domain {
 			String lastname, String password, String email, Boolean gendermale,
 			Date birthdate, String profession, String avatarlocation,
 			String note, Date notemodifedtime, String description,
-			Date lastlogin, Date createdtime, Date modifiedtime,
-			Set<Group> groups, Set<UserHasGroup> userHasGroups,
-			Set<Iwantto> iwanttos,
+			Date lastlogin, Boolean disable, Date createdtime,
+			Date modifiedtime, Set<Group> groups,
+			Set<UserHasGroup> userHasGroups, Set<Iwantto> iwanttos,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
 			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
@@ -102,6 +103,7 @@ public class User implements java.io.Serializable, Domain {
 		this.notemodifedtime = notemodifedtime;
 		this.description = description;
 		this.lastlogin = lastlogin;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.groups = groups;
@@ -365,6 +367,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setLastlogin(Date lastlogin) {
 		this.lastlogin = lastlogin;
+	}
+
+	@Column(name = "disable")
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -1,9 +1,8 @@
 package com.nositer.client.widget.menuitem;
 
 import com.extjs.gxt.ui.client.util.IconHelper;
-import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 
-public class ViewMenuItem extends MenuItem {
+public class ViewMenuItem extends MenuItemPlus {
 
 	public ViewMenuItem() {
 		super("View");

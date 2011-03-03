@@ -11,8 +11,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.manageimages.ManageImages;
 import com.nositer.client.top.TopPanel;
-import com.nositer.client.widget.AlertMessageBox;
-import com.nositer.client.widget.InfoMessageBox;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 import com.nositer.shared.Global;
 
 @SuppressWarnings({"rawtypes", "unchecked"})

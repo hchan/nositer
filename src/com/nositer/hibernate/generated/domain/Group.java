@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Feb 26, 2011 6:36:22 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -44,6 +44,7 @@ public class Group implements java.io.Serializable, Domain {
 	private String name;
 	private String description;
 	private String avatarlocation;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
@@ -62,8 +63,8 @@ public class Group implements java.io.Serializable, Domain {
 
 	public Group(Zipcode zipcode, User user, Postalcode postalcode,
 			String tagname, String countrycode, String name,
-			String description, String avatarlocation, Date createdtime,
-			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			String description, String avatarlocation, Boolean disable,
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.user = user;
 		this.postalcode = postalcode;
@@ -72,6 +73,7 @@ public class Group implements java.io.Serializable, Domain {
 		this.name = name;
 		this.description = description;
 		this.avatarlocation = avatarlocation;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
@@ -218,6 +220,15 @@ public class Group implements java.io.Serializable, Domain {
 
 	public void setAvatarlocation(String avatarlocation) {
 		this.avatarlocation = avatarlocation;
+	}
+
+	@Column(name = "disable")
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -13,4 +13,6 @@ public interface GroupServiceAsync {
 
 	void getGroupByTagname(String tagname, AsyncCallback<Group> callback);
 
+	void deleteGroup(Group group, AsyncCallback<Void> callback);
+
 }

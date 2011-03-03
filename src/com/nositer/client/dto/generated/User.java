@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 26, 2011 6:36:23 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -40,6 +40,7 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Date notemodifedtime;
 	private String description;
 	private Date lastlogin;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<Group> groups = new HashSet<Group>(0);
@@ -72,9 +73,9 @@ public class User implements java.io.Serializable, IsSerializable,
 			String lastname, String password, String email, Boolean gendermale,
 			Date birthdate, String profession, String avatarlocation,
 			String note, Date notemodifedtime, String description,
-			Date lastlogin, Date createdtime, Date modifiedtime,
-			Set<Group> groups, Set<UserHasGroup> userHasGroups,
-			Set<Iwantto> iwanttos,
+			Date lastlogin, Boolean disable, Date createdtime,
+			Date modifiedtime, Set<Group> groups,
+			Set<UserHasGroup> userHasGroups, Set<Iwantto> iwanttos,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
 			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
@@ -95,6 +96,7 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.notemodifedtime = notemodifedtime;
 		this.description = description;
 		this.lastlogin = lastlogin;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.groups = groups;
@@ -296,6 +298,14 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.lastlogin = lastlogin;
 	}
 
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
+	}
+
 	public Date getCreatedtime() {
 		return this.createdtime;
 	}
@@ -354,6 +364,6 @@ public class User implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, salutationcodeid, zipcodeid, relationshipcodeid, postalcodeid, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, createdtime, modifiedtime,
+		id, salutationcodeid, zipcodeid, relationshipcodeid, postalcodeid, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, disable, createdtime, modifiedtime,
 	}
 }

@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Feb 26, 2011 6:36:23 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -30,6 +30,7 @@ public class Group implements java.io.Serializable, IsSerializable,
 	private String name;
 	private String description;
 	private String avatarlocation;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
@@ -53,8 +54,8 @@ public class Group implements java.io.Serializable, IsSerializable,
 
 	public Group(Zipcode zipcode, User user, Postalcode postalcode,
 			String tagname, String countrycode, String name,
-			String description, String avatarlocation, Date createdtime,
-			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			String description, String avatarlocation, Boolean disable,
+			Date createdtime, Date modifiedtime, Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.user = user;
 		this.postalcode = postalcode;
@@ -63,6 +64,7 @@ public class Group implements java.io.Serializable, IsSerializable,
 		this.name = name;
 		this.description = description;
 		this.avatarlocation = avatarlocation;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.userHasGroups = userHasGroups;
@@ -170,6 +172,14 @@ public class Group implements java.io.Serializable, IsSerializable,
 		this.avatarlocation = avatarlocation;
 	}
 
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
+	}
+
 	public Date getCreatedtime() {
 		return this.createdtime;
 	}
@@ -195,6 +205,6 @@ public class Group implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, zipcodeid, userid, postalcodeid, tagname, countrycode, name, description, avatarlocation, createdtime, modifiedtime,
+		id, zipcodeid, userid, postalcodeid, tagname, countrycode, name, description, avatarlocation, disable, createdtime, modifiedtime,
 	}
 }

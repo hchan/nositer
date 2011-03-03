@@ -43,11 +43,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			group.setZipcode(user.getZipcode());
 			group.setCountrycode(user.getCountrycode());
 			com.nositer.hibernate.generated.domain.Group groupDomain = BeanConversion.copyDTO2Domain(group, com.nositer.hibernate.generated.domain.Group.class);
-		
+
 			sess.save(groupDomain);
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
-			
+
 		}
 		catch (GWTException e) {
 			throw e;
@@ -66,8 +66,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		return retval;
 	}
-	
-	
+
+
 	public static boolean isValidTagname(String tagname) {
 		boolean retval = false;
 		String validCharsPattern = "^([A-Za-z0-9_\\.])+$";
@@ -88,11 +88,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(
 					SqlHelper.FINDMYGROUPS).		
 					addEntity(com.nositer.hibernate.generated.domain.Group.class).
-			setInteger(Group.ColumnType.userid.toString(), 
-					user.getId()
+					setInteger(Group.ColumnType.userid.toString(), 
+							user.getId()
 					).
-			list();
-		
+					list();
+
 			retval = BeanConversion.copyDomain2DTO(results, Group.class);					
 		}
 		catch (GWTException e) {
@@ -114,10 +114,10 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	public Group getGroupByTagname(String tagname) throws GWTException {
 		Group retval = null;
 		Session sess = HibernateUtil.getSession();
-	
+
 		Transaction trx = null;
 		try {
-			
+
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.Group.class).
 			setString(Group.ColumnType.tagname.toString(), tagname).list();
@@ -140,6 +140,36 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			HibernateUtil.closeSession(sess);
 		}	
 		return retval;
+	}
+
+
+	@Override
+	public void deleteGroup(Group group) throws GWTException {		
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			if (user.getId().equals(group.getUserid())) {				
+				sess.createSQLQuery(
+						SqlHelper.disableSQL(group)).executeUpdate();
+			} else {
+				throw new GWTException("You are not the owner of this group");
+			}			
+			trx.commit();			
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
 	}
 
 }

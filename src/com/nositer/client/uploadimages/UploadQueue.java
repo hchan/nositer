@@ -18,9 +18,9 @@ import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridViewConfig;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.nositer.client.widget.AlertMessageBox;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
 
 @SuppressWarnings("rawtypes")
 public class UploadQueue extends LayoutContainer {

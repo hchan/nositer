@@ -23,8 +23,8 @@ import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class CreateIWantTo extends LayoutContainer implements Resizable {

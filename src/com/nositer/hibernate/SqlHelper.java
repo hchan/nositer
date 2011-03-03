@@ -1,13 +1,16 @@
 package com.nositer.hibernate;
-import static com.nositer.hibernate.CommonSql.PARAMETERIZEDLIMITCLAUSE;
+import static com.nositer.hibernate.CommonSql.*;
 
+import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.User;
 public class SqlHelper {
+	
 	public static String FINDUSERBYLOGIN = 
-		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login;
+		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login + 
+		" and " + NOTDISABLE;
 	public static String UPDATEBASICPROFILE =
 		"update " + User.TABLENAME + " set " +
 		User.ColumnType.firstname + "= :" + User.ColumnType.firstname + ", " +
@@ -38,12 +41,29 @@ public class SqlHelper {
 		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 	public static String FINDMYGROUPS =
-		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid;
+		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid + 
+		" and " + NOTDISABLE +
+		" order by " + Group.ColumnType.name;
 	public static String FINDGROUPBYTAGNAME =
-		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.tagname + " = :" + Group.ColumnType.tagname;
+		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.tagname + " = :" + Group.ColumnType.tagname +
+		" and " + NOTDISABLE;
 	public static String FINDMYIWANTTOS =
-		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid;
+		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid +
+		" and " + NOTDISABLE +
+		" order by " + Iwantto.ColumnType.description;
+	public static String DELETEGROUP = 
+		"update " + Group.TABLENAME + " set " +
+		Group.ColumnType.disable + " = true" +
+		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
 	
+	
+	public static String disableSQL(DTO dto) {
+		String retval = null;
+		retval = "update " + dto.getTablename() + " set " +
+		"disable = true" +
+		" where id = " + dto.getId();
+		return retval;
+	}
 	
 	public static String createLookupSQL (String tablename) {
 		String retval = null;

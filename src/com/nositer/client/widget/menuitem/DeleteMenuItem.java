@@ -1,9 +1,8 @@
 package com.nositer.client.widget.menuitem;
 
 import com.extjs.gxt.ui.client.util.IconHelper;
-import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 
-public class DeleteMenuItem extends MenuItem {
+public class DeleteMenuItem extends MenuItemPlus {
 
 	public DeleteMenuItem() {
 		super("Delete");

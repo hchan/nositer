@@ -27,9 +27,9 @@ import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
-import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.AvatarSelector;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 
 public class CreateGroup extends LayoutContainer implements Resizable {
 	private FormPanel formPanel;

@@ -27,9 +27,9 @@ import com.nositer.client.register.Register;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
-import com.nositer.client.widget.InfoMessageBox;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup.GenderType;
 
 @SuppressWarnings({"unchecked", "rawtypes"})

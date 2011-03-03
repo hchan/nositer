@@ -1,4 +1,4 @@
-package com.nositer.client.widget;
+package com.nositer.client.widget.messagebox;
 
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
