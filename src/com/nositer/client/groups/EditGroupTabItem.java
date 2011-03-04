@@ -65,17 +65,9 @@ public class EditGroupTabItem extends TabItemPlus implements Resizable{
 		add(contentPanel);
 
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
-		
-		
 	}
 
 
-
-
-	@Override
-	protected void onWindowResize(int width, int height) {
-		resize(0,0);
-	}
 
 	@Override
 	public void resize(int width, int height) {

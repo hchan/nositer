@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
@@ -36,7 +37,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		GroupTabItem.this.setText(group.getName());
 		setLayout(new FitLayout());
 		groupTabPanel = new GroupTabPanel(group);
-		groupTabPanel.setSize(400, 400);
+		
 		add(groupTabPanel);
 		layout();
 	}
@@ -44,6 +45,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	@Override
 	public void resize(int width, int height) {		
-		
+		setSize(MainPanel.getInstance().getWidth()-3,
+				MainPanel.getInstance().getHeight());
 	}
 }

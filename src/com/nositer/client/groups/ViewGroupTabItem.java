@@ -26,7 +26,7 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		init();
 	}
 
-	private void init() {
+	public void init() {
 		setMonitorWindowResize(true);
 		TableLayout layout = new TableLayout(1);
 
@@ -45,18 +45,17 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
+		add(contentPanel);
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		contentPanel.setHeight(MainPanel.getInstance().getHeight()-30);
-		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);	
-		layout();
+		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
+	
+		
 	}
 
-	@Override
-	protected void onWindowResize(int width, int height) {
-		resize(0,0);
-	}
+	
 
 }
