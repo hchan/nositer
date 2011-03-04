@@ -32,12 +32,16 @@ public class ViewEditTabPanel extends TabPanel {
 			@Override
 			public void resize(int width, int height) {				
 			}
+			@Override
+			public void addDefaultListeners() {};
 		};
 
 		editTabItem = new TabItemPlus("Edit") {
 			@Override
 			public void resize(int width, int height) {				
 			}
+			@Override
+			public void addDefaultListeners() {};
 		};
 		add(viewTabItem);
 		add(editTabItem);

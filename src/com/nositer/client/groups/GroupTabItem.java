@@ -24,6 +24,7 @@ import com.nositer.client.widget.avatar.Avatar;
 public class GroupTabItem extends TabItemPlus implements Resizable{
 	private HtmlContainer description;
 	private ContentPanel contentPanel;
+	private ViewEditTabPanel viewEditTabPanel;
 	private Avatar avatar;
 
 	public GroupTabItem(String tabId) {
@@ -34,7 +35,6 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init() {
 		setText("Loading...");
 		setClosable(true);
-		
 		TableLayout layout = new TableLayout(1);
 
 		contentPanel = new ContentPanel();
@@ -44,13 +44,9 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		contentPanel.setHeaderVisible(false);
 		contentPanel.setScrollMode(Scroll.AUTO);
 		contentPanel.setId(getItemId());
-
 		setMonitorWindowResize(true);
 
-		description = new HtmlContainer();
-		avatar = new Avatar();
 		AsyncCallback<Group> callback = new AsyncCallback<Group>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
@@ -58,26 +54,35 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 			@Override
 			public void onSuccess(Group result) {
-				GroupTabItem.this.setText(
-						result.getName());
-				description.setHtml(result.getDescription());
-				avatar.setPathToImage(ImageHelper.getUserImagePathURL(result.getAvatarlocation()));
-				resize(0,0);
+				init(result);
 			}
-
 		};
+
+		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
+	}
+
+	public void init(Group group) {
+		GroupTabItem.this.setText(group.getName());
+		
+
+		description = new HtmlContainer();
+		description.setHtml(group.getDescription());
+		avatar = new Avatar();
+		avatar.setPathToImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation()));
 		LayoutContainer avatarContentPanel = new LayoutContainer();
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
-		
-		//add(contentPanel);
-		add(new ViewEditTabPanel());
-		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
+
+		if (Groups.isGroupIOwn(group)) {
+			viewEditTabPanel = new ViewEditTabPanel();
+			add(viewEditTabPanel);
+		} else {
+			add(contentPanel);
+		}
+		layout();
+		resize(0,0);
 	}
-
-
-
 
 	@Override
 	protected void onWindowResize(int width, int height) {
@@ -86,8 +91,12 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	@Override
 	public void resize(int width, int height) {		
-		contentPanel.setHeight(MainPanel.getInstance().getHeight()-30);
-		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);		
+		if (viewEditTabPanel != null) {
+			viewEditTabPanel.setHeight(MainPanel.getInstance().getHeight()-90);
+			viewEditTabPanel.setWidth(MainPanel.getInstance().getWidth()-3);		
+		} else {
+			contentPanel.setHeight(MainPanel.getInstance().getHeight()-30);
+			contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);		
+		}
 	}
-
 }
