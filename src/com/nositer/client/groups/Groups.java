@@ -106,11 +106,23 @@ public class Groups extends TabPanel implements Resizable {
 		setSelection(tabItem);		
 	}
 
+	public void showEditTab(String tabId) {
+		TabItem tabItem = null;
+		tabItem = findItem(tabId, false);
+		if (tabItem == null) {
+			tabItem = new GroupTabItem(tabId);			
+			add(tabItem);
+		}	
+		setSelection(tabItem);		
+	}
+	
 	@Override
 	public void resize(int width, int height) {
 		Resizable resizable = null;
-		if (this.getSelectedItem().getItems().get(0) instanceof Resizable) {
-			resizable = (Resizable)this.getSelectedItem().getItems().get(0);
+		if (this.getSelectedItem().equals(groupsItem)) {
+			groupsContainer.resize(width, height);
+		} else if (this.getSelectedItem() instanceof Resizable) {
+			resizable = (Resizable)this.getSelectedItem();//.getItems().get(0);
 			resizable.resize(width, height);
 		}
 	}  

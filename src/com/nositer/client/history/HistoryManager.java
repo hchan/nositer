@@ -11,8 +11,11 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
 import com.nositer.client.creategroup.CreateGroup;
 import com.nositer.client.createiwantto.CreateIWantTo;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
@@ -21,6 +24,7 @@ import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
+import com.nositer.client.top.TopPanel;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfile;
@@ -47,14 +51,34 @@ public class HistoryManager {
 		}
 	}
 
-	public static void onHistoryChanged(String historyToken) {
+	public static void onHistoryChanged(final String historyToken) {
 		GWTUtil.log("historyToken: " + historyToken);
 		LeftPanel leftPanel = LeftPanel.getInstance();
 		AccordionLayout accordionLayout = leftPanel.getAccordionLayout();
 		if (historyToken.equals(HOME)) {				
 			accordionLayout.setActiveItem(null);
 			MainPanel.getInstance().removeAll();
-		} else if (historyToken.equals(VIEWPROFILE.toString())) {
+		} else {
+			AsyncCallback<User> callback = new AsyncCallback<User>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					GWTUtil.log("", caught);
+				}
+				@Override
+				public void onSuccess(User result) {
+					if (result != null) {
+						TopPanel.getInstance().setUser(result);		
+						onHistoryChangedForTokensOtherThanHome(historyToken); 
+					}
+				}
+			};
+			ServiceBroker.profileService.getCurrentUser(callback);
+		}
+	}
+
+	public static void onHistoryChangedForTokensOtherThanHome(String historyToken) {
+		LeftPanel leftPanel = LeftPanel.getInstance();
+		if (historyToken.equals(VIEWPROFILE.toString())) {
 			leftPanel.getProfile().expand();		
 			leftPanel.getNavigationTree().select(leftPanel.getViewProfileNavigationItem());
 			setMainPanel(new ViewProfile());
@@ -99,6 +123,11 @@ public class HistoryManager {
 			leftPanel.getIWantto().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getIwanttosNavigationItem());
 			setMainPanel(IWanttos.getInstance(true));
+		} else if (historyToken.startsWith(EDITGROUP.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showEditTab(getSubHistoryToken());
+			setMainPanel(Groups.getInstance(true));
 		}
 	}
 

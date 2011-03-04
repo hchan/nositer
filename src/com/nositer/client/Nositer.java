@@ -101,6 +101,7 @@ public class Nositer implements EntryPoint {
 			public void handleEvent(BorderLayoutEvent borderLayoutEvent) {				
 				//topPanel.collapse();				
 				topPanel.hide();
+				MainPanel.getInstance().resizeChildren(0, 0);
 			}}
 		);
 		
@@ -109,6 +110,7 @@ public class Nositer implements EntryPoint {
 			public void handleEvent(BorderLayoutEvent borderLayoutEvent) {
 				//topPanel.expand();
 				topPanel.show();
+				MainPanel.getInstance().resizeChildren(0, 0);
 			}}
 		);
 	}

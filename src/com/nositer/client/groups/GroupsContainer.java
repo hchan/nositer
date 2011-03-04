@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.button.RefreshButton;
 
 
 public class GroupsContainer extends LayoutContainer implements Resizable {
@@ -20,6 +21,30 @@ public class GroupsContainer extends LayoutContainer implements Resizable {
 	private GroupsGrid groupsGrid;
 	private ToolBar toolBar;
 	
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public GroupsGrid getGroupsGrid() {
+		return groupsGrid;
+	}
+
+	public void setGroupsGrid(GroupsGrid groupsGrid) {
+		this.groupsGrid = groupsGrid;
+	}
+
+	public ToolBar getToolBar() {
+		return toolBar;
+	}
+
+	public void setToolBar(ToolBar toolBar) {
+		this.toolBar = toolBar;
+	}
+
 	public GroupsContainer() {
 		init();
 	}
@@ -29,12 +54,12 @@ public class GroupsContainer extends LayoutContainer implements Resizable {
 		groupsGrid = new GroupsGrid(); 
 		toolBar = new ToolBar();			
 		toolBar.add(new FillToolItem());
-		toolBar.add(new Button("Refresh", IconHelper.create("/public/image/refresh.gif"), new SelectionListener<ButtonEvent>() {
+		toolBar.add(new RefreshButton() {			
 			@Override
-			public void componentSelected(ButtonEvent ce) {
+			public void doSelect() {
 				groupsGrid.refresh();
 			}
-		}));			
+		});
 		contentPanel = new ContentPanel();  
 		contentPanel.setFrame(true);  
 		contentPanel.setCollapsible(true);  
@@ -55,6 +80,6 @@ public class GroupsContainer extends LayoutContainer implements Resizable {
 	@Override
 	public void resize(int width, int height) {		
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
-		//grid.setSize(MainPanel.getInstance().getWidth()-15, MainPanel.getInstance().getHeight()-30);
+		//groupsGrid.setSize(MainPanel.getInstance().getWidth()-15, MainPanel.getInstance().getHeight()-30);
 	}
 }

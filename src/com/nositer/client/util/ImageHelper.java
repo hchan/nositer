@@ -9,7 +9,11 @@ public class ImageHelper {
 	public static String getUserImagePathURL (String relativePath) {
 		String retval = "";
 		//retval = Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + relativePath;
-		retval = getUserImagePathURL(relativePath, TopPanel.getInstance().getUser().getId());
+		retval = getUserImagePathURL(
+				relativePath, 
+				TopPanel.getInstance().
+				getUser().
+				getId());
 		return retval;
 	}
 	

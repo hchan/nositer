@@ -271,3 +271,7 @@
 	height: 50px !important;
 	overflow: auto;
 }
+
+.overflowAuto {
+	overflow: auto;
+}

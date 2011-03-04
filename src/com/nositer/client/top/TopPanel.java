@@ -6,6 +6,7 @@ import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nositer.client.ServiceBroker;
@@ -19,7 +20,7 @@ public class TopPanel extends ContentPanel {
 	private Label firstLastName;
 	private Logout logout;
 
-	public User getUser() {
+	public User getUser() {		
 		return user;
 	}
 
@@ -94,8 +95,19 @@ public class TopPanel extends ContentPanel {
 		this.add(welcomePanel);
 		if (doLogin) {
 			this.add(loggedInAs);
-			initFirstLastName();
+			if (user == null) {
+				initFirstLastName();
+			} else {
+				adjustComponents();
+			}
 		}
+	}
+
+	private void adjustComponents() {
+		setFirstLastName(user);	
+		TopPanel.this.loggedInAs.remove(logout);
+		TopPanel.this.loggedInAs.add(logout);
+		TopPanel.this.layout();
 	}
 
 	private void initFirstLastName() {
@@ -106,19 +118,33 @@ public class TopPanel extends ContentPanel {
 			}
 			@Override
 			public void onSuccess(User result) {
+				GWTUtil.log("Inside success of initFirstLastName()");
 				if (result != null) {
 					user = result;		
-					setFirstLastName(user);	
-					TopPanel.this.loggedInAs.remove(logout);
-					TopPanel.this.loggedInAs.add(logout);
-					TopPanel.this.layout();
+					adjustComponents();
 				}
 			}
-
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
 	}
 
+	public void initUser() {
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+			@Override
+			public void onSuccess(User result) {
+				GWTUtil.log("Inside success of initFirstLastName()");
+				if (result != null) {
+					user = result;		
+				}
+			}
+		};
+		ServiceBroker.profileService.getCurrentUser(callback);
+	}
+	
 	public void setFirstLastName(User user) {
 		firstLastName.setText(user.getFirstname() + " " + user.getLastname());
 	}

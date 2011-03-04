@@ -40,6 +40,10 @@ public class MainPanel extends ContentPanel {
 	@Override
 	protected void onResize(int width, int height) {		
 		super.onResize(width, height);
+		resizeChildren(width, height);
+	}
+	
+	public void resizeChildren(int width, int height) {
 		for (Component component : getItems()) {
 			if (component instanceof Resizable) {
 				Resizable resizable = (Resizable)component;
