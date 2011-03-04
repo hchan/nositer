@@ -42,6 +42,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			group.setPostalcode(user.getPostalcode());
 			group.setZipcode(user.getZipcode());
 			group.setCountrycode(user.getCountrycode());
+			group.setDisable(false);
 			com.nositer.hibernate.generated.domain.Group groupDomain = BeanConversion.copyDTO2Domain(group, com.nositer.hibernate.generated.domain.Group.class);
 
 			sess.save(groupDomain);

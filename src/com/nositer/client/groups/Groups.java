@@ -117,13 +117,14 @@ public class Groups extends TabPanel implements Resizable {
 	}
 	
 	@Override
-	public void resize(int width, int height) {
-		Resizable resizable = null;
+	public void resize(int width, int height) {		
 		if (this.getSelectedItem().equals(groupsItem)) {
 			groupsContainer.resize(width, height);
-		} else if (this.getSelectedItem() instanceof Resizable) {
-			resizable = (Resizable)this.getSelectedItem();//.getItems().get(0);
-			resizable.resize(width, height);
+		} else if (this.getSelectedItem() instanceof TabItemPlus) {
+			TabItemPlus tabItemPlus = null;
+			tabItemPlus = (TabItemPlus)this.getSelectedItem();//.getItems().get(0);
+			tabItemPlus.resize(width, height);
+		
 		}
 	}  
 }

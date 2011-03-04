@@ -6,6 +6,8 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.layout.TableData;
+import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -31,21 +33,19 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init() {
 		setText("Loading...");
 		setClosable(true);		
-		//VBoxLayout layout = new VBoxLayout(VBoxLayoutAlign.CENTER);
-		FlowLayout layout = new FlowLayout();
-		setLayout(new FitLayout());
 		
+		TableLayout layout = new TableLayout(1);
+
 		contentPanel = new ContentPanel();
-	
 		contentPanel.setBodyBorder(false);
 		contentPanel.setBorders(false);
 		contentPanel.setLayout(layout);
 		contentPanel.setHeaderVisible(false);
-contentPanel.setScrollMode(Scroll.AUTO);
-contentPanel.setId(getItemId());
+		contentPanel.setScrollMode(Scroll.AUTO);
+		contentPanel.setId(getItemId());
 
 		setMonitorWindowResize(true);
-		
+
 		description = new HtmlContainer();
 		avatar = new Avatar();
 		AsyncCallback<Group> callback = new AsyncCallback<Group>() {
@@ -70,10 +70,7 @@ contentPanel.setId(getItemId());
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
 		add(contentPanel);
-
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
-		
-		
 	}
 
 
@@ -85,13 +82,9 @@ contentPanel.setId(getItemId());
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) {		
 		contentPanel.setHeight(MainPanel.getInstance().getHeight()-30);
-		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
-		setHeight(MainPanel.getInstance().getHeight()-30);
-		setWidth(MainPanel.getInstance().getWidth()-3);
-		//description.setWidth(contentPanel.getWidth());
-	
+		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);		
 	}
 
 }
