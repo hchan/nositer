@@ -34,7 +34,6 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.avatar.Avatar;
@@ -148,7 +147,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				BeanModel beanModel   = (BeanModel) data.models.get(0);
 				Group group = beanModel.getBean();
 				String text = null;
-				if (isGroupIOwn(group)) {
+				if (Groups.isGroupIOwn(group)) {
 					text = "Groups I own";
 				} else {
 					text = "Groups I am subscribed too";
@@ -170,13 +169,6 @@ public class GroupsGrid extends Grid<BeanModel> {
 		setBorders(true);  
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
 
-	}
-
-
-	private boolean isGroupIOwn(Group group) {
-		boolean retval = false;
-		retval = group.getUserid().equals(TopPanel.getInstance().getUser().getId());
-		return retval;
 	}
 
 
@@ -235,7 +227,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				};
 			};
 			contextMenu.add(viewMenuItem);		
-			if (isGroupIOwn(group)) {
+			if (Groups.isGroupIOwn(group)) {
 				EditMenuItem editMenuItem = new EditMenuItem() {
 					public void doSelect() {
 						doEditGroup(group);	

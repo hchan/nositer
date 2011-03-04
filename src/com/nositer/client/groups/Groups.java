@@ -8,8 +8,10 @@ import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.nositer.client.dto.generated.Group;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
@@ -126,5 +128,11 @@ public class Groups extends TabPanel implements Resizable {
 			tabItemPlus.resize(width, height);
 		
 		}
+	}
+
+	public static boolean isGroupIOwn(Group group) {
+		boolean retval = false;
+		retval = group.getUserid().equals(TopPanel.getInstance().getUser().getId());
+		return retval;
 	}  
 }

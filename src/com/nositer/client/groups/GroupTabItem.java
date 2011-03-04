@@ -18,6 +18,7 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
+import com.nositer.client.widget.ViewEditTabPanel;
 import com.nositer.client.widget.avatar.Avatar;
 
 public class GroupTabItem extends TabItemPlus implements Resizable{
@@ -32,7 +33,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	public void init() {
 		setText("Loading...");
-		setClosable(true);		
+		setClosable(true);
 		
 		TableLayout layout = new TableLayout(1);
 
@@ -69,7 +70,9 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
-		add(contentPanel);
+		
+		//add(contentPanel);
+		add(new ViewEditTabPanel());
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
 	}
 
