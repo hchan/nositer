@@ -17,7 +17,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class Groups extends TabPanel implements Resizable {
+public class Groups extends TabPanel {
 
 	private TabItemPlus groupsItem;
 	private GroupsContainer groupsContainer;
@@ -87,7 +87,7 @@ public class Groups extends TabPanel implements Resizable {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				resize(0,0);
+				//resize(0,0);
 				
 			}});
 		FitLayout layout = new FitLayout();
@@ -118,17 +118,7 @@ public class Groups extends TabPanel implements Resizable {
 		setSelection(tabItem);		
 	}
 	
-	@Override
-	public void resize(int width, int height) {		
-		if (this.getSelectedItem().equals(groupsItem)) {
-			groupsContainer.resize(width, height);
-		} else if (this.getSelectedItem() instanceof TabItemPlus) {
-			TabItemPlus tabItemPlus = null;
-			tabItemPlus = (TabItemPlus)this.getSelectedItem();//.getItems().get(0);
-			tabItemPlus.resize(width, height);
-		
-		}
-	}
+	
 
 	public static boolean isGroupIOwn(Group group) {
 		boolean retval = false;

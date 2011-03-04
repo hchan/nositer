@@ -51,6 +51,7 @@ public class GroupsContainer extends LayoutContainer implements Resizable {
 
 	public void init() {
 		setLayout(new FitLayout());
+		setMonitorWindowResize(true);
 		groupsGrid = new GroupsGrid(); 
 		toolBar = new ToolBar();			
 		toolBar.add(new FillToolItem());
@@ -77,6 +78,11 @@ public class GroupsContainer extends LayoutContainer implements Resizable {
 		add(contentPanel);  
 	}
 
+	@Override
+	protected void onWindowResize(int width, int height) {
+		resize(width, height);
+	}
+	
 	@Override
 	public void resize(int width, int height) {		
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
