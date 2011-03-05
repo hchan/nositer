@@ -1,80 +1,60 @@
 package com.nositer.client.groups;
 
+import com.extjs.gxt.ui.client.Style.Scroll;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayout.VBoxLayoutAlign;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.ServiceBroker;
+import com.extjs.gxt.ui.client.widget.TabItem;
+import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.main.MainPanel;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.TabItemPlus;
 import com.nositer.client.widget.avatar.Avatar;
 
-public class EditGroupTabItem extends TabItemPlus implements Resizable{
+public class EditGroupTabItem extends TabItem implements Resizable {
+
 	private HtmlContainer description;
 	private ContentPanel contentPanel;
-	private Avatar avatar;
 
-	public EditGroupTabItem(String tabId) {
-		setItemId(tabId);
+	private Avatar avatar;
+	private Group group;
+
+	public EditGroupTabItem(Group group) {
+		super("Edit");
+		this.group = group;
 		init();
 	}
 
 	public void init() {
-		setText("Loading...");
-		setClosable(true);		
-		VBoxLayout layout = new VBoxLayout(VBoxLayoutAlign.CENTER);
-		setLayout(new FitLayout());
+		setMonitorWindowResize(true);
+		TableLayout layout = new TableLayout(1);
+
 		contentPanel = new ContentPanel();
 		contentPanel.setBodyBorder(false);
 		contentPanel.setBorders(false);
 		contentPanel.setLayout(layout);
 		contentPanel.setHeaderVisible(false);
-
-		setMonitorWindowResize(true);
-		
+		contentPanel.setScrollMode(Scroll.AUTO);
+		contentPanel.setId(getItemId());
 		description = new HtmlContainer();
+		description.setHtml(group.getDescription());
 		avatar = new Avatar();
-		AsyncCallback<Group> callback = new AsyncCallback<Group>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				GWTUtil.log("", caught);
-			}
-
-			@Override
-			public void onSuccess(Group result) {
-				EditGroupTabItem.this.setText(
-						result.getName());
-				description.setHtml(result.getDescription());
-				avatar.setPathToImage(ImageHelper.getUserImagePathURL(result.getAvatarlocation()));
-				resize(0,0);
-			}
-
-		};
+		avatar.setPathToImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation()));
 		LayoutContainer avatarContentPanel = new LayoutContainer();
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
 		add(contentPanel);
-
-		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
 	}
-
-
 
 	@Override
 	public void resize(int width, int height) {
-		//contentPanel.setHeight(MainPanel.getInstance().getHeight());
-		//contentPanel.setWidth(MainPanel.getInstance().getWidth());
-		//setHeight(MainPanel.getInstance().getHeight());
-		//setWidth(MainPanel.getInstance().getWidth());
+		//contentPanel.setHeight(MainPanel.getInstance().getHeight()-22);
+		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
+	
+		
 	}
+
+	
 
 }
