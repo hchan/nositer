@@ -6,17 +6,16 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.nositer.client.creategroup.CreateGroup;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.Avatar;
 
 public class EditGroupTabItem extends TabItem implements Resizable {
 
-	private HtmlContainer description;
-	private ContentPanel contentPanel;
-
-	private Avatar avatar;
+	private CreateGroup createGroup;
 	private Group group;
 
 	public EditGroupTabItem(Group group) {
@@ -26,30 +25,14 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 	}
 
 	public void init() {
-		setMonitorWindowResize(true);
-		TableLayout layout = new TableLayout(1);
-
-		contentPanel = new ContentPanel();
-		contentPanel.setBodyBorder(false);
-		contentPanel.setBorders(false);
-		contentPanel.setLayout(layout);
-		contentPanel.setHeaderVisible(false);
-		contentPanel.setScrollMode(Scroll.AUTO);
-		contentPanel.setId(getItemId());
-		description = new HtmlContainer();
-		description.setHtml(group.getDescription());
-		avatar = new Avatar();
-		avatar.setPathToImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation()));
-		LayoutContainer avatarContentPanel = new LayoutContainer();
-		avatarContentPanel.add(avatar);
-		contentPanel.add(avatarContentPanel);
-		contentPanel.add(description);
-		add(contentPanel);
+		createGroup = new CreateGroup();
+		
+		add(createGroup);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		//contentPanel.setHeight(MainPanel.getInstance().getHeight()-22);
+		//contentPanel.setHeight(MainPanel.getInstance().getHeight()-57);
 		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
 	
 		

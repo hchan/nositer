@@ -43,8 +43,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		init();
 	}
 
-	public void init() {
-		setMonitorWindowResize(true);
+	public void init() {	
 		formPanel = new FormPanel();
 		
 		
@@ -191,11 +190,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		cancelButton.addListener(Events.Select, cancelListener);
 	}
 
-	@Override
-	protected void onWindowResize(int width, int height) {
-		super.onWindowResize(width, height);
-		resize(width, height);
-	}
+
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();		

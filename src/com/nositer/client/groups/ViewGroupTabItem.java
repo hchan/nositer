@@ -46,6 +46,7 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		contentPanel.add(avatarContentPanel);
 		contentPanel.add(description);
 		add(contentPanel);
+		resize(0,0);
 	}
 
 	@Override
