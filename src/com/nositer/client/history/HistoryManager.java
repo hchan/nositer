@@ -19,6 +19,7 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
 import com.nositer.client.editprofile.EditBasicProfile;
+import com.nositer.client.groups.GroupTabPanel;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
@@ -113,7 +114,7 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showTab(getSubHistoryToken());
+			Groups.getInstance(true).showTab(getSubHistoryToken(), GroupTabPanel.TabItemType.VIEW);
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
 			leftPanel.getIWantto().expand();	
@@ -126,7 +127,7 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(EDITGROUP.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showEditTab(getSubHistoryToken());
+			Groups.getInstance(true).showTab(getSubHistoryToken(), GroupTabPanel.TabItemType.EDIT);
 			setMainPanel(Groups.getInstance(true));
 		}
 	}

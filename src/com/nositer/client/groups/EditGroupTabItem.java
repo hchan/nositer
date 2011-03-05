@@ -1,18 +1,15 @@
 package com.nositer.client.groups;
 
-import com.extjs.gxt.ui.client.Style.Scroll;
-import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.HtmlContainer;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
-import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.nositer.client.creategroup.CreateGroup;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.main.MainPanel;
-import com.nositer.client.util.ImageHelper;
+import com.nositer.client.history.HistoryManager;
+import com.nositer.client.history.HistoryToken;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.avatar.Avatar;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class EditGroupTabItem extends TabItem implements Resizable {
 
 	private CreateGroup createGroup;
@@ -25,9 +22,25 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 	}
 
 	public void init() {
-		createGroup = new CreateGroup();
-		
+		createGroup = new CreateGroup() {
+			@Override
+			public int getHeightOffset() {
+				return 300;
+			};
+		};		
 		add(createGroup);
+		addDefaultListeners();
+	}
+
+	
+	private void addDefaultListeners() {
+		addListener(Events.Select, new Listener() {
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + group.getTagname());
+				resize(0,0);
+			}
+		});
 	}
 
 	@Override

@@ -98,25 +98,18 @@ public class Groups extends TabPanel {
 		instance = this;
 	}
 	
-	public void showTab(String tabId) {
+	public TabItem showTab(String tabId, GroupTabPanel.TabItemType tabItemType) {
 		TabItem tabItem = null;
 		tabItem = findItem(tabId, false);
 		if (tabItem == null) {
-			tabItem = new GroupTabItem(tabId);			
+			tabItem = new GroupTabItem(tabId, tabItemType);			
 			add(tabItem);
 		}	
 		setSelection(tabItem);		
+		return tabItem;
 	}
 
-	public void showEditTab(String tabId) {
-		TabItem tabItem = null;
-		tabItem = findItem(tabId, false);
-		if (tabItem == null) {
-			tabItem = new GroupTabItem(tabId);			
-			add(tabItem);
-		}	
-		setSelection(tabItem);		
-	}
+
 	
 	
 

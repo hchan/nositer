@@ -39,6 +39,54 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	private ErrorPanel errorPanel;
 	private AvatarSelector avatarSelector;
 	
+	public FormPanel getFormPanel() {
+		return formPanel;
+	}
+
+	public void setFormPanel(FormPanel formPanel) {
+		this.formPanel = formPanel;
+	}
+
+	public TextField<String> getName() {
+		return name;
+	}
+
+	public void setName(TextField<String> name) {
+		this.name = name;
+	}
+
+	public TextField<String> getTagname() {
+		return tagname;
+	}
+
+	public void setTagname(TextField<String> tagname) {
+		this.tagname = tagname;
+	}
+
+	public HtmlEditor getDescription() {
+		return description;
+	}
+
+	public void setDescription(HtmlEditor description) {
+		this.description = description;
+	}
+
+	public ErrorPanel getErrorPanel() {
+		return errorPanel;
+	}
+
+	public void setErrorPanel(ErrorPanel errorPanel) {
+		this.errorPanel = errorPanel;
+	}
+
+	public AvatarSelector getAvatarSelector() {
+		return avatarSelector;
+	}
+
+	public void setAvatarSelector(AvatarSelector avatarSelector) {
+		this.avatarSelector = avatarSelector;
+	}
+
 	public CreateGroup() {
 		init();
 	}
@@ -110,14 +158,17 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		setDescriptionHeight();
 	}
 	
-	private void setDescriptionHeight() {
-		int heightOfComponents = 250;
+	public void setDescriptionHeight() {
+		int heightOffset = getHeightOffset();
 		if (errorPanel.isRendered() && !errorPanel.isHidden()) {
-			heightOfComponents = heightOfComponents + errorPanel.getHeight();
+			heightOffset = heightOffset + errorPanel.getHeight();
 		}
-		description.setHeight(MainPanel.getInstance().getHeight() - heightOfComponents);
+		description.setHeight(MainPanel.getInstance().getHeight() - heightOffset);
 	}
 
+	public int getHeightOffset() {
+		return 250;
+	}
 	
 
 	public void initButtons() {

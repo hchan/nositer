@@ -4,7 +4,6 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
@@ -12,7 +11,23 @@ import com.nositer.client.widget.TabItemPlus;
 public class GroupTabItem extends TabItemPlus implements Resizable{
 	
 	private GroupTabPanel groupTabPanel;
+	private GroupTabPanel.TabItemType tabItemType;
+	
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
 	public GroupTabItem(String tabId) {
+		setItemId(tabId);
+		init();
+	}
+	
+	public GroupTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
+		this.tabItemType = tabItemType;
 		setItemId(tabId);
 		init();
 	}
@@ -36,9 +51,11 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init(Group group) {
 		GroupTabItem.this.setText(group.getName());
 		setLayout(new FitLayout());
-		groupTabPanel = new GroupTabPanel(group);
-		
+		groupTabPanel = new GroupTabPanel(group);		
 		add(groupTabPanel);
+		if (tabItemType != null) {
+			groupTabPanel.show(tabItemType);
+		}
 		layout();
 	}
 
