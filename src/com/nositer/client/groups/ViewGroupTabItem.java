@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.ImageHelper;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.Avatar;
@@ -49,8 +50,8 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		//contentPanel.setHeight(MainPanel.getInstance().getHeight()-22);
-		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
+		contentPanel.setHeight(MainPanel.getInstance().getHeight()-57);
+		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
 	
 		
 	}
