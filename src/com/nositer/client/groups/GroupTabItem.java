@@ -45,7 +45,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	@Override
 	public void resize(int width, int height) {		
-		setSize(MainPanel.getInstance().getWidth()-3,
-				MainPanel.getInstance().getHeight());
+		//setSize(MainPanel.getInstance().getWidth()-3,
+		//		MainPanel.getInstance().getHeight());
 	}
 }

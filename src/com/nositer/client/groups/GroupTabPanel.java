@@ -43,8 +43,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		setSize(MainPanel.getInstance().getWidth(), 
-				MainPanel.getInstance().getHeight()-30);
+		setSize(MainPanel.getInstance().getWidth()-3, 
+				MainPanel.getInstance().getHeight()-29);
 	
 	}
 }

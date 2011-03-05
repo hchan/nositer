@@ -50,8 +50,8 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		contentPanel.setHeight(MainPanel.getInstance().getHeight()-30);
-		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
+		//contentPanel.setHeight(MainPanel.getInstance().getHeight()-22);
+		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
 	
 		
 	}

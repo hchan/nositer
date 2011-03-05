@@ -71,10 +71,10 @@ public class EditGroupTabItem extends TabItemPlus implements Resizable{
 
 	@Override
 	public void resize(int width, int height) {
-		contentPanel.setHeight(MainPanel.getInstance().getHeight());
-		contentPanel.setWidth(MainPanel.getInstance().getWidth());
-		setHeight(MainPanel.getInstance().getHeight());
-		setWidth(MainPanel.getInstance().getWidth());
+		//contentPanel.setHeight(MainPanel.getInstance().getHeight());
+		//contentPanel.setWidth(MainPanel.getInstance().getWidth());
+		//setHeight(MainPanel.getInstance().getHeight());
+		//setWidth(MainPanel.getInstance().getWidth());
 	}
 
 }
