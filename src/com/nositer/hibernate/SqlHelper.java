@@ -55,7 +55,13 @@ public class SqlHelper {
 		"update " + Group.TABLENAME + " set " +
 		Group.ColumnType.disable + " = true" +
 		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
-	
+	public static String FINDGROUPS =
+		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.name + " = :" + Group.ColumnType.name +
+		" and " + Group.ColumnType.postalcodeid + " = :" + Group.ColumnType.postalcodeid +
+		" and " + Group.ColumnType.zipcodeid + " = :" + Group.ColumnType.zipcodeid +
+		" and " + Group.ColumnType.countrycode + " = :" + Group.ColumnType.countrycode +
+		" and " + NOTDISABLE +
+		" order by " + Group.ColumnType.name; 
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;

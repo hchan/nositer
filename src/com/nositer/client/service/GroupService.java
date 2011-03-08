@@ -16,4 +16,5 @@ public interface GroupService extends RemoteService {
 	ArrayList<Group> getMyGroups() throws GWTException;
 	Group getGroupByTagname(String tagname) throws GWTException;
 	void deleteGroup(Group group) throws GWTException;
+	ArrayList<Group> search(String name, Integer postalcodeid, Integer zipcodeid, String countrycode) throws GWTException;
 }

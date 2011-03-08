@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.type.IntegerType;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
@@ -171,6 +172,44 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		finally {
 			HibernateUtil.closeSession(sess);
 		}	
+	}
+
+
+	@Override
+	public ArrayList<Group> search(String name, Integer postalcodeid,
+			Integer zipcodeid, String countrycode) throws GWTException {
+		ArrayList<Group> retval = null;
+		Session sess = HibernateUtil.getSession();
+
+		Transaction trx = null;
+		try {
+
+			trx = sess.beginTransaction();		
+			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
+			addEntity(com.nositer.hibernate.generated.domain.Group.class).
+			setString(Group.ColumnType.name.toString(), name).
+			setParameter(User.ColumnType.postalcodeid.toString(), postalcodeid, new IntegerType()).		
+			setParameter(User.ColumnType.zipcodeid.toString(), zipcodeid, new IntegerType()).
+			setString(User.ColumnType.countrycode.toString(),countrycode).			
+			list();
+			if (results.size() == 0) {				
+				retval = null;
+			} else {
+				retval = BeanConversion.copyDomain2DTO(results, Group.class);									
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.nositer.client.searchforgroups;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
@@ -47,13 +49,24 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		location.setStyleName(groupName.getStyleName());
 		location.getPostalcode().setFieldLabel("Postal code");		
 		location.getZipcode().setFieldLabel("Zip code");
-		searchButton = new Button("Search");
+		searchButton = createSearchButton();
 		
 		add(groupName);
 		add(location);
 		
 		setButtonAlign(HorizontalAlignment.CENTER);
 		addButton(searchButton);
+	}
+
+	private Button createSearchButton() {
+		Button retval = new Button("Search");
+		retval.addSelectionListener(new SelectionListener<ButtonEvent>() {			
+			@Override
+			public void componentSelected(ButtonEvent ce) {
+				// TODO Auto-generated method stub				
+			}					
+		});
+		return retval;
 	}
 
 
