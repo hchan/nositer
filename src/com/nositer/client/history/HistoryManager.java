@@ -25,6 +25,7 @@ import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
+import com.nositer.client.searchforgroups.SearchForGroups;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
@@ -129,7 +130,11 @@ public class HistoryManager {
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showTab(getSubHistoryToken(), GroupTabPanel.TabItemType.EDIT);
 			setMainPanel(Groups.getInstance(true));
-		}
+		} else if (historyToken.equals(SEARCHFORGROUPS.toString())) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
+			setMainPanel(new SearchForGroups());
+		} 
 	}
 
 

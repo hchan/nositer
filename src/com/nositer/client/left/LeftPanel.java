@@ -32,13 +32,28 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem editAboutMeNavigationItem;
 	private NavigationItem groupsNavigationItem;
 	private NavigationItem createGroupNavigationItem;
+	private NavigationItem searchForGroupsNavigationItem;
 	private NavigationItem iwanttosNavigationItem;
 	private NavigationItem createIwantToNavigationItem;
 	private NavigationItem changePasswordNavigationItem;
 	private NavigationItem uploadImagesNavigationItem;
 	private NavigationItem manageImagesNavigationItem;
-	
-	
+
+
+	public NavigationItem getSearchForGroupsNavigationItem() {
+		return searchForGroupsNavigationItem;
+	}
+
+
+	public void setSearchForGroupsNavigationItem(
+			NavigationItem searchForGroupsNavigationItem) {
+		this.searchForGroupsNavigationItem = searchForGroupsNavigationItem;
+	}
+
+
+	public ContentPanel getIwantto() {
+		return iwantto;
+	}
 
 
 	public static LeftPanel getInstance() {
@@ -269,36 +284,27 @@ public class LeftPanel extends ContentPanel {
 		
 		// Profile
 		profile = createNavigationContentPanel("Profile", this);	
-		viewProfileNavigationItem = navigationTree.createNavigationItem("View Profile");
-		editBasicProfileNavigationItem = navigationTree.createNavigationItem("Edit Basic Profile");
-		changePasswordNavigationItem = navigationTree.createNavigationItem("Change Password");
-		editAboutMeNavigationItem = navigationTree.createNavigationItem("Edit About Me");
-		profile.add(viewProfileNavigationItem);
-		profile.add(editBasicProfileNavigationItem);
-		profile.add(changePasswordNavigationItem);
-		profile.add(editAboutMeNavigationItem);
-		
+		viewProfileNavigationItem = addNavigationItem("View Profile", profile, HistoryToken.VIEWPROFILE);
+		editBasicProfileNavigationItem = addNavigationItem("Edit Basic Profile", profile, HistoryToken.EDITBASICPROFILE);
+		changePasswordNavigationItem = addNavigationItem("Change Password", profile, HistoryToken.CHANGEPASSWORD);
+		editAboutMeNavigationItem = addNavigationItem("Edit About Me", profile, HistoryToken.EDITABOUTME);
 		
 		// Images
 		images = createNavigationContentPanel("Images", this);
-		uploadImagesNavigationItem = navigationTree.createNavigationItem("Upload Images");
-		manageImagesNavigationItem = navigationTree.createNavigationItem("Manage Images");
-		images.add(uploadImagesNavigationItem);
-		images.add(manageImagesNavigationItem);
+		uploadImagesNavigationItem = addNavigationItem("Upload Images", images, HistoryToken.UPLOADIMAGES);
+		manageImagesNavigationItem = addNavigationItem("Manage Images", images, HistoryToken.MANAGEIMAGES);		
 		
 		// Groups
 		groups = createNavigationContentPanel("Groups", this);	
-		groupsNavigationItem = navigationTree.createNavigationItem("View Groups");
-		createGroupNavigationItem = navigationTree.createNavigationItem("Create Group");
-		groups.add(groupsNavigationItem);		
-		groups.add(createGroupNavigationItem);
-
+		groupsNavigationItem = addNavigationItem("View Groups", groups, HistoryToken.GROUPS);
+		createGroupNavigationItem = addNavigationItem("Create Group", groups, HistoryToken.CREATEGROUP);
+		searchForGroupsNavigationItem = addNavigationItem("Search", groups, HistoryToken.SEARCHFORGROUPS);
+		
 		// I want to ...
 		iwantto = createNavigationContentPanel("I want to ...", this);	
-		iwanttosNavigationItem = navigationTree.createNavigationItem("I want to's ...");
-		createIwantToNavigationItem = navigationTree.createNavigationItem("Create I want to...");
-		iwantto.add(iwanttosNavigationItem);
-		iwantto.add(createIwantToNavigationItem);
+		iwanttosNavigationItem = addNavigationItem("I want to's ...", iwantto, HistoryToken.IWANTTOS);
+		createIwantToNavigationItem = addNavigationItem("Create I want to...", iwantto, HistoryToken.CREATEIWANTTO);
+		
 		
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
@@ -308,7 +314,14 @@ public class LeftPanel extends ContentPanel {
 		
 		collapseAccordion();
 		this.layout();
-		addListeners();
+		//addListeners();
+	}
+	
+	public NavigationItem addNavigationItem(String str, ContentPanel contentPanel, HistoryToken historyToken) {
+		NavigationItem retval = navigationTree.createNavigationItem(str);
+		contentPanel.add(retval);
+		HistoryManager.addHistoryOnClick(retval, historyToken.toString());
+		return retval;
 	}
 	
 	public ContentPanel createNavigationContentPanel(String heading, LayoutContainer container) {
@@ -329,6 +342,7 @@ public class LeftPanel extends ContentPanel {
 		}
 	}
 
+	/*
 	public void addListeners() {		
 		HistoryManager.addHistoryOnClick(viewProfileNavigationItem, HistoryToken.VIEWPROFILE.toString());
 		HistoryManager.addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
@@ -341,4 +355,5 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(createIwantToNavigationItem, HistoryToken.CREATEIWANTTO.toString());
 		HistoryManager.addHistoryOnClick(iwanttosNavigationItem, HistoryToken.IWANTTOS.toString());
 	}
+	*/
 }
