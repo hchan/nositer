@@ -1,16 +1,33 @@
 package com.nositer.client.searchforgroups;
 
-import com.extjs.gxt.ui.client.util.Margins;
-import com.extjs.gxt.ui.client.widget.Label;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.nositer.client.widget.Location;
 
 public class SearchCriteriaForGroupsPanel extends FormPanel {
 
 	private TextField<String> groupName;
+	private Location location;
+	private Button searchButton;
 	
+	public TextField<String> getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(TextField<String> groupName) {
+		this.groupName = groupName;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	public SearchCriteriaForGroupsPanel() {
 		init();
 	}
@@ -21,21 +38,24 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		setCollapsible(true);
 		setBodyBorder(false);
 		//addSearchLabel();
+		setLabelWidth(107);
+		setFieldWidth(200);
 		groupName = new TextField<String>();
 		groupName.setFieldLabel("Group name");
+		location = new Location();
+		location.setHeading("Location");
+		location.setStyleName(groupName.getStyleName());
+		location.getPostalcode().setFieldLabel("Postal code");		
+		location.getZipcode().setFieldLabel("Zip code");
+		searchButton = new Button("Search");
+		
 		add(groupName);
+		add(location);
+		
+		setButtonAlign(HorizontalAlignment.CENTER);
+		addButton(searchButton);
 	}
-	
-	@Deprecated
-	// use setHeading
-	private void addSearchLabel() {
-		FlowLayout flowLayoutRequiredFieldLabelContainer = new FlowLayout();
-		flowLayoutRequiredFieldLabelContainer.setMargins(new Margins(0, 0, 10, 0));
-		LayoutContainer requiredFieldLabelContainer = new LayoutContainer(flowLayoutRequiredFieldLabelContainer);
-		Label requiredFieldLabel = new Label("Search");
-		requiredFieldLabel.setStyleName("requiredFieldLabel");
-		requiredFieldLabelContainer.add(requiredFieldLabel);
-		add(requiredFieldLabelContainer);
-	}
+
+
 
 }
