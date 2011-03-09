@@ -5,7 +5,9 @@ import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Iwantto;
+import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
 	
 	public static String FINDUSERBYLOGIN = 
@@ -56,11 +58,26 @@ public class SqlHelper {
 		Group.ColumnType.disable + " = true" +
 		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
 	public static String FINDGROUPS =
-		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.name + " = :" + Group.ColumnType.name +
+		"select " + Group.TABLENAME + "." + "* from " + Group.TABLENAME + 
+		" left outer join " + Postalcode.TABLENAME + " on " + 
+		Group.TABLENAME + "." + Group.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
+		" left outer join " + Zipcode.TABLENAME + " on " + 
+		Group.TABLENAME + "." + Group.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
+		" where " + Group.TABLENAME + "." + Group.ColumnType.name + " = :" + Group.ColumnType.name +
 		" and " + Group.ColumnType.postalcodeid + " = :" + Group.ColumnType.postalcodeid +
 		" and " + Group.ColumnType.zipcodeid + " = :" + Group.ColumnType.zipcodeid +
 		" and " + Group.ColumnType.countrycode + " = :" + Group.ColumnType.countrycode +
 		" and " + NOTDISABLE +
+		" and " + 
+		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" + 
+		"/180)) + " +
+		"(COS(PI()* :latitude /180)*cos(PI()*" + 
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" +
+		"/180)*COS(PI() * " + 
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.longitude + ")" +
+		"/180-PI()* - :longitude /180)) " +
+		") < = :radius" +
 		" order by " + Group.ColumnType.name; 
 	
 	public static String disableSQL(DTO dto) {

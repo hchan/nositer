@@ -18,7 +18,7 @@ while ($line = <FH>) {
     $count++;
     chomp $line;
     #($id, $postalcode, $city, $province, $provincecode, $citytype, $latitude, $longitude) = split("\\|", $line);
-    #print qq|INSERT INTO POSTALCODE VALUES($count, "$postalcode", "$city", "$province", "$pronvincecode", "$citytype", "$latitude", "$longitude");\n|;
+    #print qq|INSERT INTO POSTALCODE VALUES($count, "$postalcode", "$city", "$province", "$pronvincecode", $citytype, $latitude, "$longitude");\n|;
     @fields = split("\\|", $line);
     for ($i = 0; $i <= $#fields; $i++) {
 
