@@ -73,8 +73,8 @@ public class SqlHelper {
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" +
 		"/180)*COS(PI() * " + 
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.longitude + ")" +
-		"/180-PI()* - :longitude /180)) " +
-		") < = :radius" +
+		"/180-PI()* :longitude /180)) " +
+		") <= :radius" +
 		" order by " + Group.ColumnType.name; 
 	
 	public static String disableSQL(DTO dto) {
