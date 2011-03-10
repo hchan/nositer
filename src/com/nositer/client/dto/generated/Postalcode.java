@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -28,8 +28,8 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 	private String province;
 	private String provincecode;
 	private String citytype;
-	private String latitude;
-	private String longitude;
+	private Float latitude;
+	private Float longitude;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<User> users = new HashSet<User>(0);
@@ -49,7 +49,7 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 
 	public Postalcode(String code, String description, String city,
 			String province, String provincecode, String citytype,
-			String latitude, String longitude, Date createdtime,
+			Float latitude, Float longitude, Date createdtime,
 			Date modifiedtime, Set<User> users, Set<Group> groups) {
 		this.code = code;
 		this.description = description;
@@ -121,19 +121,19 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 		this.citytype = citytype;
 	}
 
-	public String getLatitude() {
+	public Float getLatitude() {
 		return this.latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Float getLongitude() {
 		return this.longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 
@@ -169,6 +169,8 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 		this.groups = groups;
 	}
 
+
+	
 	public enum ColumnType {
 		id, code, description, city, province, provincecode, citytype, latitude, longitude, createdtime, modifiedtime,
 	}

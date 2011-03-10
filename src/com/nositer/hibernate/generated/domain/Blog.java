@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 9, 2011 2:37:49 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class Blog implements java.io.Serializable, Domain {
 	private User user;
 	private String name;
 	private String description;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
@@ -47,11 +48,12 @@ public class Blog implements java.io.Serializable, Domain {
 		this.user = user;
 	}
 
-	public Blog(User user, String name, String description, Date createdtime,
-			Date modifiedtime, Set<Iwantto> iwanttos) {
+	public Blog(User user, String name, String description, Boolean disable,
+			Date createdtime, Date modifiedtime, Set<Iwantto> iwanttos) {
 		this.user = user;
 		this.name = name;
 		this.description = description;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.iwanttos = iwanttos;
@@ -113,6 +115,15 @@ public class Blog implements java.io.Serializable, Domain {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Column(name = "disable")
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -4,4 +4,8 @@ import com.nositer.client.groups.GroupsGrid;
 
 public class SearchGroupsGrid extends GroupsGrid {
 	
+	public SearchGroupsGrid() {
+		
+	}
+	
 }

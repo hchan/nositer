@@ -15,7 +15,6 @@ public interface GroupServiceAsync {
 
 	void deleteGroup(Group group, AsyncCallback<Void> callback);
 
-	void search(String name, Integer postalcodeid, Integer zipcodeid,
-			String countrycode, AsyncCallback<ArrayList<Group>> callback);
+	void search(String name, Float latitude, Float longitude, Number radius, AsyncCallback<ArrayList<Group>> callback);
 
 }

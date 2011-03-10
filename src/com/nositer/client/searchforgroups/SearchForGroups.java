@@ -10,6 +10,16 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 	private SearchGroupsGrid searchGroupsGrid;
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
 	
+	private static SearchForGroups instance;
+	
+	public static SearchForGroups getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(SearchForGroups instance) {
+		SearchForGroups.instance = instance;
+	}
+
 	public SearchForGroups() {
 		init();
 	}
@@ -17,10 +27,10 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 	public void init() {
 		contentPanel = new ContentPanel();
 		contentPanel.setHeaderVisible(false);
-		
+	
 		searchCriteriaForGroupsPanel = new SearchCriteriaForGroupsPanel();
-		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
 		searchGroupsGrid = new SearchGroupsGrid();
+		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
 		contentPanel.add(searchGroupsGrid);
 		add(contentPanel);
 	}
@@ -31,7 +41,6 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		searchCriteriaForGroupsPanel.getLocation().setWidth(MainPanel.getInstance().getWidth()-20);
 		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-20);
 	}
-	  
-
+	
 	
 }

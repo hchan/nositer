@@ -3,11 +3,13 @@ package com.nositer.client.util;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.extjs.gxt.ui.client.widget.form.Field;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
+@SuppressWarnings("rawtypes")
 public class GWTUtil {
 	public static void log(String str) {
 		GWT.log(str);
@@ -47,6 +49,15 @@ public class GWTUtil {
 			retval.add(textField.getFieldLabel().replace("* ", "") + " is required");
 		}
 	}
+	
+	public static void addRequiredErrorIfNecessary(Field field, String label,
+			ArrayList<String> retval) {
+		if (field.getValue() == null) {
+			retval.add(label + " is required");
+		}
+	}
+	
+	
 	public static void addRequiredErrorIfNecessary(HtmlEditor htmlEditor,
 			ArrayList<String> retval) {
 		if (htmlEditor.getValue()  == null) {

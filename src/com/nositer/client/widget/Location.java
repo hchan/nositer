@@ -1,5 +1,7 @@
 package com.nositer.client.widget;
 
+import com.extjs.gxt.ui.client.data.BeanModel;
+import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.FieldEvent;
@@ -12,10 +14,14 @@ import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
+import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.combobox.PostalcodeComboBox;
 import com.nositer.client.widget.combobox.ZipcodeComboBox;
 
+@SuppressWarnings("unchecked")
 public class Location extends FieldSet {
 	
 	
@@ -83,7 +89,7 @@ public class Location extends FieldSet {
 	}
 
 	
-	private void init() {	
+	public void init() {	
 		postalcode = new PostalcodeComboBox();
 		postalcode.setFieldLabel("* Postal code");
 		postalcode.setStyleName(GWTUtil.getRequiredFieldStyle());
@@ -125,7 +131,7 @@ public class Location extends FieldSet {
 		country.add(canRadio);
 		country.add(usaRadio);
 		add(country, new VBoxLayoutData(new Margins(5, 0, 0, 5)));
-		add(geographyCode, new VBoxLayoutData(new Margins(5, 0, 0, 5)));
+		add(geographyCode, new VBoxLayoutData(new Margins(5, 0, 0, 5)));	
 		setHeight(80);
 	}
 
@@ -134,5 +140,20 @@ public class Location extends FieldSet {
 		geographyCode = new LayoutContainer();
 		geographyCode.setLayout(new FormLayout());
 		geographyCode.add(postalcode);
+	}
+
+
+	public void populate(User user) {
+		if (user.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
+			country.setValue(getCanRadio());
+			BeanModel beanModel = BeanModelLookup.get().getFactory(Postalcode.class).createModel(user.getPostalcode());
+			postalcode.setValue(beanModel);
+			postalcode.setRawValue(user.getPostalcode().getCode());
+		} else {
+			country.setValue(getUsaRadio());
+			BeanModel beanModel = BeanModelLookup.get().getFactory(Zipcode.class).createModel(user.getZipcode());
+			zipcode.setValue(beanModel);
+			zipcode.setRawValue(user.getZipcode().getCode());
+		}
 	}
 }

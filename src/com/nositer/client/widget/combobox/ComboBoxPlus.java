@@ -7,6 +7,8 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
+import com.extjs.gxt.ui.client.data.BeanModelFactory;
+import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.BeanModelTag;
 import com.extjs.gxt.ui.client.data.HttpProxy;
@@ -54,7 +56,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		ListStore<BeanModel> store = new ListStore<BeanModel>(loader);
 		this.setStore(store);
 	}
-	
+
 	public static ModelType getModelType(ArrayList<String> columnNames) {
 		ModelType retval = new ModelType();
 		retval.setRoot("records");
@@ -65,22 +67,22 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		}
 		return retval;
 	}
-	
-	
-	
+
+
+
 	public HttpProxy getHttpProxy(String serviceName) {
 		HttpProxy retval = null;
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET,  serviceName);
 		retval = new HttpProxy (builder);
 		return retval;
 	}
-	
+
 	public void initPagingToolBar() {
 		removeLastButtonFromToolBar(this.getPagingToolBar());
-	
+
 	}
-	
-	
+
+
 	public static void removeLastButtonFromToolBar(PagingToolBar toolBar) {
 		toolBar.getMessages().setDisplayMsg("");		
 		toolBar.getMessages().setAfterPageText("");
@@ -89,8 +91,8 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		toolBar.getImages().setLastDisabled(null);
 		toolBar.getImages().setRefresh(null);
 	}
-	
-	
+
+
 	@Override
 	protected void onBlur(ComponentEvent ce) {
 		super.onBlur(ce);
@@ -99,7 +101,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 			setRawValue("");
 		} 
 	}
-	
+
 	public PagingLoader<PagingLoadResult<ModelData>> getLoader(RpcProxy<PagingLoadResult<Postalcode>> proxy) {
 		PagingLoader<PagingLoadResult<ModelData>> retval = null;
 		BeanModelReader reader = new BeanModelReader() {
@@ -130,7 +132,7 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		});
 		return retval;
 	}
-	
+
 	public RpcProxy getProxy() {
 		RpcProxy retval = new RpcProxy() {			
 			@Override
@@ -146,15 +148,15 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 		};
 		return retval;
 	}
-	
+
 	public boolean doServiceWithRPC(int offset, int limit, String query, AsyncCallback callback) {		
 		return false;
 	}
-	
+
 	public boolean doServiceWithRPC(BasePagingLoadConfig basePagingLoadConfig, AsyncCallback callback) {
 		return false;
 	}
-	
+
 	public D getBean() {
 		D retval = null;
 		BeanModel beanModel = (BeanModel) getValue();
@@ -162,6 +164,14 @@ public class ComboBoxPlus<D extends BeanModelTag> extends ComboBox {
 			retval = beanModel.getBean();
 		}
 		return retval;
-		
+
+	}
+
+	public void setBean(D bean) {
+		if (bean != null) {
+			BeanModelFactory factory = BeanModelLookup.get().getFactory(bean.getClass());
+			BeanModel val = factory.createModel(bean);
+			setValue(val);
+		}
 	}
 }

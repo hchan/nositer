@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -25,6 +25,7 @@ public class Blog implements java.io.Serializable, IsSerializable,
 	private User user;
 	private String name;
 	private String description;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
@@ -41,11 +42,12 @@ public class Blog implements java.io.Serializable, IsSerializable,
 		this.user = user;
 	}
 
-	public Blog(User user, String name, String description, Date createdtime,
-			Date modifiedtime, Set<Iwantto> iwanttos) {
+	public Blog(User user, String name, String description, Boolean disable,
+			Date createdtime, Date modifiedtime, Set<Iwantto> iwanttos) {
 		this.user = user;
 		this.name = name;
 		this.description = description;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.iwanttos = iwanttos;
@@ -93,6 +95,14 @@ public class Blog implements java.io.Serializable, IsSerializable,
 		this.description = description;
 	}
 
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
+	}
+
 	public Date getCreatedtime() {
 		return this.createdtime;
 	}
@@ -118,6 +128,6 @@ public class Blog implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, userid, name, description, createdtime, modifiedtime,
+		id, userid, name, description, disable, createdtime, modifiedtime,
 	}
 }

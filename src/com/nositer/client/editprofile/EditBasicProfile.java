@@ -87,17 +87,7 @@ public class EditBasicProfile extends LayoutContainer implements Resizable {
 
 		register.getFirstName().setValue(user.getFirstname());
 		register.getLastName().setValue(user.getLastname());
-		if (user.getCountrycode().equals(Location.COUNTRYCODE_CAN)) {
-			register.getLocation().getCountry().setValue(register.getLocation().getCanRadio());
-			BeanModel beanModel = BeanModelLookup.get().getFactory(Postalcode.class).createModel(user.getPostalcode());
-			register.getLocation().getPostalcode().setValue(beanModel);
-			register.getLocation().getPostalcode().setRawValue(user.getPostalcode().getCode());
-		} else {
-			register.getLocation().getCountry().setValue(register.getLocation().getUsaRadio());
-			BeanModel beanModel = BeanModelLookup.get().getFactory(Zipcode.class).createModel(user.getZipcode());
-			register.getLocation().getZipcode().setValue(beanModel);
-			register.getLocation().getZipcode().setRawValue(user.getZipcode().getCode());
-		}
+		register.getLocation().populate(user);
 
 		if (user.getSalutationcode() != null) {
 			BeanModel salutationModel = BeanModelLookup.get().getFactory(Salutationcode.class).createModel(user.getSalutationcode());

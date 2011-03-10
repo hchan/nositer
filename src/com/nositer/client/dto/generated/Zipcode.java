@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -24,8 +24,8 @@ public class Zipcode implements java.io.Serializable, IsSerializable,
 	private Integer id;
 	private String code;
 	private String description;
-	private String latitude;
-	private String longitude;
+	private Float latitude;
+	private Float longitude;
 	private String city;
 	private String state;
 	private String county;
@@ -47,8 +47,8 @@ public class Zipcode implements java.io.Serializable, IsSerializable,
 		this.code = code;
 	}
 
-	public Zipcode(String code, String description, String latitude,
-			String longitude, String city, String state, String county,
+	public Zipcode(String code, String description, Float latitude,
+			Float longitude, String city, String state, String county,
 			String zipClass, Date createdtime, Date modifiedtime,
 			Set<User> users, Set<Group> groups) {
 		this.code = code;
@@ -89,19 +89,19 @@ public class Zipcode implements java.io.Serializable, IsSerializable,
 		this.description = description;
 	}
 
-	public String getLatitude() {
+	public Float getLatitude() {
 		return this.latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Float getLongitude() {
 		return this.longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 

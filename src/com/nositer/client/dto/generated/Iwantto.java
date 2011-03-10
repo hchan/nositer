@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 2, 2011 4:31:18 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -25,6 +25,7 @@ public class Iwantto implements java.io.Serializable, IsSerializable,
 	private Blog blog;
 	private User user;
 	private String description;
+	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
 	public static final String TABLENAME = "nositer.iwantto";
@@ -41,11 +42,12 @@ public class Iwantto implements java.io.Serializable, IsSerializable,
 		this.description = description;
 	}
 
-	public Iwantto(Blog blog, User user, String description, Date createdtime,
-			Date modifiedtime) {
+	public Iwantto(Blog blog, User user, String description, Boolean disable,
+			Date createdtime, Date modifiedtime) {
 		this.blog = blog;
 		this.user = user;
 		this.description = description;
+		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 	}
@@ -102,6 +104,14 @@ public class Iwantto implements java.io.Serializable, IsSerializable,
 		this.description = description;
 	}
 
+	public Boolean getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(Boolean disable) {
+		this.disable = disable;
+	}
+
 	public Date getCreatedtime() {
 		return this.createdtime;
 	}
@@ -119,6 +129,6 @@ public class Iwantto implements java.io.Serializable, IsSerializable,
 	}
 
 	public enum ColumnType {
-		id, blogid, userid, description, createdtime, modifiedtime,
+		id, blogid, userid, description, disable, createdtime, modifiedtime,
 	}
 }

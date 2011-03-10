@@ -41,6 +41,7 @@ import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.combobox.RelationshipcodeComboBox;
 import com.nositer.client.widget.combobox.SalutationcodeComboBox;
 import com.nositer.client.widget.radiogroup.GenderRadioGroup;
+
 @SuppressWarnings("unchecked")
 public class Register implements EntryPoint {
 

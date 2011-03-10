@@ -176,8 +176,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public ArrayList<Group> search(String name, Integer postalcodeid,
-			Integer zipcodeid, String countrycode) throws GWTException {
+	public ArrayList<Group> search(String name, Float latitude, Float longitude, Number radius) throws GWTException {
 		ArrayList<Group> retval = null;
 		Session sess = HibernateUtil.getSession();
 
@@ -188,9 +187,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
 			addEntity(com.nositer.hibernate.generated.domain.Group.class).
 			setString(Group.ColumnType.name.toString(), name).
-			setParameter(User.ColumnType.postalcodeid.toString(), postalcodeid, new IntegerType()).		
-			setParameter(User.ColumnType.zipcodeid.toString(), zipcodeid, new IntegerType()).
-			setString(User.ColumnType.countrycode.toString(),countrycode).			
+			setParameter("latitude", latitude).		
+			setParameter("longitude", longitude).
+			setParameter("radius", radius).	
 			list();
 			if (results.size() == 0) {				
 				retval = null;

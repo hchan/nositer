@@ -63,10 +63,7 @@ public class SqlHelper {
 		Group.TABLENAME + "." + Group.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
 		Group.TABLENAME + "." + Group.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
-		" where " + Group.TABLENAME + "." + Group.ColumnType.name + " = :" + Group.ColumnType.name +
-		" and " + Group.ColumnType.postalcodeid + " = :" + Group.ColumnType.postalcodeid +
-		" and " + Group.ColumnType.zipcodeid + " = :" + Group.ColumnType.zipcodeid +
-		" and " + Group.ColumnType.countrycode + " = :" + Group.ColumnType.countrycode +
+		" where " + Group.TABLENAME + "." + Group.ColumnType.name + " = :" + Group.ColumnType.name +		
 		" and " + NOTDISABLE +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
