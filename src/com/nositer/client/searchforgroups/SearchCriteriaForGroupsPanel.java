@@ -81,7 +81,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 
 			};
 		};
-		
+
 		location.setHeading("Location");
 		location.setStyleName(groupName.getStyleName());
 		location.getPostalcode().setFieldLabel("Postal code");		
@@ -98,7 +98,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 			}
 		};
 		ServiceBroker.noopService.noop(0, callback);
-		
+
 		searchButton = createSearchButton();
 
 		setTopComponent(errorPanel);
@@ -106,9 +106,9 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		add(location);
 		setButtonAlign(HorizontalAlignment.CENTER);
 		addButton(searchButton);
-		
-		
-		
+
+
+
 	}
 
 	private Button createSearchButton() {
@@ -116,49 +116,55 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		retval.addSelectionListener(new SelectionListener<ButtonEvent>() {			
 			@Override
 			public void componentSelected(ButtonEvent ce) {
-				if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
-					Postalcode postalcode = location.getPostalcode().getBean();			
-					if (postalcode != null) {
-						latitude = postalcode.getLatitude();
-						longitude = postalcode.getLongitude();
-					}
-				} else {
-					Zipcode zipcode = location.getZipcode().getBean();		
-					if (zipcode != null) {
-						latitude = zipcode.getLatitude();
-						longitude = zipcode.getLongitude();
-					}
-				}
-				ArrayList<String> errors = getErrors();
-				if (errors.size() > 0) {
-					errorPanel.setErrors(errors);
-					errorPanel.show();					
-				} else {
-					AsyncCallback<ArrayList<Group>> callback = new AsyncCallback<ArrayList<Group>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							GWTUtil.log("", caught);
-						}
-
-						@Override
-						public void onSuccess(ArrayList<Group> result) {
-							GWTUtil.log("Wow, this actually succeeded");
-						}
-						
-					};
-					ServiceBroker.groupService.search(
-							groupName.getValue(), 
-							latitude, 
-							longitude, 
-							radius.getValue(), 
-							callback);
-				}			
+				doSearch(null);
 			}					
 		});
 		return retval;
 	}
 
+
+	public void doSearch(AsyncCallback<ArrayList<Group>> callback) {
+		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
+			Postalcode postalcode = location.getPostalcode().getBean();			
+			if (postalcode != null) {
+				latitude = postalcode.getLatitude();
+				longitude = postalcode.getLongitude();
+			}
+		} else {
+			Zipcode zipcode = location.getZipcode().getBean();		
+			if (zipcode != null) {
+				latitude = zipcode.getLatitude();
+				longitude = zipcode.getLongitude();
+			}
+		}
+		ArrayList<String> errors = getErrors();
+		if (errors.size() > 0) {
+			errorPanel.setErrors(errors);
+			errorPanel.show();					
+		} else {
+			if (callback == null) {
+				callback = new AsyncCallback<ArrayList<Group>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						GWTUtil.log("", caught);
+					}
+
+					@Override
+					public void onSuccess(ArrayList<Group> result) {
+						GWTUtil.log("Wow, this actually succeeded");
+					}
+
+				};
+			}
+			ServiceBroker.groupService.search(
+					groupName.getValue(), 
+					latitude, 
+					longitude, 
+					radius.getValue(), 
+					callback);
+		}			
+	}
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();

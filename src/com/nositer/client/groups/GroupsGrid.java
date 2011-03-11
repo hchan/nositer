@@ -45,10 +45,10 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 @SuppressWarnings({"rawtypes"})
 public class GroupsGrid extends Grid<BeanModel> {
 
-	private RpcProxy<ArrayList<Group>> proxy;
-	private BaseListLoader<PagingLoadResult<ModelData>> loader;
-	private GroupingView groupingView;
-	private Menu contextMenu;
+	protected RpcProxy<ArrayList<Group>> proxy;
+	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
+	protected GroupingView groupingView;
+	protected Menu contextMenu;
 
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
@@ -89,7 +89,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	private GridCellRenderer getAvatarGridCellRenderer() {
+	protected GridCellRenderer getAvatarGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
 			@Override
@@ -110,7 +110,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	private GridCellRenderer getDescriptionGridCellRenderer() {
+	protected GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
 			@Override
@@ -172,7 +172,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 
 
-	private void addListeners() {
+	protected void addListeners() {
 		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
 
 			@Override
@@ -215,7 +215,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 
 
-	private void showContextMenu(GridEvent<BeanModel> gridEvent) {
+	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
 		final Group group = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
