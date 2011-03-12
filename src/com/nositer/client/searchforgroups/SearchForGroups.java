@@ -16,7 +16,6 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 	private SearchGroupsGrid searchGroupsGrid;
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
 	private PagingToolBar pagingToolBar;
-
 	private static SearchForGroups instance;
 
 	public static SearchForGroups getInstance() {
@@ -44,6 +43,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		contentPanel.setBottomComponent(pagingToolBar);
 		addDefaultListeners();
 		resize(0,0);
+		instance = this;
 	}
 
 
@@ -56,24 +56,27 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		);
 		searchCriteriaForGroupsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
 			@Override
-			public void handleEvent(BaseEvent baseEvent) {				
+			public void handleEvent(BaseEvent baseEvent) {	
+				
 				resize(0,0);
+				
 			}}
 		);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		searchCriteriaForGroupsPanel.getLocation().setWidth(MainPanel.getInstance().getWidth()-20);
-		searchCriteriaForGroupsPanel.getLocation().layout();
 		int gridHeightOffset = 258;
 		if (searchCriteriaForGroupsPanel.isRendered()) {
+		
 			if (searchCriteriaForGroupsPanel.isCollapsed()) {
 				gridHeightOffset -= 200;
 			}
+			if (searchCriteriaForGroupsPanel.getErrorPanel().isVisible()) {
+				gridHeightOffset += searchCriteriaForGroupsPanel.getErrorPanel().getHeight();
+			}
 		}
 		searchGroupsGrid.setHeight(MainPanel.getInstance().getHeight() - gridHeightOffset);
-
-
+		searchCriteriaForGroupsPanel.getLocation().getGeographyCode().layout();
 	}
 }

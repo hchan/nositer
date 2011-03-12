@@ -34,6 +34,24 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 	private ErrorPanel errorPanel;
 	private Float latitude = null;
 	private Float longitude = null;
+	
+	
+	public Button getSearchButton() {
+		return searchButton;
+	}
+
+	public void setSearchButton(Button searchButton) {
+		this.searchButton = searchButton;
+	}
+
+	public ErrorPanel getErrorPanel() {
+		return errorPanel;
+	}
+
+	public void setErrorPanel(ErrorPanel errorPanel) {
+		this.errorPanel = errorPanel;
+	}
+
 	public TextField<String> getGroupName() {
 		return groupName;
 	}
@@ -140,8 +158,10 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		ArrayList<String> errors = getErrors();
 		if (errors.size() > 0) {
 			errorPanel.setErrors(errors);
-			errorPanel.show();					
+			errorPanel.show();		
+			
 		} else {
+			errorPanel.hide();				
 			if (callback == null) {
 				callback = new AsyncCallback<ArrayList<Group>>() {
 
@@ -163,7 +183,8 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 					longitude, 
 					radius.getValue(), 
 					callback);
-		}			
+		}		
+		SearchForGroups.getInstance().resize(0, 0);
 	}
 
 	public ArrayList<String> getErrors() {

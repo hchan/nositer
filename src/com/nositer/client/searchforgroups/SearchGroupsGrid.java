@@ -47,7 +47,6 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
 public class SearchGroupsGrid extends GroupsGrid {
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
-	private PagingToolBar pagingToolBar;
 	
 	public SearchCriteriaForGroupsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
@@ -89,7 +88,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 
 		addListeners();
 
-		store.getLoader().load();
+		//store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
