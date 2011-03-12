@@ -36,6 +36,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 
 		searchCriteriaForGroupsPanel = new SearchCriteriaForGroupsPanel();
 		searchGroupsGrid = new SearchGroupsGrid(searchCriteriaForGroupsPanel);
+		searchCriteriaForGroupsPanel.setSearchGroupsGrid(searchGroupsGrid);
 		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
 		contentPanel.add(searchGroupsGrid);
 		add(contentPanel);

@@ -36,6 +36,40 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 	private Float longitude = null;
 	
 	
+	public NumberField getRadius() {
+		return radius;
+	}
+
+	public void setRadius(NumberField radius) {
+		this.radius = radius;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+
+	private SearchGroupsGrid searchGroupsGrid;
+	
+	public SearchGroupsGrid getSearchGroupsGrid() {
+		return searchGroupsGrid;
+	}
+
+	public void setSearchGroupsGrid(SearchGroupsGrid searchGroupsGrid) {
+		this.searchGroupsGrid = searchGroupsGrid;
+	}
+
 	public Button getSearchButton() {
 		return searchButton;
 	}
@@ -134,56 +168,16 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		retval.addSelectionListener(new SelectionListener<ButtonEvent>() {			
 			@Override
 			public void componentSelected(ButtonEvent ce) {
-				doSearch(null);
+				doSearch();
 			}					
 		});
 		return retval;
 	}
 
 
-	public void doSearch(AsyncCallback<ArrayList<Group>> callback) {
-		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
-			Postalcode postalcode = location.getPostalcode().getBean();			
-			if (postalcode != null) {
-				latitude = postalcode.getLatitude();
-				longitude = postalcode.getLongitude();
-			}
-		} else {
-			Zipcode zipcode = location.getZipcode().getBean();		
-			if (zipcode != null) {
-				latitude = zipcode.getLatitude();
-				longitude = zipcode.getLongitude();
-			}
-		}
-		ArrayList<String> errors = getErrors();
-		if (errors.size() > 0) {
-			errorPanel.setErrors(errors);
-			errorPanel.show();		
-			
-		} else {
-			errorPanel.hide();				
-			if (callback == null) {
-				callback = new AsyncCallback<ArrayList<Group>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						GWTUtil.log("", caught);
-					}
-
-					@Override
-					public void onSuccess(ArrayList<Group> result) {
-						GWTUtil.log("Wow, this actually succeeded");
-					}
-
-				};
-			}
-			ServiceBroker.groupService.search(
-					groupName.getValue(), 
-					latitude, 
-					longitude, 
-					radius.getValue(), 
-					callback);
-		}		
+	public void doSearch() {
+		searchGroupsGrid.load();
+		
 		SearchForGroups.getInstance().resize(0, 0);
 	}
 
