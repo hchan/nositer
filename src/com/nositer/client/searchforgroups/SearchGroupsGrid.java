@@ -28,6 +28,7 @@ import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
 import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
+import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
@@ -43,10 +44,11 @@ import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
 import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
-@SuppressWarnings({"rawtypes"})
+
 public class SearchGroupsGrid extends GroupsGrid {
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
-
+	private PagingToolBar pagingToolBar;
+	
 	public SearchCriteriaForGroupsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
 	}
@@ -91,7 +93,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 		setLoadMask(true);  
 		setBorders(true);  
 		setAutoExpandColumn(Group.ColumnType.description.toString());  
-		this.setHeight(500);
+		
 	}
 
 
