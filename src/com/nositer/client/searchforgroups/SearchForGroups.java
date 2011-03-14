@@ -30,8 +30,16 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 	private ContentPanel contentPanel;
 	private SearchGroupsGrid searchGroupsGrid;
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
-	private PagingToolBar pagingToolBar;
+	private SearchForGroupsPagingToolBar pagingToolBar;
 	private static SearchForGroups instance;
+
+	public SearchForGroupsPagingToolBar getPagingToolBar() {
+		return pagingToolBar;
+	}
+
+	public void setPagingToolBar(SearchForGroupsPagingToolBar pagingToolBar) {
+		this.pagingToolBar = pagingToolBar;
+	}
 
 	public static SearchForGroups getInstance() {
 		return instance;
@@ -64,7 +72,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 
 
 	private void initToolBar() {
-		pagingToolBar = new PagingToolBar(ComboBoxPlus.DEFAULTLIMIT);
+		pagingToolBar = new SearchForGroupsPagingToolBar(ComboBoxPlus.DEFAULTLIMIT);
 
 		
 	
