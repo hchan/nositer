@@ -186,7 +186,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
 			addEntity(com.nositer.hibernate.generated.domain.Group.class).
-			setString(Group.ColumnType.name.toString(), name).
+			setString(Group.ColumnType.name.toString(), "%" + name + "%").
 			setParameter("latitude", latitude).		
 			setParameter("longitude", longitude).
 			setParameter("radius", radius).	
