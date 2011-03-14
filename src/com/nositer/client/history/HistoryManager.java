@@ -132,7 +132,7 @@ public class HistoryManager {
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.equals(SEARCHFORGROUPS.toString())) {
 			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
+			leftPanel.getNavigationTree().select(leftPanel.getSearchForGroupsNavigationItem());
 			setMainPanel(new SearchForGroups());
 		} 
 	}
