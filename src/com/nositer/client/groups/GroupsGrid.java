@@ -6,6 +6,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.BaseListLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
+import com.extjs.gxt.ui.client.data.Loader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
@@ -50,6 +51,15 @@ public class GroupsGrid extends Grid<BeanModel> {
 	protected GroupingView groupingView;
 	protected Menu contextMenu;
 
+	public RpcProxy getProxy() {
+		return proxy;
+	}
+	
+	public Loader getLoader() {
+		return loader;
+	}
+	
+	
 	public GroupsGrid() {
 		proxy = new RpcProxy<ArrayList<Group>>() {
 			@Override

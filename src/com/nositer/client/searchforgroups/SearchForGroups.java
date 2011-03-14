@@ -1,16 +1,31 @@
 package com.nositer.client.searchforgroups;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
+import com.extjs.gxt.ui.client.data.BasePagingLoader;
+import com.extjs.gxt.ui.client.data.BeanModelReader;
+import com.extjs.gxt.ui.client.data.ListLoadResult;
+import com.extjs.gxt.ui.client.data.LoadEvent;
+import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
+import com.extjs.gxt.ui.client.data.PagingLoader;
 import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.BorderLayoutEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.LoadListener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.dto.generated.Group;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.combobox.ComboBoxPlus;
 
+@SuppressWarnings("rawtypes")
 public class SearchForGroups extends LayoutContainer implements Resizable {
 	private ContentPanel contentPanel;
 	private SearchGroupsGrid searchGroupsGrid;
@@ -40,13 +55,35 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
 		contentPanel.add(searchGroupsGrid);
 		add(contentPanel);
-		pagingToolBar = new PagingToolBar(50);
+		initToolBar();
 		contentPanel.setBottomComponent(pagingToolBar);
 		addDefaultListeners();
 		resize(0,0);
 		instance = this;
 	}
 
+
+	private void initToolBar() {
+		pagingToolBar = new PagingToolBar(ComboBoxPlus.DEFAULTLIMIT);
+
+		
+	
+		pagingToolBar.bind((PagingLoader) searchGroupsGrid.getLoader());
+		searchGroupsGrid.getLoader().addLoadListener(new LoadListener() {
+			@Override
+			public void loaderLoad(LoadEvent le) {
+
+				BasePagingLoadResult basePagingLoadResult = le.getData();
+
+				int actualSize = basePagingLoadResult.getData().size();
+				if (actualSize == ComboBoxPlus.DEFAULTLIMIT) {
+					basePagingLoadResult.setTotalLength(ComboBoxPlus.FICTITIOUSCOUNT);
+				}
+				super.loaderLoad(le);
+			}
+		});
+
+	}
 
 	private void addDefaultListeners() {
 		searchCriteriaForGroupsPanel.addListener(Events.Collapse, new Listener<BaseEvent>() {
@@ -58,9 +95,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		searchCriteriaForGroupsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent baseEvent) {	
-				
-				resize(0,0);
-				
+				resize(0,0);				
 			}}
 		);
 	}
@@ -69,7 +104,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 	public void resize(int width, int height) {
 		int gridHeightOffset = 258;
 		if (searchCriteriaForGroupsPanel.isRendered()) {
-		
+
 			if (searchCriteriaForGroupsPanel.isCollapsed()) {
 				gridHeightOffset -= 200;
 			}

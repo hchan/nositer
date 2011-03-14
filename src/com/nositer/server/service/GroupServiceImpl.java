@@ -192,7 +192,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			setParameter("radius", radius).	
 			list();
 			if (results.size() == 0) {				
-				retval = null;
+				retval = new ArrayList<Group>();
 			} else {
 				retval = BeanConversion.copyDomain2DTO(results, Group.class);									
 			}
