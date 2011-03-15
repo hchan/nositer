@@ -25,7 +25,7 @@ import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
-import com.nositer.client.searchforgroups.SearchForGroups;
+import com.nositer.client.searchforgroups.SearchForGroupsContainer;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
@@ -111,11 +111,17 @@ public class HistoryManager {
 		} else if (historyToken.equals(GROUPS.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showNonClosableTab(Groups.TabItemType.GROUPS);
+			setMainPanel(Groups.getInstance(true));
+		}  else if (historyToken.equals(SEARCHFORGROUPS.toString())) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getSearchForGroupsNavigationItem());
+			Groups.getInstance(true).showNonClosableTab(Groups.TabItemType.SEARCHFORGROPS);
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showTab(getSubHistoryToken(), GroupTabPanel.TabItemType.VIEW);
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.VIEW);
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
 			leftPanel.getIWantto().expand();	
@@ -128,13 +134,9 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(EDITGROUP.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showTab(getSubHistoryToken(), GroupTabPanel.TabItemType.EDIT);
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.EDIT);
 			setMainPanel(Groups.getInstance(true));
-		} else if (historyToken.equals(SEARCHFORGROUPS.toString())) {
-			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getSearchForGroupsNavigationItem());
-			setMainPanel(new SearchForGroups());
-		} 
+		}
 	}
 
 

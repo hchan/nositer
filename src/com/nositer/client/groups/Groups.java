@@ -1,27 +1,39 @@
 package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
-import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.searchforgroups.SearchForGroupsContainer;
 import com.nositer.client.top.TopPanel;
-import com.nositer.client.util.GWTUtil;
-import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class Groups extends TabPanel {
 
-	private TabItemPlus groupsItem;
+	public enum TabItemType {
+		GROUPS, SEARCHFORGROPS
+	}
+
+	private TabItemPlus groupsTabItem;
+	private TabItem searchForGroupsTabItem;
 	private GroupsContainer groupsContainer;
+	private SearchForGroupsContainer searchForGroupsContainer;
 	private static Groups instance;
+
+	
+	public TabItem getSearchForGroupsTabItem() {
+		return searchForGroupsTabItem;
+	}
+
+	public void setSearchForGroupsTabItem(TabItem searchForGroupsTabItem) {
+		this.searchForGroupsTabItem = searchForGroupsTabItem;
+	}
 
 	public GroupsContainer getGroupsContainer() {
 		return groupsContainer;
@@ -46,12 +58,12 @@ public class Groups extends TabPanel {
 		Groups.instance = instance;
 	}
 
-	public TabItemPlus getGroupsItem() {
-		return groupsItem;
+	public TabItemPlus getGroupsTabItem() {
+		return groupsTabItem;
 	}
 
-	public void setGroupsItem(TabItemPlus groupsItem) {
-		this.groupsItem = groupsItem;
+	public void setGroupsItem(TabItemPlus groupsTabItem) {
+		this.groupsTabItem = groupsTabItem;
 	}
 
 	public Groups() {
@@ -62,16 +74,22 @@ public class Groups extends TabPanel {
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-		groupsItem = new TabItemPlus("Groups") {
-
+		groupsTabItem = createGroupsTabItem();
+		searchForGroupsTabItem = createSearchForGroupsTabItem();
+		
+		add(groupsTabItem);
+		add(searchForGroupsTabItem);
+		instance = this;
+	}
+	
+	private TabItemPlus createGroupsTabItem() {
+		TabItemPlus retval;
+		retval = new TabItemPlus("Groups") {
 			@Override
-			public void resize(int width, int height) {
-				
-			}
-			
+			public void resize(int width, int height) {				
+			}			
 			@Override
-			public void addDefaultListeners() {
-			
+			public void addDefaultListeners() {			
 				addListener(Events.Select, new Listener() {
 					@Override
 					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
@@ -79,26 +97,52 @@ public class Groups extends TabPanel {
 						resize(0,0);
 					}
 				});
-			}
-			
+			}			
 		};  
-		groupsItem.setClosable(false);
-		groupsItem.addListener(Events.Select, new Listener() {
+		retval.setClosable(false);
+		retval.addListener(Events.Select, new Listener() {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
 				//resize(0,0);
 				
-			}});
-		FitLayout layout = new FitLayout();
-		groupsItem.setLayout(layout);
+			}});		
 		groupsContainer = new GroupsContainer();
-		groupsItem.add(groupsContainer);
-		add(groupsItem);
-		instance = this;
+		retval.add(groupsContainer);
+		return retval;
 	}
 	
-	public TabItem showTab(String tabId, GroupTabPanel.TabItemType tabItemType) {
+	private TabItem createSearchForGroupsTabItem() {
+		TabItem retval;
+		retval = new TabItemPlus("Search For Groups") {
+			@Override
+			public void resize(int width, int height) {				
+			}			
+			@Override
+			public void addDefaultListeners() {			
+				addListener(Events.Select, new Listener() {
+					@Override
+					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
+						HistoryManager.addHistory(HistoryToken.SEARCHFORGROUPS.toString());
+						resize(0,0);
+					}
+				});
+			}			
+		};  
+		retval.setClosable(false);
+		retval.addListener(Events.Select, new Listener() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				//resize(0,0);
+				
+			}});		
+		searchForGroupsContainer = new SearchForGroupsContainer();
+		retval.add(searchForGroupsContainer);
+		return retval;
+	}
+
+	public TabItem showClosableTab(String tabId, GroupTabPanel.TabItemType tabItemType) {
 		TabItem tabItem = null;
 		tabItem = findItem(tabId, false);
 		if (tabItem == null) {
@@ -109,7 +153,16 @@ public class Groups extends TabPanel {
 		return tabItem;
 	}
 
-
+	public TabItem showNonClosableTab(Groups.TabItemType tabItemType) {
+		TabItem tabItem = null;
+		if (tabItemType.equals(Groups.TabItemType.GROUPS)) {
+			tabItem = groupsTabItem;
+		} else if (tabItemType.equals(Groups.TabItemType.SEARCHFORGROPS)) {
+			tabItem = searchForGroupsTabItem;
+		}
+		setSelection(tabItem);		
+		return tabItem;
+	}
 	
 	
 

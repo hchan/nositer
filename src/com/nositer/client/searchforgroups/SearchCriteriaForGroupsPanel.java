@@ -178,7 +178,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 	public void doSearch() {
 		searchGroupsGrid.load();
 		
-		SearchForGroups.getInstance().resize(0, 0);
+		SearchForGroupsContainer.getInstance().resize(0, 0);
 	}
 
 	public ArrayList<String> getErrors() {

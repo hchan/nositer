@@ -71,7 +71,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 			@Override
 			protected void loadData(final Object config) {
 				super.loadData(config);
-				SearchForGroups.getInstance().resize(0,0);
+				SearchForGroupsContainer.getInstance().resize(0,0);
 			}
 		}; 
 			
@@ -135,8 +135,8 @@ public class SearchGroupsGrid extends GroupsGrid {
 		if (errors.size() > 0) {
 			errorPanel.setErrors(errors);
 			errorPanel.show();	
-			SearchForGroups.getInstance().getPagingToolBar().setEnabled(true);
-			SearchForGroups.getInstance().getPagingToolBar().setImages(SearchForGroups.getInstance().getPagingToolBar().getImages());
+			SearchForGroupsContainer.getInstance().getPagingToolBar().setEnabled(true);
+			SearchForGroupsContainer.getInstance().getPagingToolBar().setImages(SearchForGroupsContainer.getInstance().getPagingToolBar().getImages());
 			//getRefreshButton().setIcon(SearchForGroups.getInstance().getPagingToolBar().getImages().getRefresh());
 		} else {
 			errorPanel.hide();				

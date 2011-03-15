@@ -26,12 +26,12 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.combobox.ComboBoxPlus;
 
 @SuppressWarnings("rawtypes")
-public class SearchForGroups extends LayoutContainer implements Resizable {
+public class SearchForGroupsContainer extends LayoutContainer implements Resizable {
 	private ContentPanel contentPanel;
 	private SearchGroupsGrid searchGroupsGrid;
 	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
 	private SearchForGroupsPagingToolBar pagingToolBar;
-	private static SearchForGroups instance;
+	private static SearchForGroupsContainer instance;
 
 	public SearchForGroupsPagingToolBar getPagingToolBar() {
 		return pagingToolBar;
@@ -41,15 +41,15 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 		this.pagingToolBar = pagingToolBar;
 	}
 
-	public static SearchForGroups getInstance() {
+	public static SearchForGroupsContainer getInstance() {
 		return instance;
 	}
 
-	public static void setInstance(SearchForGroups instance) {
-		SearchForGroups.instance = instance;
+	public static void setInstance(SearchForGroupsContainer instance) {
+		SearchForGroupsContainer.instance = instance;
 	}
 
-	public SearchForGroups() {
+	public SearchForGroupsContainer() {
 		init();
 	}
 
@@ -110,6 +110,7 @@ public class SearchForGroups extends LayoutContainer implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
 		int gridHeightOffset = 258;
 		if (searchCriteriaForGroupsPanel.isRendered()) {
 
