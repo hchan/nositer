@@ -17,6 +17,7 @@ import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.LoadListener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
@@ -60,12 +61,16 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 		searchCriteriaForGroupsPanel = new SearchCriteriaForGroupsPanel();
 		searchGroupsGrid = new SearchGroupsGrid(searchCriteriaForGroupsPanel);
 		searchCriteriaForGroupsPanel.setSearchGroupsGrid(searchGroupsGrid);
+		contentPanel.setLayout(new FitLayout());
 		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
 		contentPanel.add(searchGroupsGrid);
 		add(contentPanel);
 		initToolBar();
 		contentPanel.setBottomComponent(pagingToolBar);
 		addDefaultListeners();
+		setAutoHeight(true);
+		setAutoWidth(true);
+		setStateful(false);
 		resize(0,0);
 		instance = this;
 	}
@@ -74,8 +79,8 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 	private void initToolBar() {
 		pagingToolBar = new SearchForGroupsPagingToolBar(ComboBoxPlus.DEFAULTLIMIT);
 
-		
-	
+
+
 		pagingToolBar.bind((PagingLoader) searchGroupsGrid.getLoader());
 		searchGroupsGrid.getLoader().addLoadListener(new LoadListener() {
 			@Override
@@ -110,18 +115,23 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 
 	@Override
 	public void resize(int width, int height) {
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
-		int gridHeightOffset = 258;
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
+		//int gridHeightOffset = 258;
 		if (searchCriteriaForGroupsPanel.isRendered()) {
-
-			if (searchCriteriaForGroupsPanel.isCollapsed()) {
-				gridHeightOffset -= 200;
-			}
 			if (searchCriteriaForGroupsPanel.getErrorPanel().isVisible()) {
-				gridHeightOffset += searchCriteriaForGroupsPanel.getErrorPanel().getHeight();
+				searchCriteriaForGroupsPanel.getErrorPanel().hide();
+				searchCriteriaForGroupsPanel.getErrorPanel().show();
 			}
+			//if (searchCriteriaForGroupsPanel.isCollapsed()) {
+			//	gridHeightOffset -= 200;
+			contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-30);
+			//}
+			//if (searchCriteriaForGroupsPanel.getErrorPanel().isVisible()) {
+			//	gridHeightOffset += searchCriteriaForGroupsPanel.getErrorPanel().getHeight();
+			//}
 		}
-		searchGroupsGrid.setHeight(MainPanel.getInstance().getHeight() - gridHeightOffset);
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		searchCriteriaForGroupsPanel.getLocation().getGeographyCode().layout();
+
 	}
 }

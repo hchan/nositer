@@ -108,6 +108,7 @@ public class Groups extends TabPanel {
 				
 			}});		
 		groupsContainer = new GroupsContainer();
+		retval.setLayout(new FitLayout());
 		retval.add(groupsContainer);
 		return retval;
 	}
@@ -138,6 +139,7 @@ public class Groups extends TabPanel {
 				
 			}});		
 		searchForGroupsContainer = new SearchForGroupsContainer();
+		retval.setLayout(new FitLayout());
 		retval.add(searchForGroupsContainer);
 		return retval;
 	}
