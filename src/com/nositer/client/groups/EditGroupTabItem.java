@@ -3,7 +3,7 @@ package com.nositer.client.groups;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
-import com.nositer.client.creategroup.CreateGroup;
+import com.nositer.client.createoreditgroup.CreateOrEditGroup;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
@@ -12,7 +12,7 @@ import com.nositer.client.widget.Resizable;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class EditGroupTabItem extends TabItem implements Resizable {
 
-	private CreateGroup createGroup;
+	private CreateOrEditGroup createOrEditGroup;
 	private Group group;
 
 	public EditGroupTabItem(Group group) {
@@ -22,13 +22,14 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 	}
 
 	public void init() {
-		createGroup = new CreateGroup() {
+		createOrEditGroup = new CreateOrEditGroup(false) {
 			@Override
 			public int getHeightOffset() {
 				return 300;
 			};
 		};		
-		add(createGroup);
+		createOrEditGroup.populate(group);
+		add(createOrEditGroup);
 		addDefaultListeners();
 	}
 

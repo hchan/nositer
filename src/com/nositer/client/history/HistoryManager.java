@@ -13,8 +13,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.creategroup.CreateGroup;
 import com.nositer.client.createiwantto.CreateIWantTo;
+import com.nositer.client.createoreditgroup.CreateOrEditGroup;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.editprofile.ChangePassword;
 import com.nositer.client.editprofile.EditAboutMe;
@@ -107,7 +107,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(CREATEGROUP.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
-			setMainPanel(new CreateGroup());
+			setMainPanel(new CreateOrEditGroup(true));
 		} else if (historyToken.equals(GROUPS.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());

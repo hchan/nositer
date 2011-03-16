@@ -1,4 +1,4 @@
-package com.nositer.client.creategroup;
+package com.nositer.client.createoreditgroup;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,10 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 
-public class CreateGroup extends LayoutContainer implements Resizable {
+public class CreateOrEditGroup extends LayoutContainer implements Resizable {
+
+	private Integer groupid;
+	private boolean create = false;
 	private FormPanel formPanel;
 	private TextField<String> name;
 	private TextField<String> tagname;
@@ -39,6 +42,22 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 	private ErrorPanel errorPanel;
 	private AvatarSelector avatarSelector;
 	
+	public Integer getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(Integer groupid) {
+		this.groupid = groupid;
+	}
+
+	public boolean isCreate() {
+		return create;
+	}
+
+	public void setCreate(boolean create) {
+		this.create = create;
+	}
+
 	public FormPanel getFormPanel() {
 		return formPanel;
 	}
@@ -87,7 +106,8 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		this.avatarSelector = avatarSelector;
 	}
 
-	public CreateGroup() {
+	public CreateOrEditGroup(boolean create) {
+		this.create = create;
 		init();
 	}
 
@@ -119,7 +139,11 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		description.setFieldLabel("Description");
 		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
-		addLabel("Create Group");
+		if (create) {
+			addLabel("Create Group");
+		} else {
+			addLabel("Edit Group");
+		}
 		formPanel.add(tagname, new FormData("100%"));
 		formPanel.add(name, new FormData("100%"));
 		FormData formDataAvatarSelector = new FormData();
@@ -146,11 +170,7 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		ServiceBroker.profileService.getCurrentUser(callback);
 		*/
 	}
-	
-	private void populate(User user) {
-		name.setValue(user.getNote());
-		description.setValue(user.getDescription());
-	}
+
 	
 	@Override
 	public void resize(int width, int height) {
@@ -219,8 +239,18 @@ public class CreateGroup extends LayoutContainer implements Resizable {
 		button.addListener(Events.Select, saveListener);
 	}
 	
+	
+	public void populate(Group group) {
+		groupid = group.getId();
+		name.setValue(group.getName());
+		tagname.setValue(group.getTagname());
+		description.setValue(group.getDescription());
+		avatarSelector.getSelectedFile().setValue(group.getAvatarlocation());
+	}
+	
 	private Group createGroupDTO() {
 		Group retval = new Group();
+		retval.setId(groupid);
 		retval.setName(name.getValue());
 		retval.setTagname(tagname.getValue());
 		retval.setDescription(description.getValue());
