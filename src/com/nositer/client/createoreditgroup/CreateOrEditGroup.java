@@ -41,7 +41,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	private HtmlEditor description;
 	private ErrorPanel errorPanel;
 	private AvatarSelector avatarSelector;
-	
+
 	public Integer getGroupid() {
 		return groupid;
 	}
@@ -113,8 +113,8 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 
 	public void init() {	
 		formPanel = new FormPanel();
-		
-		
+
+
 		formPanel.setHeaderVisible(false);
 		//formPanel.setLabelWidth(200);
 		formPanel.setLabelAlign(LabelAlign.TOP);
@@ -130,12 +130,12 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		name = new TextField<String>();
 		name.setFieldLabel("* Name");
 		name.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
-		
+
 		avatarSelector = new AvatarSelector();
-		
+
 		description = new HtmlEditor();
 		setDescriptionHeight();
-		
+
 		description.setFieldLabel("Description");
 		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
@@ -150,7 +150,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
 		formPanel.add(avatarSelector, formDataAvatarSelector);
 		formPanel.add(description, new FormData("100%"));	
-		
+
 		this.add(formPanel);
 		initButtons();	
 		/*
@@ -168,16 +168,16 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 			}
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
-		*/
+		 */
 	}
 
-	
+
 	@Override
 	public void resize(int width, int height) {
 		formPanel.setWidth(this.getWidth());
 		setDescriptionHeight();
 	}
-	
+
 	public void setDescriptionHeight() {
 		int heightOffset = getHeightOffset();
 		if (errorPanel.isRendered() && !errorPanel.isHidden()) {
@@ -189,7 +189,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	public int getHeightOffset() {
 		return 250;
 	}
-	
+
 
 	public void initButtons() {
 		initSaveButton();
@@ -232,14 +232,18 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 							});										
 						}
 					};
-					ServiceBroker.groupService.createGroup(createGroupDTO(), callback);
+					if (isCreate()) {
+						ServiceBroker.groupService.createGroup(createGroupDTO(), callback);
+					} else {
+						ServiceBroker.groupService.updateGroup(createGroupDTO(), callback);
+					}
 				}
 			}
 		};
 		button.addListener(Events.Select, saveListener);
 	}
-	
-	
+
+
 	public void populate(Group group) {
 		groupid = group.getId();
 		name.setValue(group.getName());
@@ -247,7 +251,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		description.setValue(group.getDescription());
 		avatarSelector.getSelectedFile().setValue(group.getAvatarlocation());
 	}
-	
+
 	private Group createGroupDTO() {
 		Group retval = new Group();
 		retval.setId(groupid);

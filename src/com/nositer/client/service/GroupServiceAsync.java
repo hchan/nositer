@@ -17,4 +17,6 @@ public interface GroupServiceAsync {
 
 	void search(String name, Float latitude, Float longitude, Number radius, AsyncCallback<ArrayList<Group>> callback);
 
+	void updateGroup(Group group, AsyncCallback<Group> callback);
+
 }
