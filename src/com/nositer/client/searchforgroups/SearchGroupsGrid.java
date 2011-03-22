@@ -14,6 +14,7 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoader; 
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
+import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
@@ -25,10 +26,14 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.menuitem.DeleteMenuItem;
+import com.nositer.client.widget.menuitem.EditMenuItem;
+import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 
 public class SearchGroupsGrid extends GroupsGrid {
@@ -163,5 +168,25 @@ public class SearchGroupsGrid extends GroupsGrid {
 					callback);
 		}		
 		unmask();
+	}
+	
+	
+	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
+		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
+		final Group group = beanModel.getBean();	
+		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			contextMenu.removeAll();
+			ViewMenuItem viewMenuItem = new ViewMenuItem() {
+				public void doSelect() {
+					doViewGroup(group);
+				};
+			};
+			contextMenu.add(viewMenuItem);		
+			
+
+		} else {
+			gridEvent.setCancelled(true);
+		}
 	}
 }

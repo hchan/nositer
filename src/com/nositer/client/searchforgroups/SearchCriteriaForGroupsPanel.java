@@ -124,7 +124,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 				super.init();
 				radius = new NumberField();
 				radius.setValue(50);
-				radius.setFieldLabel("Radius");
+				radius.setFieldLabel("Radius (km)");
 				LayoutContainer radiusContainer = new LayoutContainer();
 				radiusContainer.setLayout(new FormLayout());
 				radiusContainer.add(radius);

@@ -259,7 +259,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 	}
 
 	public void doViewGroup(Group group) {
-		HistoryManager.addSubHistoryToken(group.getTagname());
+		//HistoryManager.addSubHistoryToken(group.getTagname());
+		HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + group.getTagname());
 	}
 
 	public void doEditGroup(Group group) {
