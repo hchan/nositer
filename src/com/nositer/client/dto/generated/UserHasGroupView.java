@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 23, 2011 4:24:28 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 24, 2011 1:58:31 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -35,7 +35,7 @@ public class UserHasGroupView implements java.io.Serializable, IsSerializable,
 	private Integer userid;
 	private Boolean owner;
 	private Boolean invisible;
-	public static final String TABLENAME = "nositer.userhasgroupview";
+	public static final String TABLENAME = "nositer.user_has_group_view";
 
 	public String getTablename() {
 		return TABLENAME;

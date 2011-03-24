@@ -155,7 +155,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 
 			@Override
 			public String render(GroupColumnData data) {
-				BeanModel beanModel   = (BeanModel) data.models.get(0);
+				BeanModel beanModel = (BeanModel) data.models.get(0);
 				UserHasGroupView userHasGroupView = beanModel.getBean();
 				String text = null;
 				if (Groups.isGroupIOwn(userHasGroupView)) {
@@ -178,7 +178,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(Group.ColumnType.description.toString());  
+		setAutoExpandColumn(UserHasGroupView.ColumnType.description.toString());  
 
 	}
 

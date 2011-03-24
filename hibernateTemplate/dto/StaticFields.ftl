@@ -6,7 +6,7 @@
     <#assign tableNamePrefix>
     </#assign>
 </#if>
-public static final String TABLENAME = "${tableNamePrefix}${pojo.getDeclarationName()?lower_case}";
+public static final String TABLENAME = "${tableNamePrefix}${clazz.table.name?lower_case}";
 
 public String getTablename() {
        return TABLENAME;

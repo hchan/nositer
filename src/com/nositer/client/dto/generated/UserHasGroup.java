@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 23, 2011 4:24:28 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 24, 2011 1:58:31 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -28,7 +28,7 @@ public class UserHasGroup implements java.io.Serializable, IsSerializable,
 	private Boolean invisible;
 	private Date createdtime;
 	private Date modifiedtime;
-	public static final String TABLENAME = "nositer.userhasgroup";
+	public static final String TABLENAME = "nositer.user_has_group";
 
 	public String getTablename() {
 		return TABLENAME;

@@ -140,9 +140,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(
+			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(
 					SqlHelper.FINDMYGROUPS).		
-					addEntity(com.nositer.hibernate.generated.domain.Group.class).
+					addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
 					setInteger(UserHasGroupView.ColumnType.userid.toString(), 
 							user.getId()
 					).
