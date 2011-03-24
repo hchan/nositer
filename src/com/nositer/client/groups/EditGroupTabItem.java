@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.widget.Resizable;
@@ -13,11 +14,11 @@ import com.nositer.client.widget.Resizable;
 public class EditGroupTabItem extends TabItem implements Resizable {
 
 	private CreateOrEditGroup createOrEditGroup;
-	private Group group;
+	private UserHasGroupView userHasGroupView;
 
-	public EditGroupTabItem(Group group) {
+	public EditGroupTabItem(UserHasGroupView userHasGroupView) {
 		super("Edit");
-		this.group = group;
+		this.userHasGroupView = userHasGroupView;
 		init();
 	}
 
@@ -28,7 +29,7 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 				return 300;
 			};
 		};		
-		createOrEditGroup.populate(group);
+		createOrEditGroup.populate(userHasGroupView);
 		add(createOrEditGroup);
 		addDefaultListeners();
 	}
@@ -38,7 +39,7 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + group.getTagname());
+				HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
 				resize(0,0);
 			}
 		});

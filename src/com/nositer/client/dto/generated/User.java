@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 23, 2011 4:24:28 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -43,7 +43,6 @@ public class User implements java.io.Serializable, IsSerializable,
 	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
-	private Set<Group> groups = new HashSet<Group>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
@@ -74,8 +73,8 @@ public class User implements java.io.Serializable, IsSerializable,
 			Date birthdate, String profession, String avatarlocation,
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Boolean disable, Date createdtime,
-			Date modifiedtime, Set<Group> groups,
-			Set<UserHasGroup> userHasGroups, Set<Iwantto> iwanttos,
+			Date modifiedtime, Set<UserHasGroup> userHasGroups,
+			Set<Iwantto> iwanttos,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
 			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
@@ -99,7 +98,6 @@ public class User implements java.io.Serializable, IsSerializable,
 		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
-		this.groups = groups;
 		this.userHasGroups = userHasGroups;
 		this.iwanttos = iwanttos;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
@@ -320,14 +318,6 @@ public class User implements java.io.Serializable, IsSerializable,
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
-	}
-
-	public Set<Group> getGroups() {
-		return this.groups;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
 	}
 
 	public Set<UserHasGroup> getUserHasGroups() {

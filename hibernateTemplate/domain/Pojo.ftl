@@ -17,6 +17,9 @@ ${pojo.getPackageDeclaration()}
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
+
+
+
 <#assign classbody>
 @SuppressWarnings("serial")
 <#include "PojoTypeDeclaration.ftl"/>, Domain {

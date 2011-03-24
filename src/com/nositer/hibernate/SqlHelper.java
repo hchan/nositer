@@ -7,6 +7,7 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
 	
@@ -43,12 +44,14 @@ public class SqlHelper {
 		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 	public static String FINDMYGROUPS =
-		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.userid + " = :" + Group.ColumnType.userid + 
+		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + 
 		" and " + NOTDISABLE +
 		" order by " + Group.ColumnType.name;
 	public static String FINDGROUPBYTAGNAME =
-		"select * from " + Group.TABLENAME + " where " + Group.ColumnType.tagname + " = :" + Group.ColumnType.tagname +
-		" and " + NOTDISABLE;
+		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.tagname + " = :" + UserHasGroupView.ColumnType.tagname +
+		" and " + NOTDISABLE +
+		" order by " + UserHasGroupView.ColumnType.owner + " desc" +
+		" limit 1";
 	public static String FINDMYIWANTTOS =
 		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid +
 		" and " + NOTDISABLE +
@@ -58,12 +61,13 @@ public class SqlHelper {
 		Group.ColumnType.disable + " = true" +
 		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
 	public static String FINDGROUPS =
-		"select " + Group.TABLENAME + "." + "* from " + Group.TABLENAME + 
+		"select " + UserHasGroupView.TABLENAME + "." + "* from " + UserHasGroupView.TABLENAME + 
 		" left outer join " + Postalcode.TABLENAME + " on " + 
-		Group.TABLENAME + "." + Group.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
+		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
-		Group.TABLENAME + "." + Group.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
-		" where " + Group.TABLENAME + "." + Group.ColumnType.name + " like :" + Group.ColumnType.name + 
+		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
+		" where " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.name + " like :" + UserHasGroupView.ColumnType.name + 
+		" and " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
 		" and " + NOTDISABLE +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 

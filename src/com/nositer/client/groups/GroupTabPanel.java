@@ -2,6 +2,7 @@ package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.groups.GroupTabPanel.TabItemType;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
@@ -14,7 +15,7 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
 	
-	private Group group;
+	private UserHasGroupView userHasGroupView;
 
 	public ViewGroupTabItem getViewGroupTabItem() {
 		return viewGroupTabItem;
@@ -44,23 +45,23 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 
 
-	public Group getGroup() {
-		return group;
+	public UserHasGroupView getUserHasGroupView() {
+		return userHasGroupView;
 	}
 
 
 
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setGroup(UserHasGroupView userHasGroupView) {
+		this.userHasGroupView = userHasGroupView;
 	}
 
 
 
 
-	public GroupTabPanel(Group group) {
+	public GroupTabPanel(UserHasGroupView userHasGroupView) {
 		super();
-		this.group = group;
+		this.userHasGroupView = userHasGroupView;
 		init();
 	}
 
@@ -69,11 +70,11 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 	public void init() {
 		setTabPosition(TabPosition.BOTTOM);
-		viewGroupTabItem = new ViewGroupTabItem(group);
+		viewGroupTabItem = new ViewGroupTabItem(userHasGroupView);
 		add(viewGroupTabItem);
 		resize(0,0);
-		if (Groups.isGroupIOwn(group)) {
-			editGroupTabItem = new EditGroupTabItem(group);
+		if (Groups.isGroupIOwn(userHasGroupView)) {
+			editGroupTabItem = new EditGroupTabItem(userHasGroupView);
 			add(editGroupTabItem);
 		}
 	}

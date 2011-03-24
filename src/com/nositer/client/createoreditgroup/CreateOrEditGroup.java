@@ -22,6 +22,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -244,12 +245,12 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	}
 
 
-	public void populate(Group group) {
-		groupid = group.getId();
-		name.setValue(group.getName());
-		tagname.setValue(group.getTagname());
-		description.setValue(group.getDescription());
-		avatarSelector.getSelectedFile().setValue(group.getAvatarlocation());
+	public void populate(UserHasGroupView userHasGroupView) {
+		groupid = userHasGroupView.getId();
+		name.setValue(userHasGroupView.getName());
+		tagname.setValue(userHasGroupView.getTagname());
+		description.setValue(userHasGroupView.getDescription());
+		avatarSelector.getSelectedFile().setValue(userHasGroupView.getAvatarlocation());
 	}
 
 	private Group createGroupDTO() {

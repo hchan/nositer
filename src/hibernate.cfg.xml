@@ -32,6 +32,7 @@
         <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
         <mapping class="com.nositer.hibernate.generated.domain.Iwantto" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasSecurityquestioncode" />
+        <mapping class="com.nositer.hibernate.generated.domain.UserHasGroupView" />
         <mapping class="com.nositer.hibernate.generated.domain.Salutationcode" />
         <mapping class="com.nositer.hibernate.generated.domain.Group" />
     </session-factory>

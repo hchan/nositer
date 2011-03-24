@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Mar 9, 2011 2:37:49 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 23, 2011 4:24:28 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -32,6 +32,8 @@ public class UserHasGroup implements java.io.Serializable, Domain {
 	private Integer id;
 	private Group group;
 	private User user;
+	private Boolean owner;
+	private Boolean invisible;
 	private Date createdtime;
 	private Date modifiedtime;
 
@@ -43,10 +45,12 @@ public class UserHasGroup implements java.io.Serializable, Domain {
 		this.user = user;
 	}
 
-	public UserHasGroup(Group group, User user, Date createdtime,
-			Date modifiedtime) {
+	public UserHasGroup(Group group, User user, Boolean owner,
+			Boolean invisible, Date createdtime, Date modifiedtime) {
 		this.group = group;
 		this.user = user;
+		this.owner = owner;
+		this.invisible = invisible;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 	}
@@ -119,6 +123,24 @@ public class UserHasGroup implements java.io.Serializable, Domain {
 	 }
 	 }
 	 */
+
+	@Column(name = "owner")
+	public Boolean getOwner() {
+		return this.owner;
+	}
+
+	public void setOwner(Boolean owner) {
+		this.owner = owner;
+	}
+
+	@Column(name = "invisible")
+	public Boolean getInvisible() {
+		return this.invisible;
+	}
+
+	public void setInvisible(Boolean invisible) {
+		this.invisible = invisible;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createdtime", length = 19)

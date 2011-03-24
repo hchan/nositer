@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.nositer.client.dto.generated.User;
 import com.nositer.hibernate.generated.domain.Group;
 import com.nositer.server.service.GroupServiceImpl;
 import com.nositer.shared.GWTException;
@@ -15,8 +14,8 @@ public class TestGroup {
 	public static void main(String[] args) {
 		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();
 		
-		ArrayList<com.nositer.client.dto.generated.Group> myGroups = groupServiceImpl.getMyGroups();
-		for (com.nositer.client.dto.generated.Group group : myGroups) {
+		ArrayList<com.nositer.client.dto.generated.UserHasGroupView> myGroups = groupServiceImpl.getMyGroups();
+		for (com.nositer.client.dto.generated.UserHasGroupView group : myGroups) {
 			System.out.println(group.getName());
 			System.out.println(group.getUserid());
 		}
@@ -31,7 +30,6 @@ public class TestGroup {
 			trx = sess.beginTransaction();
 			Group group = HibernateUtil.findByPrimaryKey(Group.class, 1, sess);
 			System.out.println(group.getName());
-			System.out.println(group.getUserid());
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		

@@ -26,6 +26,7 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.util.GWTUtil;
@@ -54,10 +55,10 @@ public class SearchGroupsGrid extends GroupsGrid {
 		setLoadMask(false);
 
 		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
-		proxy = new RpcProxy<ArrayList<Group>>() {
+		proxy = new RpcProxy<ArrayList<UserHasGroupView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<Group>> callback) {
+					AsyncCallback<ArrayList<UserHasGroupView>> callback) {
 				SearchGroupsGrid.this.load(loadConfig,callback);
 			}
 		};  		
@@ -118,7 +119,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 	}
 
 	public void load(Object loadConfig,
-			AsyncCallback<ArrayList<Group>> callback) {
+			AsyncCallback<ArrayList<UserHasGroupView>> callback) {
 		Location location = searchCriteriaForGroupsPanel.getLocation();
 
 		ErrorPanel errorPanel = searchCriteriaForGroupsPanel.getErrorPanel();
@@ -146,7 +147,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 		} else {
 			errorPanel.hide();				
 			if (callback == null) {
-				callback = new AsyncCallback<ArrayList<Group>>() {
+				callback = new AsyncCallback<ArrayList<UserHasGroupView>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -154,7 +155,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 					}
 
 					@Override
-					public void onSuccess(ArrayList<Group> result) {
+					public void onSuccess(ArrayList<UserHasGroupView> result) {
 						GWTUtil.log("Wow, this actually succeeded");
 					}
 
@@ -173,13 +174,13 @@ public class SearchGroupsGrid extends GroupsGrid {
 	
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final Group group = beanModel.getBean();	
+		final UserHasGroupView userHasGroupView = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
 			ViewMenuItem viewMenuItem = new ViewMenuItem() {
 				public void doSelect() {
-					doViewGroup(group);
+					doViewGroup(userHasGroupView);
 				};
 			};
 			contextMenu.add(viewMenuItem);		

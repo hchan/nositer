@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 9, 2011 2:37:50 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 23, 2011 4:24:28 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -169,8 +169,6 @@ public class Postalcode implements java.io.Serializable, IsSerializable,
 		this.groups = groups;
 	}
 
-
-	
 	public enum ColumnType {
 		id, code, description, city, province, provincecode, citytype, latitude, longitude, createdtime, modifiedtime,
 	}

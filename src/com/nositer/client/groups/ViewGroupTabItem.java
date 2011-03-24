@@ -9,6 +9,7 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -23,11 +24,11 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 	private ContentPanel contentPanel;
 
 	private Avatar avatar;
-	private Group group;
+	private UserHasGroupView userHasGroupView;
 
-	public ViewGroupTabItem(Group group) {
+	public ViewGroupTabItem(UserHasGroupView group) {
 		super("View");
-		this.group = group;
+		this.userHasGroupView = group;
 		init();
 	}
 
@@ -43,9 +44,9 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		contentPanel.setScrollMode(Scroll.AUTO);
 		contentPanel.setId(getItemId());
 		description = new HtmlContainer();
-		description.setHtml(group.getDescription());
+		description.setHtml(userHasGroupView.getDescription());
 		avatar = new Avatar();
-		avatar.setPathToImage(ImageHelper.getUserImagePathURL(group.getAvatarlocation()));
+		avatar.setPathToImage(ImageHelper.getUserImagePathURL(userHasGroupView.getAvatarlocation()));
 		LayoutContainer avatarContentPanel = new LayoutContainer();
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
@@ -60,7 +61,7 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + group.getTagname());
+				HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
 				resize(0,0);
 			}
 		});

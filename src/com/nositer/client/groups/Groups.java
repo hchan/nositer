@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
@@ -168,9 +169,9 @@ public class Groups extends TabPanel {
 	
 	
 
-	public static boolean isGroupIOwn(Group group) {
+	public static boolean isGroupIOwn(UserHasGroupView userHasGroupView) {
 		boolean retval = false;
-		retval = group.getUserid().equals(TopPanel.getInstance().getUser().getId());
+		retval = userHasGroupView.getUserid().equals(TopPanel.getInstance().getUser().getId());
 		return retval;
 	}  
 }

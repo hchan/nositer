@@ -17,26 +17,22 @@
 <listEntry value="myDomain"/>
 <listEntry value="myDto"/>
 </listAttribute>
-
 <booleanAttribute key="org.hibernate.tools.exporters.myDomain" value="true"/>
 <stringAttribute key="org.hibernate.tools.exporters.myDomain.extension_id" value="org.hibernate.tools.hbmtemplate"/>
 <mapAttribute key="org.hibernate.tools.exporters.myDomain.properties">
 <mapEntry key="file_pattern" value="com/nositer/hibernate/generated/domain/{class-name}.java"/>
-<mapEntry key="package_name" value="com.nositer.hibernate.generated.domain"/>
 <mapEntry key="outputdir" value="/nositer/src"/>
+<mapEntry key="package_name" value="com.nositer.hibernate.generated.domain"/>
 <mapEntry key="template_name" value="domain/Pojo.ftl"/>
 </mapAttribute>
-
 <booleanAttribute key="org.hibernate.tools.exporters.myDto" value="true"/>
 <stringAttribute key="org.hibernate.tools.exporters.myDto.extension_id" value="org.hibernate.tools.hbmtemplate"/>
 <mapAttribute key="org.hibernate.tools.exporters.myDto.properties">
 <mapEntry key="file_pattern" value="com/nositer/client/dto/generated/{class-name}.java"/>
-<mapEntry key="package_name" value="com.nositer.client.dto.generated"/>
 <mapEntry key="outputdir" value="/nositer/src"/>
+<mapEntry key="package_name" value="com.nositer.client.dto.generated"/>
 <mapEntry key="template_name" value="dto/Pojo.ftl"/>
 </mapAttribute>
-
-
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2cfgxml" value="true"/>
 <stringAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2cfgxml.extension_id" value="org.hibernate.tools.hbm2cfgxml"/>
 <booleanAttribute key="org.hibernate.tools.exporters.org.hibernate.tools.hbm2dao" value="false"/>
@@ -58,6 +54,7 @@
 <booleanAttribute key="org.hibernate.tools.reveng.detect_many_to_many" value="true"/>
 <booleanAttribute key="org.hibernate.tools.reveng.detect_one_to_one" value="true"/>
 <booleanAttribute key="org.hibernate.tools.reveng.detect_optimistc_lock" value="true"/>
+<stringAttribute key="org.hibernate.tools.revengstrategy" value="com.nositer.hibernate.RevEng"/>
 <booleanAttribute key="org.hibernate.tools.schema2hbm" value="true"/>
 <stringAttribute key="org.hibernate.tools.templatepath" value="\nositer\hibernateTemplate\"/>
 <booleanAttribute key="org.hibernate.tools.useOwnTemplates" value="true"/>
