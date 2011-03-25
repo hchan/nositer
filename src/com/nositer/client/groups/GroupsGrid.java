@@ -132,8 +132,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 				retval.setStyleName("myGroupsRow");
 				try {
 					BeanModel beanModel = (BeanModel) model;
-					Group group = beanModel.getBean();
-					retval.setHtml(group.getDescription());
+					UserHasGroupView userHasGroupView = beanModel.getBean();
+					retval.setHtml(userHasGroupView.getDescription());
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
