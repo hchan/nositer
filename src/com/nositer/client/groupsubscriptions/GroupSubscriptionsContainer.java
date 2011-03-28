@@ -29,10 +29,10 @@ import com.nositer.client.widget.combobox.ComboBoxPlus;
 @SuppressWarnings("rawtypes")
 public class GroupSubscriptionsContainer extends LayoutContainer implements Resizable {
 	private ContentPanel contentPanel;
-	private GroupSubscriptionsGrid searchGroupsGrid;
-	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
+	private GroupSubscriptionsGrid groupSubscriptionsGrid;
+	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupSubscriptionsPanel;
 	private GroupSubscriptionsPagingToolBar pagingToolBar;
-	private static GroupSubscriptionsContainer instance;
+	
 
 	public GroupSubscriptionsPagingToolBar getPagingToolBar() {
 		return pagingToolBar;
@@ -42,13 +42,7 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		this.pagingToolBar = pagingToolBar;
 	}
 
-	public static GroupSubscriptionsContainer getInstance() {
-		return instance;
-	}
 
-	public static void setInstance(GroupSubscriptionsContainer instance) {
-		GroupSubscriptionsContainer.instance = instance;
-	}
 
 	public GroupSubscriptionsContainer() {
 		init();
@@ -58,12 +52,12 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		contentPanel = new ContentPanel();
 		contentPanel.setHeaderVisible(false);
 
-		searchCriteriaForGroupsPanel = new SearchCriteriaForGroupSubscriptionsPanel();
-		searchGroupsGrid = new GroupSubscriptionsGrid(searchCriteriaForGroupsPanel);
-		searchCriteriaForGroupsPanel.setSearchGroupsGrid(searchGroupsGrid);
+		searchCriteriaForGroupSubscriptionsPanel = new SearchCriteriaForGroupSubscriptionsPanel(this);
+		groupSubscriptionsGrid = new GroupSubscriptionsGrid(this);
+		searchCriteriaForGroupSubscriptionsPanel.setSearchGroupsGrid(groupSubscriptionsGrid);
 		contentPanel.setLayout(new FitLayout());
-		contentPanel.setTopComponent(searchCriteriaForGroupsPanel);
-		contentPanel.add(searchGroupsGrid);
+		contentPanel.setTopComponent(searchCriteriaForGroupSubscriptionsPanel);
+		contentPanel.add(groupSubscriptionsGrid);
 		add(contentPanel);
 		initToolBar();
 		contentPanel.setBottomComponent(pagingToolBar);
@@ -72,7 +66,7 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		setAutoWidth(true);
 		setStateful(false);
 		resize(0,0);
-		instance = this;
+		
 	}
 
 
@@ -81,8 +75,8 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 
 
 
-		pagingToolBar.bind((PagingLoader) searchGroupsGrid.getLoader());
-		searchGroupsGrid.getLoader().addLoadListener(new LoadListener() {
+		pagingToolBar.bind((PagingLoader) groupSubscriptionsGrid.getLoader());
+		groupSubscriptionsGrid.getLoader().addLoadListener(new LoadListener() {
 			@Override
 			public void loaderLoad(LoadEvent le) {
 
@@ -99,13 +93,13 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 	}
 
 	private void addDefaultListeners() {
-		searchCriteriaForGroupsPanel.addListener(Events.Collapse, new Listener<BaseEvent>() {
+		searchCriteriaForGroupSubscriptionsPanel.addListener(Events.Collapse, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent baseEvent) {				
 				resize(0,0);
 			}}
 		);
-		searchCriteriaForGroupsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
+		searchCriteriaForGroupSubscriptionsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent baseEvent) {	
 				resize(0,0);				
@@ -117,10 +111,10 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 	public void resize(int width, int height) {
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		//int gridHeightOffset = 258;
-		if (searchCriteriaForGroupsPanel.isRendered()) {
-			if (searchCriteriaForGroupsPanel.getErrorPanel().isVisible()) {
-				searchCriteriaForGroupsPanel.getErrorPanel().hide();
-				searchCriteriaForGroupsPanel.getErrorPanel().show();
+		if (searchCriteriaForGroupSubscriptionsPanel.isRendered()) {
+			if (searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().isVisible()) {
+				searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().hide();
+				searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().show();
 			}
 			//if (searchCriteriaForGroupsPanel.isCollapsed()) {
 			//	gridHeightOffset -= 200;
@@ -131,7 +125,7 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 			//}
 		}
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
-		searchCriteriaForGroupsPanel.getLocation().getGeographyCode().layout();
+		searchCriteriaForGroupSubscriptionsPanel.getLocation().getGeographyCode().layout();
 
 	}
 }

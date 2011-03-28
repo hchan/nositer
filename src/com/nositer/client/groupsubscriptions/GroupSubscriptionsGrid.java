@@ -41,7 +41,7 @@ import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 public class GroupSubscriptionsGrid extends GroupsGrid {
 	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
-
+	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 
 	public SearchCriteriaForGroupSubscriptionsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
@@ -53,10 +53,10 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 
 	
-	public GroupSubscriptionsGrid(final SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel) {
+	public GroupSubscriptionsGrid(final GroupSubscriptionsContainer groupSubscriptionsContainer) {
 		setLoadMask(false);
 
-		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
+		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
 		proxy = new RpcProxy<ArrayList<UserHasGroupView>>() {
 			@Override
 			protected void load(Object loadConfig,
@@ -79,7 +79,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 			@Override
 			protected void loadData(final Object config) {
 				super.loadData(config);
-				GroupSubscriptionsContainer.getInstance().resize(0,0);
+				groupSubscriptionsContainer.resize(0,0);
 			}
 		}; 
 			
@@ -143,8 +143,8 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		if (errors.size() > 0) {
 			errorPanel.setErrors(errors);
 			errorPanel.show();	
-			GroupSubscriptionsContainer.getInstance().getPagingToolBar().setEnabled(true);
-			GroupSubscriptionsContainer.getInstance().getPagingToolBar().setImages(GroupSubscriptionsContainer.getInstance().getPagingToolBar().getImages());
+			groupSubscriptionsContainer.getPagingToolBar().setEnabled(true);
+			groupSubscriptionsContainer.getPagingToolBar().setImages(groupSubscriptionsContainer.getPagingToolBar().getImages());
 			//getRefreshButton().setIcon(SearchForGroups.getInstance().getPagingToolBar().getImages().getRefresh());
 		} else {
 			errorPanel.hide();				

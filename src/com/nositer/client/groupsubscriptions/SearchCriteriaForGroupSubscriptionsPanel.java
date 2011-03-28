@@ -27,6 +27,7 @@ import com.nositer.client.widget.Location;
 @SuppressWarnings("unchecked")
 public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
+	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	private TextField<String> groupName;
 	private NumberField radius;
 	private Location location;
@@ -102,7 +103,8 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		this.location = location;
 	}
 
-	public SearchCriteriaForGroupSubscriptionsPanel() {
+	public SearchCriteriaForGroupSubscriptionsPanel(GroupSubscriptionsContainer groupSubscriptionsContainer) {
+		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
 		init();
 	}
 
@@ -111,7 +113,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		errorPanel = new ErrorPanel();
 		//errorPanel.init();
 		errorPanel.hide();
-		setHeading("Group Search");
+		setHeading("Group Subscriptions Search Criteria");
 		setCollapsible(true);
 		setBodyBorder(false);
 		//addSearchLabel();
@@ -178,7 +180,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 	public void doSearch() {
 		searchGroupsGrid.load();
 		
-		GroupSubscriptionsContainer.getInstance().resize(0, 0);
+		groupSubscriptionsContainer.resize(0, 0);
 	}
 
 	public ArrayList<String> getErrors() {
