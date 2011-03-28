@@ -10,15 +10,38 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT
+		VIEW, EDIT, SUBSCRIPTIONS
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
+	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
 	
 	private UserHasGroupView userHasGroupView;
 
 	public ViewGroupTabItem getViewGroupTabItem() {
 		return viewGroupTabItem;
+	}
+
+
+
+
+	public SubscriptionsGroupTabItem getSubscriptionsGroupTabItem() {
+		return subscriptionsGroupTabItem;
+	}
+
+
+
+
+	public void setSubscriptionsGroupTabItem(
+			SubscriptionsGroupTabItem subscriptionsGroupTabItem) {
+		this.subscriptionsGroupTabItem = subscriptionsGroupTabItem;
+	}
+
+
+
+
+	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
+		this.userHasGroupView = userHasGroupView;
 	}
 
 
@@ -77,6 +100,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			editGroupTabItem = new EditGroupTabItem(userHasGroupView);
 			add(editGroupTabItem);
 		}
+		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(userHasGroupView);
+		add(subscriptionsGroupTabItem);
 	}
 
 
@@ -96,6 +121,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(viewGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.EDIT)) {
 			setSelection(editGroupTabItem);
+		} else if (tabItemType.equals(TabItemType.SUBSCRIPTIONS)) {
+			setSelection(subscriptionsGroupTabItem);
 		}
 	}
 }

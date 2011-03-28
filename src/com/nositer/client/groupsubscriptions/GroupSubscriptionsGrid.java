@@ -1,4 +1,4 @@
-package com.nositer.client.searchforgroups;
+package com.nositer.client.groupsubscriptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,21 +39,21 @@ import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 
-public class SearchGroupsGrid extends GroupsGrid {
-	private SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel;
+public class GroupSubscriptionsGrid extends GroupsGrid {
+	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
 
 
-	public SearchCriteriaForGroupsPanel getSearchCriteriaForGroupsPanel() {
+	public SearchCriteriaForGroupSubscriptionsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
 	}
 
 	public void setSearchCriteriaForGroupsPanel(
-			SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel) {
+			SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel) {
 		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
 	}
 
 	
-	public SearchGroupsGrid(final SearchCriteriaForGroupsPanel searchCriteriaForGroupsPanel) {
+	public GroupSubscriptionsGrid(final SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel) {
 		setLoadMask(false);
 
 		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
@@ -61,7 +61,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 			@Override
 			protected void load(Object loadConfig,
 					AsyncCallback<ArrayList<UserHasGroupView>> callback) {
-				SearchGroupsGrid.this.load(loadConfig,callback);
+				GroupSubscriptionsGrid.this.load(loadConfig,callback);
 			}
 		};  		
 
@@ -79,7 +79,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 			@Override
 			protected void loadData(final Object config) {
 				super.loadData(config);
-				SearchForGroupsContainer.getInstance().resize(0,0);
+				GroupSubscriptionsContainer.getInstance().resize(0,0);
 			}
 		}; 
 			
@@ -143,8 +143,8 @@ public class SearchGroupsGrid extends GroupsGrid {
 		if (errors.size() > 0) {
 			errorPanel.setErrors(errors);
 			errorPanel.show();	
-			SearchForGroupsContainer.getInstance().getPagingToolBar().setEnabled(true);
-			SearchForGroupsContainer.getInstance().getPagingToolBar().setImages(SearchForGroupsContainer.getInstance().getPagingToolBar().getImages());
+			GroupSubscriptionsContainer.getInstance().getPagingToolBar().setEnabled(true);
+			GroupSubscriptionsContainer.getInstance().getPagingToolBar().setImages(GroupSubscriptionsContainer.getInstance().getPagingToolBar().getImages());
 			//getRefreshButton().setIcon(SearchForGroups.getInstance().getPagingToolBar().getImages().getRefresh());
 		} else {
 			errorPanel.hide();				
@@ -191,7 +191,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 					TopPanel.getInstance().getUser().getId())) {
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
-						doSubscriptionsGroup(userHasGroupView);
+						doViewGroup(userHasGroupView);
 					};
 				};
 				contextMenu.add(subscribeMenuItem);

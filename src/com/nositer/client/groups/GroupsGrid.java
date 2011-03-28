@@ -267,6 +267,10 @@ public class GroupsGrid extends Grid<BeanModel> {
 	public void doEditGroup(UserHasGroupView userHasGroupView) {
 		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
 	}
+	
+	public void doSubscriptionsGroup(UserHasGroupView userHasGroupView) {
+		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
+	}
 
 	public void doDeleteGroup(final UserHasGroupView userHasGroupView) {
 		Listener<MessageBoxEvent> callback = new Listener<MessageBoxEvent>() {
