@@ -232,14 +232,15 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	public ArrayList<UserHasGroupView> search(String name, Float latitude, Float longitude, Number radius) throws GWTException {
 		ArrayList<UserHasGroupView> retval = null;
 		Session sess = HibernateUtil.getSession();
-
+		User user = null;
 		Transaction trx = null;
 		try {
-
+			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			List<com.nositer.hibernate.generated.domain.Group> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
-			addEntity(com.nositer.hibernate.generated.domain.Group.class).
-			setString(Group.ColumnType.name.toString(), "%" + name + "%").
+			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
+			addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
+			setString(Group.ColumnType.name.toString(), "%" + name + "%").			
+			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).			
 			setParameter("latitude", latitude).		
 			setParameter("longitude", longitude).
 			setParameter("radius", radius).	

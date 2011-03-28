@@ -160,10 +160,12 @@ public class Groups extends TabPanel {
 		TabItem tabItem = null;
 		if (tabItemType.equals(Groups.TabItemType.GROUPS)) {
 			tabItem = groupsTabItem;
+			groupsContainer.resize(0,0);
 		} else if (tabItemType.equals(Groups.TabItemType.SEARCHFORGROPS)) {
 			tabItem = searchForGroupsTabItem;
 		}
 		setSelection(tabItem);		
+		
 		return tabItem;
 	}
 	

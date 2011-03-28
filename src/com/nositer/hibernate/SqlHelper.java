@@ -61,13 +61,15 @@ public class SqlHelper {
 		Group.ColumnType.disable + " = true" +
 		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
 	public static String FINDGROUPS =
-		"select " + UserHasGroupView.TABLENAME + "." + "* from " + UserHasGroupView.TABLENAME + 
+		"select * from (" +
+		" select " + UserHasGroupView.TABLENAME + "." + "* from " + UserHasGroupView.TABLENAME + 
 		" left outer join " + Postalcode.TABLENAME + " on " + 
 		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
 		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
 		" where " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.name + " like :" + UserHasGroupView.ColumnType.name + 
-		" and " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
+		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
+		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
 		" and " + NOTDISABLE +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
@@ -79,7 +81,8 @@ public class SqlHelper {
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.longitude + ")" +
 		"/180-PI()* :longitude /180)) " +
 		") <= :radius" +
-		" order by " + Group.ColumnType.name; 
+		" order by " + UserHasGroupView.ColumnType.name + " ," + UserHasGroupView.ColumnType.owner + 
+		" ) derivedTable group by " + UserHasGroupView.ColumnType.id;
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;

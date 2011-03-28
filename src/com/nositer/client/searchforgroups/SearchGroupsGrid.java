@@ -29,11 +29,13 @@ import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
+import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
+import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 
@@ -183,7 +185,17 @@ public class SearchGroupsGrid extends GroupsGrid {
 					doViewGroup(userHasGroupView);
 				};
 			};
+			
 			contextMenu.add(viewMenuItem);		
+			if (!userHasGroupView.getUserid().equals(
+					TopPanel.getInstance().getUser().getId())) {
+				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
+					public void doSelect() {
+						doViewGroup(userHasGroupView);
+					};
+				};
+				contextMenu.add(subscribeMenuItem);
+			}
 			
 
 		} else {
