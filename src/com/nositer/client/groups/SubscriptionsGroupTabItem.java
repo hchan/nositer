@@ -17,6 +17,31 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	private UserHasGroupView userHasGroupView;
 	private boolean populated;
+	
+	public GroupSubscriptionsContainer getGroupSubscriptionsContainer() {
+		return groupSubscriptionsContainer;
+	}
+
+	public void setGroupSubscriptionsContainer(
+			GroupSubscriptionsContainer groupSubscriptionsContainer) {
+		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
+	}
+
+	public UserHasGroupView getUserHasGroupView() {
+		return userHasGroupView;
+	}
+
+	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
+		this.userHasGroupView = userHasGroupView;
+	}
+
+	public boolean isPopulated() {
+		return populated;
+	}
+
+	public void setPopulated(boolean populated) {
+		this.populated = populated;
+	}
 
 	public SubscriptionsGroupTabItem(UserHasGroupView userHasGroupView) {
 		super("Subscriptions");
@@ -26,7 +51,7 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 	}
 
 	public void init() {
-		groupSubscriptionsContainer = new GroupSubscriptionsContainer();		
+		groupSubscriptionsContainer = new GroupSubscriptionsContainer(userHasGroupView);		
 		add(groupSubscriptionsContainer);
 		addDefaultListeners();
 	}

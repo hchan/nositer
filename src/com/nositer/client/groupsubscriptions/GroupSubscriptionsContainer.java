@@ -21,6 +21,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
@@ -28,11 +29,20 @@ import com.nositer.client.widget.combobox.ComboBoxPlus;
 
 @SuppressWarnings("rawtypes")
 public class GroupSubscriptionsContainer extends LayoutContainer implements Resizable {
+	private UserHasGroupView userHasGroupView;
 	private ContentPanel contentPanel;
-	private GroupSubscriptionsGrid groupSubscriptionsGrid;
-	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupSubscriptionsPanel;
+	private GroupSubscriptionsGrid groupSubscriptionsGrid;	
+	private GroupSubscriptionsTopComponent groupSubscriptionsTopComponent;
 	private GroupSubscriptionsPagingToolBar pagingToolBar;
 	
+
+	public UserHasGroupView getUserHasGroupView() {
+		return userHasGroupView;
+	}
+
+	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
+		this.userHasGroupView = userHasGroupView;
+	}
 
 	public GroupSubscriptionsPagingToolBar getPagingToolBar() {
 		return pagingToolBar;
@@ -44,7 +54,8 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 
 
 
-	public GroupSubscriptionsContainer() {
+	public GroupSubscriptionsContainer(UserHasGroupView userHasGroupView) {
+		this.userHasGroupView = userHasGroupView;
 		init();
 	}
 
@@ -52,16 +63,16 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		contentPanel = new ContentPanel();
 		contentPanel.setHeaderVisible(false);
 
-		searchCriteriaForGroupSubscriptionsPanel = new SearchCriteriaForGroupSubscriptionsPanel(this);
+		groupSubscriptionsTopComponent = new GroupSubscriptionsTopComponent(this);
+		SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupSubscriptionsPanel = groupSubscriptionsTopComponent.getSearchCriteriaForGroupSubscriptionsPanel();
 		groupSubscriptionsGrid = new GroupSubscriptionsGrid(this);
 		searchCriteriaForGroupSubscriptionsPanel.setSearchGroupsGrid(groupSubscriptionsGrid);
 		contentPanel.setLayout(new FitLayout());
-		contentPanel.setTopComponent(searchCriteriaForGroupSubscriptionsPanel);
+		contentPanel.setTopComponent(groupSubscriptionsTopComponent);
 		contentPanel.add(groupSubscriptionsGrid);
 		add(contentPanel);
 		initToolBar();
 		contentPanel.setBottomComponent(pagingToolBar);
-		addDefaultListeners();
 		setAutoHeight(true);
 		setAutoWidth(true);
 		setStateful(false);
@@ -92,23 +103,10 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 
 	}
 
-	private void addDefaultListeners() {
-		searchCriteriaForGroupSubscriptionsPanel.addListener(Events.Collapse, new Listener<BaseEvent>() {
-			@Override
-			public void handleEvent(BaseEvent baseEvent) {				
-				resize(0,0);
-			}}
-		);
-		searchCriteriaForGroupSubscriptionsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
-			@Override
-			public void handleEvent(BaseEvent baseEvent) {	
-				resize(0,0);				
-			}}
-		);
-	}
-
+	
 	@Override
 	public void resize(int width, int height) {
+		/*
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		//int gridHeightOffset = 258;
 		if (searchCriteriaForGroupSubscriptionsPanel.isRendered()) {
@@ -126,6 +124,7 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		}
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		searchCriteriaForGroupSubscriptionsPanel.getLocation().getGeographyCode().layout();
+		*/
 
 	}
 }
