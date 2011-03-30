@@ -78,22 +78,20 @@ public class TopPanel extends ContentPanel {
 		logout = new Logout();
 		loggedInAs.add(logout);
 
-
+		
 		topLayoutData.setSize(50);
 		//topLayoutData.setCollapsible(true);
 		this.setHeaderVisible(false);
 		welcomePanel = new HTMLPanel("Journey with us");
 		welcomePanel.setStyleName("welcomeDescription");
 		this.add(welcomePanel);
-
+		this.add(loggedInAs);
 		adjustComponents();
 
 	}
 
 	public void adjustComponents() {
-		setFirstLastName(
-				Nositer.getInstance().
-				getUser());	
+		setFirstLastName(Nositer.getInstance().getUser());	
 		TopPanel.this.loggedInAs.remove(logout);
 		TopPanel.this.loggedInAs.add(logout);
 		TopPanel.this.layout();

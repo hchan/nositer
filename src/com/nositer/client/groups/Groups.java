@@ -117,6 +117,7 @@ public class Groups extends TabPanel {
 
 	private TabItem createSearchForGroupsTabItem() {
 		TabItem retval;
+		searchForGroupsContainer = new SearchForGroupsContainer();
 		retval = new TabItemPlus("Search For Groups") {
 			@Override
 			public void resize(int width, int height) {				
@@ -127,7 +128,7 @@ public class Groups extends TabPanel {
 					@Override
 					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
 						HistoryManager.addHistory(HistoryToken.SEARCHFORGROUPS.toString());
-						resize(0,0);
+						searchForGroupsContainer.resize(0,0);
 					}
 				});
 			}			
@@ -140,7 +141,7 @@ public class Groups extends TabPanel {
 				//resize(0,0);
 
 			}});		
-		searchForGroupsContainer = new SearchForGroupsContainer();
+		
 		retval.setLayout(new FitLayout());
 		retval.add(searchForGroupsContainer);
 		return retval;

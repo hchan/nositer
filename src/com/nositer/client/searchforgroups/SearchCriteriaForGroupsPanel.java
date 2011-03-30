@@ -129,8 +129,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 				radiusContainer.setLayout(new FormLayout());
 				radiusContainer.add(radius);
 				add(radiusContainer, new VBoxLayoutData(new Margins(5, 0, 0, 5)));				
-				setHeight(120);
-
+				setHeight(120);				
 			};
 		};
 
@@ -138,6 +137,8 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 		location.setStyleName(groupName.getStyleName());
 		location.getPostalcode().setFieldLabel("Postal code");		
 		location.getZipcode().setFieldLabel("Zip code");
+		//location.populate(Nositer.getInstance().getUser());
+	
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -149,8 +150,8 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 				location.populate(Nositer.getInstance().getUser());
 			}
 		};
-		ServiceBroker.noopService.noop(0, callback);
-
+		ServiceBroker.noopService.noop(1000, callback);
+		
 		searchButton = createSearchButton();
 
 		setTopComponent(errorPanel);

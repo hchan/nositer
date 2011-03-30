@@ -110,7 +110,7 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 			public void handleEvent(BaseEvent baseEvent) {	
 				resize(0,0);				
 			}}
-		);
+		);	
 	}
 
 	@Override
