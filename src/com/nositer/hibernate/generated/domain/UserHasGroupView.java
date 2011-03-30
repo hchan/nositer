@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Mar 24, 2011 1:58:31 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 29, 2011 5:10:11 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -35,23 +35,27 @@ public class UserHasGroupView implements java.io.Serializable, Domain {
 	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Integer userHasGroupId;
 	private Integer userid;
 	private Boolean owner;
 	private Boolean invisible;
+	private Boolean userHasGroupDisable;
 
 	public UserHasGroupView() {
 	}
 
-	public UserHasGroupView(Integer id, Integer userid) {
+	public UserHasGroupView(Integer id, Integer userHasGroupId, Integer userid) {
 		this.id = id;
+		this.userHasGroupId = userHasGroupId;
 		this.userid = userid;
 	}
 
 	public UserHasGroupView(Integer id, String tagname, Integer postalcodeid,
 			Integer zipcodeid, String countrycode, String name,
 			String description, String avatarlocation, Boolean disable,
-			Date createdtime, Date modifiedtime, Integer userid, Boolean owner,
-			Boolean invisible) {
+			Date createdtime, Date modifiedtime, Integer userHasGroupId,
+			Integer userid, Boolean owner, Boolean invisible,
+			Boolean userHasGroupDisable) {
 		this.id = id;
 		this.tagname = tagname;
 		this.postalcodeid = postalcodeid;
@@ -63,9 +67,11 @@ public class UserHasGroupView implements java.io.Serializable, Domain {
 		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.userHasGroupId = userHasGroupId;
 		this.userid = userid;
 		this.owner = owner;
 		this.invisible = invisible;
+		this.userHasGroupDisable = userHasGroupDisable;
 	}
 
 	@Id
@@ -170,6 +176,15 @@ public class UserHasGroupView implements java.io.Serializable, Domain {
 		this.modifiedtime = modifiedtime;
 	}
 
+	@Column(name = "user_has_group_id", nullable = false)
+	public Integer getUserHasGroupId() {
+		return this.userHasGroupId;
+	}
+
+	public void setUserHasGroupId(Integer userHasGroupId) {
+		this.userHasGroupId = userHasGroupId;
+	}
+
 	@Column(name = "userid", nullable = false)
 	public Integer getUserid() {
 		return this.userid;
@@ -195,6 +210,15 @@ public class UserHasGroupView implements java.io.Serializable, Domain {
 
 	public void setInvisible(Boolean invisible) {
 		this.invisible = invisible;
+	}
+
+	@Column(name = "user_has_group_disable")
+	public Boolean getUserHasGroupDisable() {
+		return this.userHasGroupDisable;
+	}
+
+	public void setUserHasGroupDisable(Boolean userHasGroupDisable) {
+		this.userHasGroupDisable = userHasGroupDisable;
 	}
 
 }

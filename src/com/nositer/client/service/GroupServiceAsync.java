@@ -22,6 +22,9 @@ public interface GroupServiceAsync {
 
 	void updateGroup(Group group, AsyncCallback<Group> callback);
 
+	void updateSubscription(UserHasGroupView userHasGroupView,
+			AsyncCallback<Void> callback);
+
 	
 
 }

@@ -40,7 +40,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				throw new GWTException("Tagname contains must be consist of alpha-numeric characters or _");
 			}
 			group.setTagname(tagname);		
-			
+
 			group.setPostalcode(user.getPostalcode());
 			group.setZipcode(user.getZipcode());
 			group.setCountrycode(user.getCountrycode());
@@ -48,14 +48,14 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			com.nositer.hibernate.generated.domain.Group groupDomain = BeanConversion.copyDTO2Domain(group, com.nositer.hibernate.generated.domain.Group.class);
 
 			sess.save(groupDomain);
-			
+
 			UserHasGroup userHasGroupDomain = new UserHasGroup();
 			userHasGroupDomain.setGroup(groupDomain);
 			userHasGroupDomain.setOwner(true);
 			userHasGroupDomain.setUser(BeanConversion.copyDTO2Domain(user, com.nositer.hibernate.generated.domain.User.class));
 			sess.save(userHasGroupDomain);
-			
-			
+
+
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
 
@@ -77,7 +77,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		return retval;
 	}
-	
+
 	@Override
 	public Group updateGroup(Group group) throws GWTException {
 		Group retval = null;
@@ -263,6 +263,42 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			HibernateUtil.closeSession(sess);
 		}	
 		return retval;
+	}
+
+	@Override
+	public void updateSubscription(UserHasGroupView userHasGroupView)
+	throws GWTException {
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			if (user.getId().equals(userHasGroupView.getUserid())) {				
+				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.disable.toString(), userHasGroupView.getUserHasGroupDisable()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.invisible.toString(), userHasGroupView.getInvisible()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.id.toString(), userHasGroupView.getUserHasGroupId()).
+				
+				
+				executeUpdate();
+			
+			} else {
+				throw new GWTException("You are not the owner of this group");
+			}			
+			trx.commit();			
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
 	}
 
 }

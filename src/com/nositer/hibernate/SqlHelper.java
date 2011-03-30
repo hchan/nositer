@@ -7,6 +7,7 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.UserHasGroup;
 import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
@@ -70,7 +71,8 @@ public class SqlHelper {
 		" where " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.name + " like :" + UserHasGroupView.ColumnType.name + 
 		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
 		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
-		" and " + NOTDISABLE +
+		" and " + UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable +
+		" and " + UserHasGroupView.ColumnType.user_has_group_disable + " = :" + UserHasGroupView.ColumnType.user_has_group_disable +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" + 
@@ -83,7 +85,11 @@ public class SqlHelper {
 		") <= :radius" +
 		" order by " + UserHasGroupView.ColumnType.name + " ," + UserHasGroupView.ColumnType.owner + 
 		" ) derivedTable group by " + UserHasGroupView.ColumnType.id;
-	
+	public static String UPDATESUBSCRIPTION =
+		"update " + UserHasGroup.TABLENAME + " set " +
+		UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable + ", " +
+		UserHasGroup.ColumnType.invisible + " = :" + UserHasGroup.ColumnType.invisible +
+		" where " + UserHasGroup.ColumnType.id + "= :" + UserHasGroup.ColumnType.id;	
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +
