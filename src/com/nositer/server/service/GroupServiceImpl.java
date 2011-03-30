@@ -169,13 +169,15 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	public UserHasGroupView getGroupByTagname(String tagname) throws GWTException {
 		UserHasGroupView retval = null;
 		Session sess = HibernateUtil.getSession();
-
+		User user = null;
 		Transaction trx = null;
 		try {
-
+			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
-			setString(UserHasGroupView.ColumnType.tagname.toString(), tagname).list();
+			setString(UserHasGroupView.ColumnType.tagname.toString(), tagname).
+			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).
+			list();
 			if (results.size() == 0) {				
 				retval = null;
 			} else {
@@ -199,19 +201,16 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public void deleteGroup(UserHasGroupView userHasGroupView) throws GWTException {		
+	public void disableGroup(UserHasGroupView userHasGroupView) throws GWTException {		
 		Session sess = HibernateUtil.getSession();
 		User user = null;
 		Transaction trx = null;
 		try {
 			user = Application.getCurrentUser();
-			trx = sess.beginTransaction();		
-			if (user.getId().equals(userHasGroupView.getUserid())) {				
-				sess.createSQLQuery(
-						SqlHelper.disableSQL(userHasGroupView)).executeUpdate();
-			} else {
-				throw new GWTException("You are not the owner of this group");
-			}			
+			trx = sess.beginTransaction();				
+			sess.createSQLQuery(SqlHelper.DISABLEGROUP).
+			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId())
+			.executeUpdate();			
 			trx.commit();			
 		}
 		catch (GWTException e) {
@@ -240,7 +239,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
 			addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
 			setString(Group.ColumnType.name.toString(), "%" + name + "%").			
-			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).			
+			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).
 			setParameter("latitude", latitude).		
 			setParameter("longitude", longitude).
 			setParameter("radius", radius).	
@@ -266,7 +265,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 	@Override
-	public void updateSubscription(UserHasGroupView userHasGroupView)
+	public void createOrUpdateSubscription(UserHasGroupView userHasGroupView)
 	throws GWTException {
 		Session sess = HibernateUtil.getSession();
 		User user = null;
@@ -274,17 +273,17 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			if (user.getId().equals(userHasGroupView.getUserid())) {				
+			if (user.getId().equals(userHasGroupView.getUserid())) {	
 				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
 				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.disable.toString(), userHasGroupView.getUserHasGroupDisable()).
 				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.invisible.toString(), userHasGroupView.getInvisible()).
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.id.toString(), userHasGroupView.getUserHasGroupId()).
-				
-				
-				executeUpdate();
-			
+				executeUpdate();				
 			} else {
-				throw new GWTException("You are not the owner of this group");
+				sess.createSQLQuery(SqlHelper.CREATESUBSCRIPTION).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.userid.toString(), user.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.groupid.toString(), userHasGroupView.getId()).
+				executeUpdate();
 			}			
 			trx.commit();			
 		}

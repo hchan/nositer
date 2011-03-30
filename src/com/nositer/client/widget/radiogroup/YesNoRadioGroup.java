@@ -43,6 +43,12 @@ public class YesNoRadioGroup extends RadioGroup {
 		return retval;
 	}
 
+	public boolean getValueAsBoolean() {
+		boolean retval = false;
+		retval = getYesNo().equals(YesNoType.YES);
+		return retval;
+	}
+	
 	public enum YesNoType {
 		YES, NO
 	}

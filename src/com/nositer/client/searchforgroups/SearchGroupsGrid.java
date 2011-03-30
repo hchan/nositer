@@ -37,6 +37,7 @@ import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
 
 
 public class SearchGroupsGrid extends GroupsGrid {
@@ -187,11 +188,26 @@ public class SearchGroupsGrid extends GroupsGrid {
 			};
 			
 			contextMenu.add(viewMenuItem);		
-			if (!userHasGroupView.getUserid().equals(
-					TopPanel.getInstance().getUser().getId())) {
+			if (Groups.isGroupICanSubscribeTo(userHasGroupView))  {
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
-						doSubscriptionsGroup(userHasGroupView);
+						
+						AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								AlertMessageBox.show("Error", "could not subscribe to this group: " + caught.getMessage(), null);
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								doSubscriptionsGroup(userHasGroupView);
+							}
+							
+						};
+						ServiceBroker.groupService.createOrUpdateSubscription(userHasGroupView, callback);
+						
+						
 					};
 				};
 				contextMenu.add(subscribeMenuItem);

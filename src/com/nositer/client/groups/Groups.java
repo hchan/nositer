@@ -13,6 +13,7 @@ import com.nositer.client.history.HistoryToken;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.TabItemPlus;
+import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class Groups extends TabPanel {
@@ -27,7 +28,7 @@ public class Groups extends TabPanel {
 	private SearchForGroupsContainer searchForGroupsContainer;
 	private static Groups instance;
 
-	
+
 	public TabItem getSearchForGroupsTabItem() {
 		return searchForGroupsTabItem;
 	}
@@ -43,7 +44,7 @@ public class Groups extends TabPanel {
 	public void setGroupsContainer(GroupsContainer groupsContainer) {
 		this.groupsContainer = groupsContainer;
 	}
-	
+
 
 	public static Groups getInstance(boolean createIfNecessary) {
 		Groups retval = null;
@@ -54,7 +55,7 @@ public class Groups extends TabPanel {
 		}
 		return retval;
 	}
-	
+
 	public static void setInstance(Groups instance) {
 		Groups.instance = instance;
 	}
@@ -71,18 +72,18 @@ public class Groups extends TabPanel {
 		init();
 	}
 
-	
+
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
 		groupsTabItem = createGroupsTabItem();
 		searchForGroupsTabItem = createSearchForGroupsTabItem();
-		
+
 		add(groupsTabItem);
 		add(searchForGroupsTabItem);
 		instance = this;
 	}
-	
+
 	private TabItemPlus createGroupsTabItem() {
 		TabItemPlus retval;
 		retval = new TabItemPlus("Groups") {
@@ -106,14 +107,14 @@ public class Groups extends TabPanel {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				//resize(0,0);
-				
+
 			}});		
 		groupsContainer = new GroupsContainer();
 		retval.setLayout(new FitLayout());
 		retval.add(groupsContainer);
 		return retval;
 	}
-	
+
 	private TabItem createSearchForGroupsTabItem() {
 		TabItem retval;
 		retval = new TabItemPlus("Search For Groups") {
@@ -137,7 +138,7 @@ public class Groups extends TabPanel {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				//resize(0,0);
-				
+
 			}});		
 		searchForGroupsContainer = new SearchForGroupsContainer();
 		retval.setLayout(new FitLayout());
@@ -165,15 +166,22 @@ public class Groups extends TabPanel {
 			tabItem = searchForGroupsTabItem;
 		}
 		setSelection(tabItem);		
-		
+
 		return tabItem;
 	}
-	
-	
+
+
 
 	public static boolean isGroupIOwn(UserHasGroupView userHasGroupView) {
 		boolean retval = false;
 		retval = userHasGroupView.getUserid().equals(TopPanel.getInstance().getUser().getId());
 		return retval;
 	}  
+
+	public static boolean isGroupICanSubscribeTo(UserHasGroupView userHasGroupView) {
+		boolean retval = false;
+		retval = (!(userHasGroupView.getUserid().equals(TopPanel.getInstance().getUser().getId()))) 
+		|| userHasGroupView.getUserHasGroupDisable();
+		return retval;
+	}
 }

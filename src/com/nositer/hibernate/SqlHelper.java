@@ -11,7 +11,7 @@ import com.nositer.client.dto.generated.UserHasGroup;
 import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
-	
+
 	public static String FINDUSERBYLOGIN = 
 		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login + 
 		" and " + NOTDISABLE;
@@ -50,17 +50,16 @@ public class SqlHelper {
 		" order by " + Group.ColumnType.name;
 	public static String FINDGROUPBYTAGNAME =
 		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.tagname + " = :" + UserHasGroupView.ColumnType.tagname +
-		" and " + NOTDISABLE +
-		" order by " + UserHasGroupView.ColumnType.owner + " desc" +
+		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
+		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
+		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
+		" order by " + UserHasGroupView.ColumnType.owner + 
 		" limit 1";
 	public static String FINDMYIWANTTOS =
 		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid +
 		" and " + NOTDISABLE +
 		" order by " + Iwantto.ColumnType.description;
-	public static String DELETEGROUP = 
-		"update " + Group.TABLENAME + " set " +
-		Group.ColumnType.disable + " = true" +
-		" where " + Group.ColumnType.id + "= :" + Group.ColumnType.id;
+
 	public static String FINDGROUPS =
 		"select * from (" +
 		" select " + UserHasGroupView.TABLENAME + "." + "* from " + UserHasGroupView.TABLENAME + 
@@ -71,8 +70,7 @@ public class SqlHelper {
 		" where " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.name + " like :" + UserHasGroupView.ColumnType.name + 
 		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
 		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
-		" and " + UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable +
-		" and " + UserHasGroupView.ColumnType.user_has_group_disable + " = :" + UserHasGroupView.ColumnType.user_has_group_disable +
+		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" + 
@@ -89,7 +87,28 @@ public class SqlHelper {
 		"update " + UserHasGroup.TABLENAME + " set " +
 		UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable + ", " +
 		UserHasGroup.ColumnType.invisible + " = :" + UserHasGroup.ColumnType.invisible +
-		" where " + UserHasGroup.ColumnType.id + "= :" + UserHasGroup.ColumnType.id;	
+		" where " + UserHasGroup.ColumnType.id + "= :" + UserHasGroup.ColumnType.id;
+	public static String CREATESUBSCRIPTION =
+		"insert into " + UserHasGroup.TABLENAME + "(" +
+		UserHasGroup.ColumnType.userid + ", " +
+		UserHasGroup.ColumnType.groupid + ", " +
+		UserHasGroup.ColumnType.owner + ", " +
+		UserHasGroup.ColumnType.invisible + ", " +
+		UserHasGroup.ColumnType.disable +
+		")" + " values( " +
+		":" + UserHasGroup.ColumnType.userid + ", " +
+		":" + UserHasGroup.ColumnType.groupid + ", " +
+		"false, " +
+		"false, " +
+		"false" +
+		")";
+	public static String DISABLEGROUP =
+		"update " + UserHasGroupView.TABLENAME + " set " +
+		UserHasGroupView.ColumnType.disable + " = true " +
+		" where " + UserHasGroupView.ColumnType.id + "= :" + UserHasGroupView.ColumnType.id + " and " +
+		UserHasGroupView.ColumnType.owner + " = true " +
+		UserHasGroupView.ColumnType.userid + " =:" + UserHasGroupView.ColumnType.userid;
+
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +
@@ -97,7 +116,7 @@ public class SqlHelper {
 		" where id = " + dto.getId();
 		return retval;
 	}
-	
+
 	public static String createLookupSQL (String tablename) {
 		String retval = null;
 		retval = "select * from " + tablename + " where " + Lookupcode.CODE + " like " + ":" + Lookupcode.CODE + " " + PARAMETERIZEDLIMITCLAUSE;

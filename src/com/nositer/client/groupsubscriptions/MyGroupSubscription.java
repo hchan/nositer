@@ -5,6 +5,9 @@ import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.UserHasGroupView;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup.YesNoType;
@@ -49,12 +52,31 @@ public class MyGroupSubscription extends FormPanel {
 		updateButton.addSelectionListener(new SelectionListener<ButtonEvent>() {			
 			@Override
 			public void componentSelected(ButtonEvent ce) {
-				updateSubscription();
+				createOrUpdateSubscription();
 			}					
 		});
 	}
 
-	private void updateSubscription() {
+	private void createOrUpdateSubscription() {
+		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
 		
+		UserHasGroupView userHasGroupViewToUpdate =  groupSubscriptionsContainer.getUserHasGroupView().clone();
+		userHasGroupViewToUpdate.setUserHasGroupDisable(subscribeRadioGroup.getValueAsBoolean());
+		userHasGroupViewToUpdate.setInvisible(invisibleRadioGroup.getValueAsBoolean());
+		ServiceBroker.groupService.createOrUpdateSubscription(userHasGroupViewToUpdate, callback);
 	}
 }

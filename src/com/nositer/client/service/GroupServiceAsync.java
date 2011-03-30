@@ -10,7 +10,7 @@ public interface GroupServiceAsync {
 
 	void createGroup(Group group, AsyncCallback<Group> callback);
 
-	void deleteGroup(UserHasGroupView userHasGroupView,
+	void disableGroup(UserHasGroupView userHasGroupView,
 			AsyncCallback<Void> callback);
 
 	void getGroupByTagname(String tagname, AsyncCallback<UserHasGroupView> callback);
@@ -22,7 +22,7 @@ public interface GroupServiceAsync {
 
 	void updateGroup(Group group, AsyncCallback<Group> callback);
 
-	void updateSubscription(UserHasGroupView userHasGroupView,
+	void createOrUpdateSubscription(UserHasGroupView userHasGroupView,
 			AsyncCallback<Void> callback);
 
 	

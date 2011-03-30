@@ -289,7 +289,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 							refresh();
 						}						
 					};
-					ServiceBroker.groupService.deleteGroup(userHasGroupView, deleteCallback);
+					ServiceBroker.groupService.disableGroup(userHasGroupView, deleteCallback);
 				}			
 			}			
 		};
