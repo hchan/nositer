@@ -175,7 +175,8 @@ public class Groups extends TabPanel {
 
 	public static boolean isGroupIOwn(GroupPlusView groupPlusView) {
 		boolean retval = false;
-		retval = groupPlusView.getUserid().equals(Nositer.getInstance().getUser().getId());
+		retval = groupPlusView.getUserid().equals(Nositer.getInstance().getUser().getId())
+		&& groupPlusView.getOwner();
 		return retval;
 	}  
 

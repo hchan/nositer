@@ -23,17 +23,18 @@
         <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
         <property name="hibernate.dialect">com.nositer.hibernate.MyMySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
-        <mapping class="com.nositer.hibernate.generated.domain.Postalcode" />
         <mapping class="com.nositer.hibernate.generated.domain.Securityquestioncode" />
-        <mapping class="com.nositer.hibernate.generated.domain.Relationshipcode" />
-        <mapping class="com.nositer.hibernate.generated.domain.User" />
-        <mapping class="com.nositer.hibernate.generated.domain.GroupPlusView" />
-        <mapping class="com.nositer.hibernate.generated.domain.Zipcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.GroupSubscriptionView" />
         <mapping class="com.nositer.hibernate.generated.domain.Blog" />
-        <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
         <mapping class="com.nositer.hibernate.generated.domain.Iwantto" />
+        <mapping class="com.nositer.hibernate.generated.domain.Postalcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.Relationshipcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.GroupPlusView" />
+        <mapping class="com.nositer.hibernate.generated.domain.User" />
+        <mapping class="com.nositer.hibernate.generated.domain.Zipcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasSecurityquestioncode" />
-        <mapping class="com.nositer.hibernate.generated.domain.Salutationcode" />
         <mapping class="com.nositer.hibernate.generated.domain.Group" />
+        <mapping class="com.nositer.hibernate.generated.domain.Salutationcode" />
     </session-factory>
 </hibernate-configuration>

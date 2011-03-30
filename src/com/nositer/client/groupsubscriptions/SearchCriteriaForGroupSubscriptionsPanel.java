@@ -87,7 +87,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		setLabelWidth(107);
 		setFieldWidth(200);
 		lastname = new TextField<String>();
-		lastname.setFieldLabel("Group name");
+		lastname.setFieldLabel("Last name");
 	
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override

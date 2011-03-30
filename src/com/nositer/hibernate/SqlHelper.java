@@ -52,7 +52,7 @@ public class SqlHelper {
 		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.ColumnType.tagname + " = :" + GroupPlusView.ColumnType.tagname +
 		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = true" +
 		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
-		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
+		" and " + NOTDISABLE +
 		" order by " + GroupPlusView.ColumnType.owner + 
 		" limit 1";
 	public static String FINDMYIWANTTOS =
@@ -70,7 +70,7 @@ public class SqlHelper {
 		" where " + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.name + " like :" + GroupPlusView.ColumnType.name + 
 		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = 1" +
 		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
-		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
+		" and " + NOTDISABLE +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" + 
@@ -86,7 +86,8 @@ public class SqlHelper {
 	public static String UPDATESUBSCRIPTION =
 		"update " + UserHasGroup.TABLENAME + " set " +
 		UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable + ", " +
-		UserHasGroup.ColumnType.invisible + " = :" + UserHasGroup.ColumnType.invisible +
+		UserHasGroup.ColumnType.invisible + " = :" + UserHasGroup.ColumnType.invisible + ", " +
+		MODIFIEDTIMENOW + 
 		" where " + UserHasGroup.ColumnType.id + "= :" + UserHasGroup.ColumnType.id;
 	public static String CREATESUBSCRIPTION =
 		"insert into " + UserHasGroup.TABLENAME + "(" +
@@ -94,13 +95,15 @@ public class SqlHelper {
 		UserHasGroup.ColumnType.groupid + ", " +
 		UserHasGroup.ColumnType.owner + ", " +
 		UserHasGroup.ColumnType.invisible + ", " +
-		UserHasGroup.ColumnType.disable +
+		UserHasGroup.ColumnType.disable + ", " +
+		UserHasGroup.ColumnType.createdtime +
 		")" + " values( " +
 		":" + UserHasGroup.ColumnType.userid + ", " +
 		":" + UserHasGroup.ColumnType.groupid + ", " +
 		"false, " +
 		"false, " +
-		"false" +
+		"false, " +
+		NOW +
 		")";
 	public static String DISABLEGROUP =
 		"update " + GroupPlusView.TABLENAME + " set " +
