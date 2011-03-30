@@ -2,7 +2,7 @@ package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.GroupTabPanel.TabItemType;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
@@ -16,7 +16,7 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 	private EditGroupTabItem editGroupTabItem;
 	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
 	
-	private UserHasGroupView userHasGroupView;
+	private GroupPlusView groupPlusView;
 
 	public ViewGroupTabItem getViewGroupTabItem() {
 		return viewGroupTabItem;
@@ -40,8 +40,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 
 
-	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
-		this.userHasGroupView = userHasGroupView;
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
 	}
 
 
@@ -68,23 +68,23 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 
 
-	public UserHasGroupView getUserHasGroupView() {
-		return userHasGroupView;
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
 	}
 
 
 
 
-	public void setGroup(UserHasGroupView userHasGroupView) {
-		this.userHasGroupView = userHasGroupView;
+	public void setGroup(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
 	}
 
 
 
 
-	public GroupTabPanel(UserHasGroupView userHasGroupView) {
+	public GroupTabPanel(GroupPlusView groupPlusView) {
 		super();
-		this.userHasGroupView = userHasGroupView;
+		this.groupPlusView = groupPlusView;
 		init();
 	}
 
@@ -93,14 +93,14 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 	public void init() {
 		setTabPosition(TabPosition.BOTTOM);
-		viewGroupTabItem = new ViewGroupTabItem(userHasGroupView);
+		viewGroupTabItem = new ViewGroupTabItem(groupPlusView);
 		add(viewGroupTabItem);
 		resize(0,0);
-		if (Groups.isGroupIOwn(userHasGroupView)) {
-			editGroupTabItem = new EditGroupTabItem(userHasGroupView);
+		if (Groups.isGroupIOwn(groupPlusView)) {
+			editGroupTabItem = new EditGroupTabItem(groupPlusView);
 			add(editGroupTabItem);
 		}
-		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(userHasGroupView);
+		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(groupPlusView);
 		add(subscriptionsGroupTabItem);
 	}
 

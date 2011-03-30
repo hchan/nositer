@@ -8,7 +8,7 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup;
@@ -29,7 +29,7 @@ public class MyGroupSubscription extends FormPanel {
 		setHeading("My Subscription Information");
 		setCollapsible(true);
 		setBodyBorder(false);
-		if (Groups.isGroupIOwn(groupSubscriptionsContainer.getUserHasGroupView())) {
+		if (Groups.isGroupIOwn(groupSubscriptionsContainer.getGroupPlusView())) {
 			groupIOwnInit();
 		} else {
 			userInit();
@@ -43,15 +43,15 @@ public class MyGroupSubscription extends FormPanel {
 
 	private void userInit() {
 		subscribeRadioGroup = new YesNoRadioGroup("Subscribe");
-		if (groupSubscriptionsContainer.getUserHasGroupView().getUserid().equals(TopPanel.getInstance().getUser().getId())) {
+		if (groupSubscriptionsContainer.getGroupPlusView().getUserid().equals(TopPanel.getInstance().getUser().getId())) {
 			subscribeRadioGroup.setYesNo(YesNoType.YES);
 		} else {
 			subscribeRadioGroup.setYesNo(YesNoType.NO);
 		}
 		add(subscribeRadioGroup);
 		invisibleRadioGroup = new YesNoRadioGroup("Invisible");
-		if (groupSubscriptionsContainer.getUserHasGroupView().getInvisible() != null && 
-				groupSubscriptionsContainer.getUserHasGroupView().getInvisible().equals(true)) {
+		if (groupSubscriptionsContainer.getGroupPlusView().getInvisible() != null && 
+				groupSubscriptionsContainer.getGroupPlusView().getInvisible().equals(true)) {
 			invisibleRadioGroup.setYesNo(YesNoType.YES);
 		} else {
 			invisibleRadioGroup.setYesNo(YesNoType.NO);
@@ -89,9 +89,9 @@ public class MyGroupSubscription extends FormPanel {
 			
 		};
 		
-		UserHasGroupView userHasGroupViewToUpdate =  groupSubscriptionsContainer.getUserHasGroupView().clone();
-		userHasGroupViewToUpdate.setUserHasGroupDisable(subscribeRadioGroup.getValueAsBoolean());
-		userHasGroupViewToUpdate.setInvisible(invisibleRadioGroup.getValueAsBoolean());
-		ServiceBroker.groupService.createOrUpdateSubscription(userHasGroupViewToUpdate, callback);
+		GroupPlusView groupPlusViewToUpdate =  groupSubscriptionsContainer.getGroupPlusView().clone();
+		groupPlusViewToUpdate.setUserHasGroupDisable(subscribeRadioGroup.getValueAsBoolean());
+		groupPlusViewToUpdate.setInvisible(invisibleRadioGroup.getValueAsBoolean());
+		ServiceBroker.groupService.createOrUpdateSubscription(groupPlusViewToUpdate, callback);
 	}
 }

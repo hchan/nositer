@@ -33,7 +33,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
@@ -47,7 +47,7 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 @SuppressWarnings({"rawtypes"})
 public class GroupsGrid extends Grid<BeanModel> {
 
-	protected RpcProxy<ArrayList<UserHasGroupView>> proxy;
+	protected RpcProxy<ArrayList<GroupPlusView>> proxy;
 	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
 	protected GroupingView groupingView;
 	protected Menu contextMenu;
@@ -62,10 +62,10 @@ public class GroupsGrid extends Grid<BeanModel> {
 	
 	
 	public GroupsGrid() {
-		proxy = new RpcProxy<ArrayList<UserHasGroupView>>() {
+		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<UserHasGroupView>> callback) {
+					AsyncCallback<ArrayList<GroupPlusView>> callback) {
 				ServiceBroker.groupService.getMyGroups(callback);  
 			}
 		};  		
@@ -110,8 +110,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 				Avatar retval = new Avatar();
 				try {
 					BeanModel beanModel = (BeanModel) model;
-					UserHasGroupView userHasGroupView = beanModel.getBean();
-					retval.setPathToSmallImage(ImageHelper.getUserImagePathURL(userHasGroupView.getAvatarlocation(), userHasGroupView.getUserid()));
+					GroupPlusView groupPlusView = beanModel.getBean();
+					retval.setPathToSmallImage(ImageHelper.getUserImagePathURL(groupPlusView.getAvatarlocation(), groupPlusView.getUserid()));
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
@@ -132,8 +132,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 				retval.setStyleName("myGroupsRow");
 				try {
 					BeanModel beanModel = (BeanModel) model;
-					UserHasGroupView userHasGroupView = beanModel.getBean();
-					retval.setHtml(userHasGroupView.getDescription());
+					GroupPlusView groupPlusView = beanModel.getBean();
+					retval.setHtml(groupPlusView.getDescription());
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
@@ -156,9 +156,9 @@ public class GroupsGrid extends Grid<BeanModel> {
 			@Override
 			public String render(GroupColumnData data) {
 				BeanModel beanModel = (BeanModel) data.models.get(0);
-				UserHasGroupView userHasGroupView = beanModel.getBean();
+				GroupPlusView groupPlusView = beanModel.getBean();
 				String text = null;
-				if (Groups.isGroupIOwn(userHasGroupView)) {
+				if (Groups.isGroupIOwn(groupPlusView)) {
 					text = "Groups I own";
 				} else {
 					text = "Groups I am subscribed too";
@@ -174,11 +174,11 @@ public class GroupsGrid extends Grid<BeanModel> {
 		addListeners();
 
 		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
-		groupingStore.groupBy(UserHasGroupView.ColumnType.userid.toString());
+		groupingStore.groupBy(GroupPlusView.ColumnType.userid.toString());
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(UserHasGroupView.ColumnType.description.toString());  
+		setAutoExpandColumn(GroupPlusView.ColumnType.description.toString());  
 
 	}
 
@@ -191,8 +191,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 				if (me.getMenu().getBounds(true).x == me.getClientX()) {
 					contextMenu.hide();
 					BeanModel beanModel = GroupsGrid.this.getSelectionModel().getSelectedItem();
-					final UserHasGroupView userHasGroupView = beanModel.getBean();	
-					doViewGroup(userHasGroupView);
+					final GroupPlusView groupPlusView = beanModel.getBean();	
+					doViewGroup(groupPlusView);
 				}
 			}
 		});
@@ -219,8 +219,8 @@ public class GroupsGrid extends Grid<BeanModel> {
 			@Override
 			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
 				BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-				final UserHasGroupView userHasGroupView = beanModel.getBean();	
-				doViewGroup(userHasGroupView);
+				final GroupPlusView groupPlusView = beanModel.getBean();	
+				doViewGroup(groupPlusView);
 			}
 		});
 	}
@@ -228,26 +228,26 @@ public class GroupsGrid extends Grid<BeanModel> {
 
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final UserHasGroupView userHasGroupView = beanModel.getBean();	
+		final GroupPlusView groupPlusView = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
 			ViewMenuItem viewMenuItem = new ViewMenuItem() {
 				public void doSelect() {
-					doViewGroup(userHasGroupView);
+					doViewGroup(groupPlusView);
 				};
 			};
 			contextMenu.add(viewMenuItem);		
-			if (Groups.isGroupIOwn(userHasGroupView)) {
+			if (Groups.isGroupIOwn(groupPlusView)) {
 				EditMenuItem editMenuItem = new EditMenuItem() {
 					public void doSelect() {
-						doEditGroup(userHasGroupView);	
+						doEditGroup(groupPlusView);	
 					};
 				};
 				contextMenu.add(editMenuItem);
 				DeleteMenuItem deleteMenuItem = new DeleteMenuItem(){
 					public void doSelect() {
-						doDeleteGroup(userHasGroupView);	
+						doDeleteGroup(groupPlusView);	
 					};
 				};
 				contextMenu.add(deleteMenuItem);
@@ -259,20 +259,20 @@ public class GroupsGrid extends Grid<BeanModel> {
 		}
 	}
 
-	public void doViewGroup(UserHasGroupView userHasGroupView) {
+	public void doViewGroup(GroupPlusView groupPlusView) {
 		//HistoryManager.addSubHistoryToken(group.getTagname());
-		HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
+		HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 
-	public void doEditGroup(UserHasGroupView userHasGroupView) {
-		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
+	public void doEditGroup(GroupPlusView groupPlusView) {
+		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 	
-	public void doSubscriptionsGroup(UserHasGroupView userHasGroupView) {
-		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
+	public void doSubscriptionsGroup(GroupPlusView groupPlusView) {
+		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 
-	public void doDeleteGroup(final UserHasGroupView userHasGroupView) {
+	public void doDeleteGroup(final GroupPlusView groupPlusView) {
 		Listener<MessageBoxEvent> callback = new Listener<MessageBoxEvent>() {
 			@Override
 			public void handleEvent(MessageBoxEvent be) {
@@ -289,11 +289,11 @@ public class GroupsGrid extends Grid<BeanModel> {
 							refresh();
 						}						
 					};
-					ServiceBroker.groupService.disableGroup(userHasGroupView, deleteCallback);
+					ServiceBroker.groupService.disableGroup(groupPlusView, deleteCallback);
 				}			
 			}			
 		};
-		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + userHasGroupView.getName(), callback);
+		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + groupPlusView.getName(), callback);
 	}
 
 	public void refresh() {

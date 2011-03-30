@@ -11,7 +11,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.service.GroupService;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
@@ -132,23 +132,23 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public ArrayList<UserHasGroupView> getMyGroups() throws GWTException {
-		ArrayList<UserHasGroupView> retval = new ArrayList<UserHasGroupView>();
+	public ArrayList<GroupPlusView> getMyGroups() throws GWTException {
+		ArrayList<GroupPlusView> retval = new ArrayList<GroupPlusView>();
 		Session sess = HibernateUtil.getSession();
 		User user = null;
 		Transaction trx = null;
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(
+			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(
 					SqlHelper.FINDMYGROUPS).		
-					addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
-					setInteger(UserHasGroupView.ColumnType.userid.toString(), 
+					addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
+					setInteger(GroupPlusView.ColumnType.userid.toString(), 
 							user.getId()
 					).
 					list();
 
-			retval = BeanConversion.copyDomain2DTO(results, UserHasGroupView.class);					
+			retval = BeanConversion.copyDomain2DTO(results, GroupPlusView.class);					
 		}
 		catch (GWTException e) {
 			throw e;
@@ -166,23 +166,23 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public UserHasGroupView getGroupByTagname(String tagname) throws GWTException {
-		UserHasGroupView retval = null;
+	public GroupPlusView getGroupByTagname(String tagname) throws GWTException {
+		GroupPlusView retval = null;
 		Session sess = HibernateUtil.getSession();
 		User user = null;
 		Transaction trx = null;
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
-			setString(UserHasGroupView.ColumnType.tagname.toString(), tagname).
-			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).
+			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
+			setString(GroupPlusView.ColumnType.tagname.toString(), tagname).
+			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId()).
 			list();
 			if (results.size() == 0) {				
 				retval = null;
 			} else {
-				com.nositer.hibernate.generated.domain.UserHasGroupView userHasGroupViewDomain = results.get(0);
-				retval = BeanConversion.copyDomain2DTO(userHasGroupViewDomain, UserHasGroupView.class);
+				com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = results.get(0);
+				retval = BeanConversion.copyDomain2DTO(groupPlusViewDomain, GroupPlusView.class);
 			}
 		}
 		catch (GWTException e) {
@@ -201,7 +201,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public void disableGroup(UserHasGroupView userHasGroupView) throws GWTException {		
+	public void disableGroup(GroupPlusView groupPlusView) throws GWTException {		
 		Session sess = HibernateUtil.getSession();
 		User user = null;
 		Transaction trx = null;
@@ -209,7 +209,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();				
 			sess.createSQLQuery(SqlHelper.DISABLEGROUP).
-			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId())
+			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId())
 			.executeUpdate();			
 			trx.commit();			
 		}
@@ -228,26 +228,26 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 	@Override
-	public ArrayList<UserHasGroupView> search(String name, Float latitude, Float longitude, Number radius) throws GWTException {
-		ArrayList<UserHasGroupView> retval = null;
+	public ArrayList<GroupPlusView> search(String name, Float latitude, Float longitude, Number radius) throws GWTException {
+		ArrayList<GroupPlusView> retval = null;
 		Session sess = HibernateUtil.getSession();
 		User user = null;
 		Transaction trx = null;
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			List<com.nositer.hibernate.generated.domain.UserHasGroupView> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
-			addEntity(com.nositer.hibernate.generated.domain.UserHasGroupView.class).
+			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
+			addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
 			setString(Group.ColumnType.name.toString(), "%" + name + "%").			
-			setInteger(UserHasGroupView.ColumnType.userid.toString(), user.getId()).
+			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId()).
 			setParameter("latitude", latitude).		
 			setParameter("longitude", longitude).
 			setParameter("radius", radius).	
 			list();
 			if (results.size() == 0) {				
-				retval = new ArrayList<UserHasGroupView>();
+				retval = new ArrayList<GroupPlusView>();
 			} else {
-				retval = BeanConversion.copyDomain2DTO(results, UserHasGroupView.class);									
+				retval = BeanConversion.copyDomain2DTO(results, GroupPlusView.class);									
 			}
 		}
 		catch (GWTException e) {
@@ -265,7 +265,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 	@Override
-	public void createOrUpdateSubscription(UserHasGroupView userHasGroupView)
+	public void createOrUpdateSubscription(GroupPlusView groupPlusView)
 	throws GWTException {
 		Session sess = HibernateUtil.getSession();
 		User user = null;
@@ -273,16 +273,16 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
-			if (user.getId().equals(userHasGroupView.getUserid())) {	
+			if (user.getId().equals(groupPlusView.getUserid())) {	
 				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
-				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.disable.toString(), userHasGroupView.getUserHasGroupDisable()).
-				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.invisible.toString(), userHasGroupView.getInvisible()).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.id.toString(), userHasGroupView.getUserHasGroupId()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.disable.toString(), groupPlusView.getUserHasGroupDisable()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.invisible.toString(), groupPlusView.getInvisible()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.id.toString(), groupPlusView.getUserHasGroupId()).
 				executeUpdate();				
 			} else {
 				sess.createSQLQuery(SqlHelper.CREATESUBSCRIPTION).
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.userid.toString(), user.getId()).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.groupid.toString(), userHasGroupView.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.groupid.toString(), groupPlusView.getId()).
 				executeUpdate();
 			}			
 			trx.commit();			

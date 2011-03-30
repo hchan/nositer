@@ -14,8 +14,8 @@ public class TestGroup {
 	public static void main(String[] args) {
 		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();
 		
-		ArrayList<com.nositer.client.dto.generated.UserHasGroupView> myGroups = groupServiceImpl.getMyGroups();
-		for (com.nositer.client.dto.generated.UserHasGroupView group : myGroups) {
+		ArrayList<com.nositer.client.dto.generated.GroupPlusView> myGroups = groupServiceImpl.getMyGroups();
+		for (com.nositer.client.dto.generated.GroupPlusView group : myGroups) {
 			System.out.println(group.getName());
 			System.out.println(group.getUserid());
 		}

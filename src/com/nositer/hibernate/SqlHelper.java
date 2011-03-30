@@ -8,7 +8,7 @@ import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.UserHasGroup;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
 
@@ -45,15 +45,15 @@ public class SqlHelper {
 		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
 		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
 	public static String FINDMYGROUPS =
-		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + 
+		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + 
 		" and " + NOTDISABLE +
 		" order by " + Group.ColumnType.name;
 	public static String FINDGROUPBYTAGNAME =
-		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.tagname + " = :" + UserHasGroupView.ColumnType.tagname +
-		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = true" +
-		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
+		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.ColumnType.tagname + " = :" + GroupPlusView.ColumnType.tagname +
+		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = true" +
+		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
 		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
-		" order by " + UserHasGroupView.ColumnType.owner + 
+		" order by " + GroupPlusView.ColumnType.owner + 
 		" limit 1";
 	public static String FINDMYIWANTTOS =
 		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid +
@@ -62,14 +62,14 @@ public class SqlHelper {
 
 	public static String FINDGROUPS =
 		"select * from (" +
-		" select " + UserHasGroupView.TABLENAME + "." + "* from " + UserHasGroupView.TABLENAME + 
+		" select " + GroupPlusView.TABLENAME + "." + "* from " + GroupPlusView.TABLENAME + 
 		" left outer join " + Postalcode.TABLENAME + " on " + 
-		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
+		GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
-		UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
-		" where " + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.name + " like :" + UserHasGroupView.ColumnType.name + 
-		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
-		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
+		GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
+		" where " + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.name + " like :" + GroupPlusView.ColumnType.name + 
+		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = 1" +
+		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
 		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
@@ -81,8 +81,8 @@ public class SqlHelper {
 		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.longitude + ")" +
 		"/180-PI()* :longitude /180)) " +
 		") <= :radius" +
-		" order by " + UserHasGroupView.ColumnType.name + " ," + UserHasGroupView.ColumnType.owner + 
-		" ) derivedTable group by " + UserHasGroupView.ColumnType.id;
+		" order by " + GroupPlusView.ColumnType.name + " ," + GroupPlusView.ColumnType.owner + 
+		" ) derivedTable group by " + GroupPlusView.ColumnType.id;
 	public static String UPDATESUBSCRIPTION =
 		"update " + UserHasGroup.TABLENAME + " set " +
 		UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable + ", " +
@@ -103,11 +103,11 @@ public class SqlHelper {
 		"false" +
 		")";
 	public static String DISABLEGROUP =
-		"update " + UserHasGroupView.TABLENAME + " set " +
-		UserHasGroupView.ColumnType.disable + " = true " +
-		" where " + UserHasGroupView.ColumnType.id + "= :" + UserHasGroupView.ColumnType.id + " and " +
-		UserHasGroupView.ColumnType.owner + " = true " +
-		UserHasGroupView.ColumnType.userid + " =:" + UserHasGroupView.ColumnType.userid;
+		"update " + GroupPlusView.TABLENAME + " set " +
+		GroupPlusView.ColumnType.disable + " = true " +
+		" where " + GroupPlusView.ColumnType.id + "= :" + GroupPlusView.ColumnType.id + " and " +
+		GroupPlusView.ColumnType.owner + " = true " +
+		GroupPlusView.ColumnType.userid + " =:" + GroupPlusView.ColumnType.userid;
 
 	public static String disableSQL(DTO dto) {
 		String retval = null;

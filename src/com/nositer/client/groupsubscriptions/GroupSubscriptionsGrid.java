@@ -26,7 +26,7 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.top.TopPanel;
@@ -57,10 +57,10 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		setLoadMask(false);
 
 		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
-		proxy = new RpcProxy<ArrayList<UserHasGroupView>>() {
+		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<UserHasGroupView>> callback) {
+					AsyncCallback<ArrayList<GroupPlusView>> callback) {
 				GroupSubscriptionsGrid.this.load(loadConfig,callback);
 			}
 		};  		
@@ -121,7 +121,8 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 
 	public void load(Object loadConfig,
-			AsyncCallback<ArrayList<UserHasGroupView>> callback) {
+			AsyncCallback<ArrayList<GroupPlusView>> callback) {
+		/*
 		Location location = searchCriteriaForGroupsPanel.getLocation();
 
 		ErrorPanel errorPanel = searchCriteriaForGroupsPanel.getErrorPanel();
@@ -149,7 +150,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		} else {
 			errorPanel.hide();				
 			if (callback == null) {
-				callback = new AsyncCallback<ArrayList<UserHasGroupView>>() {
+				callback = new AsyncCallback<ArrayList<GroupPlusView>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -157,41 +158,42 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 					}
 
 					@Override
-					public void onSuccess(ArrayList<UserHasGroupView> result) {
+					public void onSuccess(ArrayList<GroupPlusView> result) {
 						GWTUtil.log("Wow, this actually succeeded");
 					}
 
 				};
 			}
 			ServiceBroker.groupService.search(
-					searchCriteriaForGroupsPanel.getGroupName().getValue(), 
+					searchCriteriaForGroupsPanel.getLastname().getValue(), 
 					searchCriteriaForGroupsPanel.getLatitude(), 
 					searchCriteriaForGroupsPanel.getLongitude(), 
 					searchCriteriaForGroupsPanel.getRadius().getValue(), 
 					callback);
 		}		
 		unmask();
+		*/
 	}
 	
 	
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final UserHasGroupView userHasGroupView = beanModel.getBean();	
+		final GroupPlusView groupPlusView = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
 			ViewMenuItem viewMenuItem = new ViewMenuItem() {
 				public void doSelect() {
-					doViewGroup(userHasGroupView);
+					doViewGroup(groupPlusView);
 				};
 			};
 			
 			contextMenu.add(viewMenuItem);		
-			if (!userHasGroupView.getUserid().equals(
+			if (!groupPlusView.getUserid().equals(
 					TopPanel.getInstance().getUser().getId())) {
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
-						doViewGroup(userHasGroupView);
+						doViewGroup(groupPlusView);
 					};
 				};
 				contextMenu.add(subscribeMenuItem);

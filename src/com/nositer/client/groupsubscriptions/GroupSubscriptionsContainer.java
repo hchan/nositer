@@ -21,7 +21,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
@@ -29,19 +29,19 @@ import com.nositer.client.widget.combobox.ComboBoxPlus;
 
 @SuppressWarnings("rawtypes")
 public class GroupSubscriptionsContainer extends LayoutContainer implements Resizable {
-	private UserHasGroupView userHasGroupView;
+	private GroupPlusView groupPlusView;
 	private ContentPanel contentPanel;
 	private GroupSubscriptionsGrid groupSubscriptionsGrid;	
 	private GroupSubscriptionsTopComponent groupSubscriptionsTopComponent;
 	private GroupSubscriptionsPagingToolBar pagingToolBar;
 	
 
-	public UserHasGroupView getUserHasGroupView() {
-		return userHasGroupView;
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
 	}
 
-	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
-		this.userHasGroupView = userHasGroupView;
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
 	}
 
 	public GroupSubscriptionsPagingToolBar getPagingToolBar() {
@@ -54,8 +54,8 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 
 
 
-	public GroupSubscriptionsContainer(UserHasGroupView userHasGroupView) {
-		this.userHasGroupView = userHasGroupView;
+	public GroupSubscriptionsContainer(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
 		init();
 	}
 

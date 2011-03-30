@@ -5,7 +5,7 @@ import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groupsubscriptions.GroupSubscriptionsContainer;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
@@ -15,7 +15,7 @@ import com.nositer.client.widget.Resizable;
 public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
-	private UserHasGroupView userHasGroupView;
+	private GroupPlusView groupPlusView;
 	private boolean populated;
 	
 	public GroupSubscriptionsContainer getGroupSubscriptionsContainer() {
@@ -27,12 +27,12 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
 	}
 
-	public UserHasGroupView getUserHasGroupView() {
-		return userHasGroupView;
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
 	}
 
-	public void setUserHasGroupView(UserHasGroupView userHasGroupView) {
-		this.userHasGroupView = userHasGroupView;
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
 	}
 
 	public boolean isPopulated() {
@@ -43,15 +43,15 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 		this.populated = populated;
 	}
 
-	public SubscriptionsGroupTabItem(UserHasGroupView userHasGroupView) {
+	public SubscriptionsGroupTabItem(GroupPlusView groupPlusView) {
 		super("Subscriptions");
 		this.populated = false;
-		this.userHasGroupView = userHasGroupView;
+		this.groupPlusView = groupPlusView;
 		init();
 	}
 
 	public void init() {
-		groupSubscriptionsContainer = new GroupSubscriptionsContainer(userHasGroupView);		
+		groupSubscriptionsContainer = new GroupSubscriptionsContainer(groupPlusView);		
 		add(groupSubscriptionsContainer);
 		addDefaultListeners();
 	}
@@ -61,7 +61,7 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {				
-				HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + userHasGroupView.getTagname());
+				HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 				resize(0,0);
 				if (!populated) {
 					populate();

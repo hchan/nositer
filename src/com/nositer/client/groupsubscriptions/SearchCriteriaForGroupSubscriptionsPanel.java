@@ -28,38 +28,13 @@ import com.nositer.client.widget.Location;
 public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
-	private TextField<String> groupName;
-	private NumberField radius;
-	private Location location;
+	private TextField<String> lastname;
+	
 	private Button searchButton;
 	private ErrorPanel errorPanel;
-	private Float latitude = null;
-	private Float longitude = null;
 	
 	
-	public NumberField getRadius() {
-		return radius;
-	}
 
-	public void setRadius(NumberField radius) {
-		this.radius = radius;
-	}
-
-	public Float getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(Float latitude) {
-		this.latitude = latitude;
-	}
-
-	public Float getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Float longitude) {
-		this.longitude = longitude;
-	}
 
 	private GroupSubscriptionsGrid searchGroupsGrid;
 	
@@ -87,20 +62,12 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		this.errorPanel = errorPanel;
 	}
 
-	public TextField<String> getGroupName() {
-		return groupName;
+	public TextField<String> getLastname() {
+		return lastname;
 	}
 
-	public void setGroupName(TextField<String> groupName) {
-		this.groupName = groupName;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setLastname(TextField<String> groupName) {
+		this.lastname = groupName;
 	}
 
 	public SearchCriteriaForGroupSubscriptionsPanel(GroupSubscriptionsContainer groupSubscriptionsContainer) {
@@ -119,27 +86,9 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		//addSearchLabel();
 		setLabelWidth(107);
 		setFieldWidth(200);
-		groupName = new TextField<String>();
-		groupName.setFieldLabel("Group name");
-		location = new Location() {
-			public void init() {
-				super.init();
-				radius = new NumberField();
-				radius.setValue(50);
-				radius.setFieldLabel("Radius (km)");
-				LayoutContainer radiusContainer = new LayoutContainer();
-				radiusContainer.setLayout(new FormLayout());
-				radiusContainer.add(radius);
-				add(radiusContainer, new VBoxLayoutData(new Margins(5, 0, 0, 5)));				
-				setHeight(120);
-
-			};
-		};
-
-		location.setHeading("Location");
-		location.setStyleName(groupName.getStyleName());
-		location.getPostalcode().setFieldLabel("Postal code");		
-		location.getZipcode().setFieldLabel("Zip code");
+		lastname = new TextField<String>();
+		lastname.setFieldLabel("Group name");
+	
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -148,7 +97,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
 			@Override
 			public void onSuccess(Void result) {
-				location.populate(TopPanel.getInstance().getUser());
+				//location.populate(TopPanel.getInstance().getUser());
 			}
 		};
 		ServiceBroker.noopService.noop(0, callback);
@@ -156,8 +105,8 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		searchButton = createSearchButton();
 
 		setTopComponent(errorPanel);
-		add(groupName);
-		add(location);
+		add(lastname);
+	
 		setButtonAlign(HorizontalAlignment.CENTER);
 		addButton(searchButton);
 
@@ -185,16 +134,8 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();
-		GWTUtil.addRequiredErrorIfNecessary(groupName, retval);
-		if (latitude == null) {
-			retval.add("A Postal code or zipcode must is required");
-		}
-		GWTUtil.addRequiredErrorIfNecessary(radius, "Radius", retval);
-		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {
-			GWTUtil.addRequiredErrorIfNecessary(location.getPostalcode(), retval);
-		} else {
-			GWTUtil.addRequiredErrorIfNecessary(location.getZipcode(), retval);
-		}
+		GWTUtil.addRequiredErrorIfNecessary(lastname, retval);
+		
 		return retval;
 	}
 

@@ -26,7 +26,7 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.top.TopPanel;
@@ -58,10 +58,10 @@ public class SearchGroupsGrid extends GroupsGrid {
 		setLoadMask(false);
 
 		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
-		proxy = new RpcProxy<ArrayList<UserHasGroupView>>() {
+		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<UserHasGroupView>> callback) {
+					AsyncCallback<ArrayList<GroupPlusView>> callback) {
 				SearchGroupsGrid.this.load(loadConfig,callback);
 			}
 		};  		
@@ -122,7 +122,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 	}
 
 	public void load(Object loadConfig,
-			AsyncCallback<ArrayList<UserHasGroupView>> callback) {
+			AsyncCallback<ArrayList<GroupPlusView>> callback) {
 		Location location = searchCriteriaForGroupsPanel.getLocation();
 
 		ErrorPanel errorPanel = searchCriteriaForGroupsPanel.getErrorPanel();
@@ -150,7 +150,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 		} else {
 			errorPanel.hide();				
 			if (callback == null) {
-				callback = new AsyncCallback<ArrayList<UserHasGroupView>>() {
+				callback = new AsyncCallback<ArrayList<GroupPlusView>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -158,7 +158,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 					}
 
 					@Override
-					public void onSuccess(ArrayList<UserHasGroupView> result) {
+					public void onSuccess(ArrayList<GroupPlusView> result) {
 						GWTUtil.log("Wow, this actually succeeded");
 					}
 
@@ -177,18 +177,18 @@ public class SearchGroupsGrid extends GroupsGrid {
 	
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final UserHasGroupView userHasGroupView = beanModel.getBean();	
+		final GroupPlusView groupPlusView = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
 			ViewMenuItem viewMenuItem = new ViewMenuItem() {
 				public void doSelect() {
-					doViewGroup(userHasGroupView);
+					doViewGroup(groupPlusView);
 				};
 			};
 			
 			contextMenu.add(viewMenuItem);		
-			if (Groups.isGroupICanSubscribeTo(userHasGroupView))  {
+			if (Groups.isGroupICanSubscribeTo(groupPlusView))  {
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
 						
@@ -201,11 +201,11 @@ public class SearchGroupsGrid extends GroupsGrid {
 
 							@Override
 							public void onSuccess(Void result) {
-								doSubscriptionsGroup(userHasGroupView);
+								doSubscriptionsGroup(groupPlusView);
 							}
 							
 						};
-						ServiceBroker.groupService.createOrUpdateSubscription(userHasGroupView, callback);
+						ServiceBroker.groupService.createOrUpdateSubscription(groupPlusView, callback);
 						
 						
 					};

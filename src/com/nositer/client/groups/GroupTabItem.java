@@ -4,7 +4,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
@@ -36,23 +36,23 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init() {
 		setText("Loading...");
 		setClosable(true);
-		AsyncCallback<UserHasGroupView> callback = new AsyncCallback<UserHasGroupView>() {
+		AsyncCallback<GroupPlusView> callback = new AsyncCallback<GroupPlusView>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
 			}
 			@Override
-			public void onSuccess(UserHasGroupView result) {
+			public void onSuccess(GroupPlusView result) {
 				init(result);
 			}
 		};
 		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
 	}
 
-	public void init(UserHasGroupView userHasGroupView) {
-		GroupTabItem.this.setText(userHasGroupView.getName());
+	public void init(GroupPlusView groupPlusView) {
+		GroupTabItem.this.setText(groupPlusView.getName());
 		setLayout(new FitLayout());
-		groupTabPanel = new GroupTabPanel(userHasGroupView);		
+		groupTabPanel = new GroupTabPanel(groupPlusView);		
 		add(groupTabPanel);
 		if (tabItemType != null) {
 			groupTabPanel.show(tabItemType);
