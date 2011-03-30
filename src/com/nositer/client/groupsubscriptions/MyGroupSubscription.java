@@ -7,10 +7,10 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup.YesNoType;
 
@@ -43,7 +43,7 @@ public class MyGroupSubscription extends FormPanel {
 
 	private void userInit() {
 		subscribeRadioGroup = new YesNoRadioGroup("Subscribe");
-		if (groupSubscriptionsContainer.getGroupPlusView().getUserid().equals(TopPanel.getInstance().getUser().getId())) {
+		if (groupSubscriptionsContainer.getGroupPlusView().getUserid().equals(Nositer.getInstance().getUser().getId())) {
 			subscribeRadioGroup.setYesNo(YesNoType.YES);
 		} else {
 			subscribeRadioGroup.setYesNo(YesNoType.NO);

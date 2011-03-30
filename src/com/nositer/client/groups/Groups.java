@@ -6,12 +6,12 @@ import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.TabItemPlus;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 
@@ -174,13 +174,13 @@ public class Groups extends TabPanel {
 
 	public static boolean isGroupIOwn(GroupPlusView groupPlusView) {
 		boolean retval = false;
-		retval = groupPlusView.getUserid().equals(TopPanel.getInstance().getUser().getId());
+		retval = groupPlusView.getUserid().equals(Nositer.getInstance().getUser().getId());
 		return retval;
 	}  
 
 	public static boolean isGroupICanSubscribeTo(GroupPlusView groupPlusView) {
 		boolean retval = false;
-		retval = (!(groupPlusView.getUserid().equals(TopPanel.getInstance().getUser().getId()))) 
+		retval = (!(groupPlusView.getUserid().equals(Nositer.getInstance().getUser().getId()))) 
 		|| groupPlusView.getUserHasGroupDisable();
 		return retval;
 	}

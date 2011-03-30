@@ -15,6 +15,7 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Relationshipcode;
@@ -145,8 +146,8 @@ public class EditBasicProfile extends LayoutContainer implements Resizable {
 
 						@Override
 						public void onSuccess(Void result) {
-							TopPanel.getInstance().setUser(user);
-							TopPanel.getInstance().setFirstLastName(user);
+							Nositer.getInstance().setUser(user);
+							TopPanel.getInstance().adjustComponents();
 							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								

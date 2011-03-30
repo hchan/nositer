@@ -22,6 +22,7 @@ import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
@@ -29,7 +30,6 @@ import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
@@ -190,7 +190,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 			
 			contextMenu.add(viewMenuItem);		
 			if (!groupPlusView.getUserid().equals(
-					TopPanel.getInstance().getUser().getId())) {
+					Nositer.getInstance().getUser().getId())) {
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
 						doViewGroup(groupPlusView);

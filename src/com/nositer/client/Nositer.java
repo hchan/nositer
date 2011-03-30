@@ -10,7 +10,9 @@ import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
@@ -21,17 +23,18 @@ import com.nositer.client.util.GWTUtil;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Nositer implements EntryPoint {
+public class Nositer implements EntryPoint{
+
+
 	private TopPanel topPanel;
 	private MainPanel mainPanel;
 	private LeftPanel leftPanel;
 	private LayoutContainer layoutContainer;
 	private static Nositer instance;
 	private BorderLayout borderLayout;
+	private User user;
 
-	public static Nositer getInstance() {
-		return instance;
-	}
+
 	public static void setInstance(Nositer instance) {
 		Nositer.instance = instance;
 	}
@@ -61,7 +64,21 @@ public class Nositer implements EntryPoint {
 		this.leftPanel = leftPanel;
 	}
 	public void onModuleLoad() {
-		init();
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+			@Override
+			public void onSuccess(User result) {
+				if (result != null) {
+					user = result;		
+					init();
+				}
+			}
+		};
+		instance = this;
+		ServiceBroker.profileService.getCurrentUser(callback);
 	}
 
 	public void init() {
@@ -72,16 +89,16 @@ public class Nositer implements EntryPoint {
 		BorderLayoutData borderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		viewport.add(layoutContainer, borderLayoutData);
 		borderLayoutData.setMargins(new Margins(1));
-		instance = this;
+		
 		RootPanel.get().add(viewport);		
 		HistoryManager.addHistorySupport();
 	}
 
-	
+
 	public void initLayoutContainer() {
 		layoutContainer = new LayoutContainer();	
 		borderLayout = new BorderLayout();
-	
+
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
 		topPanel = new TopPanel(topLayoutData);	
@@ -94,7 +111,7 @@ public class Nositer implements EntryPoint {
 		layoutContainer.add(mainPanel, mainLayoutData);		
 		addListeners();
 	}
-	
+
 	private void addListeners() {
 		borderLayout.addListener(Events.Collapse, new Listener<BorderLayoutEvent>() {
 			@Override
@@ -104,7 +121,7 @@ public class Nositer implements EntryPoint {
 				MainPanel.getInstance().resizeChildren(0, 0, MainPanel.getInstance());
 			}}
 		);
-		
+
 		borderLayout.addListener(Events.Expand, new Listener<BorderLayoutEvent>() {
 			@Override
 			public void handleEvent(BorderLayoutEvent borderLayoutEvent) {
@@ -113,6 +130,15 @@ public class Nositer implements EntryPoint {
 				MainPanel.getInstance().resizeChildren(0, 0, MainPanel.getInstance());
 			}}
 		);
+	}
+	public User getUser() {		
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public static Nositer getInstance() {
+		return instance;
 	}
 }
 

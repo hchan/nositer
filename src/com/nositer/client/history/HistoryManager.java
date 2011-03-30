@@ -12,6 +12,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.createiwantto.CreateIWantTo;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
@@ -26,7 +27,6 @@ import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.uploadimages.UploadImages;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfile;
@@ -69,7 +69,7 @@ public class HistoryManager {
 				@Override
 				public void onSuccess(User result) {
 					if (result != null) {
-						TopPanel.getInstance().setUser(result);		
+						Nositer.getInstance().setUser(result);		
 						onHistoryChangedForTokensOtherThanHome(historyToken); 
 					}
 				}

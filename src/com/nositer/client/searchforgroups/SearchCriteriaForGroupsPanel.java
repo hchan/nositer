@@ -14,12 +14,12 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.Zipcode;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
@@ -146,7 +146,7 @@ public class SearchCriteriaForGroupsPanel extends FormPanel {
 
 			@Override
 			public void onSuccess(Void result) {
-				location.populate(TopPanel.getInstance().getUser());
+				location.populate(Nositer.getInstance().getUser());
 			}
 		};
 		ServiceBroker.noopService.noop(0, callback);

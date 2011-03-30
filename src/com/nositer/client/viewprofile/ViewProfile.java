@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.top.TopPanel;
@@ -60,9 +61,9 @@ public class ViewProfile extends TabPanel {
 					@Override
 					public void onSuccess(User result) {
 						if (result != null) {
-							TopPanel.getInstance().setUser(result);
+							Nositer.getInstance().setUser(result);
 							TopPanel.getInstance().setFirstLastName(result);
-							viewProfile.populate(TopPanel.getInstance().getUser());
+							viewProfile.populate(Nositer.getInstance().getUser());
 							profileTabItem.add(viewProfile);
 							ViewProfile.this.layout();
 						}

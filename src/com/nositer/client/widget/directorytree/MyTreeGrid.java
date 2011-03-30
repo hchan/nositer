@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.nositer.client.top.TopPanel;
+import com.nositer.client.Nositer;
 
 @SuppressWarnings("rawtypes")
 public class MyTreeGrid extends TreeGrid<ModelData>{
@@ -22,7 +22,7 @@ public class MyTreeGrid extends TreeGrid<ModelData>{
 		FileModel fileModel = (FileModel)model;
 		if (model instanceof FolderModel && isLeaf(model)) {
 			retval = IconHelper.createPath("/public/image/emptyFolder.png");
-		} if (fileModel.getPath().equals(TopPanel.getInstance().getUser().getAvatarlocation())) {
+		} if (fileModel.getPath().equals(Nositer.getInstance().getUser().getAvatarlocation())) {
 			retval = IconHelper.createPath("/public/image/avataricon.png");
 		} else {
 			retval = super.calculateIconStyle(model);

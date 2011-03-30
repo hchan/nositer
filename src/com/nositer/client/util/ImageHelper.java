@@ -1,6 +1,6 @@
 package com.nositer.client.util;
 
-import com.nositer.client.top.TopPanel;
+import com.nositer.client.Nositer;
 import com.nositer.shared.Global;
 
 
@@ -11,7 +11,7 @@ public class ImageHelper {
 		//retval = Global.USER_URL_PREFIX + "/" + TopPanel.getInstance().getUser().getId() + "/image" + relativePath;
 		retval = getUserImagePathURL(
 				relativePath, 
-				TopPanel.getInstance().
+				Nositer.getInstance().
 				getUser().
 				getId());
 		return retval;

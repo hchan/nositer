@@ -9,31 +9,23 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 
 public class TopPanel extends ContentPanel {	
-	private static TopPanel instance;
-	private User user;
+	protected static TopPanel instance;
 	private Label youAreLoggedOnAs;
 	private Label firstLastName;
 	private Logout logout;
 
-	public User getUser() {		
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+	public static void setInstance(TopPanel instance) {
+		TopPanel.instance = instance;
 	}
 
 	public static TopPanel getInstance() {
 		return instance;
-	}
-
-	public static void setInstance(TopPanel instance) {
-		TopPanel.instance = instance;
 	}
 
 	private BorderLayoutData topLayoutData;
@@ -58,7 +50,7 @@ public class TopPanel extends ContentPanel {
 
 
 	public TopPanel (BorderLayoutData topLayoutData) {		
-		this(topLayoutData, true);
+		this(topLayoutData, false);
 
 	}
 
@@ -93,24 +85,21 @@ public class TopPanel extends ContentPanel {
 		welcomePanel = new HTMLPanel("Journey with us");
 		welcomePanel.setStyleName("welcomeDescription");
 		this.add(welcomePanel);
-		if (doLogin) {
-			this.add(loggedInAs);
-			if (user == null) {
-				initFirstLastName();
-			} else {
-				adjustComponents();
-			}
-		}
+
+		adjustComponents();
+
 	}
 
-	private void adjustComponents() {
-		setFirstLastName(user);	
+	public void adjustComponents() {
+		setFirstLastName(
+				Nositer.getInstance().
+				getUser());	
 		TopPanel.this.loggedInAs.remove(logout);
 		TopPanel.this.loggedInAs.add(logout);
 		TopPanel.this.layout();
 	}
 
-	private void initFirstLastName() {
+	private void initFirstLastNameNotUsed() {
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -120,7 +109,7 @@ public class TopPanel extends ContentPanel {
 			public void onSuccess(User result) {
 				GWTUtil.log("Inside success of initFirstLastName()");
 				if (result != null) {
-					user = result;		
+					Nositer.getInstance().setUser(result);		
 					adjustComponents();
 				}
 			}
@@ -128,6 +117,7 @@ public class TopPanel extends ContentPanel {
 		ServiceBroker.profileService.getCurrentUser(callback);
 	}
 
+	/*
 	public void initUser() {
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
@@ -144,7 +134,8 @@ public class TopPanel extends ContentPanel {
 		};
 		ServiceBroker.profileService.getCurrentUser(callback);
 	}
-	
+	 */
+
 	public void setFirstLastName(User user) {
 		firstLastName.setText(user.getFirstname() + " " + user.getLastname());
 	}
