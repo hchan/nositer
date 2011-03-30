@@ -149,7 +149,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		formPanel.add(name, new FormData("100%"));
 		FormData formDataAvatarSelector = new FormData();
 		formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
-		formPanel.add(avatarSelector, formDataAvatarSelector);
+		//formPanel.add(avatarSelector, formDataAvatarSelector);
 		formPanel.add(description, new FormData("100%"));	
 
 		this.add(formPanel);
@@ -188,7 +188,8 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	}
 
 	public int getHeightOffset() {
-		return 250;
+		//return 250;
+		return 225;
 	}
 
 
