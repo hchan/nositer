@@ -50,7 +50,7 @@ public class SqlHelper {
 		" order by " + Group.ColumnType.name;
 	public static String FINDGROUPBYTAGNAME =
 		"select * from " + UserHasGroupView.TABLENAME + " where " + UserHasGroupView.ColumnType.tagname + " = :" + UserHasGroupView.ColumnType.tagname +
-		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = 1" +
+		" and (" + UserHasGroupView.TABLENAME + "." + UserHasGroupView.ColumnType.owner + " = true" +
 		" or " + UserHasGroupView.ColumnType.userid + " = :" + UserHasGroupView.ColumnType.userid + ")" + 
 		" and " + UserHasGroup.ColumnType.disable + " = false" + 		
 		" order by " + UserHasGroupView.ColumnType.owner + 

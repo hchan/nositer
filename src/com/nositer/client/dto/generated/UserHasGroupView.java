@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 29, 2011 5:10:11 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 30, 2011 10:03:51 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -207,22 +207,54 @@ public class UserHasGroupView implements java.io.Serializable, IsSerializable,
 	public UserHasGroupView clone() {
 
 		UserHasGroupView retval = new UserHasGroupView();
-		retval.setId(new Integer(id));
-		retval.setTagname(new String(tagname));
-		retval.setPostalcodeid(new Integer(postalcodeid));
-		retval.setZipcodeid(new Integer(zipcodeid));
-		retval.setCountrycode(new String(countrycode));
-		retval.setName(new String(name));
-		retval.setDescription(new String(description));
-		retval.setAvatarlocation(new String(avatarlocation));
-		retval.setDisable(new Boolean(disable));
-		retval.setCreatedtime((Date) createdtime.clone());
-		retval.setModifiedtime((Date) modifiedtime.clone());
-		retval.setUserHasGroupId(new Integer(userHasGroupId));
-		retval.setUserid(new Integer(userid));
-		retval.setOwner(new Boolean(owner));
-		retval.setInvisible(new Boolean(invisible));
-		retval.setUserHasGroupDisable(new Boolean(userHasGroupDisable));
+		if (id != null) {
+			retval.setId(new Integer(id));
+		}
+		if (tagname != null) {
+			retval.setTagname(new String(tagname));
+		}
+		if (postalcodeid != null) {
+			retval.setPostalcodeid(new Integer(postalcodeid));
+		}
+		if (zipcodeid != null) {
+			retval.setZipcodeid(new Integer(zipcodeid));
+		}
+		if (countrycode != null) {
+			retval.setCountrycode(new String(countrycode));
+		}
+		if (name != null) {
+			retval.setName(new String(name));
+		}
+		if (description != null) {
+			retval.setDescription(new String(description));
+		}
+		if (avatarlocation != null) {
+			retval.setAvatarlocation(new String(avatarlocation));
+		}
+		if (disable != null) {
+			retval.setDisable(new Boolean(disable));
+		}
+		if (createdtime != null) {
+			retval.setCreatedtime((Date) createdtime.clone());
+		}
+		if (modifiedtime != null) {
+			retval.setModifiedtime((Date) modifiedtime.clone());
+		}
+		if (userHasGroupId != null) {
+			retval.setUserHasGroupId(new Integer(userHasGroupId));
+		}
+		if (userid != null) {
+			retval.setUserid(new Integer(userid));
+		}
+		if (owner != null) {
+			retval.setOwner(new Boolean(owner));
+		}
+		if (invisible != null) {
+			retval.setInvisible(new Boolean(invisible));
+		}
+		if (userHasGroupDisable != null) {
+			retval.setUserHasGroupDisable(new Boolean(userHasGroupDisable));
+		}
 
 		return retval;
 	}

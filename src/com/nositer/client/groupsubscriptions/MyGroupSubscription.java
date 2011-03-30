@@ -3,11 +3,13 @@ package com.nositer.client.groupsubscriptions;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.UserHasGroupView;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup;
 import com.nositer.client.widget.radiogroup.YesNoRadioGroup.YesNoType;
@@ -27,6 +29,19 @@ public class MyGroupSubscription extends FormPanel {
 		setHeading("My Subscription Information");
 		setCollapsible(true);
 		setBodyBorder(false);
+		if (Groups.isGroupIOwn(groupSubscriptionsContainer.getUserHasGroupView())) {
+			groupIOwnInit();
+		} else {
+			userInit();
+		}
+	}
+	
+	private void groupIOwnInit() {
+		HtmlContainer htmlContainer = new HtmlContainer("You are the owner of this group");
+		add(htmlContainer);
+	}
+
+	private void userInit() {
 		subscribeRadioGroup = new YesNoRadioGroup("Subscribe");
 		if (groupSubscriptionsContainer.getUserHasGroupView().getUserid().equals(TopPanel.getInstance().getUser().getId())) {
 			subscribeRadioGroup.setYesNo(YesNoType.YES);

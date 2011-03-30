@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 29, 2011 5:10:11 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 30, 2011 10:03:51 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -172,17 +172,39 @@ public class Zipcode implements java.io.Serializable, IsSerializable,
 	public Zipcode clone() {
 
 		Zipcode retval = new Zipcode();
-		retval.setId(new Integer(id));
-		retval.setCode(new String(code));
-		retval.setDescription(new String(description));
-		retval.setLatitude(new Float(latitude));
-		retval.setLongitude(new Float(longitude));
-		retval.setCity(new String(city));
-		retval.setState(new String(state));
-		retval.setCounty(new String(county));
-		retval.setZipClass(new String(zipClass));
-		retval.setCreatedtime((Date) createdtime.clone());
-		retval.setModifiedtime((Date) modifiedtime.clone());
+		if (id != null) {
+			retval.setId(new Integer(id));
+		}
+		if (code != null) {
+			retval.setCode(new String(code));
+		}
+		if (description != null) {
+			retval.setDescription(new String(description));
+		}
+		if (latitude != null) {
+			retval.setLatitude(new Float(latitude));
+		}
+		if (longitude != null) {
+			retval.setLongitude(new Float(longitude));
+		}
+		if (city != null) {
+			retval.setCity(new String(city));
+		}
+		if (state != null) {
+			retval.setState(new String(state));
+		}
+		if (county != null) {
+			retval.setCounty(new String(county));
+		}
+		if (zipClass != null) {
+			retval.setZipClass(new String(zipClass));
+		}
+		if (createdtime != null) {
+			retval.setCreatedtime((Date) createdtime.clone());
+		}
+		if (modifiedtime != null) {
+			retval.setModifiedtime((Date) modifiedtime.clone());
+		}
 
 		return retval;
 	}

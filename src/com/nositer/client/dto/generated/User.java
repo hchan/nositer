@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Mar 29, 2011 5:10:11 PM by Hibernate Tools 3.2.4.GA
+// Generated Mar 30, 2011 10:03:51 AM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -356,24 +356,60 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 	public User clone() {
 
 		User retval = new User();
-		retval.setId(new Integer(id));
-		retval.setCountrycode(new String(countrycode));
-		retval.setLogin(new String(login));
-		retval.setFirstname(new String(firstname));
-		retval.setLastname(new String(lastname));
-		retval.setPassword(new String(password));
-		retval.setEmail(new String(email));
-		retval.setGendermale(new Boolean(gendermale));
-		retval.setBirthdate((Date) birthdate.clone());
-		retval.setProfession(new String(profession));
-		retval.setAvatarlocation(new String(avatarlocation));
-		retval.setNote(new String(note));
-		retval.setNotemodifedtime((Date) notemodifedtime.clone());
-		retval.setDescription(new String(description));
-		retval.setLastlogin((Date) lastlogin.clone());
-		retval.setDisable(new Boolean(disable));
-		retval.setCreatedtime((Date) createdtime.clone());
-		retval.setModifiedtime((Date) modifiedtime.clone());
+		if (id != null) {
+			retval.setId(new Integer(id));
+		}
+		if (countrycode != null) {
+			retval.setCountrycode(new String(countrycode));
+		}
+		if (login != null) {
+			retval.setLogin(new String(login));
+		}
+		if (firstname != null) {
+			retval.setFirstname(new String(firstname));
+		}
+		if (lastname != null) {
+			retval.setLastname(new String(lastname));
+		}
+		if (password != null) {
+			retval.setPassword(new String(password));
+		}
+		if (email != null) {
+			retval.setEmail(new String(email));
+		}
+		if (gendermale != null) {
+			retval.setGendermale(new Boolean(gendermale));
+		}
+		if (birthdate != null) {
+			retval.setBirthdate((Date) birthdate.clone());
+		}
+		if (profession != null) {
+			retval.setProfession(new String(profession));
+		}
+		if (avatarlocation != null) {
+			retval.setAvatarlocation(new String(avatarlocation));
+		}
+		if (note != null) {
+			retval.setNote(new String(note));
+		}
+		if (notemodifedtime != null) {
+			retval.setNotemodifedtime((Date) notemodifedtime.clone());
+		}
+		if (description != null) {
+			retval.setDescription(new String(description));
+		}
+		if (lastlogin != null) {
+			retval.setLastlogin((Date) lastlogin.clone());
+		}
+		if (disable != null) {
+			retval.setDisable(new Boolean(disable));
+		}
+		if (createdtime != null) {
+			retval.setCreatedtime((Date) createdtime.clone());
+		}
+		if (modifiedtime != null) {
+			retval.setModifiedtime((Date) modifiedtime.clone());
+		}
 
 		return retval;
 	}

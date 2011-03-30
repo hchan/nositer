@@ -11,14 +11,6 @@ public class PlayClone {
 		User myClone = (User) user.clone();
 		System.out.println(myClone.getNote());
 		
-		Date today = new Date();
 		
-		Date todayAgain = today;
-		
-		today.setYear(2099);
-		System.out.println(todayAgain);
-		
-		
-		System.out.println(Integer.class.isPrimitive());
 	}
 }
