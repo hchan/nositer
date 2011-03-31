@@ -14,7 +14,7 @@ public class ErrorPanel extends LayoutContainer {
 	private Label header;
 	private LayoutContainer errorMessages;
 	private boolean hidden = false;
-	
+	private ArrayList<String> errors = null;
 	public Label getHeader() {
 		return header;
 	}
@@ -40,17 +40,15 @@ public class ErrorPanel extends LayoutContainer {
 	}
 
 	public ErrorPanel() {
-		//init();
-	}
-
-	@Override
-	protected void onRender(Element parent, int index) {
-		super.onRender(parent, index);
 		init();
 	}
+
+	
 	
 	public void init() {
+		errors = new ArrayList<String>();
 		header = new Label("Errors");
+		header.setId("errorHeader");
 		header.setStyleName("errorHeader");
 		errorMessages = new LayoutContainer(new TableLayout(1));
 		TableLayout layout = new TableLayout(1);  
@@ -66,14 +64,20 @@ public class ErrorPanel extends LayoutContainer {
 
 	public void clearErrorMessages() {
 		errorMessages.removeAll();
+		errors.clear();
 	}
 
 	public void addErrorMessage(String str) {
 		Label label = new Label("&rArr; " + str);
 		label.setStyleName("errorMessages");
 		errorMessages.add(label);
+		errors.add(str);
 	}
 	
+	public ArrayList<String> getErrors() {
+		return errors;
+	}
+
 	public void setErrors(ArrayList<String> errors) {
 		clearErrorMessages();
 		for (String str : errors) {
@@ -94,5 +98,9 @@ public class ErrorPanel extends LayoutContainer {
 		super.show();
 		this.layout();
 		this.el().fadeIn(FxConfig.NONE);
+	}
+
+	public void resetHeight() {
+		setHeight(25 + this.getErrors().size() * 20);
 	}
 }

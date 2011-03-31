@@ -15,7 +15,7 @@ public class Global {
 	public static final String USER_URL_PREFIX = "/userfile";
 	public static final String AVATAR_WIDTHHEIGHT = "200"; // in px
 	public static final String PUBLICBASEDIR = "/public/image";
-	public static final String DEFAULTAVATAR = PUBLICBASEDIR + "/defaultAvatar.png";
+	public static final String DEFAULTAVATAR = PUBLICBASEDIR + "/unknownavatar.jpg";
 	public static final String DEFAULTUSERAVATAR = "/public/defaultAvatar.png";
 	
 }

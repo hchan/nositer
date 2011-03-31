@@ -17,11 +17,12 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.layout.AnchorLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
-import com.extjs.gxt.ui.client.widget.layout.CenterLayout;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,6 +38,7 @@ import com.nositer.client.top.TopPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.combobox.RelationshipcodeComboBox;
 import com.nositer.client.widget.combobox.SalutationcodeComboBox;
@@ -67,6 +69,7 @@ public class Register implements EntryPoint {
 	private SalutationcodeComboBox salutation;
 	private RelationshipcodeComboBox relationship;
 	private AvatarSelector avatarSelector;
+	private ContentPanel registrationPanel;
 	
 	public AvatarSelector getAvatarSelector() {
 		return avatarSelector;
@@ -265,15 +268,18 @@ public class Register implements EntryPoint {
 	private void populateMainPanel() {		
 		initFormPanel();
 		addButtons();
-		mainPanel.setLayout(new CenterLayout());
-		ContentPanel registrationPanel = new ContentPanel(new TableLayout(1));
+	
+		registrationPanel = new ContentPanel();
+		
 		registrationPanel.setWidth(500);
 		registrationPanel.setHeading("Registration");
-		errorPanel = new ErrorPanel();
-		errorPanel.init();
+		errorPanel = new ErrorPanel();	
+		
 		errorPanel.hide();
-		registrationPanel.add(errorPanel);
+		registrationPanel.setTopComponent(errorPanel);
 		registrationPanel.add(formPanel);
+		
+		
 		mainPanel.add(registrationPanel);
 
 	}
@@ -410,8 +416,8 @@ public class Register implements EntryPoint {
 				ArrayList<String> errors = getErrors();
 				if (errors.size() > 0) {
 					errorPanel.setErrors(errors);
-					errorPanel.show();					
-
+					errorPanel.show();		
+					errorPanel.resetHeight();
 				} else {
 					User user = createDTO();
 					ServiceBroker.registerService.register(user, callback);
@@ -485,5 +491,8 @@ public class Register implements EntryPoint {
 		retval.setBirthdate(birthdate.getValue());
 		return retval;
 	}
+
+	
+
 
 }
