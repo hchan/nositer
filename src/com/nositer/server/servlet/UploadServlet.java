@@ -42,7 +42,7 @@ public class UploadServlet extends HttpServlet {
 			user = getUseridViaHttpCall(req, resp);
 			String uploadDirFromRequest = req.getParameter("uploadDir");
 			performSecurityCheck(uploadDirFromRequest);
-			uploadDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
+			uploadDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
 		
 			
 			ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());

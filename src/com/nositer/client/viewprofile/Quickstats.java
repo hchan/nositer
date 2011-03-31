@@ -93,7 +93,7 @@ public class Quickstats extends LayoutContainer {
 		}
 
 		if (user.getAvatarlocation() == null) { 
-			avatar.setPathToImage(Global.UNKNOWNAVATAR);
+			avatar.setPathToImage(Global.DEFAULTAVATAR);
 		} else {
 			avatar.setPathToImage(ImageHelper.getUserImagePathURL(user.getAvatarlocation()));
 		}

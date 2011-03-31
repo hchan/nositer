@@ -52,7 +52,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	public List<FileModel> getImageFolderChildren(FileModel folder) {
-		rootDir = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId());
+		rootDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId());
 		root = new File(rootDir);
 		try {
 			createDirsIfNecessary();
@@ -102,13 +102,13 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		return models;
 	}
 
-	private void createDirsIfNecessary() throws IOException {
+	public void createDirsIfNecessary() throws IOException {
 	
-		File privateImageDir = new File(MessageFormat.format(Global.USERPRIVATEIMAGEDIRTEMPLATE, user.getId()));
+		File privateImageDir = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()));
 		if (!privateImageDir.exists()) {
 			FileUtils.forceMkdir(privateImageDir);
 		}
-		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICIMAGEDIRTEMPLATE, user.getId()));
+		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, user.getId()));
 		if (!publicImageDir.exists()) {
 			FileUtils.forceMkdir(publicImageDir);
 		}
@@ -165,7 +165,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 			if (!isValidFileName(baseName)) {
 				throw new GWTException(baseName + " has illegal characters");
 			}
-			String fullFolderPath = MessageFormat.format(Global.USERIMAGEDIRTEMPLATE, user.getId()) + folder;
+			String fullFolderPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + folder;
 			File dirToCreate = new File(fullFolderPath);
 			if (dirToCreate.exists()) {
 				throw new GWTException(baseName + " already exists");

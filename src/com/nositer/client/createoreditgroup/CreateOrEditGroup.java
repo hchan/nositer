@@ -146,10 +146,12 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 			addLabel("Edit Group");
 		}
 		formPanel.add(tagname, new FormData("100%"));
-		formPanel.add(name, new FormData("100%"));
-		FormData formDataAvatarSelector = new FormData();
-		formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
-		//formPanel.add(avatarSelector, formDataAvatarSelector);
+		formPanel.add(name, new FormData("100%"));		
+		if (!isCreate()) {
+			FormData formDataAvatarSelector = new FormData();
+			formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
+			formPanel.add(avatarSelector, formDataAvatarSelector);			
+		}
 		formPanel.add(description, new FormData("100%"));	
 
 		this.add(formPanel);
@@ -188,8 +190,13 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	}
 
 	public int getHeightOffset() {
-		//return 250;
-		return 225;
+		int retval = 0;
+		if (isCreate()) {
+			retval = 225;
+		} else {
+			retval = 250;
+		}		
+		return retval;
 	}
 
 

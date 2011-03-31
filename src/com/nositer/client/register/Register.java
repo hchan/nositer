@@ -252,7 +252,7 @@ public class Register implements EntryPoint {
 		BorderLayout borderLayout = new BorderLayout();
 		layoutContainer.setLayout(borderLayout);
 		BorderLayoutData topLayoutData = new BorderLayoutData(LayoutRegion.NORTH);  
-		topPanel = new TopPanel(topLayoutData, false);		
+		topPanel = new TopPanel(topLayoutData, true);		
 		BorderLayoutData mainLayoutData = new BorderLayoutData(LayoutRegion.CENTER);  
 		mainPanel = new MainPanel(mainLayoutData);
 		mainPanel.setScrollMode(Scroll.AUTO);

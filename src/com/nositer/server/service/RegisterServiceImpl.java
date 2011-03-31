@@ -1,8 +1,12 @@
 package com.nositer.server.service;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,6 +15,7 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.RegisterService;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.shared.GWTException;
+import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.Encrypt;
 import com.nositer.webapp.Application;
@@ -23,15 +28,17 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 		boolean retval = false;
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
-		try {
+		try {		
 			trx = sess.beginTransaction();		   
 			com.nositer.hibernate.generated.domain.User userDomain = BeanConversion.copyDTO2Domain(user, com.nositer.hibernate.generated.domain.User.class);
+			userDomain.setAvatarlocation(Global.DEFAULTUSERAVATAR);
 			userDomain.setPassword(Encrypt.cryptPassword(userDomain.getPassword()));
 			userDomain.setLastlogin(new Date());
 			sess.save(userDomain);
 			trx.commit();
 			user = BeanConversion.copyDomain2DTO(userDomain, User.class);
 			Application.setCurrentUser(user);
+			createBasicFilesStructure();
 			retval = true;
 		}
 		catch (Exception e) {
@@ -43,5 +50,13 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			HibernateUtil.closeSession(sess);
 		}
 		return retval;
+	}
+
+	private void createBasicFilesStructure() throws IOException {
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		fileServiceImpl.createDirsIfNecessary();
+		File defaultAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.DEFAULTAVATAR));		
+		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
+		FileUtils.copyFileToDirectory(defaultAvatar, publicImageDir);
 	}
 }

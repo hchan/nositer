@@ -55,13 +55,13 @@ public class TopPanel extends ContentPanel {
 	}
 
 
-	public TopPanel(BorderLayoutData topLayoutData, boolean doLogin) {
+	public TopPanel(BorderLayoutData topLayoutData, boolean noUser) {
 		this.topLayoutData = topLayoutData;
-		init(doLogin);
+		init(noUser);
 		instance = this;
 	}
 
-	public void init(boolean doLogin) {
+	public void init(boolean noUser) {
 		setId("topPanel");
 		loggedInAs = new ContentPanel();
 		loggedInAs.setHeaderVisible(false);
@@ -78,15 +78,17 @@ public class TopPanel extends ContentPanel {
 		logout = new Logout();
 		loggedInAs.add(logout);
 
-		
+
 		topLayoutData.setSize(50);
 		//topLayoutData.setCollapsible(true);
 		this.setHeaderVisible(false);
 		welcomePanel = new HTMLPanel("Journey with us");
 		welcomePanel.setStyleName("welcomeDescription");
 		this.add(welcomePanel);
-		this.add(loggedInAs);
-		adjustComponents();
+		if (!noUser) {
+			this.add(loggedInAs);
+			adjustComponents();
+		}
 
 	}
 
