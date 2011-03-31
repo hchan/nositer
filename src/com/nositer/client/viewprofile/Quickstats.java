@@ -91,12 +91,7 @@ public class Quickstats extends LayoutContainer {
 		} else {
 			location.setValue(user.getZipcode().getCity() + ", " + user.getZipcode().getState() + " " + user.getCountrycode());
 		}
-
-		if (user.getAvatarlocation() == null) { 
-			avatar.setPathToImage(Global.DEFAULTAVATAR);
-		} else {
-			avatar.setPathToImage(ImageHelper.getUserImagePathURL(user.getAvatarlocation()));
-		}
+		avatar.setPathToImage(ImageHelper.getUserImagePathURL(user.getAvatarlocation()));		
 	}
 	
 	public LabelField createProfileLabelField(String fieldLabel) {

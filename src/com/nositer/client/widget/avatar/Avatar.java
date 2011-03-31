@@ -49,7 +49,7 @@ public class Avatar extends LayoutContainer {
 
 	private void setPathToImage(String pathToImage, String className) {
 		if (pathToImage == null) {
-			pathToImage = Global.DEFAULTAVATAR;
+			pathToImage = Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTAVATAR;
 		}
 		htmlContainer.setHtml("<IMG SRC='" + pathToImage + "' CLASS='" + className + "'/>");
 		setStyleName(className);

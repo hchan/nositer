@@ -31,7 +31,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 		try {		
 			trx = sess.beginTransaction();		   
 			com.nositer.hibernate.generated.domain.User userDomain = BeanConversion.copyDTO2Domain(user, com.nositer.hibernate.generated.domain.User.class);
-			userDomain.setAvatarlocation(Global.DEFAULTUSERAVATAR);
+			userDomain.setAvatarlocation(Global.USERPUBLICDIR + "/" + Global.DEFAULTUSERAVATAR);
 			userDomain.setPassword(Encrypt.cryptPassword(userDomain.getPassword()));
 			userDomain.setLastlogin(new Date());
 			sess.save(userDomain);
@@ -55,7 +55,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 	private void createBasicFilesStructure() throws IOException {
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		fileServiceImpl.createDirsIfNecessary();
-		File defaultUserAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.DEFAULTUSERAVATAR));		
+		File defaultUserAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
 		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
 		FileUtils.copyFileToDirectory(defaultUserAvatar, publicImageDir);
 		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");

@@ -69,7 +69,7 @@ public class UserFileServlet extends HttpServlet {
 		}
 
 		// Decode the file name (might contain spaces and on) and prepare file object.
-		File image = new File(Global.USERROOTDIR + "/" + requestedImage, URLDecoder.decode(requestedImage, "UTF-8"));
+		File image = new File(Global.USERROOTDIR + "/" + requestedImage);//, URLDecoder.decode(requestedImage, "UTF-8"));
 
 		// Check if file actually exists in filesystem.
 		if (!image.exists()) {
@@ -129,7 +129,7 @@ public class UserFileServlet extends HttpServlet {
 			if (!userid.matches("^\\d+$")) {
 				retval = false;
 			} else {
-				if (!accessPath.equals(Global.AccessType.PUBLIC.toString().toLowerCase())) {		
+				if (!("/" + accessPath).equals(Global.USERPUBLICDIR)) {		
 					retval = false;
 				} else {
 					for (int i = 1; i < dirPaths.length; i++) {

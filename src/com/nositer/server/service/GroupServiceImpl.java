@@ -1,9 +1,13 @@
 package com.nositer.server.service;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,6 +21,7 @@ import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.UserHasGroup;
 import com.nositer.shared.GWTException;
+import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
 import com.nositer.util.HTMLPurifier;
 import com.nositer.webapp.Application;
@@ -58,7 +63,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
-
+			createBasicFilesStructure();
 		}
 		catch (GWTException e) {
 			throw e;
@@ -76,6 +81,22 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			HibernateUtil.closeSession(sess);
 		}
 		return retval;
+	}
+	
+	private void createBasicFilesStructure() throws IOException {
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		fileServiceImpl.createDirsIfNecessary();
+		File defaultUserAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
+		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
+		FileUtils.copyFileToDirectory(defaultUserAvatar, publicImageDir);
+		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
+		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + Application.getCurrentUser().getId() + 
+				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() +
+				"\nFor example, your default avatar is viewable at this location: " +
+				Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() + Global.DEFAULTUSERAVATAR
+		);		
+		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
+		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
 	}
 
 	@Override
