@@ -4,7 +4,7 @@ import com.nositer.server.service.FileServiceImpl;
 import com.nositer.shared.Global;
 
 @SuppressWarnings({"serial"})
-public class UserFileServlet extends AbstractFileServlet {
+public class GroupFileServlet extends AbstractFileServlet {
 
 
 	@Override
@@ -12,12 +12,12 @@ public class UserFileServlet extends AbstractFileServlet {
 		boolean retval = true;
 		try {
 			String[] dirPaths = str.split("/");
-			String userid = dirPaths[1];
+			String groupid = dirPaths[1];
 			String accessPath = dirPaths[2];
-			if (!userid.matches("^\\d+$")) {
+			if (!groupid.matches("^\\d+$")) {
 				retval = false;
 			} else {
-				if (!("/" + accessPath).equals(Global.USERPUBLICDIR)) {		
+				if (!("/" + accessPath).equals(Global.GROUPPUBLICDIR)) {		
 					retval = false;
 				} else {
 					for (int i = 1; i < dirPaths.length; i++) {
@@ -37,7 +37,7 @@ public class UserFileServlet extends AbstractFileServlet {
 
 	@Override
 	public String getRootDir() {		
-		return Global.USERROOTDIR;
+		return Global.GROUPROOTDIR;
 	}
 	
 

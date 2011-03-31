@@ -51,19 +51,16 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			group.setCountrycode(user.getCountrycode());
 			group.setDisable(false);
 			com.nositer.hibernate.generated.domain.Group groupDomain = BeanConversion.copyDTO2Domain(group, com.nositer.hibernate.generated.domain.Group.class);
-
+			groupDomain.setAvatarlocation(Global.GROUPPUBLICDIR + "/" + Global.DEFAULTGROUPAVATAR);			
 			sess.save(groupDomain);
-
 			UserHasGroup userHasGroupDomain = new UserHasGroup();
 			userHasGroupDomain.setGroup(groupDomain);
 			userHasGroupDomain.setOwner(true);
 			userHasGroupDomain.setUser(BeanConversion.copyDTO2Domain(user, com.nositer.hibernate.generated.domain.User.class));
 			sess.save(userHasGroupDomain);
-
-
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
-			createBasicFilesStructure();
+			createBasicFilesStructure(retval.getId());
 		}
 		catch (GWTException e) {
 			throw e;
@@ -83,19 +80,19 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 	
-	private void createBasicFilesStructure() throws IOException {
+	private void createBasicFilesStructure(int groupid) throws IOException {
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		fileServiceImpl.createDirsIfNecessary();
-		File defaultUserAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
-		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
-		FileUtils.copyFileToDirectory(defaultUserAvatar, publicImageDir);
-		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + Application.getCurrentUser().getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() +
+		File defaultAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTGROUPAVATAR));		
+		File publicImageDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, groupid));
+		FileUtils.copyFileToDirectory(defaultAvatar, publicImageDir);
+		File publicREADME = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, groupid) + "/README.txt");
+		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your groupid is: " + groupid + 
+				"\nAny files in your public directory can be accessed with a relative URL of " + Global.GROUP_URL_PREFIX + "/" + groupid +
 				"\nFor example, your default avatar is viewable at this location: " +
-				Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() + Global.DEFAULTUSERAVATAR
+				Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() + Global.DEFAULTGROUPAVATAR
 		);		
-		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
+		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, groupid) + "/README.txt");
 		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
 	}
 

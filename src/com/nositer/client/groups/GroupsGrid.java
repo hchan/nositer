@@ -37,7 +37,7 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.client.util.ImageHelper;
+import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
@@ -111,7 +111,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				try {
 					BeanModel beanModel = (BeanModel) model;
 					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setPathToSmallImage(ImageHelper.getUserImagePathURL(groupPlusView.getAvatarlocation(), groupPlusView.getUserid()));
+					retval.setPathToSmallImage(HttpGetFileHelper.getUserPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getUserid()));
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}

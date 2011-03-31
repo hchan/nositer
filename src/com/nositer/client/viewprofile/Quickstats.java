@@ -8,7 +8,7 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.client.util.ImageHelper;
+import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.shared.Global;
 
@@ -91,7 +91,7 @@ public class Quickstats extends LayoutContainer {
 		} else {
 			location.setValue(user.getZipcode().getCity() + ", " + user.getZipcode().getState() + " " + user.getCountrycode());
 		}
-		avatar.setPathToImage(ImageHelper.getUserImagePathURL(user.getAvatarlocation()));		
+		avatar.setPathToImage(HttpGetFileHelper.getUserPathURL(user.getAvatarlocation()));		
 	}
 	
 	public LabelField createProfileLabelField(String fieldLabel) {

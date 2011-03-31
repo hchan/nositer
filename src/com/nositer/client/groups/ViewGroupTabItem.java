@@ -13,7 +13,7 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.util.ImageHelper;
+import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.Avatar;
 
@@ -46,7 +46,7 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		description = new HtmlContainer();
 		description.setHtml(groupPlusView.getDescription());
 		avatar = new Avatar();
-		avatar.setPathToImage(ImageHelper.getUserImagePathURL(groupPlusView.getAvatarlocation()));
+		avatar.setPathToImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
 		LayoutContainer avatarContentPanel = new LayoutContainer();
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);

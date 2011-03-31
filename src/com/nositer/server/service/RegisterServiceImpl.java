@@ -55,9 +55,9 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 	private void createBasicFilesStructure() throws IOException {
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		fileServiceImpl.createDirsIfNecessary();
-		File defaultUserAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
+		File defaultAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
 		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
-		FileUtils.copyFileToDirectory(defaultUserAvatar, publicImageDir);
+		FileUtils.copyFileToDirectory(defaultAvatar, publicImageDir);
 		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
 		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + Application.getCurrentUser().getId() + 
 				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() +

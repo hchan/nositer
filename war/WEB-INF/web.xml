@@ -72,6 +72,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>GroupFileServlet</servlet-name>
+		<servlet-class>com.nositer.server.servlet.GroupFileServlet</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>UserFileServlet</servlet-name>
 		<servlet-class>com.nositer.server.servlet.UserFileServlet</servlet-class>
 	</servlet>
@@ -80,6 +85,12 @@
 		<servlet-name>UserFileServlet</servlet-name>
 		<url-pattern>/userfile/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>GroupFileServlet</servlet-name>
+		<url-pattern>/groupfile/*</url-pattern>
+	</servlet-mapping>
+	
 
 	<servlet-mapping>
 		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
