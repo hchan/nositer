@@ -18,4 +18,8 @@ public class Global {
 	public static final String DEFAULTAVATAR = PUBLICBASEDIR + "/unknownavatar.jpg";
 	public static final String DEFAULTUSERAVATAR = "/public/defaultAvatar.png";
 	
+	
+	public enum AccessType {
+		PUBLIC, PRIVATE;
+	}
 }

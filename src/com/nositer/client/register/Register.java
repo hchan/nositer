@@ -400,7 +400,7 @@ public class Register implements EntryPoint {
 				} else {
 					errorPanel.addErrorMessage(caught.getMessage());
 				}
-				errorPanel.show();
+				errorPanel.show(true);
 				GWTUtil.log("", caught);
 			}
 
@@ -416,8 +416,7 @@ public class Register implements EntryPoint {
 				ArrayList<String> errors = getErrors();
 				if (errors.size() > 0) {
 					errorPanel.setErrors(errors);
-					errorPanel.show();		
-					errorPanel.resetHeight();
+					errorPanel.show(true);							
 				} else {
 					User user = createDTO();
 					ServiceBroker.registerService.register(user, callback);

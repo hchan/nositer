@@ -72,12 +72,12 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>imageServlet</servlet-name>
-		<servlet-class>com.nositer.server.servlet.ImageServlet</servlet-class>
+		<servlet-name>UserFileServlet</servlet-name>
+		<servlet-class>com.nositer.server.servlet.UserFileServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>imageServlet</servlet-name>
+		<servlet-name>UserFileServlet</servlet-name>
 		<url-pattern>/userfile/*</url-pattern>
 	</servlet-mapping>
 

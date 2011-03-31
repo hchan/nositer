@@ -13,18 +13,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
+
+import com.nositer.server.service.FileServiceImpl;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
 
 @SuppressWarnings({"serial"})
-public class ImageServlet extends HttpServlet {
+public class UserFileServlet extends HttpServlet {
 	/**
-	 * an example URL request would look like:
-	 * http://localhost:8888/userfile/1/image/public/adapter.jpg
+	 * an example URL request would look like: where 1 is the userid
+	 * http://localhost:8888/userfile/1/public/adapter.jpg
 	 */
 	// Constants ----------------------------------------------------------------------------------
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
+	private String userid;
+	private String accessPath;
 
 
 	// Actions ------------------------------------------------------------------------------------
@@ -33,7 +38,7 @@ public class ImageServlet extends HttpServlet {
 
 
 
-		// In a Windows environment with the Applicationserver running on the
+		// In a Windows environment with the Application server running on the
 		// c: volume, the above path is exactly the same as "c:\images".
 		// In UNIX, it is just straightforward "/images".
 		// If you have stored files in the WebContent of a WAR, for example in the
@@ -46,6 +51,14 @@ public class ImageServlet extends HttpServlet {
 	{
 		// Get requested image by path info.
 		String requestedImage = request.getPathInfo();
+		Application.log.info("requestedFile: " + requestedImage);
+
+		if (!isValidRequestedFile(requestedImage)) {
+
+			Application.log.info("requestedFile is invalid");
+			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+			return;
+		}
 
 		// Check if file name is actually supplied to the request URI.
 		if (requestedImage == null) {
@@ -56,7 +69,7 @@ public class ImageServlet extends HttpServlet {
 		}
 
 		// Decode the file name (might contain spaces and on) and prepare file object.
-		File image = new File(Global.USERROOTDIR, URLDecoder.decode(requestedImage, "UTF-8"));
+		File image = new File(Global.USERROOTDIR + "/" + requestedImage, URLDecoder.decode(requestedImage, "UTF-8"));
 
 		// Check if file actually exists in filesystem.
 		if (!image.exists()) {
@@ -107,6 +120,32 @@ public class ImageServlet extends HttpServlet {
 		}
 	}
 
+	public boolean isValidRequestedFile(String str) {
+		boolean retval = true;
+		try {
+			String[] dirPaths = str.split("/");
+			userid = dirPaths[1];
+			accessPath = dirPaths[2];
+			if (!userid.matches("^\\d+$")) {
+				retval = false;
+			} else {
+				if (!accessPath.equals(Global.AccessType.PUBLIC.toString().toLowerCase())) {		
+					retval = false;
+				} else {
+					for (int i = 1; i < dirPaths.length; i++) {
+						String dirPath = dirPaths[i];
+						if (!FileServiceImpl.isValidFileName(dirPath)) {
+							retval = false;
+							break;
+						}
+					}			
+				}
+			}		
+		} catch (Exception e) {
+			retval = false;
+		}
+		return retval;
+	}
 	// Helpers (can be refactored to public utility class) ----------------------------------------
 
 	private static void close(Closeable resource) {

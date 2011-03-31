@@ -99,6 +99,13 @@ public class ErrorPanel extends LayoutContainer {
 		this.layout();
 		this.el().fadeIn(FxConfig.NONE);
 	}
+	
+	public void show(boolean resetHeight) {
+		show();
+		if (resetHeight) {
+			resetHeight();
+		}
+	}
 
 	public void resetHeight() {
 		setHeight(25 + this.getErrors().size() * 20);
