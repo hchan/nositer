@@ -15,6 +15,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
 	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
+	private FilesGroupTabItem filesGroupTabItem;
+	private UploadGroupTabItem uploadGroupTabItem;
 	
 	private GroupPlusView groupPlusView;
 
@@ -65,22 +67,13 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		this.editGroupTabItem = editGroupTabItem;
 	}
 
-
-
-
 	public GroupPlusView getGroupPlusView() {
 		return groupPlusView;
 	}
 
-
-
-
 	public void setGroup(GroupPlusView groupPlusView) {
 		this.groupPlusView = groupPlusView;
 	}
-
-
-
 
 	public GroupTabPanel(GroupPlusView groupPlusView) {
 		super();
@@ -88,33 +81,24 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		init();
 	}
 
-
-
-
 	public void init() {
 		setTabPosition(TabPosition.BOTTOM);
 		viewGroupTabItem = new ViewGroupTabItem(groupPlusView);
 		add(viewGroupTabItem);
-		resize(0,0);
+		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(groupPlusView);
+		add(subscriptionsGroupTabItem);
 		if (Groups.isGroupIOwn(groupPlusView)) {
 			editGroupTabItem = new EditGroupTabItem(groupPlusView);
 			add(editGroupTabItem);
 		}
-		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(groupPlusView);
-		add(subscriptionsGroupTabItem);
+		resize(0,0);
 	}
-
-
 
 	@Override
 	public void resize(int width, int height) {
 		setSize(MainPanel.getInstance().getWidth()-3, 
-				MainPanel.getInstance().getHeight()-29);
-	
+				MainPanel.getInstance().getHeight()-29);	
 	}
-
-
-
 
 	public void show(TabItemType tabItemType) {
 		if (tabItemType.equals(TabItemType.VIEW)) {
