@@ -1,4 +1,4 @@
-package com.nositer.client.uploadimages;
+package com.nositer.client.uploadfiles;
 
 import java.util.Arrays;
 

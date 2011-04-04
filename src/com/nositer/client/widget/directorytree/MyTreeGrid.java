@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.Nositer;
 
@@ -16,6 +17,15 @@ public class MyTreeGrid extends TreeGrid<ModelData>{
 		
 	}
 
+	@Override
+	public com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode findNode(
+			ModelData m) {
+		// TODO Auto-generated method stub
+		return super.findNode(m);
+	}
+
+	
+	
 	@Override
 	protected AbstractImagePrototype calculateIconStyle(ModelData model) {
 		AbstractImagePrototype retval = null;

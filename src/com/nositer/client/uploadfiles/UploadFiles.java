@@ -1,4 +1,4 @@
-package com.nositer.client.uploadimages;
+package com.nositer.client.uploadfiles;
 
 import org.swfupload.client.File;
 import org.swfupload.client.SWFUpload;
@@ -13,13 +13,18 @@ import org.swfupload.client.event.UploadProgressHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.TreeGridEvent;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -33,15 +38,15 @@ import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.shared.Global;
 
 
-public class UploadImages extends LayoutContainer implements Resizable {
+public class UploadFiles extends LayoutContainer implements Resizable {
 	public static int FILESIZELIMIT = 5000; //kB
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
 	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
-	private static UploadImages instance;
+	private static UploadFiles instance;
 	private SWFUpload swfUpload;
-	public UploadImages() {
+	public UploadFiles() {
 		init();
 		instance = this;
 	}
@@ -50,7 +55,17 @@ public class UploadImages extends LayoutContainer implements Resizable {
 		TableLayout layout = new TableLayout(2);
 		layout.setWidth("100%");
 		this.setLayout(layout);
-		fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer();
+		fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer() {
+			public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
+				for (FileModel fileModel : result) {
+					if (fileModel.getPath() != null && fileModel.getPath().equals("/public") && fileModel.getName().equals("public")) {				
+						fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
+						break;
+					}
+				}
+			};
+		};
+	
 		add(fileDirectoryTreeGridContainer);
 		uploadQueue = new UploadQueue();
 

@@ -27,7 +27,7 @@ import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.manageimages.ManageImages;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
-import com.nositer.client.uploadimages.UploadImages;
+import com.nositer.client.uploadfiles.UploadFiles;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.viewprofile.ViewProfile;
 
@@ -99,7 +99,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(UPLOADIMAGES.toString())) {
 			leftPanel.getImages().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getUploadImagesNavigationItem());
-			setMainPanel(new UploadImages());
+			setMainPanel(new UploadFiles());
 		} else if (historyToken.equals(MANAGEIMAGES.toString())) {
 			leftPanel.getImages().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageImagesNavigationItem());

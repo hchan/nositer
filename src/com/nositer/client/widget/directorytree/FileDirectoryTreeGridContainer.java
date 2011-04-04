@@ -19,11 +19,13 @@ import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.TreeNodeHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.SelectedFolderPanel;
@@ -88,7 +90,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 			protected void load(Object loadConfig,
 					AsyncCallback<List<FileModel>> callback) {
 				ServiceBroker.fileService.getImageFolderChildren((FileModel) loadConfig, callback);  
-			}  
+			}  			
 		};  
 
 		// tree loader  
@@ -99,6 +101,12 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 				return parent instanceof FolderModel;  
 			} 
 
+			@Override
+			protected void onLoadSuccess(Object loadConfig,
+					List<FileModel> result) {				
+				super.onLoadSuccess(loadConfig, result);
+				doAfterTreeIsLoaded(loadConfig, result);
+			}
 
 		};  
 
@@ -115,7 +123,11 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 					return -1;  
 				} else if (!m1Folder && m2Folder) {  
 					return 1;  
-				}  
+				}  else if (m1Folder && m2Folder) {
+					return m1.getName().compareTo(m2.getName());
+				} else if (!m1Folder && !m2Folder) {
+					return m1.getName().compareTo(m2.getName());
+				}
 
 				return super.compare(store, m1, m2, property);  
 			}  
@@ -145,20 +157,10 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 			@Override
 			protected void onClick(GridEvent<ModelData> e) {
 				super.onClick(e);
-				if (e.getModel() instanceof FolderModel) {
-					FolderModel folderModel = (FolderModel)e.getModel();
-					selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
-					selectedFolderPanel.setFolderModel(folderModel);
-					selectedFolderPanel.setTreeNode(this.findNode(folderModel));
-					doFolderModelClick(folderModel);
-				} else {
-					FileModel fileModel = (FileModel)e.getModel();
-					selectedFilePanel.getSelectedFile().setValue(fileModel.getPath());
-					selectedFilePanel.setFileModel(fileModel);
-					selectedFilePanel.setTreeNode(this.findNode(fileModel));
-					doFileModelClick((FileModel) e.getModel());
-				}
+				setSelectedFileOrFolder((FileModel)e.getModel(), this.findNode(e.getModel()));
 			}
+			
+			
 		};  
 
 
@@ -184,9 +186,26 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		add(contentPanel);  
 
 	}  
+	
+	
+	public void setSelectedFileOrFolder(FileModel fileModel, TreeNode treeNode) {
+		getTree().getSelectionModel().select(fileModel, false);
+		if (fileModel instanceof FolderModel) {
+			FolderModel folderModel = (FolderModel)fileModel;
+			selectedFolderPanel.getSelectedFolder().setValue(folderModel.getPath());					
+			selectedFolderPanel.setFolderModel(folderModel);
+			selectedFolderPanel.setTreeNode(treeNode);
+			doFolderModelClick(folderModel);
+		} else {			
+			selectedFilePanel.getSelectedFile().setValue(fileModel.getPath());
+			selectedFilePanel.setFileModel(fileModel);
+			selectedFilePanel.setTreeNode(treeNode);
+			doFileModelClick(fileModel);
+		}
+	}
 
 	public void refreshSelectedTreeNode() {
-		TreeNodeHelper.refreh(getSelectedFolderPanel().getTreeNode());
+		TreeNodeHelper.refresh(getSelectedFolderPanel().getTreeNode());
 	}
 
 
@@ -196,5 +215,10 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 	public void doFolderModelClick(FolderModel folderModel) {
 
+	}
+	
+	public void doAfterTreeIsLoaded(Object loadConfig,
+			List<FileModel> result) {
+		
 	}
 }
