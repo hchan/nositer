@@ -35,6 +35,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
+import com.nositer.shared.FileNameVerifier;
 import com.nositer.shared.Global;
 
 
@@ -65,7 +66,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 				}
 			};
 		};
-	
+
 		add(fileDirectoryTreeGridContainer);
 		uploadQueue = new UploadQueue();
 
@@ -189,9 +190,13 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		builder.setFileQueuedHandler(new FileQueuedHandler() {
 			@Override
 			public void onFileQueued(FileQueuedEvent event) {	
+				FileModel fileModel = new FileModel(event.getFile());
+				if (!FileNameVerifier.isValidFileName(event.getFile().getName())) {
+					fileModel.set(FileModel.Attribute.errorMessage.toString(), "File contains illegal character");
+					swfUpload.cancelUpload((String)fileModel.get(FileModel.Attribute.id.toString()), false);
+				}
 				GWTUtil.log(event.getFile().getName() + " has been queued");
 				GWTUtil.log(event.getFile().getId() + " has been queued");
-				FileModel fileModel = new FileModel(event.getFile());
 				uploadQueue.addRow(fileModel);
 			}
 		});
@@ -214,8 +219,8 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 				//fileDirectoryTreeGridContainer.getTree().findNode( fileDirectoryTreeGridContainer.getSelectedFolderPanel().getModel()).setExpanded(true);
 				// fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().relo
 				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
-				
-				
+
+
 				uploadQueue.removeRow(e.getFile().getId());
 				/*
 				fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().setExpanded(true);

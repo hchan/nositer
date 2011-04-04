@@ -49,7 +49,17 @@ public class FileModel extends BaseModelData implements IsSerializable {
 	public boolean equals(Object obj) {
 		if (obj != null && obj instanceof FileModel) {
 			FileModel mobj = (FileModel) obj;
-			return getName().equals(mobj.getName()) && getPath().equals(mobj.getPath());
+			String curPath = getPath();
+			if (curPath == null) {
+				curPath = "";
+			}
+			String objPath = mobj.getPath();
+			if (objPath == null) {
+				objPath = "";
+			}
+			
+			return getName().equals(mobj.getName()) 
+			&& curPath.equals(objPath);
 		}
 		return super.equals(obj);
 	}

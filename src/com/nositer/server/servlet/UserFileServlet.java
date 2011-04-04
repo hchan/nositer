@@ -1,6 +1,6 @@
 package com.nositer.server.servlet;
 
-import com.nositer.server.service.FileServiceImpl;
+import com.nositer.shared.FileNameVerifier;
 import com.nositer.shared.Global;
 
 @SuppressWarnings({"serial"})
@@ -22,7 +22,7 @@ public class UserFileServlet extends AbstractFileServlet {
 				} else {
 					for (int i = 1; i < dirPaths.length; i++) {
 						String dirPath = dirPaths[i];
-						if (!FileServiceImpl.isValidFileName(dirPath)) {
+						if (!FileNameVerifier.isValidFileName(dirPath)) {
 							retval = false;
 							break;
 						}
