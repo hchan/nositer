@@ -15,7 +15,7 @@ public class FileManager extends FileDirectoryTreeGridContainer {
 	protected void init(boolean useSelectedFilePanel) {
 		super.init(false);
 		setLayout(new FlowLayout(0));  
-		fileManagerMenuBar = new FileManagerMenuBar();
+		fileManagerMenuBar = new FileManagerMenuBar(this);
 		getContentPanel().setTopComponent(fileManagerMenuBar);
 	}
 	

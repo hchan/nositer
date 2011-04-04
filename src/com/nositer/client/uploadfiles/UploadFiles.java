@@ -30,6 +30,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
+import com.nositer.client.managefiles.FileManagerMenuBar;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
@@ -66,6 +67,9 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 				}
 			};
 		};
+		FileManagerMenuBar fileManagerMenuBar = new FileManagerMenuBar(fileDirectoryTreeGridContainer);
+		fileDirectoryTreeGridContainer.getContentPanel().setTopComponent(fileManagerMenuBar);
+		
 
 		add(fileDirectoryTreeGridContainer);
 		uploadQueue = new UploadQueue();

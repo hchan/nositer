@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.PromptMessageBox;
@@ -24,8 +25,10 @@ public class FileManagerMenuBar extends MenuBar {
 
 	private MenuBarItem file;
 	private MenuItem createFolder;
-
-	public FileManagerMenuBar() {
+	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
+	
+	public FileManagerMenuBar(FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
+		this.fileDirectoryTreeGridContainer = fileDirectoryTreeGridContainer;
 		Menu subMenu = new Menu();
 		initCreateFolder();
 		subMenu.add(createFolder);
@@ -40,7 +43,7 @@ public class FileManagerMenuBar extends MenuBar {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				if (ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
+				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
 					PromptMessageBox.show("Create Folder", "Enter the name of the folder", new Listener<MessageBoxEvent>() {
 						@Override
 						public void handleEvent(MessageBoxEvent be) {
@@ -58,7 +61,7 @@ public class FileManagerMenuBar extends MenuBar {
 	}
 
 	private void doCreateFolder(final String folderName) {
-		String fullFolderName = ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() + "/" + folderName;
+		String fullFolderName = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() + "/" + folderName;
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 			@Override
@@ -69,7 +72,7 @@ public class FileManagerMenuBar extends MenuBar {
 			@Override
 			public void onSuccess(Void result) {			
 
-				ManageFiles.getInstance().getFileManager().getTree().getStore().addStoreListener(new StoreListener<ModelData>(){
+				fileDirectoryTreeGridContainer.getTree().getStore().addStoreListener(new StoreListener<ModelData>(){
 
 					@Override
 					public void handleEvent(StoreEvent<ModelData> e) {						
@@ -80,8 +83,8 @@ public class FileManagerMenuBar extends MenuBar {
 								FileModel fileModel = (FileModel) modelData;
 								
 								if (fileModel != null && folderName.equals(fileModel.getName())) {
-									ManageFiles.getInstance().getFileManager().getTree().getSelectionModel().select(fileModel, false);
-									ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());
+									fileDirectoryTreeGridContainer.getTree().getSelectionModel().select(fileModel, false);
+									fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());
 									break;
 								}
 							}
@@ -89,7 +92,7 @@ public class FileManagerMenuBar extends MenuBar {
 					}
 				
 				});
-				ManageFiles.getInstance().getFileManager().refreshSelectedTreeNode();
+				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
 			}		
 		};
 		ServiceBroker.fileService.createFolder(fullFolderName, callback);
