@@ -23,7 +23,7 @@ public class LeftPanel extends ContentPanel {
 	private AccordionLayout accordionLayout;
 	private ContentPanel profile;
 	private ContentPanel groups;
-	private ContentPanel images;
+	private ContentPanel files;
 	private ContentPanel iwantto;
 	private ContentPanel blog;
 	private ContentPanel chat;
@@ -36,8 +36,8 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem iwanttosNavigationItem;
 	private NavigationItem createIwantToNavigationItem;
 	private NavigationItem changePasswordNavigationItem;
-	private NavigationItem uploadImagesNavigationItem;
-	private NavigationItem manageImagesNavigationItem;
+	private NavigationItem uploadFilesNavigationItem;
+	private NavigationItem manageFilesNavigationItem;
 
 
 	public NavigationItem getSearchForGroupsNavigationItem() {
@@ -116,13 +116,13 @@ public class LeftPanel extends ContentPanel {
 	}
 
 
-	public ContentPanel getImages() {
-		return images;
+	public ContentPanel getFiles() {
+		return files;
 	}
 
 
-	public void setImages(ContentPanel images) {
-		this.images = images;
+	public void setFiles(ContentPanel files) {
+		this.files = files;
 	}
 
 
@@ -244,25 +244,25 @@ public class LeftPanel extends ContentPanel {
 	}
 
 
-	public NavigationItem getUploadImagesNavigationItem() {
-		return uploadImagesNavigationItem;
+	public NavigationItem getUploadFilesNavigationItem() {
+		return uploadFilesNavigationItem;
 	}
 
 
-	public void setUploadImagesNavigationItem(
-			NavigationItem uploadImagesNavigationItem) {
-		this.uploadImagesNavigationItem = uploadImagesNavigationItem;
+	public void setUploadFilesNavigationItem(
+			NavigationItem uploadFilesNavigationItem) {
+		this.uploadFilesNavigationItem = uploadFilesNavigationItem;
 	}
 
 
-	public NavigationItem getManageImagesNavigationItem() {
-		return manageImagesNavigationItem;
+	public NavigationItem getManageFilesNavigationItem() {
+		return manageFilesNavigationItem;
 	}
 
 
-	public void setManageImagesNavigationItem(
-			NavigationItem manageImagesNavigationItem) {
-		this.manageImagesNavigationItem = manageImagesNavigationItem;
+	public void setManageFilesNavigationItem(
+			NavigationItem manageFilesNavigationItem) {
+		this.manageFilesNavigationItem = manageFilesNavigationItem;
 	}
 
 
@@ -289,10 +289,10 @@ public class LeftPanel extends ContentPanel {
 		changePasswordNavigationItem = addNavigationItem("Change Password", profile, HistoryToken.CHANGEPASSWORD);
 		editAboutMeNavigationItem = addNavigationItem("Edit About Me", profile, HistoryToken.EDITABOUTME);
 		
-		// Images
-		images = createNavigationContentPanel("Images", this);
-		uploadImagesNavigationItem = addNavigationItem("Upload Images", images, HistoryToken.UPLOADIMAGES);
-		manageImagesNavigationItem = addNavigationItem("Manage Images", images, HistoryToken.MANAGEIMAGES);		
+		// Files
+		files = createNavigationContentPanel("Files", this);
+		uploadFilesNavigationItem = addNavigationItem("Upload Files", files, HistoryToken.UPLOADFILES);
+		manageFilesNavigationItem = addNavigationItem("Manage Files", files, HistoryToken.MANAGEFILES);		
 		
 		// Groups
 		groups = createNavigationContentPanel("Groups", this);	
@@ -348,8 +348,8 @@ public class LeftPanel extends ContentPanel {
 		HistoryManager.addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
 		HistoryManager.addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
 		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
-		HistoryManager.addHistoryOnClick(uploadImagesNavigationItem, HistoryToken.UPLOADIMAGES.toString());
-		HistoryManager.addHistoryOnClick(manageImagesNavigationItem, HistoryToken.MANAGEIMAGES.toString());
+		HistoryManager.addHistoryOnClick(uploadFilesNavigationItem, HistoryToken.UPLOADFILES.toString());
+		HistoryManager.addHistoryOnClick(manageFilesNavigationItem, HistoryToken.MANAGEFILES.toString());
 		HistoryManager.addHistoryOnClick(createGroupNavigationItem, HistoryToken.CREATEGROUP.toString());
 		HistoryManager.addHistoryOnClick(groupsNavigationItem, HistoryToken.GROUPS.toString());
 		HistoryManager.addHistoryOnClick(createIwantToNavigationItem, HistoryToken.CREATEIWANTTO.toString());

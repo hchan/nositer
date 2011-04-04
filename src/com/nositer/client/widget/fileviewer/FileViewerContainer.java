@@ -1,4 +1,4 @@
-package com.nositer.client.widget.imageviewer;
+package com.nositer.client.widget.fileviewer;
 
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -10,11 +10,11 @@ import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.directorytree.FileModel;
 
-public class ImageViewerContainer extends LayoutContainer {
+public class FileViewerContainer extends LayoutContainer {
 	private ContentPanel contentPanel;
-	private HtmlContainer imageContainer;
+	private HtmlContainer fileContainer;
 	private SelectedFilePanel selectedFilePanel;
-	private ImageViewerMenuBar imageViewerMenuBar;
+	private FileViewerMenuBar fileViewerMenuBar;
 
 	public SelectedFilePanel getSelectedFilePanel() {
 		return selectedFilePanel;
@@ -32,29 +32,29 @@ public class ImageViewerContainer extends LayoutContainer {
 		this.contentPanel = contentPanel;
 	}
 
-	public HtmlContainer getImageContainer() {
-		return imageContainer;
+	public HtmlContainer getFileContainer() {
+		return fileContainer;
 	}
 
-	public void setImageContainer(HtmlContainer imageContainer) {
-		this.imageContainer = imageContainer;
+	public void setFileContainer(HtmlContainer fileContainer) {
+		this.fileContainer = fileContainer;
 	}
 
-	public ImageViewerContainer() {
+	public FileViewerContainer() {
 		init();
 	}
 
 	private void init() {
 		setLayout(new FlowLayout(0));  
 		contentPanel = new ContentPanel();
-		contentPanel.setHeading("Image Viewer");
+		contentPanel.setHeading("File Viewer");
 		contentPanel.setFrame(true);
-		imageContainer = new HtmlContainer("<BR/>&nbsp;No Image Selected");
+		fileContainer = new HtmlContainer("<BR/>&nbsp;No File Selected");
 
-		contentPanel.add(imageContainer);
+		contentPanel.add(fileContainer);
 
-		imageViewerMenuBar = new ImageViewerMenuBar();
-		contentPanel.setTopComponent(imageViewerMenuBar);
+		fileViewerMenuBar = new FileViewerMenuBar();
+		contentPanel.setTopComponent(fileViewerMenuBar);
 		selectedFilePanel = new SelectedFilePanel();
 		contentPanel.setBottomComponent(selectedFilePanel);
 		this.add(contentPanel, new FlowData(new Margins(0, 0, 0, 0)));
@@ -63,7 +63,7 @@ public class ImageViewerContainer extends LayoutContainer {
 
 	public void setImage(FileModel fileModel) {
 		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModel.getPath());
-		imageContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
+		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
 	}
 
 
@@ -74,6 +74,6 @@ public class ImageViewerContainer extends LayoutContainer {
 		if (widthAndHeight != null) {
 			style = "STYLE='width:" + widthAndHeight + ";height:" + widthAndHeight + "'";
 		}
-		imageContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer' " + style + "/>");		
+		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer' " + style + "/>");		
 	}
 }

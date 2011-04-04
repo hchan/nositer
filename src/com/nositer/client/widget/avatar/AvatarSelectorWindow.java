@@ -14,14 +14,14 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
-import com.nositer.client.widget.imageviewer.ImageViewerContainer;
+import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 
 public class AvatarSelectorWindow extends Window {
 	private AvatarSelector avatarSelector;
 	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private ContentPanel contentPanel;
-	private ImageViewerContainer imageViewerContainer;
+	private FileViewerContainer fileViewerContainer;
 	private Button okButton;
 	private Button cancelButton;
 	
@@ -50,20 +50,20 @@ public class AvatarSelectorWindow extends Window {
 			
 			@Override
 			public void doFileModelClick(FileModel fileModel) {
-				imageViewerContainer.setImage(fileModel);
-				imageViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
+				fileViewerContainer.setImage(fileModel);
+				fileViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 			}
 		};
 		
 		fileDirectoryTreeGridContainer.setLayout(new FlowLayout(0));
-		imageViewerContainer = new ImageViewerContainer() {
+		fileViewerContainer = new FileViewerContainer() {
 			@Override
 			protected void onResize(int width, int height) {
 				AvatarSelectorWindow.this.onResize(AvatarSelectorWindow.this.getWidth(), AvatarSelectorWindow.this.getHeight());
 			};
 		};
-		imageViewerContainer.getContentPanel().setBottomComponent(null);
-		imageViewerContainer.getContentPanel().setTopComponent(null);
+		fileViewerContainer.getContentPanel().setBottomComponent(null);
+		fileViewerContainer.getContentPanel().setTopComponent(null);
 		
 		setHeading("Select Avatar");
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
@@ -74,7 +74,7 @@ public class AvatarSelectorWindow extends Window {
 		centerBorderLayoutData.setSplit(true);
 
 		contentPanel.add(fileDirectoryTreeGridContainer, westBorderLayoutData);
-		contentPanel.add(imageViewerContainer, centerBorderLayoutData);
+		contentPanel.add(fileViewerContainer, centerBorderLayoutData);
 		
 		addButtons();		
 		this.add(contentPanel);
@@ -107,9 +107,9 @@ public class AvatarSelectorWindow extends Window {
 		super.onResize(width, height);
 		fileDirectoryTreeGridContainer.getContentPanel().setSize(fileDirectoryTreeGridContainer.getWidth(), 
 				height-heightOffset);
-		imageViewerContainer.setHeight(height-heightOffset);
-		imageViewerContainer.getContentPanel().setHeight(height-heightOffset);		
-		imageViewerContainer.getSelectedFilePanel().setWidth(imageViewerContainer.getWidth() - 10);		
+		fileViewerContainer.setHeight(height-heightOffset);
+		fileViewerContainer.getContentPanel().setHeight(height-heightOffset);		
+		fileViewerContainer.getSelectedFilePanel().setWidth(fileViewerContainer.getWidth() - 10);		
 	}
 		
 }

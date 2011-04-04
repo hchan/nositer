@@ -124,11 +124,20 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		return retval;
 	}
 
+	
+	public String getFileTypes() {
+		String retval = "";
+		for (String ext : FileNameVerifier.getUploadableExtensions()) {
+			retval += "*." + ext + ";";
+		}
+		return retval;
+	}
+	
 	public void doSWFUploadInit(final String sessionId) {		
 		final UploadBuilder builder = new UploadBuilder();
 		// Configure which file types may be selected
-		builder.setFileTypes("*.png;*.jpg;*.jpeg;*.gif");
-		builder.setFileTypesDescription("Images");
+		builder.setFileTypes(getFileTypes());
+		builder.setFileTypesDescription("Valid file extensions");
 
 
 		//setFlashURL(builder, getFlashURL());
@@ -142,10 +151,10 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		// Configure the button to display
 		builder.setButtonPlaceholderID(SWFUploadContainer.SWFUPLOADSLOT);
 		builder.setButtonImageURL("/public/image/spyGlass.png");
-		builder.setButtonWidth(180);
+		builder.setButtonWidth(190);
 		builder.setButtonHeight(20);
 		builder.setFileSizeLimit(FILESIZELIMIT);
-		builder.setButtonText("<span class=\"uploadBrowse\">Select Images <span class=\"fileSize\">" + "(" + FILESIZELIMIT/1000 + " MB Max)</span></span>");
+		builder.setButtonText("<span class=\"uploadBrowse\">Select Files <span class=\"fileSize\">" + "(" + FILESIZELIMIT/1000 + " MB Max per file)</span></span>");
 		builder.setButtonTextStyle(".uploadBrowse { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .fileSize {font-size: 10pt;}");
 		builder.setButtonTextLeftPadding(18);
 		builder.setButtonTextTopPadding(0);

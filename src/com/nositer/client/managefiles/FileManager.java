@@ -1,4 +1,4 @@
-package com.nositer.client.manageimages;
+package com.nositer.client.managefiles;
 
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
@@ -21,7 +21,7 @@ public class FileManager extends FileDirectoryTreeGridContainer {
 	
 	@Override
 	public void doFileModelClick(FileModel fileModel) {
-		ManageImages.getInstance().getImageViewerContainer().setImage(fileModel);
-		ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
+		ManageFiles.getInstance().getFileViewerContainer().setImage(fileModel);
+		ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 	}
 }

@@ -25,7 +25,7 @@ import com.nositer.client.groups.Groups;
 import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.manageimages.ManageImages;
+import com.nositer.client.managefiles.ManageFiles;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
 import com.nositer.client.uploadfiles.UploadFiles;
 import com.nositer.client.util.GWTUtil;
@@ -96,14 +96,14 @@ public class HistoryManager {
 			leftPanel.getProfile().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getEditAboutMeNavigationItem());
 			setMainPanel(new EditAboutMe());
-		} else if (historyToken.equals(UPLOADIMAGES.toString())) {
-			leftPanel.getImages().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getUploadImagesNavigationItem());
+		} else if (historyToken.equals(UPLOADFILES.toString())) {
+			leftPanel.getFiles().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getUploadFilesNavigationItem());
 			setMainPanel(new UploadFiles());
-		} else if (historyToken.equals(MANAGEIMAGES.toString())) {
-			leftPanel.getImages().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getManageImagesNavigationItem());
-			setMainPanel(new ManageImages());
+		} else if (historyToken.equals(MANAGEFILES.toString())) {
+			leftPanel.getFiles().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());
+			setMainPanel(new ManageFiles());
 		} else if (historyToken.equals(CREATEGROUP.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());

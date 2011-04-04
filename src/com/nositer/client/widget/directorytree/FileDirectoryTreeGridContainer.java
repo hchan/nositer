@@ -145,7 +145,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 		contentPanel = new ContentPanel();  
 		contentPanel.setBodyBorder(false);  
-		contentPanel.setHeading("My Images");  
+		contentPanel.setHeading("My Files");  
 		contentPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		contentPanel.setLayout(new FitLayout());  
 		contentPanel.setFrame(true);  

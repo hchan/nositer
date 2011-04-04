@@ -1,4 +1,4 @@
-package com.nositer.client.widget.imageviewer;
+package com.nositer.client.widget.fileviewer;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -10,13 +10,13 @@ import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.manageimages.ManageImages;
+import com.nositer.client.managefiles.ManageFiles;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 import com.nositer.shared.Global;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ImageViewerMenuBar extends MenuBar {
+public class FileViewerMenuBar extends MenuBar {
 
 	private MenuBarItem options;
 	private MenuItem viewActualSize;
@@ -26,7 +26,7 @@ public class ImageViewerMenuBar extends MenuBar {
 	private MenuItem setAsAvatar;
 	
 	
-	public ImageViewerMenuBar() {
+	public FileViewerMenuBar() {
 		Menu subMenu = new Menu();
 		viewActualSize = new MenuItem("View Actual Size");
 		viewActualSize.addListener(Events.Select, createImageViewListener(null));
@@ -61,7 +61,7 @@ public class ImageViewerMenuBar extends MenuBar {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				
-				if (ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
+				if (ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
 					AsyncCallback<Void> callback = new AsyncCallback() {
 
 						@Override
@@ -71,13 +71,13 @@ public class ImageViewerMenuBar extends MenuBar {
 
 						@Override
 						public void onSuccess(Object result) {
-							Nositer.getInstance().getUser().setAvatarlocation(ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
-							ManageImages.getInstance().getFileManager().refreshSelectedTreeNode();
+							Nositer.getInstance().getUser().setAvatarlocation(ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
+							ManageFiles.getInstance().getFileManager().refreshSelectedTreeNode();
 							InfoMessageBox.show("Avatar updated");
 						}
 						
 					};
-					ServiceBroker.profileService.updateAvatarOfCurrentUser(ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(), callback);
+					ServiceBroker.profileService.updateAvatarOfCurrentUser(ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(), callback);
 				}
 			}
 		};
@@ -91,9 +91,9 @@ public class ImageViewerMenuBar extends MenuBar {
 		retval = new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				if (ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
-					ManageImages.getInstance().getImageViewerContainer().setImage(
-							ManageImages.getInstance().getImageViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(),
+				if (ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
+					ManageFiles.getInstance().getFileViewerContainer().setImage(
+							ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(),
 							percent);
 				}
 			}

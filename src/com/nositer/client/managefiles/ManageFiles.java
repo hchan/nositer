@@ -1,4 +1,4 @@
-package com.nositer.client.manageimages;
+package com.nositer.client.managefiles;
 
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -8,13 +8,13 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
-import com.nositer.client.widget.imageviewer.ImageViewerContainer;
+import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
-public class ManageImages extends LayoutContainer implements Resizable {
+public class ManageFiles extends LayoutContainer implements Resizable {
 	private FileDirectoryTreeGridContainer fileManager;
-	private ImageViewerContainer imageViewerContainer;
+	private FileViewerContainer fileViewerContainer;
 	private ContentPanel contentPanel;
-	private static ManageImages instance;
+	private static ManageFiles instance;
 	
 	public FileDirectoryTreeGridContainer getFileManager() {
 		return fileManager;
@@ -24,12 +24,12 @@ public class ManageImages extends LayoutContainer implements Resizable {
 		this.fileManager = fileManager;
 	}
 
-	public ImageViewerContainer getImageViewerContainer() {
-		return imageViewerContainer;
+	public FileViewerContainer getFileViewerContainer() {
+		return fileViewerContainer;
 	}
 
-	public void setImageViewerContainer(ImageViewerContainer imageViewerContainer) {
-		this.imageViewerContainer = imageViewerContainer;
+	public void setFileViewerContainer(FileViewerContainer fileViewerContainer) {
+		this.fileViewerContainer = fileViewerContainer;
 	}
 
 	public ContentPanel getContentPanel() {
@@ -40,15 +40,15 @@ public class ManageImages extends LayoutContainer implements Resizable {
 		this.contentPanel = contentPanel;
 	}
 
-	public static ManageImages getInstance() {
+	public static ManageFiles getInstance() {
 		return instance;
 	}
 
-	public static void setInstance(ManageImages instance) {
-		ManageImages.instance = instance;
+	public static void setInstance(ManageFiles instance) {
+		ManageFiles.instance = instance;
 	}
 
-	public ManageImages() {
+	public ManageFiles() {
 		init();
 		instance = this;
 	}
@@ -68,7 +68,7 @@ public class ManageImages extends LayoutContainer implements Resizable {
 			};
 		};
 		
-		imageViewerContainer = new ImageViewerContainer() {
+		fileViewerContainer = new FileViewerContainer() {
 			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
@@ -83,7 +83,7 @@ public class ManageImages extends LayoutContainer implements Resizable {
 		contentPanel.add(fileManager, westBorderLayoutData);
 		BorderLayoutData centerBorderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerBorderLayoutData.setSplit(true);
-		contentPanel.add(imageViewerContainer, centerBorderLayoutData);
+		contentPanel.add(fileViewerContainer, centerBorderLayoutData);
 
 
 		add(contentPanel);
@@ -94,13 +94,13 @@ public class ManageImages extends LayoutContainer implements Resizable {
 		fileManager.getContentPanel().setSize(fileManager.getWidth(), 
 				fileManager.getHeight());
 		
-		imageViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
-		imageViewerContainer.getContentPanel().setHeight(imageViewerContainer.getHeight());
-		//imageViewerContainer.getSelectedFilePanel().getSelectedFile().setWidth(imageViewerContainer.getWidth());
+		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
+		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());
+		//fileViewerContainer.getSelectedFilePanel().getSelectedFile().setWidth(fileViewerContainer.getWidth());
 		
 		contentPanel.setSize(MainPanel.getInstance().getWidth(),
 				MainPanel.getInstance().getHeight());
-		imageViewerContainer.getSelectedFilePanel().setWidth(imageViewerContainer.getWidth() - 10);
+		fileViewerContainer.getSelectedFilePanel().setWidth(fileViewerContainer.getWidth() - 10);
 		
 	}
 

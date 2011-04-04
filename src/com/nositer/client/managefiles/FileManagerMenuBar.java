@@ -1,4 +1,4 @@
-package com.nositer.client.manageimages;
+package com.nositer.client.managefiles;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class FileManagerMenuBar extends MenuBar {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
-				if (ManageImages.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
+				if (ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
 					PromptMessageBox.show("Create Folder", "Enter the name of the folder", new Listener<MessageBoxEvent>() {
 						@Override
 						public void handleEvent(MessageBoxEvent be) {
@@ -58,7 +58,7 @@ public class FileManagerMenuBar extends MenuBar {
 	}
 
 	private void doCreateFolder(final String folderName) {
-		String fullFolderName = ManageImages.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() + "/" + folderName;
+		String fullFolderName = ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().getValue() + "/" + folderName;
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 			@Override
@@ -69,7 +69,7 @@ public class FileManagerMenuBar extends MenuBar {
 			@Override
 			public void onSuccess(Void result) {			
 
-				ManageImages.getInstance().getFileManager().getTree().getStore().addStoreListener(new StoreListener<ModelData>(){
+				ManageFiles.getInstance().getFileManager().getTree().getStore().addStoreListener(new StoreListener<ModelData>(){
 
 					@Override
 					public void handleEvent(StoreEvent<ModelData> e) {						
@@ -80,8 +80,8 @@ public class FileManagerMenuBar extends MenuBar {
 								FileModel fileModel = (FileModel) modelData;
 								
 								if (fileModel != null && folderName.equals(fileModel.getName())) {
-									ManageImages.getInstance().getFileManager().getTree().getSelectionModel().select(fileModel, false);
-									ManageImages.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());
+									ManageFiles.getInstance().getFileManager().getTree().getSelectionModel().select(fileModel, false);
+									ManageFiles.getInstance().getFileManager().getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());
 									break;
 								}
 							}
@@ -89,7 +89,7 @@ public class FileManagerMenuBar extends MenuBar {
 					}
 				
 				});
-				ManageImages.getInstance().getFileManager().refreshSelectedTreeNode();
+				ManageFiles.getInstance().getFileManager().refreshSelectedTreeNode();
 			}		
 		};
 		ServiceBroker.fileService.createFolder(fullFolderName, callback);
