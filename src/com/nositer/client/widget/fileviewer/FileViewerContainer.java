@@ -54,6 +54,7 @@ public class FileViewerContainer extends LayoutContainer {
 		contentPanel.add(fileContainer);
 
 		fileViewerMenuBar = new FileViewerMenuBar();
+		fileViewerMenuBar.disable();
 		contentPanel.setTopComponent(fileViewerMenuBar);
 		selectedFilePanel = new SelectedFilePanel();
 		contentPanel.setBottomComponent(selectedFilePanel);
@@ -62,6 +63,7 @@ public class FileViewerContainer extends LayoutContainer {
 
 
 	public void setImage(FileModel fileModel) {
+		fileViewerMenuBar.enable();
 		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModel.getPath());
 		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
 	}
@@ -69,6 +71,7 @@ public class FileViewerContainer extends LayoutContainer {
 
 
 	public void setImage(String fileModelPath, String widthAndHeight) {
+		fileViewerMenuBar.enable();
 		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModelPath);
 		String style = "";
 		if (widthAndHeight != null) {

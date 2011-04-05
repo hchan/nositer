@@ -3,12 +3,16 @@ package com.nositer.client.managefiles;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.fileviewer.FileViewerContainer;
+import com.nositer.shared.FileNameVerifier;
 
 public class FileManager extends FileDirectoryTreeGridContainer {
 	private FileManagerMenuBar fileManagerMenuBar;
+	private FileViewerContainer fileViewerContainer;
 
-	public FileManager() {
+	public FileManager(FileViewerContainer fileViewerContainer) {
 		super();
+		this.fileViewerContainer = fileViewerContainer;
 	}
 
 	@Override
@@ -18,10 +22,12 @@ public class FileManager extends FileDirectoryTreeGridContainer {
 		fileManagerMenuBar = new FileManagerMenuBar(this);
 		getContentPanel().setTopComponent(fileManagerMenuBar);
 	}
-	
+
 	@Override
 	public void doFileModelClick(FileModel fileModel) {
-		ManageFiles.getInstance().getFileViewerContainer().setImage(fileModel);
-		ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
+		if (FileNameVerifier.isImage(fileModel.getName())) {
+			fileViewerContainer.setImage(fileModel);
+		}
+		fileViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 	}
 }

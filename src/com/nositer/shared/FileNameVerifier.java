@@ -1,8 +1,6 @@
 package com.nositer.shared;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class FileNameVerifier {
 
@@ -31,6 +29,17 @@ public class FileNameVerifier {
 		retval.add("txt");
 		retval.add("doc");		
 		retval.add("xls");
+		return retval;
+	}
+	
+	public static boolean isImage(String fileName) {
+		boolean retval = false;
+		for (String imageExtension : getImageExtensions()) {
+			if (fileName.toLowerCase().endsWith("." + imageExtension)) {
+				retval = true;
+				break;
+			}
+		}
 		return retval;
 	}
 	

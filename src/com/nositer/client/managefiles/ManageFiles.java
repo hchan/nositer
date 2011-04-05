@@ -61,12 +61,7 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 		contentPanel.setHeight(MainPanel.getInstance().getHeight());
 		contentPanel.setWidth(MainPanel.getInstance().getWidth());
 		contentPanel.setLayout(layout);
-		fileManager = new FileManager() {
-			@Override
-			protected void onResize(int width, int height) {
-				resize(0,0);
-			};
-		};
+		
 		
 		fileViewerContainer = new FileViewerContainer() {
 			@Override
@@ -75,7 +70,12 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 			};
 		};
 	
-	
+		fileManager = new FileManager(fileViewerContainer) {
+			@Override
+			protected void onResize(int width, int height) {
+				resize(0,0);
+			};
+		};
 
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 		westBorderLayoutData.setSize(MainPanel.getInstance().getWidth()/2);
