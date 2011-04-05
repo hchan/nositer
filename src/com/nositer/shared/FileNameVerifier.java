@@ -22,20 +22,26 @@ public class FileNameVerifier {
 		retval.add("gif");
 		return retval;
 	}
+	
+	public static ArrayList<String> getTextExtensions() {
+		ArrayList<String> retval = new ArrayList<String>();
+		retval.add("txt");
+		return retval;
+	}
 
 	public static ArrayList<String> getUploadableExtensions() {
 		ArrayList<String> retval = new ArrayList<String>();
 		retval.addAll(getImageExtensions());
-		retval.add("txt");
+		retval.addAll(getTextExtensions());
 		retval.add("doc");		
 		retval.add("xls");
 		return retval;
 	}
 	
-	public static boolean isImage(String fileName) {
+	private static boolean doesFileNameEndWithExtensions(String fileName, ArrayList<String> extensions) {
 		boolean retval = false;
-		for (String imageExtension : getImageExtensions()) {
-			if (fileName.toLowerCase().endsWith("." + imageExtension)) {
+		for (String extension : extensions) {
+			if (fileName.toLowerCase().endsWith("." + extension)) {
 				retval = true;
 				break;
 			}
@@ -43,4 +49,15 @@ public class FileNameVerifier {
 		return retval;
 	}
 	
+	public static boolean isImageFile(String fileName) {
+		boolean retval = false;
+		retval = doesFileNameEndWithExtensions(fileName, getImageExtensions());
+		return retval;
+	}
+	
+	public static boolean isTextFile(String fileName) {
+		boolean retval = false;
+		retval = doesFileNameEndWithExtensions(fileName, getTextExtensions());
+		return retval;
+	}
 }

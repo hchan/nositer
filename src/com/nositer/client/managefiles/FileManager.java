@@ -25,8 +25,10 @@ public class FileManager extends FileDirectoryTreeGridContainer {
 
 	@Override
 	public void doFileModelClick(FileModel fileModel) {
-		if (FileNameVerifier.isImage(fileModel.getName())) {
+		if (FileNameVerifier.isImageFile(fileModel.getName())) {
 			fileViewerContainer.setImage(fileModel);
+		} else if (FileNameVerifier.isTextFile(fileModel.getName())) {
+			fileViewerContainer.setText(fileModel);
 		}
 		fileViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 	}

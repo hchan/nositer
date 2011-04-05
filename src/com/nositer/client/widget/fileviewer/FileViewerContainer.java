@@ -6,6 +6,11 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.Response;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.directorytree.FileModel;
@@ -68,8 +73,6 @@ public class FileViewerContainer extends LayoutContainer {
 		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
 	}
 
-
-
 	public void setImage(String fileModelPath, String widthAndHeight) {
 		fileViewerMenuBar.enable();
 		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModelPath);
@@ -79,4 +82,25 @@ public class FileViewerContainer extends LayoutContainer {
 		}
 		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer' " + style + "/>");		
 	}
+
+	public void setText(FileModel fileModel) {
+		String url = HttpGetFileHelper.getUserPathURL(fileModel.getPath());
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
+		try {
+			builder.sendRequest(null, new RequestCallback() {
+				public void onError(Request request, Throwable exception) {
+					GWTUtil.log("", exception);
+				}
+				@Override
+				public void onResponseReceived(Request request, Response response) {
+					fileContainer.setHtml("<DIV ID=\"textFile\" class=\"textFile\"><PRE>" + response.getText() + "</PRE></DIV>");
+					fileContainer.setStyleName("textFile");
+					fileContainer.setAutoHeight(true);
+				}
+			});
+		} catch (Exception e) {
+			GWTUtil.log("", e);
+		}	
+	}
+
 }
