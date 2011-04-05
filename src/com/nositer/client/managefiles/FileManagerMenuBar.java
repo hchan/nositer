@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
@@ -26,7 +27,7 @@ public class FileManagerMenuBar extends MenuBar {
 	private MenuBarItem file;
 	private MenuItem createFolder;
 	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
-	
+
 	public FileManagerMenuBar(FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
 		this.fileDirectoryTreeGridContainer = fileDirectoryTreeGridContainer;
 		Menu subMenu = new Menu();
@@ -71,7 +72,7 @@ public class FileManagerMenuBar extends MenuBar {
 
 			@Override
 			public void onSuccess(Void result) {			
-
+				//fileDirectoryTreeGridContainer.getTree().getStore().removeAllListeners();
 				fileDirectoryTreeGridContainer.getTree().getStore().addStoreListener(new StoreListener<ModelData>(){
 
 					@Override
@@ -80,20 +81,22 @@ public class FileManagerMenuBar extends MenuBar {
 						List<ModelData> models = e.getModels();
 						if (models != null) {
 							for (ModelData modelData : models) {
-								FileModel fileModel = (FileModel) modelData;
-								
-								if (fileModel != null && folderName.equals(fileModel.getName())) {
-									fileDirectoryTreeGridContainer.getTree().getSelectionModel().select(fileModel, false);
-									fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().setValue(fileModel.getPath());
-									break;
+								FileModel fileModel = (FileModel) modelData;								
+								if (fileModel != null && folderName.equals(fileModel.getName())) {								
+									fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel,
+											fileDirectoryTreeGridContainer.getTree().findNode(fileModel));									
 								}
 							}
 						}
 					}
-				
-				});
+
+				}
+				);
+
+
 				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
-			}		
+			}	
+
 		};
 		ServiceBroker.fileService.createFolder(fullFolderName, callback);
 	}

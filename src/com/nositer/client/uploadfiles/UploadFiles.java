@@ -60,16 +60,18 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer() {
 			public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
 				for (FileModel fileModel : result) {
-					if (fileModel.getPath() != null && fileModel.getPath().equals("/public") && fileModel.getName().equals("public")) {				
-						fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
-						break;
+					if (fileModel.getPath() != null && fileModel.getPath().equals("/public") && fileModel.getName().equals("public")) {
+						if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFileModel() == null) {
+							fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
+							break;
+						}
 					}
 				}
 			};
 		};
 		FileManagerMenuBar fileManagerMenuBar = new FileManagerMenuBar(fileDirectoryTreeGridContainer);
 		fileDirectoryTreeGridContainer.getContentPanel().setTopComponent(fileManagerMenuBar);
-		
+
 
 		add(fileDirectoryTreeGridContainer);
 		uploadQueue = new UploadQueue();
@@ -128,7 +130,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		return retval;
 	}
 
-	
+
 	public String getFileTypes() {
 		String retval = "";
 		for (String ext : FileNameVerifier.getUploadableExtensions()) {
@@ -136,7 +138,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		}
 		return retval;
 	}
-	
+
 	public void doSWFUploadInit(final String sessionId) {		
 		final UploadBuilder builder = new UploadBuilder();
 		// Configure which file types may be selected
@@ -231,6 +233,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 				//FileModel fileModel = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFolderModel();
 				//fileDirectoryTreeGridContainer.getTree().findNode( fileDirectoryTreeGridContainer.getSelectedFolderPanel().getModel()).setExpanded(true);
 				// fileDirectoryTreeGridContainer.getSelectedFolderPanel().getTreeNode().relo
+
 				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
 
 
@@ -271,10 +274,12 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		uploadQueue.getClearAll().addListener(Events.Select,  new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				for (int i = 0; i < uploadQueue.getGrid().getStore().getCount(); i++) {
-					FileModel fileModel = uploadQueue.getGrid().getStore().getAt(i);
-					swfUpload.cancelUpload((String)fileModel.get(FileModel.Attribute.id.toString()), false);
-				}
+				try {
+					for (int i = 0; i < uploadQueue.getGrid().getStore().getCount(); i++) {
+						FileModel fileModel = uploadQueue.getGrid().getStore().getAt(i);
+						swfUpload.cancelUpload((String)fileModel.get(FileModel.Attribute.id.toString()), false);
+					} 
+				} catch (Exception e) {}
 				uploadQueue.getGrid().getStore().removeAll();
 			}
 		});
