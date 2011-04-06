@@ -22,7 +22,7 @@ import com.nositer.webapp.Application;
 
 @SuppressWarnings({"serial"})
 public abstract class AbstractFileServlet extends HttpServlet {
-	
+
 
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
@@ -34,10 +34,14 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		String requestedFile = request.getPathInfo();
 		Application.log.info("requestedFile: " + requestedFile);
 
-		if (!isValidRequestedFile(requestedFile)) {
-
-			Application.log.info("requestedFile is invalid");
-			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+		try {
+			if (!isValidRequestedFile(requestedFile)) {
+				Application.log.info("requestedFile is invalid");
+				response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+				return;
+			}
+		} catch (PrivateException e) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN); // 404.
 			return;
 		}
 
@@ -105,10 +109,6 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 	}
 
-	public abstract String getRootDir();
-
-	public abstract boolean isValidRequestedFile(String str);
-	// Helpers (can be refactored to public utility class) ----------------------------------------
 
 	private static void close(Closeable resource) {
 		if (resource != null) {
@@ -119,5 +119,41 @@ public abstract class AbstractFileServlet extends HttpServlet {
 			}
 		}
 	}
+
+	private boolean isValidRequestedFile(String str) throws PrivateException {
+		boolean retval = true;
+		try {
+			String[] dirPaths = str.split("/");
+			String userid = dirPaths[1];
+			String accessPath = dirPaths[2];
+			if (!userid.matches("^\\d+$")) {
+				retval = false;
+			} else {
+				if (!("/" + accessPath).equals(getPublicDir())) {		
+					throw new PrivateException();
+				} else {
+					for (int i = 1; i < dirPaths.length; i++) {
+						String dirPath = dirPaths[i];
+						if (!FileNameUtil.isValidFileName(dirPath)) {
+							retval = false;
+							break;
+						}
+					}			
+				}
+			}		
+		} catch (PrivateException e) {
+			throw e;	
+		}
+		catch (Exception e) {
+			Application.log.error("", e);
+			retval = false;
+		}
+		return retval;
+	}
+
+	public abstract String getRootDir();
+	public abstract String getPublicDir();
+
+
 
 }
