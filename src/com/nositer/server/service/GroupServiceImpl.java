@@ -60,7 +60,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			sess.save(userHasGroupDomain);
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
-			createBasicFilesStructure(retval.getId());
+			createBasicFilesStructure(retval);
 		}
 		catch (GWTException e) {
 			throw e;
@@ -80,19 +80,19 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 	
-	private void createBasicFilesStructure(int groupid) throws IOException {
+	private void createBasicFilesStructure(Group group) throws IOException {
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		fileServiceImpl.createDirsIfNecessary();
-		File defaultAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTGROUPAVATAR));		
-		File publicImageDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, groupid));
-		FileUtils.copyFileToDirectory(defaultAvatar, publicImageDir);
-		File publicREADME = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, groupid) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your groupid is: " + groupid + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.GROUP_URL_PREFIX + "/" + groupid +
+		File defaultAvatar = new File(Application.getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTGROUPAVATAR));		
+		File publicDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()));
+		FileUtils.copyFileToDirectory(defaultAvatar, publicDir);
+		File publicREADME = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()) + "/README.txt");
+		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your groupid is: " + group.getId() + 
+				"\nAny files in your public directory can be accessed with a relative URL of " + Global.GROUP_URL_PREFIX + "/" + group.getId() +
 				"\nFor example, your default avatar is viewable at this location: " +
-				Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() + Global.DEFAULTGROUPAVATAR
+				Global.GROUP_URL_PREFIX + "/" + group.getId() + "/" + Global.DEFAULTGROUPAVATAR
 		);		
-		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, groupid) + "/README.txt");
+		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, group.getId()) + "/README.txt");
 		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
 	}
 

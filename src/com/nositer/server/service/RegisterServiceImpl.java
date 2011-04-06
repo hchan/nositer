@@ -38,7 +38,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			trx.commit();
 			user = BeanConversion.copyDomain2DTO(userDomain, User.class);
 			Application.setCurrentUser(user);
-			createBasicFilesStructure();
+			Application.createBasicFilesStructure(user);
 			retval = true;
 		}
 		catch (Exception e) {
@@ -50,21 +50,5 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			HibernateUtil.closeSession(sess);
 		}
 		return retval;
-	}
-
-	private void createBasicFilesStructure() throws IOException {
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
-		fileServiceImpl.createDirsIfNecessary();
-		File defaultAvatar = new File(getThreadLocalRequest().getSession().getServletContext().getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
-		File publicImageDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()));
-		FileUtils.copyFileToDirectory(defaultAvatar, publicImageDir);
-		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + Application.getCurrentUser().getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() +
-				"\nFor example, your default avatar is viewable at this location: " +
-				Global.USER_URL_PREFIX + "/" + Application.getCurrentUser().getId() + Global.DEFAULTUSERAVATAR
-		);		
-		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, Application.getCurrentUser().getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
 	}
 }

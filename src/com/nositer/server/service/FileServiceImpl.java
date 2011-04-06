@@ -36,8 +36,17 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	private int counter = 0;
 	private User user;
 	
+	public FileServiceImpl(User user) {
+		this.user = user;
+		init();
+	}
+	
 	public FileServiceImpl() {
 		user = Application.getCurrentUser();
+		init();
+	}
+	
+	public void init() {
 		filter = new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return !name.startsWith(".");
