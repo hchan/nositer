@@ -1,13 +1,9 @@
 package com.nositer.server.service;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,6 +16,7 @@ import com.nositer.client.service.GroupService;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.UserHasGroup;
+import com.nositer.server.util.FileUtil;
 import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
@@ -60,7 +57,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			sess.save(userHasGroupDomain);
 			trx.commit();
 			retval = BeanConversion.copyDomain2DTO(groupDomain, Group.class);
-			createBasicFilesStructure(retval);
+			FileUtil.createBasicFilesStructure(retval);
 		}
 		catch (GWTException e) {
 			throw e;
@@ -80,22 +77,6 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 	
-	private void createBasicFilesStructure(Group group) throws IOException {
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
-		fileServiceImpl.createDirsIfNecessary();
-		File defaultAvatar = new File(Application.getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTGROUPAVATAR));		
-		File publicDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()));
-		FileUtils.copyFileToDirectory(defaultAvatar, publicDir);
-		File publicREADME = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your groupid is: " + group.getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.GROUP_URL_PREFIX + "/" + group.getId() +
-				"\nFor example, your default avatar is viewable at this location: " +
-				Global.GROUP_URL_PREFIX + "/" + group.getId() + "/" + Global.DEFAULTGROUPAVATAR
-		);		
-		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, group.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
-	}
-
 	@Override
 	public Group updateGroup(Group group) throws GWTException {
 		Group retval = null;

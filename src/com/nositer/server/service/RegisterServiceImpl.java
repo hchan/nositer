@@ -14,6 +14,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.RegisterService;
 import com.nositer.hibernate.HibernateUtil;
+import com.nositer.server.util.FileUtil;
 import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
@@ -38,7 +39,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			trx.commit();
 			user = BeanConversion.copyDomain2DTO(userDomain, User.class);
 			Application.setCurrentUser(user);
-			Application.createBasicFilesStructure(user);
+			FileUtil.createBasicFilesStructure(user);
 			retval = true;
 		}
 		catch (Exception e) {

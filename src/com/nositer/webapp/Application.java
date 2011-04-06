@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.nositer.client.dto.generated.User;
 import com.nositer.server.service.FileServiceImpl;
+import com.nositer.server.util.FileUtil;
 import com.nositer.shared.Global;
 import com.nositer.util.NositerConfiguration;
 import com.thoughtworks.xstream.XStream;
@@ -52,21 +53,7 @@ public class Application {
 		return retval;
 	}
 
-	public static void createBasicFilesStructure(User user) throws IOException {
-		FileServiceImpl fileServiceImpl = new FileServiceImpl(user);
-		fileServiceImpl.createDirsIfNecessary();
-		File defaultAvatar = new File(Application.getRealPath(Global.PUBLICIMAGEDIR + "/" + Global.DEFAULTUSERAVATAR));		
-		File publicDir = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, user.getId()));
-		FileUtils.copyFileToDirectory(defaultAvatar, publicDir);
-		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, user.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + user.getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + user.getId() +
-				"\nFor example, your default avatar is viewable at this location: " +
-				Global.USER_URL_PREFIX + "/" + user.getId() + "/" + Global.DEFAULTUSERAVATAR
-		);		
-		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
-	}
+
 
 	public static String dump(Object obj) {
 		String retval = null;
