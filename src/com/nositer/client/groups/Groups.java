@@ -19,7 +19,7 @@ import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 public class Groups extends TabPanel {
 
 	public enum TabItemType {
-		GROUPS, SEARCHFORGROPS
+		GROUPS, SEARCHFORGROUPS
 	}
 
 	private TabItemPlus groupsTabItem;
@@ -163,8 +163,9 @@ public class Groups extends TabPanel {
 		if (tabItemType.equals(Groups.TabItemType.GROUPS)) {
 			tabItem = groupsTabItem;
 			groupsContainer.resize(0,0);
-		} else if (tabItemType.equals(Groups.TabItemType.SEARCHFORGROPS)) {
+		} else if (tabItemType.equals(Groups.TabItemType.SEARCHFORGROUPS)) {
 			tabItem = searchForGroupsTabItem;
+			searchForGroupsContainer.resize(0, 0);
 		}
 		setSelection(tabItem);		
 

@@ -36,7 +36,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
-import com.nositer.shared.FileNameVerifier;
+import com.nositer.shared.FileNameUtil;
 import com.nositer.shared.Global;
 
 
@@ -133,7 +133,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 
 	public String getFileTypes() {
 		String retval = "";
-		for (String ext : FileNameVerifier.getUploadableExtensions()) {
+		for (String ext : FileNameUtil.getUploadableExtensions()) {
 			retval += "*." + ext + ";";
 		}
 		return retval;
@@ -206,7 +206,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 			@Override
 			public void onFileQueued(FileQueuedEvent event) {	
 				FileModel fileModel = new FileModel(event.getFile());
-				if (!FileNameVerifier.isValidFileName(event.getFile().getName())) {
+				if (!FileNameUtil.isValidFileName(event.getFile().getName())) {
 					fileModel.set(FileModel.Attribute.errorMessage.toString(), "File contains illegal character");
 					swfUpload.cancelUpload((String)fileModel.get(FileModel.Attribute.id.toString()), false);
 				}

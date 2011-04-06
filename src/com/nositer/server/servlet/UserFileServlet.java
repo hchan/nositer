@@ -1,11 +1,15 @@
 package com.nositer.server.servlet;
 
-import com.nositer.shared.FileNameVerifier;
+import com.nositer.shared.FileNameUtil;
 import com.nositer.shared.Global;
 
 @SuppressWarnings({"serial"})
 public class UserFileServlet extends AbstractFileServlet {
-
+	/**
+	 * an example URL request would look like: where 1 is the userid
+	 * http://localhost:8888/userfile/1/public/adapter.jpg
+	 */
+	
 
 	@Override
 	public boolean isValidRequestedFile(String str) {
@@ -22,7 +26,7 @@ public class UserFileServlet extends AbstractFileServlet {
 				} else {
 					for (int i = 1; i < dirPaths.length; i++) {
 						String dirPath = dirPaths[i];
-						if (!FileNameVerifier.isValidFileName(dirPath)) {
+						if (!FileNameUtil.isValidFileName(dirPath)) {
 							retval = false;
 							break;
 						}

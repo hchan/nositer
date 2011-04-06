@@ -78,9 +78,6 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 
 	private void initToolBar() {
 		pagingToolBar = new SearchForGroupsPagingToolBar(ComboBoxPlus.DEFAULTLIMIT);
-
-
-
 		pagingToolBar.bind((PagingLoader) searchGroupsGrid.getLoader());
 		searchGroupsGrid.getLoader().addLoadListener(new LoadListener() {
 			@Override
@@ -115,6 +112,7 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 
 	@Override
 	public void resize(int width, int height) {
+		refreshLocation();
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		//int gridHeightOffset = 258;
 		if (searchCriteriaForGroupsPanel.isRendered()) {
@@ -134,4 +132,27 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 		searchCriteriaForGroupsPanel.getLocation().getGeographyCode().layout();
 
 	}
+
+	private void refreshLocation() {
+		try {
+			searchCriteriaForGroupsPanel.
+			getLocation().getPostalcode().
+			setRawValue(searchCriteriaForGroupsPanel.
+					getLocation().
+					getPostalcode().
+					getBean().
+					getCode());
+		} catch (Exception e) {}
+		try {
+			searchCriteriaForGroupsPanel.
+			getLocation().getZipcode().
+			setRawValue(searchCriteriaForGroupsPanel.
+					getLocation().
+					getZipcode().
+					getBean().
+					getCode());
+		} catch (Exception e) {}
+	}
+
+
 }

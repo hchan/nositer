@@ -2,7 +2,7 @@ package com.nositer.shared;
 
 import java.util.ArrayList;
 
-public class FileNameVerifier {
+public class FileNameUtil {
 
 	public static boolean isValidFileName(String fileName) {
 		boolean retval = false;

@@ -16,34 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 
 import com.nositer.server.service.FileServiceImpl;
+import com.nositer.shared.FileNameUtil;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
 
 @SuppressWarnings({"serial"})
 public abstract class AbstractFileServlet extends HttpServlet {
-	/**
-	 * an example URL request would look like: where 1 is the userid
-	 * http://localhost:8888/userfile/1/public/adapter.jpg
-	 */
-	// Constants ----------------------------------------------------------------------------------
-
-	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 	
 
+	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
-	// Actions ------------------------------------------------------------------------------------
-
-	public void init() throws ServletException {
-
-
-
-		// In a Windows environment with the Application server running on the
-		// c: volume, the above path is exactly the same as "c:\images".
-		// In UNIX, it is just straightforward "/images".
-		// If you have stored files in the WebContent of a WAR, for example in the
-		// "/WEB-INF/images" folder, then you can retrieve the absolute path by:
-		// this.imagePath = getServletContext().getRealPath("/WEB-INF/images");
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException
@@ -68,17 +50,19 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 
 		// Decode the file name (might contain spaces and on) and prepare file object.
-		File file = new File(getRootDir() + "/" + requestedFile);//, URLDecoder.decode(requestedImage, "UTF-8"));
+		File file = new File(getRootDir() + "/" + requestedFile);
 
 		// Check if file actually exists in filesystem.
 		if (!file.exists()) {
-			// Do your thing if the file appears to be non-existing.
-			// Throw an exception, or send 404, or show default/warning image, or just ignore it.
-			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
-			return;
+
+			if (FileNameUtil.isImageFile(requestedFile)) {
+				file = new File(Application.getRealPath(Global.IMAGENOTFOUND));
+			} else {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+				return;
+			}
 		}
 
-		
 		// Get content type by filename.
 		String contentType = getServletContext().getMimeType(file.getName());
 		/*
@@ -90,7 +74,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
 			return;
 		}
-		*/
+		 */
 
 		// Init servlet response.
 		response.reset();

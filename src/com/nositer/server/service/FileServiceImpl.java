@@ -19,7 +19,7 @@ import com.nositer.client.service.FileService;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.directorytree.FolderModel;
 import com.nositer.server.util.FileUtil;
-import com.nositer.shared.FileNameVerifier;
+import com.nositer.shared.FileNameUtil;
 import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
@@ -128,7 +128,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	private void createFolder(String folder, String fullFolderPath) throws GWTException {
 		try {
 			String baseName = FilenameUtils.getBaseName(folder);
-			if (!FileNameVerifier.isValidFileName(baseName)) {
+			if (!FileNameUtil.isValidFileName(baseName)) {
 				throw new GWTException(baseName + " has illegal characters");
 			}		
 			File dirToCreate = new File(fullFolderPath);

@@ -116,7 +116,7 @@ public class HistoryManager {
 		}  else if (historyToken.equals(SEARCHFORGROUPS.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getSearchForGroupsNavigationItem());
-			Groups.getInstance(true).showNonClosableTab(Groups.TabItemType.SEARCHFORGROPS);
+			Groups.getInstance(true).showNonClosableTab(Groups.TabItemType.SEARCHFORGROUPS);
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
