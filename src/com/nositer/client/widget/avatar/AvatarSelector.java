@@ -12,16 +12,19 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 import com.extjs.gxt.ui.client.widget.treegrid.TreeGrid.TreeNode;
+import com.nositer.client.Scope;
 import com.nositer.client.widget.directorytree.FolderModel;
 
 
 @SuppressWarnings("rawtypes")
 public class AvatarSelector extends LayoutContainer {		
-	protected TextField<String> selectedFile;
-	protected FolderModel fileModel;	
-	protected TreeNode treeNode;
-	protected Label selectAvatar;
-	protected Button button;
+	
+	private Scope scope;
+	private TextField<String> selectedFile;
+	private FolderModel fileModel;	
+	private TreeNode treeNode;
+	private Label selectAvatar;
+	private Button button;
 	protected HBoxLayoutData hBoxSelectedFileLayoutData;
 	
 	
@@ -29,6 +32,14 @@ public class AvatarSelector extends LayoutContainer {
 		return hBoxSelectedFileLayoutData;
 	}
 
+	public Scope getScope() {
+		return scope;
+	}
+
+	public void setScope(Scope scope) {
+		this.scope = scope;
+	}
+	
 	public void sethBoxSelectedFileLayoutData(
 			HBoxLayoutData hBoxSelectedFileLayoutData) {
 		this.hBoxSelectedFileLayoutData = hBoxSelectedFileLayoutData;
@@ -71,7 +82,8 @@ public class AvatarSelector extends LayoutContainer {
 		this.fileModel = fileModel;
 	}
 
-	public AvatarSelector() {
+	public AvatarSelector(Scope scope) {
+		this.scope = scope;
 		init();
 	}
 	

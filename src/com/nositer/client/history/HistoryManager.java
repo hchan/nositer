@@ -13,6 +13,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
+import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.createiwantto.CreateIWantTo;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
@@ -99,7 +100,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(UPLOADFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getUploadFilesNavigationItem());
-			setMainPanel(new UploadFiles());
+			setMainPanel(new UploadFiles(Scope.user));
 		} else if (historyToken.equals(MANAGEFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());

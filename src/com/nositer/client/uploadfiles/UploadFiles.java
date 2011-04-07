@@ -13,28 +13,25 @@ import org.swfupload.client.event.UploadProgressHandler;
 import org.swfupload.client.event.UploadSuccessHandler;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
-import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
-import com.extjs.gxt.ui.client.event.TreeGridEvent;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.TableLayout;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.managefiles.FileManagerMenuBar;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.directorytree.UserFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.shared.FileNameUtil;
 import com.nositer.shared.Global;
@@ -45,22 +42,32 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 	private Button uploadButton;
 	private UploadQueue uploadQueue;
 	private LayoutContainer uploadButtonContainer;
-	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
-	private static UploadFiles instance;
+	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
+	private Scope scope;
 	private SWFUpload swfUpload;
-	public UploadFiles() {
+	
+	
+	public Scope getScope() {
+		return scope;
+	}
+
+	public void setScope(Scope scope) {
+		this.scope = scope;
+	}
+
+	public UploadFiles(Scope scope) {
+		this.scope = scope;
 		init();
-		instance = this;
 	}
 
 	public void init() {
 		TableLayout layout = new TableLayout(2);
 		layout.setWidth("100%");
 		this.setLayout(layout);
-		fileDirectoryTreeGridContainer = new FileDirectoryTreeGridContainer() {
+		fileDirectoryTreeGridContainer = new UserFileDirectoryTreeGridContainer(false) {
 			public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
 				for (FileModel fileModel : result) {
-					if (fileModel.getPath() != null && fileModel.getPath().equals("/public") && fileModel.getName().equals("public")) {
+					if (fileModel.getPath() != null && fileModel.getPath().equals(Global.PUBLICFOLDER) && ("/" + fileModel.getName()).equals(Global.PUBLICFOLDER)) {
 						if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFileModel() == null) {
 							fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
 							break;
@@ -112,7 +119,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		int spacing = 30;
-		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - FileDirectoryTreeGridContainer.WIDTH - spacing);
+		uploadQueue.setWidth(MainPanel.getInstance().getWidth() - AbstractFileDirectoryTreeGridContainer.WIDTH - spacing);
 		uploadQueue.getGrid().getView().layout();
 	}
 

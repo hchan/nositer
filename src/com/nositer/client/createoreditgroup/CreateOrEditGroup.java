@@ -19,6 +19,7 @@ import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
@@ -132,7 +133,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		name.setFieldLabel("* Name");
 		name.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
 
-		avatarSelector = new AvatarSelector();
+		avatarSelector = new AvatarSelector(Scope.group);
 
 		description = new HtmlEditor();
 		setDescriptionHeight();

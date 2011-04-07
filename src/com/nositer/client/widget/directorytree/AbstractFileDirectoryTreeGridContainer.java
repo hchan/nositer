@@ -25,20 +25,31 @@ import com.extjs.gxt.ui.client.widget.treegrid.TreeGridCellRenderer;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.util.TreeNodeHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.SelectedFolderPanel;
+import com.nositer.shared.Global;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class FileDirectoryTreeGridContainer extends LayoutContainer {
+abstract public class AbstractFileDirectoryTreeGridContainer extends LayoutContainer {
 
 	public static final int HEIGHT = 300;
 	public static final int WIDTH = 400;
 	private SelectedFolderPanel selectedFolderPanel;
 	private SelectedFilePanel selectedFilePanel;
 	private MyTreeGrid tree;
-	private ContentPanel contentPanel;
+	private ContentPanel contentPanel;	
+	private boolean useSelectedFilePanel;
+	
+	public boolean isUseSelectedFilePanel() {
+		return useSelectedFilePanel;
+	}
+
+	public void setUseSelectedFilePanel(boolean useSelectedFilePanel) {
+		this.useSelectedFilePanel = useSelectedFilePanel;
+	}
 
 
 	public ContentPanel getContentPanel() {
@@ -74,25 +85,23 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 	}
 
 	// default uses selectedFolderPanel
-	public FileDirectoryTreeGridContainer() {
-		this(false);
+	//public FileDirectoryTreeGridContainer() {
+	//	this(false);
+	//}
+
+	public AbstractFileDirectoryTreeGridContainer(boolean useSelectedFilePanel) {
+		this.useSelectedFilePanel = useSelectedFilePanel;
+		init();
 	}
 
-	public FileDirectoryTreeGridContainer(boolean useSelectedFilePanel) {
-		init(useSelectedFilePanel);
-	}
-
-	protected void init(boolean useSelectedFilePanel) {
+	
+	public abstract RpcProxy<List<FileModel>> createProxy ();
+	
+	protected void init() {
 
 		setLayout(new FlowLayout(10));  
 		// data proxy  
-		RpcProxy<List<FileModel>> proxy = new RpcProxy<List<FileModel>>() {  
-			@Override
-			protected void load(Object loadConfig,
-					AsyncCallback<List<FileModel>> callback) {
-				ServiceBroker.fileService.getImageFolderChildren((FileModel) loadConfig, callback);  
-			}  			
-		};  
+		RpcProxy<List<FileModel>> proxy = createProxy();
 
 		// tree loader  
 		final TreeLoader<FileModel> loader = new BaseTreeLoader<FileModel>(proxy) {  
@@ -170,7 +179,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 
 		tree.setBorders(true);  
-		tree.getStyle().setLeafIcon(IconHelper.createPath("/public/image/list.gif"));  
+		tree.getStyle().setLeafIcon(IconHelper.createPath(Global.LEAFIMAGE));  
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
 

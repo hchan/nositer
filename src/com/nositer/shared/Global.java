@@ -28,6 +28,7 @@ public class Global {
 	
 	public static final String SWFLOADDIRFLASHPLAYER10 = "/public/swfupload/swfupload.swf";
 	public static final String SWFLOADDIRFLASHPLAYER9 = "/public/swfupload/swfupload_fp9.swf";
+	public static final String LEAFIMAGE = "/public/image/list.gif";
 	public static final String IMAGENOTFOUND = "/public/image/imageNotFound.gif";
 	public static final String USER_URL_PREFIX = "/userfile";
 	public static final String GROUP_URL_PREFIX = "/groupfile";

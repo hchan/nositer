@@ -27,6 +27,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Relationshipcode;
@@ -300,7 +301,7 @@ public class Register implements EntryPoint {
 	}
 
 	private void addOptionalFields() {
-		avatarSelector = new AvatarSelector();
+		avatarSelector = new AvatarSelector(Scope.user);
 		avatarSelector.gethBoxSelectedFileLayoutData().setMargins(new Margins(0, 1, 5, 78));
 		avatarSelector.getSelectAvatar().setStyleName("avatarSelectorBasicProfile");
 		avatarSelector.hide();

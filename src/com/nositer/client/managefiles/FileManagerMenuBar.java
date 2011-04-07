@@ -16,8 +16,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.util.GWTUtil;
-import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.PromptMessageBox;
@@ -26,9 +25,9 @@ public class FileManagerMenuBar extends MenuBar {
 
 	private MenuBarItem file;
 	private MenuItem createFolder;
-	private FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
+	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 
-	public FileManagerMenuBar(FileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
+	public FileManagerMenuBar(AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
 		this.fileDirectoryTreeGridContainer = fileDirectoryTreeGridContainer;
 		Menu subMenu = new Menu();
 		initCreateFolder();

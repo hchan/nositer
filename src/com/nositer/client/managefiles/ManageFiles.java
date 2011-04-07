@@ -7,20 +7,20 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 public class ManageFiles extends LayoutContainer implements Resizable {
-	private FileDirectoryTreeGridContainer fileManager;
+	private AbstractFileDirectoryTreeGridContainer fileManager;
 	private FileViewerContainer fileViewerContainer;
 	private ContentPanel contentPanel;
 	private static ManageFiles instance;
 	
-	public FileDirectoryTreeGridContainer getFileManager() {
+	public AbstractFileDirectoryTreeGridContainer getFileManager() {
 		return fileManager;
 	}
 
-	public void setFileManager(FileDirectoryTreeGridContainer fileManager) {
+	public void setFileManager(AbstractFileDirectoryTreeGridContainer fileManager) {
 		this.fileManager = fileManager;
 	}
 
@@ -70,7 +70,7 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 			};
 		};
 	
-		fileManager = new FileManager(fileViewerContainer) {
+		fileManager = new UserFileManager(fileViewerContainer) {
 			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);

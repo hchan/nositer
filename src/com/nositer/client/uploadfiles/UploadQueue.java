@@ -18,7 +18,7 @@ import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridViewConfig;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
-import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
+import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 
@@ -81,7 +81,7 @@ public class UploadQueue extends LayoutContainer {
 		contentPanel = new ContentPanel();
 		contentPanel.setHeading("Upload Queue");
 		contentPanel.setFrame(true);
-		contentPanel.setHeight(FileDirectoryTreeGridContainer.HEIGHT);
+		contentPanel.setHeight(AbstractFileDirectoryTreeGridContainer.HEIGHT);
 		initGrid();
 		swfUploadContainer = new SWFUploadContainer();
 		contentPanel.add(grid);
@@ -102,7 +102,7 @@ public class UploadQueue extends LayoutContainer {
 		ColumnModel cm = new ColumnModel(Arrays.asList(name, size));  
 		store = new ListStore<FileModel>(); 
 		grid = new Grid<FileModel>(store, cm);  
-		grid.setHeight(FileDirectoryTreeGridContainer.HEIGHT - 84);
+		grid.setHeight(AbstractFileDirectoryTreeGridContainer.HEIGHT - 84);
 		grid.setBorders(true);
 		grid.setAutoExpandColumn("name");  
 		grid.setAutoExpandMax(5000);
