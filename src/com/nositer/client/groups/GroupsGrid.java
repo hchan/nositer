@@ -111,7 +111,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 				try {
 					BeanModel beanModel = (BeanModel) model;
 					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setPathToSmallImage(HttpGetFileHelper.getUserPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getUserid()));
+					retval.setPathToSmallImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
