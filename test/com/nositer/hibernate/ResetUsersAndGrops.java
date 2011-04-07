@@ -9,15 +9,16 @@ import com.nositer.hibernate.generated.domain.Group;
 import com.nositer.hibernate.generated.domain.User;
 import com.nositer.server.util.FileUtil;
 import com.nositer.shared.GWTException;
+import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
 import com.nositer.webapp.Application;
 
 @SuppressWarnings("unchecked")
-public class ResetDirectoryStructures {
+public class ResetUsersAndGrops {
 
 	public static void main(String[] args) {
 		try {
-			//resetUserDirectoryStructures();
+			resetUserDirectoryStructures();
 			resetGroupDirectoryStructures();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,6 +37,9 @@ public class ResetDirectoryStructures {
 			for (com.nositer.client.dto.generated.Group dtoGroup : dtoObjs) {
 				FileUtil.createBasicFilesStructure(dtoGroup);
 			}
+			sess.createSQLQuery("UPDATE NOSITER.GROUP SET AVATARLOCATION = '" + Global.GROUPPUBLICDIR + "/" + Global.DEFAULTGROUPAVATAR + "'" + " WHERE AVATARLOCATION IS NULL").executeUpdate();
+			
+			trx.commit();
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
@@ -59,6 +63,9 @@ public class ResetDirectoryStructures {
 			for (com.nositer.client.dto.generated.User dtoUser : dtoObjs) {
 				FileUtil.createBasicFilesStructure(dtoUser);
 			}
+			sess.createSQLQuery("UPDATE NOSITER.USER SET AVATARLOCATION = '" + Global.USERPUBLICDIR + "/" + Global.DEFAULTUSERAVATAR + "'" + " WHERE AVATARLOCATION IS NULL").executeUpdate();
+			
+			trx.commit();
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		

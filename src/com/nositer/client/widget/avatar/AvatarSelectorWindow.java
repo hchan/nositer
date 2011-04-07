@@ -2,16 +2,22 @@ package com.nositer.client.widget.avatar;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
+import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.store.Store;
+import com.extjs.gxt.ui.client.store.StoreFilter;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.grid.filters.ListFilter;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.treegrid.filters.TreeGridFilters;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.directorytree.FileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
@@ -54,6 +60,9 @@ public class AvatarSelectorWindow extends Window {
 				fileViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 			}
 		};
+		fileDirectoryTreeGridContainer.applyImageStoreFilter();
+		
+		
 		
 		fileDirectoryTreeGridContainer.setLayout(new FlowLayout(0));
 		fileViewerContainer = new FileViewerContainer() {

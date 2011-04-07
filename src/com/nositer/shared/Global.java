@@ -7,17 +7,21 @@ public class Global {
 	public static final String UPLOADCREDENTIALKEY = "myid";
 	
 	
+	public static final String PUBLICFOLDER = "/public";
+	public static final String PRIVATEFOLDER = "/private";
+	
+	
 	public static final String USERROOTDIR = "/mnt/nositer/user";
 	public static final String USERDIRTEMPLATE = USERROOTDIR + "/{0}";
-	public static final String USERPUBLICDIR = "/public";
-	public static final String USERPRIVATEDIR = "/private";
+	public static final String USERPUBLICDIR = PUBLICFOLDER;
+	public static final String USERPRIVATEDIR = PRIVATEFOLDER;
 	public static final String USERPUBLICDIRTEMPLATE = USERDIRTEMPLATE + USERPUBLICDIR;
 	public static final String USERPRIVATEDIRTEMPLATE = USERDIRTEMPLATE + USERPRIVATEDIR;
 	
 	public static final String GROUPROOTDIR = "/mnt/nositer/group";
 	public static final String GROUPDIRTEMPLATE = GROUPROOTDIR + "/{0}";
-	public static final String GROUPPUBLICDIR = "/public";
-	public static final String GROUPPRIVATEDIR = "/private";
+	public static final String GROUPPUBLICDIR = PUBLICFOLDER;
+	public static final String GROUPPRIVATEDIR = PRIVATEFOLDER;
 	public static final String GROUPPUBLICDIRTEMPLATE = GROUPDIRTEMPLATE + GROUPPUBLICDIR;
 	public static final String GROUPPRIVATEDIRTEMPLATE = GROUPDIRTEMPLATE + GROUPPRIVATEDIR;
 	

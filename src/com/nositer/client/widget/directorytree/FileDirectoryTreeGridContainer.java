@@ -10,6 +10,7 @@ import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.data.TreeLoader;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.store.Store;
+import com.extjs.gxt.ui.client.store.StoreFilter;
 import com.extjs.gxt.ui.client.store.StoreSorter;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
@@ -25,11 +26,11 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.TreeNodeHelper;
 import com.nositer.client.widget.SelectedFilePanel;
 import com.nositer.client.widget.SelectedFolderPanel;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class FileDirectoryTreeGridContainer extends LayoutContainer {
 
 	public static final int HEIGHT = 300;
@@ -132,14 +133,16 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 				return super.compare(store, m1, m2, property);  
 			}  
 		});  
+		
+		
 
-		ColumnConfig name = new ColumnConfig("name", "Name", 100);  
+		ColumnConfig name = new ColumnConfig(FileModel.Attribute.name.toString(), "Name", 100);  
 		name.setRenderer(new TreeGridCellRenderer<ModelData>());  
 
-		ColumnConfig date = new ColumnConfig("date", "Date", 100);  
+		ColumnConfig date = new ColumnConfig(FileModel.Attribute.date.toString(), "Date", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM)); 
 
-		ColumnConfig size = new ColumnConfig("size", "Size", 100);  
+		ColumnConfig size = new ColumnConfig(FileModel.Attribute.size.toString(), "Size", 100);  
 
 		ColumnModel cm = new ColumnModel(Arrays.asList(name, date, size));  
 
@@ -171,7 +174,7 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 		//tree.getStyle().setJointExpandedIcon(IconHelper.createPath("/public/image/bol.png"));
 		tree.setCaching(false);
 
-		tree.setAutoExpandColumn("name");  
+		tree.setAutoExpandColumn(FileModel.Attribute.name.toString());  
 		tree.setTrackMouseOver(false);  
 		contentPanel.add(tree);  
 
@@ -202,6 +205,13 @@ public class FileDirectoryTreeGridContainer extends LayoutContainer {
 			selectedFilePanel.setTreeNode(treeNode);
 			doFileModelClick(fileModel);
 		}
+	}
+	
+	
+	public void applyImageStoreFilter() {
+		StoreFilter<ModelData> imageStoreFilter = new ImageStoreFilter();
+		getTree().getStore(). addFilter(imageStoreFilter);
+		getTree().getStore().applyFilters(FileModel.Attribute.name.toString());
 	}
 
 	public void refreshSelectedTreeNode() {

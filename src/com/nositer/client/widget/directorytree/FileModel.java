@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 @SuppressWarnings("serial")
 public class FileModel extends BaseModelData implements IsSerializable {
 	public enum Attribute {
-		size, errorMessage, date, id
+		size, errorMessage, date, id, name, path
 	}
 	
 	
@@ -30,19 +30,23 @@ public class FileModel extends BaseModelData implements IsSerializable {
 	}
 
 	public void setName(String name) {
-		set("name", name);
+		set(Attribute.name.toString(), name);
 	}
 
 	public void setPath(String path) {
-		set("path", path);
+		set(Attribute.path.toString(), path);
 	}
 
 	public String getPath() {
-		return get("path");
+		return get(Attribute.path.toString());
 	}
 
 	public String getName() {
-		return get("name");
+		return get(Attribute.name.toString());
+	}
+	
+	public boolean isDirectory() {
+		return get(Attribute.size.toString()) == null;
 	}
 
 	@Override

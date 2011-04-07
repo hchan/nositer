@@ -17,11 +17,9 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Relationshipcode;
 import com.nositer.client.dto.generated.Salutationcode;
 import com.nositer.client.dto.generated.User;
-import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.register.Register;
@@ -112,6 +110,8 @@ public class EditBasicProfile extends LayoutContainer implements Resizable {
 		}
 		register.getProfession().setValue(user.getProfession());
 		register.getBirthdate().setValue(user.getBirthdate());		
+		
+		register.getAvatarSelector().getSelectedFile().setValue(user.getAvatarlocation());
 
 	}
 
