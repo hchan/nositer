@@ -1,0 +1,2 @@
+serviceClass: com.nositer.client.service.ProfileService
+path: 3272912B741BF8A0C5AAB314A3913986.gwt.rpc

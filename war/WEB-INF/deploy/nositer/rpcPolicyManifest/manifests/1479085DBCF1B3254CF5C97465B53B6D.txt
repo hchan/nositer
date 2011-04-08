@@ -1,0 +1,2 @@
+serviceClass: com.nositer.client.service.GroupService
+path: 4ADD47E5D11947F26BC9F74E3DEA0B38.gwt.rpc

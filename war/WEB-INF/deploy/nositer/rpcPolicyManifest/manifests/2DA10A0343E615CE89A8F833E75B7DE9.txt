@@ -1,0 +1,2 @@
+serviceClass: com.nositer.client.service.FileService
+path: C789FE917917CAFA32BBDF16C2D7C0E9.gwt.rpc

@@ -3,14 +3,14 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="lib" path="buildlib/gxt.jar"/>
-	<classpathentry kind="lib" path="C:/gwt-2.1.1/gwt-user.jar">
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/gwt-user.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/gwt-2.1.1/doc/javadoc/"/>
+			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/doc/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/gwt-2.1.1/gwt-dev.jar">
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/gwt-dev.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/gwt-2.1.1/doc/javadoc/"/>
+			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/doc/javadoc/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.jetty.runtimeTarget/Jetty v7.2"/>

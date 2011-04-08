@@ -1,0 +1,2 @@
+serviceClass: com.nositer.client.service.RegisterService
+path: 43ACB99DFFE786705073340EA182DEC3.gwt.rpc
