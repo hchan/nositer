@@ -301,7 +301,7 @@ public class Register implements EntryPoint {
 	}
 
 	private void addOptionalFields() {
-		avatarSelector = new AvatarSelector(Scope.user);
+		avatarSelector = new AvatarSelector(new Scope(Scope.Type.user));
 		avatarSelector.gethBoxSelectedFileLayoutData().setMargins(new Margins(0, 1, 5, 78));
 		avatarSelector.getSelectAvatar().setStyleName("avatarSelectorBasicProfile");
 		avatarSelector.hide();

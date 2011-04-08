@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.shared.GWTException;
 
@@ -17,8 +18,11 @@ public interface FileService extends RemoteService {
 
 	public void createFolder(String folder) throws GWTException;
 
-	public List<FileModel> getImageFolderChildren(FileModel folder, Group group);
+	
 
-	public void createFolder(String folder, Group group);
+	List<FileModel> getImageFolderChildren(FileModel folder,
+			GroupPlusView groupPlusView);
+
+	void createFolder(String folder, GroupPlusView groupPlusView);
 
 }

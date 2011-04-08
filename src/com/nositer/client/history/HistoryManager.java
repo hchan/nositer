@@ -100,7 +100,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(UPLOADFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getUploadFilesNavigationItem());
-			setMainPanel(new UploadFiles(Scope.user));
+			setMainPanel(new UploadFiles(new Scope(Scope.Type.user)));
 		} else if (historyToken.equals(MANAGEFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import org.apache.commons.io.FileUtils;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.User;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
@@ -32,6 +33,18 @@ public class FileUtil {
 			FileUtils.forceMkdir(publicDir);
 		}
 	}
+	
+	public static void createDirsIfNecessary(GroupPlusView groupPlusView) throws IOException {	
+		File privateDir = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, groupPlusView.getId()));
+		if (!privateDir.exists()) {
+			FileUtils.forceMkdir(privateDir);
+		}
+		File publicDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, groupPlusView.getId()));
+		if (!publicDir.exists()) {
+			FileUtils.forceMkdir(publicDir);
+		}
+	}
+	
 
 	public static void createBasicFilesStructure(User user) throws IOException {
 		FileUtil.createDirsIfNecessary(user);

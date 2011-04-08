@@ -133,7 +133,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		name.setFieldLabel("* Name");
 		name.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
 
-		avatarSelector = new AvatarSelector(Scope.group);
+		avatarSelector = new AvatarSelector(new Scope(Scope.Type.group));
 
 		description = new HtmlEditor();
 		setDescriptionHeight();
@@ -259,6 +259,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		name.setValue(groupPlusView.getName());
 		tagname.setValue(groupPlusView.getTagname());
 		description.setValue(groupPlusView.getDescription());
+		avatarSelector.getScope().setGroupPlusView(groupPlusView);
 		avatarSelector.getSelectedFile().setValue(groupPlusView.getAvatarlocation());
 	}
 

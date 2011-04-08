@@ -14,6 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.FileService;
 import com.nositer.client.widget.directorytree.FileModel;
@@ -43,14 +44,14 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 	
 	@Override
-	public List<FileModel> getImageFolderChildren(FileModel folder, Group group) {
+	public List<FileModel> getImageFolderChildren(FileModel folder, GroupPlusView groupPlusView) {
 		try {
-			FileUtil.createDirsIfNecessary(group);
+			FileUtil.createDirsIfNecessary(groupPlusView);
 		} catch (IOException e) {
 			Application.log.error("", e);
 			throw new GWTException(e);
 		}
-		String rootDir = MessageFormat.format(Global.GROUPDIRTEMPLATE, group.getId());
+		String rootDir = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId());
 		return getImageFolderChildren(folder, rootDir);
 	}
 	
@@ -121,8 +122,8 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	@Override
-	public void createFolder(String folder, Group group) {
-		createFolder(folder, MessageFormat.format(Global.GROUPDIRTEMPLATE, group.getId()) + folder);
+	public void createFolder(String folder, GroupPlusView groupPlusView) {
+		createFolder(folder, MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + folder);
 	}
 
 	private void createFolder(String folder, String fullFolderPath) throws GWTException {
