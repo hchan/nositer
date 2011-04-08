@@ -14,7 +14,7 @@
         <property name="hibernate.c3p0.min_size">5</property>
         <property name="hibernate.c3p0.timeout">100</property>
         <property name="hibernate.connection.autocommit">false</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property>
         <property name="hibernate.connection.password">abc123</property>
         <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost/nositer?blobSendChunkSize=1024000000&amp;max_allowed_packet=1024000000&amp;autoReconnect=true</property>

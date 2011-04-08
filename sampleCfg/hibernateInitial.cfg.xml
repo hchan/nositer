@@ -4,7 +4,7 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property>
 		<property name="hibernate.connection.password">abc123</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost/nositer?blobSendChunkSize=1024000000&amp;max_allowed_packet=1024000000&amp;autoReconnect=true</property>
 		<property name="hibernate.connection.username">nositer</property>
