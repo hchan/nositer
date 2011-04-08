@@ -117,7 +117,7 @@ public class AvatarSelectorWindow extends Window {
 
 
 		fileDirectoryTreeGridContainer.setLayout(new FlowLayout(0));
-		fileViewerContainer = new FileViewerContainer() {
+		fileViewerContainer = new FileViewerContainer(getAvatarSelector().getScope()) {
 			@Override
 			protected void onResize(int width, int height) {
 				AvatarSelectorWindow.this.onResize(AvatarSelectorWindow.this.getWidth(), AvatarSelectorWindow.this.getHeight());

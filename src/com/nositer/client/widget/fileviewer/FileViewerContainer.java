@@ -10,6 +10,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.nositer.client.Scope;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.SelectedFilePanel;
@@ -20,6 +21,24 @@ public class FileViewerContainer extends LayoutContainer {
 	private HtmlContainer fileContainer;
 	private SelectedFilePanel selectedFilePanel;
 	private FileViewerMenuBar fileViewerMenuBar;
+	private Scope scope;
+
+
+	public FileViewerMenuBar getFileViewerMenuBar() {
+		return fileViewerMenuBar;
+	}
+
+	public void setFileViewerMenuBar(FileViewerMenuBar fileViewerMenuBar) {
+		this.fileViewerMenuBar = fileViewerMenuBar;
+	}
+
+	public Scope getScope() {
+		return scope;
+	}
+
+	public void setScope(Scope scope) {
+		this.scope = scope;
+	}
 
 	public SelectedFilePanel getSelectedFilePanel() {
 		return selectedFilePanel;
@@ -45,7 +64,8 @@ public class FileViewerContainer extends LayoutContainer {
 		this.fileContainer = fileContainer;
 	}
 
-	public FileViewerContainer() {
+	public FileViewerContainer(Scope scope) {
+		this.scope = scope;
 		init();
 	}
 
@@ -69,13 +89,13 @@ public class FileViewerContainer extends LayoutContainer {
 
 	public void setImage(FileModel fileModel) {
 		fileViewerMenuBar.enable();
-		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModel.getPath());
+		String imageUrl = getUrl(fileModel.getPath());
 		fileContainer.setHtml("<IMG SRC='" + imageUrl + "' CLASS='imageViewer'/>");		
 	}
 
 	public void setImage(String fileModelPath, String widthAndHeight) {
 		fileViewerMenuBar.enable();
-		String imageUrl = HttpGetFileHelper.getUserPathURL(fileModelPath);
+		String imageUrl = getUrl(fileModelPath);
 		String style = "";
 		if (widthAndHeight != null) {
 			style = "STYLE='width:" + widthAndHeight + ";height:" + widthAndHeight + "'";
@@ -84,7 +104,7 @@ public class FileViewerContainer extends LayoutContainer {
 	}
 
 	public void setText(FileModel fileModel) {
-		String url = HttpGetFileHelper.getUserPathURL(fileModel.getPath());
+		String url = getUrl(fileModel.getPath());
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
 		try {
 			builder.sendRequest(null, new RequestCallback() {
@@ -103,4 +123,13 @@ public class FileViewerContainer extends LayoutContainer {
 		}	
 	}
 
+	private String getUrl(String relativePath) {
+		String retval = null;
+		if (scope.getType().equals(Scope.Type.user)) {
+			retval = HttpGetFileHelper.getUserPathURL(relativePath);
+		} else {
+			retval = HttpGetFileHelper.getGroupPathURL(relativePath, scope.getGroupPlusView().getId());
+		}
+		return retval;
+	}
 }

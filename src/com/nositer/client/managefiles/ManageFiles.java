@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
+import com.nositer.client.Scope;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
@@ -63,7 +64,7 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 		contentPanel.setLayout(layout);
 		
 		
-		fileViewerContainer = new FileViewerContainer() {
+		fileViewerContainer = new FileViewerContainer(new Scope(Scope.Type.user)) {
 			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
