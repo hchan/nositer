@@ -127,7 +127,7 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		*/
 		
 		
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-55);
 		
 
 

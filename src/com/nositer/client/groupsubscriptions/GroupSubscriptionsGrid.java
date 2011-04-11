@@ -124,7 +124,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(GroupSubscriptionView.Column.avatarlocation.toString());  
+		setAutoExpandColumn(GroupSubscriptionView.Column.createdtime.toString());  
 
 	}
 
