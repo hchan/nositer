@@ -116,7 +116,7 @@ public class AuthorizationFilter implements Filter {
 			Transaction trx = null;
 			try {
 				trx = session.beginTransaction();				
-				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYLOGIN).addEntity(User.class).setString(com.nositer.client.dto.generated.User.ColumnType.login.toString(), login).list();
+				List<User> results = session.createSQLQuery(SqlHelper.FINDUSERBYLOGIN).addEntity(User.class).setString(com.nositer.client.dto.generated.User.Column.login.toString(), login).list();
 				if (results.size() == 0) {
 					doInvalidLoginPassword(request, response, chain);						
 				} else {

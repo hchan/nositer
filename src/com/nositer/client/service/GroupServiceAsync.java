@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.UserHasGroup;
 
 public interface GroupServiceAsync {
 
@@ -25,6 +27,7 @@ public interface GroupServiceAsync {
 	void createOrUpdateSubscription(GroupPlusView groupPlusView,
 			AsyncCallback<Void> callback);
 
-	
+	void getSubscriptions(GroupPlusView groupPlusView,
+			AsyncCallback<ArrayList<GroupSubscriptionView>> callback);
 
 }

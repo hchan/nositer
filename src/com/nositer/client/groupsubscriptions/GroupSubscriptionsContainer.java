@@ -125,6 +125,11 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		searchCriteriaForGroupSubscriptionsPanel.getLocation().getGeographyCode().layout();
 		*/
+		
+		
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
+		
+
 
 	}
 }

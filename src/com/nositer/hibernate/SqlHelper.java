@@ -4,6 +4,7 @@ import static com.nositer.hibernate.CommonSql.*;
 import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
@@ -13,93 +14,93 @@ import com.nositer.client.dto.generated.Zipcode;
 public class SqlHelper {
 
 	public static String FINDUSERBYLOGIN = 
-		"select * from " + User.TABLENAME + " where " + User.ColumnType.login + " = :" + User.ColumnType.login + 
+		"select * from " + User.TABLENAME + " where " + User.Column.login + " = :" + User.Column.login + 
 		" and " + NOTDISABLE;
 	public static String UPDATEBASICPROFILE =
 		"update " + User.TABLENAME + " set " +
-		User.ColumnType.firstname + "= :" + User.ColumnType.firstname + ", " +
-		User.ColumnType.lastname + "= :" + User.ColumnType.lastname + ", " +
-		User.ColumnType.countrycode + "= :" + User.ColumnType.countrycode + ", " +
-		User.ColumnType.postalcodeid + "= :" + User.ColumnType.postalcodeid + ", " +
-		User.ColumnType.zipcodeid + "= :" + User.ColumnType.zipcodeid + ", " +
-		User.ColumnType.salutationcodeid + "= :" + User.ColumnType.salutationcodeid + ", " +
-		User.ColumnType.relationshipcodeid + "= :" + User.ColumnType.relationshipcodeid + ", " +
-		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation + ", " +
-		User.ColumnType.email + "= :" + User.ColumnType.email + ", " +
-		User.ColumnType.gendermale + "= :" + User.ColumnType.gendermale + ", " +
-		User.ColumnType.profession + "= :" + User.ColumnType.profession + ", " +
-		User.ColumnType.birthdate + "= :" + User.ColumnType.birthdate +
-		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+		User.Column.firstname + "= :" + User.Column.firstname + ", " +
+		User.Column.lastname + "= :" + User.Column.lastname + ", " +
+		User.Column.countrycode + "= :" + User.Column.countrycode + ", " +
+		User.Column.postalcodeid + "= :" + User.Column.postalcodeid + ", " +
+		User.Column.zipcodeid + "= :" + User.Column.zipcodeid + ", " +
+		User.Column.salutationcodeid + "= :" + User.Column.salutationcodeid + ", " +
+		User.Column.relationshipcodeid + "= :" + User.Column.relationshipcodeid + ", " +
+		User.Column.avatarlocation + "= :" + User.Column.avatarlocation + ", " +
+		User.Column.email + "= :" + User.Column.email + ", " +
+		User.Column.gendermale + "= :" + User.Column.gendermale + ", " +
+		User.Column.profession + "= :" + User.Column.profession + ", " +
+		User.Column.birthdate + "= :" + User.Column.birthdate +
+		" where " + User.Column.id + " = :" + User.Column.id;
 	public static String CHANGEPASSWORD =
 		"update " + User.TABLENAME + " set " + 
-		User.ColumnType.password + "= :" + User.ColumnType.password +
-		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+		User.Column.password + "= :" + User.Column.password +
+		" where " + User.Column.id + " = :" + User.Column.id;
 	public static String UPDATEABOUTME =
 		"update " + User.TABLENAME + " set " + 
-		User.ColumnType.note + "= :" + User.ColumnType.note + ", " +
-		User.ColumnType.notemodifedtime + "= :" + User.ColumnType.notemodifedtime + ", " +
-		User.ColumnType.description + "= :" + User.ColumnType.description +
-		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+		User.Column.note + "= :" + User.Column.note + ", " +
+		User.Column.notemodifedtime + "= :" + User.Column.notemodifedtime + ", " +
+		User.Column.description + "= :" + User.Column.description +
+		" where " + User.Column.id + " = :" + User.Column.id;
 	public static String UPDATEAVATAR =
 		"update " + User.TABLENAME + " set " + 
-		User.ColumnType.avatarlocation + "= :" + User.ColumnType.avatarlocation  +
-		" where " + User.ColumnType.id + " = :" + User.ColumnType.id;
+		User.Column.avatarlocation + "= :" + User.Column.avatarlocation  +
+		" where " + User.Column.id + " = :" + User.Column.id;
 	public static String FINDMYGROUPS =
-		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + 
+		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid + 
 		" and " + NOTDISABLE +
-		" order by " + Group.ColumnType.name;
+		" order by " + Group.Column.name;
 	public static String FINDGROUPBYTAGNAME =
-		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.ColumnType.tagname + " = :" + GroupPlusView.ColumnType.tagname +
-		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = true" +
-		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
+		"select * from " + GroupPlusView.TABLENAME + " where " + GroupPlusView.Column.tagname + " = :" + GroupPlusView.Column.tagname +
+		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.owner + " = true" +
+		" or " + GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid + ")" + 
 		" and " + NOTDISABLE +
-		" order by " + GroupPlusView.ColumnType.owner + 
+		" order by " + GroupPlusView.Column.owner + 
 		" limit 1";
 	public static String FINDMYIWANTTOS =
-		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.ColumnType.userid + " = :" + Iwantto.ColumnType.userid +
+		"select * from " + Iwantto.TABLENAME + " where " + Iwantto.Column.userid + " = :" + Iwantto.Column.userid +
 		" and " + NOTDISABLE +
-		" order by " + Iwantto.ColumnType.description;
+		" order by " + Iwantto.Column.description;
 
 	public static String FINDGROUPS =
 		"select * from (" +
 		" select " + GroupPlusView.TABLENAME + "." + "* from " + GroupPlusView.TABLENAME + 
 		" left outer join " + Postalcode.TABLENAME + " on " + 
-		GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.ColumnType.id +
+		GroupPlusView.TABLENAME + "." + GroupPlusView.Column.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.Column.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
-		GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.ColumnType.id +
-		" where " + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.name + " like :" + GroupPlusView.ColumnType.name + 
-		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.ColumnType.owner + " = 1" +
-		" or " + GroupPlusView.ColumnType.userid + " = :" + GroupPlusView.ColumnType.userid + ")" + 
+		GroupPlusView.TABLENAME + "." + GroupPlusView.Column.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.Column.id +
+		" where " + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.name + " like :" + GroupPlusView.Column.name + 
+		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.owner + " = 1" +
+		" or " + GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid + ")" + 
 		" and " + NOTDISABLE +
 		" and " + 
 		EARTHRADIUS + " * ACOS( (SIN(PI()* :latitude /180)*SIN(PI() * " + 
-		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" + 
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.Column.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.Column.latitude + ")" + 
 		"/180)) + " +
 		"(COS(PI()* :latitude /180)*cos(PI()*" + 
-		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.latitude + ")" +
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.Column.latitude + "," + Zipcode.TABLENAME + "." + Zipcode.Column.latitude + ")" +
 		"/180)*COS(PI() * " + 
-		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.ColumnType.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.ColumnType.longitude + ")" +
+		"coalesce(" + Postalcode.TABLENAME + "." + Postalcode.Column.longitude + "," + Zipcode.TABLENAME + "." + Zipcode.Column.longitude + ")" +
 		"/180-PI()* :longitude /180)) " +
 		") <= :radius" +
-		" order by " + GroupPlusView.ColumnType.name + " ," + GroupPlusView.ColumnType.owner + 
-		" ) derivedTable group by " + GroupPlusView.ColumnType.id;
+		" order by " + GroupPlusView.Column.name + " ," + GroupPlusView.Column.owner + 
+		" ) derivedTable group by " + GroupPlusView.Column.id;
 	public static String UPDATESUBSCRIPTION =
 		"update " + UserHasGroup.TABLENAME + " set " +
-		UserHasGroup.ColumnType.disable + " = :" + UserHasGroup.ColumnType.disable + ", " +
-		UserHasGroup.ColumnType.invisible + " = :" + UserHasGroup.ColumnType.invisible + ", " +
+		UserHasGroup.Column.disable + " = :" + UserHasGroup.Column.disable + ", " +
+		UserHasGroup.Column.invisible + " = :" + UserHasGroup.Column.invisible + ", " +
 		MODIFIEDTIMENOW + 
-		" where " + UserHasGroup.ColumnType.id + "= :" + UserHasGroup.ColumnType.id;
+		" where " + UserHasGroup.Column.id + "= :" + UserHasGroup.Column.id;
 	public static String CREATESUBSCRIPTION =
 		"insert into " + UserHasGroup.TABLENAME + "(" +
-		UserHasGroup.ColumnType.userid + ", " +
-		UserHasGroup.ColumnType.groupid + ", " +
-		UserHasGroup.ColumnType.owner + ", " +
-		UserHasGroup.ColumnType.invisible + ", " +
-		UserHasGroup.ColumnType.disable + ", " +
-		UserHasGroup.ColumnType.createdtime +
+		UserHasGroup.Column.userid + ", " +
+		UserHasGroup.Column.groupid + ", " +
+		UserHasGroup.Column.owner + ", " +
+		UserHasGroup.Column.invisible + ", " +
+		UserHasGroup.Column.disable + ", " +
+		UserHasGroup.Column.createdtime +
 		")" + " values( " +
-		":" + UserHasGroup.ColumnType.userid + ", " +
-		":" + UserHasGroup.ColumnType.groupid + ", " +
+		":" + UserHasGroup.Column.userid + ", " +
+		":" + UserHasGroup.Column.groupid + ", " +
 		"false, " +
 		"false, " +
 		"false, " +
@@ -107,10 +108,16 @@ public class SqlHelper {
 		")";
 	public static String DISABLEGROUP =
 		"update " + GroupPlusView.TABLENAME + " set " +
-		GroupPlusView.ColumnType.disable + " = true " +
-		" where " + GroupPlusView.ColumnType.id + "= :" + GroupPlusView.ColumnType.id + " and " +
-		GroupPlusView.ColumnType.owner + " = true " +
-		GroupPlusView.ColumnType.userid + " =:" + GroupPlusView.ColumnType.userid;
+		GroupPlusView.Column.disable + " = true " +
+		" where " + GroupPlusView.Column.id + "= :" + GroupPlusView.Column.id + " and " +
+		GroupPlusView.Column.owner + " = true " +
+		GroupPlusView.Column.userid + " =:" + GroupPlusView.Column.userid;
+	public static String GETSUBSCRIPTIONS =
+		"select * from " + GroupSubscriptionView.TABLENAME + 
+		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + " and " +
+		GroupSubscriptionView.Column.user_disable + " = false " +
+		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
+
 
 	public static String disableSQL(DTO dto) {
 		String retval = null;

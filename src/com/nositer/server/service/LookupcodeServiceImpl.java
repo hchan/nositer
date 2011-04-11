@@ -39,7 +39,7 @@ public class LookupcodeServiceImpl extends RemoteServiceServlet implements Looku
 			List<com.nositer.hibernate.generated.domain.Postalcode> results = sess.createSQLQuery(
 					SqlHelper.createLookupSQL(instance.getTablename())).				
 					addEntity(clazzDomain).
-			setInteger(CommonSql.OFFSET, offset).setInteger(CommonSql.LIMIT, limit).setString(Postalcode.ColumnType.code.toString(), query.toUpperCase().replace(" ", "") + "%").list();
+			setInteger(CommonSql.OFFSET, offset).setInteger(CommonSql.LIMIT, limit).setString(Postalcode.Column.code.toString(), query.toUpperCase().replace(" ", "") + "%").list();
 			retval = BeanConversion.copyDomain2DTO(results, clazzDTO);
 			
 			trx.commit();

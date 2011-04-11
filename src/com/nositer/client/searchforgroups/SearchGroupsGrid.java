@@ -113,7 +113,7 @@ public class SearchGroupsGrid extends GroupsGrid {
 		//store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(Group.ColumnType.description.toString());  
+		setAutoExpandColumn(Group.Column.description.toString());  
 
 	}
 

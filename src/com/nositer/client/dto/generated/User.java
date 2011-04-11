@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Apr 8, 2011 4:53:21 PM by Hibernate Tools 3.2.4.GA
+// Generated Apr 11, 2011 1:28:00 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -414,7 +414,7 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 		return retval;
 	}
 
-	public enum ColumnType {
+	public enum Column {
 		id, salutationcodeid, zipcodeid, relationshipcodeid, postalcodeid, countrycode, login, firstname, lastname, password, email, gendermale, birthdate, profession, avatarlocation, note, notemodifedtime, description, lastlogin, disable, createdtime, modifiedtime,
 	}
 }

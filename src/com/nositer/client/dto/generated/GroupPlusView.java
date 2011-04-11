@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Apr 8, 2011 4:53:21 PM by Hibernate Tools 3.2.4.GA
+// Generated Apr 11, 2011 1:28:00 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -259,7 +259,7 @@ public class GroupPlusView implements java.io.Serializable, IsSerializable,
 		return retval;
 	}
 
-	public enum ColumnType {
+	public enum Column {
 		id, tagname, postalcodeid, zipcodeid, countrycode, name, description, avatarlocation, disable, createdtime, modifiedtime, user_has_group_id, userid, owner, invisible, user_has_group_disable,
 	}
 }

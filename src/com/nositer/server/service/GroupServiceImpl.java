@@ -10,6 +10,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.service.GroupService;
@@ -142,7 +143,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(
 					SqlHelper.FINDMYGROUPS).		
 					addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
-					setInteger(GroupPlusView.ColumnType.userid.toString(), 
+					setInteger(GroupPlusView.Column.userid.toString(), 
 							user.getId()
 					).
 					list();
@@ -174,8 +175,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(SqlHelper.FINDGROUPBYTAGNAME).addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
-			setString(GroupPlusView.ColumnType.tagname.toString(), tagname).
-			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId()).
+			setString(GroupPlusView.Column.tagname.toString(), tagname).
+			setInteger(GroupPlusView.Column.userid.toString(), user.getId()).
 			list();
 			if (results.size() == 0) {				
 				retval = null;
@@ -208,7 +209,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();				
 			sess.createSQLQuery(SqlHelper.DISABLEGROUP).
-			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId())
+			setInteger(GroupPlusView.Column.userid.toString(), user.getId())
 			.executeUpdate();			
 			trx.commit();			
 		}
@@ -237,8 +238,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.GroupPlusView> results = sess.createSQLQuery(SqlHelper.FINDGROUPS).
 			addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
-			setString(Group.ColumnType.name.toString(), "%" + name + "%").			
-			setInteger(GroupPlusView.ColumnType.userid.toString(), user.getId()).
+			setString(Group.Column.name.toString(), "%" + name + "%").			
+			setInteger(GroupPlusView.Column.userid.toString(), user.getId()).
 			setParameter("latitude", latitude).		
 			setParameter("longitude", longitude).
 			setParameter("radius", radius).	
@@ -274,14 +275,14 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx = sess.beginTransaction();		
 			if (user.getId().equals(groupPlusView.getUserid())) {	
 				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
-				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.disable.toString(), groupPlusView.getUserHasGroupDisable()).
-				setBoolean(com.nositer.client.dto.generated.UserHasGroup.ColumnType.invisible.toString(), groupPlusView.getInvisible()).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.id.toString(), groupPlusView.getUserHasGroupId()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.disable.toString(), groupPlusView.getUserHasGroupDisable()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.invisible.toString(), groupPlusView.getInvisible()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.id.toString(), groupPlusView.getUserHasGroupId()).
 				executeUpdate();				
 			} else {
 				sess.createSQLQuery(SqlHelper.CREATESUBSCRIPTION).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.userid.toString(), user.getId()).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.ColumnType.groupid.toString(), groupPlusView.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.userid.toString(), user.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.groupid.toString(), groupPlusView.getId()).
 				executeUpdate();
 			}			
 			trx.commit();			
@@ -297,6 +298,42 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		finally {
 			HibernateUtil.closeSession(sess);
 		}	
+	}
+
+	@Override
+	public ArrayList<GroupSubscriptionView> getSubscriptions(
+			GroupPlusView groupPlusView) {
+		ArrayList<GroupSubscriptionView> retval = null;
+		Session sess = HibernateUtil.getSession();
+		//User user = null;
+		Transaction trx = null;
+		try {
+			//user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.GETSUBSCRIPTIONS).
+			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
+		
+			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
+		
+			list();
+			if (results.size() == 0) {				
+				retval = new ArrayList<GroupSubscriptionView>();
+			} else {
+				retval = BeanConversion.copyDomain2DTO(results, GroupSubscriptionView.class);									
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
 	}
 
 }

@@ -128,6 +128,7 @@ public class SearchForGroupsContainer extends LayoutContainer implements Resizab
 			//	gridHeightOffset += searchCriteriaForGroupsPanel.getErrorPanel().getHeight();
 			//}
 		}
+		
 		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
 		searchCriteriaForGroupsPanel.getLocation().getGeographyCode().layout();
 

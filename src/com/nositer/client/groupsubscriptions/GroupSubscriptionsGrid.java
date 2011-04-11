@@ -17,6 +17,10 @@ import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.HtmlContainer;
+import com.extjs.gxt.ui.client.widget.grid.ColumnData;
+import com.extjs.gxt.ui.client.widget.grid.Grid;
+import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
 import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
@@ -25,14 +29,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Location;
+import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
@@ -42,7 +49,8 @@ import com.nositer.client.widget.menuitem.ViewMenuItem;
 public class GroupSubscriptionsGrid extends GroupsGrid {
 	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
-
+	protected RpcProxy<ArrayList<GroupSubscriptionView>> proxy;
+	
 	public SearchCriteriaForGroupSubscriptionsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
 	}
@@ -57,10 +65,10 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		setLoadMask(false);
 
 		this.groupSubscriptionsContainer = groupSubscriptionsContainer;
-		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
+		proxy = new RpcProxy<ArrayList<GroupSubscriptionView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<GroupPlusView>> callback) {
+					AsyncCallback<ArrayList<GroupSubscriptionView>> callback) {
 				GroupSubscriptionsGrid.this.load(loadConfig,callback);
 			}
 		};  		
@@ -109,10 +117,10 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 
 		addListeners();
 
-		//store.getLoader().load();
+		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(Group.ColumnType.description.toString());  
+		setAutoExpandColumn(Group.Column.description.toString());  
 
 	}
 
@@ -121,7 +129,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 
 	public void load(Object loadConfig,
-			AsyncCallback<ArrayList<GroupPlusView>> callback) {
+			AsyncCallback<ArrayList<GroupSubscriptionView>> callback) {
 		/*
 		Location location = searchCriteriaForGroupsPanel.getLocation();
 
@@ -173,7 +181,33 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		}		
 		unmask();
 		*/
+		ServiceBroker.groupService.getSubscriptions(groupSubscriptionsContainer.getGroupPlusView(), callback);
 	}
+	
+	
+	@Override
+	protected GridCellRenderer getAvatarGridCellRenderer() {
+		GridCellRenderer retval = new GridCellRenderer() {
+
+			@Override
+			public Object render(ModelData model, String property,
+					ColumnData config, int rowIndex, int colIndex,
+					ListStore store, Grid grid) {
+				Avatar retval = new Avatar();
+				try {
+					BeanModel beanModel = (BeanModel) model;
+					GroupSubscriptionView groupSubscriptionView = beanModel.getBean();
+					retval.setPathToSmallImage(HttpGetFileHelper.getUserPathURL(groupSubscriptionView.getAvatarlocation(), groupSubscriptionView.getId()));
+				} catch (Exception e) {
+					GWTUtil.log("", e);
+				}
+				return retval;
+			}  
+		};
+		return retval;
+	}
+
+
 	
 	
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {

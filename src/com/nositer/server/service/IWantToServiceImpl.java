@@ -63,7 +63,7 @@ public class IWantToServiceImpl extends RemoteServiceServlet implements IWantToS
 			List<com.nositer.hibernate.generated.domain.Iwantto> results = sess.createSQLQuery(
 					SqlHelper.FINDMYIWANTTOS).		
 					addEntity(com.nositer.hibernate.generated.domain.Iwantto.class).
-			setInteger(Iwantto.ColumnType.userid.toString(), 
+			setInteger(Iwantto.Column.userid.toString(), 
 					user.getId()
 					).
 			list();

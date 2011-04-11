@@ -77,19 +77,19 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 				relationshipcodeid = user.getRelationshipcode().getId();
 			}
 			sess.createSQLQuery(SqlHelper.UPDATEBASICPROFILE).
-			setString(User.ColumnType.firstname.toString(), user.getFirstname()).
-			setString(User.ColumnType.lastname.toString(), user.getLastname()).
-			setParameter(User.ColumnType.postalcodeid.toString(), postalcodeid, new IntegerType()).		
-			setParameter(User.ColumnType.zipcodeid.toString(), zipcodeid, new IntegerType()).
-			setParameter(User.ColumnType.salutationcodeid.toString(), salutationcodeid, new IntegerType()).
-			setParameter(User.ColumnType.relationshipcodeid.toString(), relationshipcodeid, new IntegerType()).
-			setString(User.ColumnType.countrycode.toString(), user.getCountrycode()).
-			setString(User.ColumnType.avatarlocation.toString(), user.getAvatarlocation()).
-			setString(User.ColumnType.email.toString(), user.getEmail()).
-			setBoolean(User.ColumnType.gendermale.toString(), user.getGendermale()).
-			setString(User.ColumnType.profession.toString(), user.getProfession()).
-			setDate(User.ColumnType.birthdate.toString(), user.getBirthdate()).
-			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			setString(User.Column.firstname.toString(), user.getFirstname()).
+			setString(User.Column.lastname.toString(), user.getLastname()).
+			setParameter(User.Column.postalcodeid.toString(), postalcodeid, new IntegerType()).		
+			setParameter(User.Column.zipcodeid.toString(), zipcodeid, new IntegerType()).
+			setParameter(User.Column.salutationcodeid.toString(), salutationcodeid, new IntegerType()).
+			setParameter(User.Column.relationshipcodeid.toString(), relationshipcodeid, new IntegerType()).
+			setString(User.Column.countrycode.toString(), user.getCountrycode()).
+			setString(User.Column.avatarlocation.toString(), user.getAvatarlocation()).
+			setString(User.Column.email.toString(), user.getEmail()).
+			setBoolean(User.Column.gendermale.toString(), user.getGendermale()).
+			setString(User.Column.profession.toString(), user.getProfession()).
+			setDate(User.Column.birthdate.toString(), user.getBirthdate()).
+			setInteger(User.Column.id.toString(), getCurrentUser().getId()).
 			executeUpdate();
 			//com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, getCurrentUser().getId(), sess);
 			trx.commit();
@@ -148,8 +148,8 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			if (currentPassword.equals(oldPasswordEncrypted)) {
 				String newPasswordEncrypted = Encrypt.cryptPassword(newPassword);
 				sess.createSQLQuery(SqlHelper.CHANGEPASSWORD).
-				setString(User.ColumnType.password.toString(), newPasswordEncrypted).			
-				setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+				setString(User.Column.password.toString(), newPasswordEncrypted).			
+				setInteger(User.Column.id.toString(), getCurrentUser().getId()).
 				executeUpdate();
 				trx.commit();
 				//getCurrentUser().setPassword(newPasswordEncrypted);
@@ -180,10 +180,10 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 			String cleanNote = HTMLPurifier.getCleanHTML(note);
 			String cleanDescription = HTMLPurifier.getCleanHTML(description);
 			sess.createSQLQuery(SqlHelper.UPDATEABOUTME).
-			setString(User.ColumnType.note.toString(), cleanNote).
-			setDate(User.ColumnType.notemodifedtime.toString(), new Date()).
-			setString(User.ColumnType.description.toString(), cleanDescription).		
-			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			setString(User.Column.note.toString(), cleanNote).
+			setDate(User.Column.notemodifedtime.toString(), new Date()).
+			setString(User.Column.description.toString(), cleanDescription).		
+			setInteger(User.Column.id.toString(), getCurrentUser().getId()).
 			executeUpdate();
 			trx.commit();
 		}
@@ -207,8 +207,8 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		try {
 			trx = sess.beginTransaction();				
 			sess.createSQLQuery(SqlHelper.UPDATEAVATAR).
-			setString(User.ColumnType.avatarlocation.toString(), avatarlocation).				
-			setInteger(User.ColumnType.id.toString(), getCurrentUser().getId()).
+			setString(User.Column.avatarlocation.toString(), avatarlocation).				
+			setInteger(User.Column.id.toString(), getCurrentUser().getId()).
 			executeUpdate();
 			trx.commit();
 		}

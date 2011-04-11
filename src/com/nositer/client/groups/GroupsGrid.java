@@ -85,15 +85,15 @@ public class GroupsGrid extends Grid<BeanModel> {
 	public ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
-		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.ColumnType.avatarlocation.toString(), "Avatar", 50);
+		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.Column.avatarlocation.toString(), "Avatar", 50);
 		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
 		columns.add(avatarColumnConfig);  
-		columns.add(new ColumnConfig(Group.ColumnType.name.toString(), "Name", 100));		
-		columns.add(new ColumnConfig(Group.ColumnType.tagname.toString(), "Tag Name", 100));
-		ColumnConfig descriptionColumnConfig = new ColumnConfig(Group.ColumnType.description.toString(), "Description", 200);
+		columns.add(new ColumnConfig(Group.Column.name.toString(), "Name", 100));		
+		columns.add(new ColumnConfig(Group.Column.tagname.toString(), "Tag Name", 100));
+		ColumnConfig descriptionColumnConfig = new ColumnConfig(Group.Column.description.toString(), "Description", 200);
 		descriptionColumnConfig.setRenderer(getDescriptionGridCellRenderer());
 		columns.add(descriptionColumnConfig);  
-		ColumnConfig date = new ColumnConfig(Group.ColumnType.createdtime.toString(), "Created On", 100);  
+		ColumnConfig date = new ColumnConfig(Group.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
 		retval = new ColumnModel(columns);
@@ -142,6 +142,7 @@ public class GroupsGrid extends Grid<BeanModel> {
 		};
 		return retval;
 	}
+	
 	public void init() {
 		contextMenu = new Menu();
 
@@ -174,11 +175,11 @@ public class GroupsGrid extends Grid<BeanModel> {
 		addListeners();
 
 		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
-		groupingStore.groupBy(GroupPlusView.ColumnType.userid.toString());
+		groupingStore.groupBy(GroupPlusView.Column.userid.toString());
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(GroupPlusView.ColumnType.description.toString());  
+		setAutoExpandColumn(GroupPlusView.Column.description.toString());  
 
 	}
 

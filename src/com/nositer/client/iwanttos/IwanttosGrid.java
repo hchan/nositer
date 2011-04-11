@@ -53,8 +53,8 @@ public class IwanttosGrid extends Grid<BeanModel> {
 	public ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  		 
-		columns.add(new ColumnConfig(Iwantto.ColumnType.description.toString(), "I want to ...", 100));			
-		ColumnConfig date = new ColumnConfig(Iwantto.ColumnType.createdtime.toString(), "Created On", 100);  
+		columns.add(new ColumnConfig(Iwantto.Column.description.toString(), "I want to ...", 100));			
+		ColumnConfig date = new ColumnConfig(Iwantto.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
 		retval = new ColumnModel(columns);
@@ -75,7 +75,7 @@ public class IwanttosGrid extends Grid<BeanModel> {
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(Iwantto.ColumnType.description.toString());  				
+		setAutoExpandColumn(Iwantto.Column.description.toString());  				
 	}
 
 	public void refresh() {
