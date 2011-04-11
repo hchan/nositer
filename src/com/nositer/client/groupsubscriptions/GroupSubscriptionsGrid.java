@@ -3,54 +3,43 @@ package com.nositer.client.groupsubscriptions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.extjs.gxt.ui.client.data.BaseListLoader;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.BasePagingLoader;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.ListLoadResult;
-import com.extjs.gxt.ui.client.data.Loader;
 import com.extjs.gxt.ui.client.data.ModelData;
-import com.extjs.gxt.ui.client.data.PagingLoader; 
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.GridEvent;
-import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.widget.HtmlContainer;
+import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
+import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
 import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
-import com.extjs.gxt.ui.client.widget.toolbar.PagingToolBar;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.GroupSubscriptionView;
-import com.nositer.client.dto.generated.Postalcode;
-import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.dto.generated.GroupPlusView;
-import com.nositer.client.groups.Groups;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
-import com.nositer.client.widget.ErrorPanel;
-import com.nositer.client.widget.Location;
 import com.nositer.client.widget.avatar.Avatar;
-import com.nositer.client.widget.menuitem.DeleteMenuItem;
-import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
 
-
+@SuppressWarnings("rawtypes")
 public class GroupSubscriptionsGrid extends GroupsGrid {
 	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	protected RpcProxy<ArrayList<GroupSubscriptionView>> proxy;
-	
+
 	public SearchCriteriaForGroupSubscriptionsPanel getSearchCriteriaForGroupsPanel() {
 		return searchCriteriaForGroupsPanel;
 	}
@@ -60,7 +49,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		this.searchCriteriaForGroupsPanel = searchCriteriaForGroupsPanel;
 	}
 
-	
+
 	public GroupSubscriptionsGrid(final GroupSubscriptionsContainer groupSubscriptionsContainer) {
 		setLoadMask(false);
 
@@ -90,10 +79,10 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 				groupSubscriptionsContainer.resize(0,0);
 			}
 		}; 
-			
-			
-			//new BaseListLoader<PagingLoadResult<ModelData>>(  
-				//proxy, reader);
+
+
+		//new BaseListLoader<PagingLoadResult<ModelData>>(  
+		//proxy, reader);
 		loader.setRemoteSort(false);  
 		store = new ListStore<BeanModel>(loader);  
 
@@ -107,8 +96,23 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		init();
 	}
 
+	@Override
+	public ColumnModel createColumnModel() {
+		ColumnModel retval = null;
+		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
+		ColumnConfig avatarColumnConfig = new ColumnConfig(GroupSubscriptionView.Column.avatarlocation.toString(), "Avatar", 50);
+		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
+		columns.add(avatarColumnConfig);  
+		columns.add(new ColumnConfig(GroupSubscriptionView.Column.lastname.toString(), "Last Name", 100));		
+		columns.add(new ColumnConfig(GroupSubscriptionView.Column.firstname.toString(), "First Name", 100));	
+		ColumnConfig date = new ColumnConfig(GroupSubscriptionView.Column.createdtime.toString(), "Subscribed On", 100);  
+		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
+		columns.add(date);  
+		retval = new ColumnModel(columns);
+		return retval;
+	}
 
-
+	@Override
 	public void init() {
 		contextMenu = new Menu();
 
@@ -120,7 +124,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(Group.Column.description.toString());  
+		setAutoExpandColumn(GroupSubscriptionView.Column.avatarlocation.toString());  
 
 	}
 
@@ -128,6 +132,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		store.getLoader().load();
 	}
 
+	
 	public void load(Object loadConfig,
 			AsyncCallback<ArrayList<GroupSubscriptionView>> callback) {
 		/*
@@ -180,11 +185,12 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 					callback);
 		}		
 		unmask();
-		*/
+		 */
 		ServiceBroker.groupService.getSubscriptions(groupSubscriptionsContainer.getGroupPlusView(), callback);
 	}
-	
-	
+
+
+
 	@Override
 	protected GridCellRenderer getAvatarGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
@@ -208,8 +214,8 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 
 
-	
-	
+
+	@Override
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
 		final GroupPlusView groupPlusView = beanModel.getBean();	
@@ -221,7 +227,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 					doViewGroup(groupPlusView);
 				};
 			};
-			
+
 			contextMenu.add(viewMenuItem);		
 			if (!groupPlusView.getUserid().equals(
 					Nositer.getInstance().getUser().getId())) {
@@ -232,7 +238,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 				};
 				contextMenu.add(subscribeMenuItem);
 			}
-			
+
 
 		} else {
 			gridEvent.setCancelled(true);
