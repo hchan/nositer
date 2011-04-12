@@ -23,4 +23,6 @@ public interface GroupService extends RemoteService {
 	void createOrUpdateSubscription(GroupPlusView groupPlusView) throws GWTException;
 	ArrayList<GroupSubscriptionView> getSubscriptions(
 			GroupPlusView groupPlusView);
+	ArrayList<GroupSubscriptionView> findSubscriptions(
+			GroupPlusView groupPlusView, String lastname);
 }

@@ -336,4 +336,40 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
+	@Override
+	public ArrayList<GroupSubscriptionView> findSubscriptions(
+			GroupPlusView groupPlusView, String lastname) {
+		ArrayList<GroupSubscriptionView> retval = null;
+		Session sess = HibernateUtil.getSession();
+		//User user = null;
+		Transaction trx = null;
+		try {
+			//user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.FINDSUBSCRIPTIONS).
+			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
+			setString(GroupSubscriptionView.Column.lastname.toString(), lastname + "%").			
+			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
+		
+			list();
+			if (results.size() == 0) {				
+				retval = new ArrayList<GroupSubscriptionView>();
+			} else {
+				retval = BeanConversion.copyDomain2DTO(results, GroupSubscriptionView.class);									
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
+
 }

@@ -19,6 +19,7 @@ public interface GroupServiceAsync {
 
 	void getMyGroups(AsyncCallback<ArrayList<GroupPlusView>> callback);
 
+	// TODO add pagination
 	void search(String name, Float latitude, Float longitude, Number radius,
 			AsyncCallback<ArrayList<GroupPlusView>> callback);
 
@@ -27,7 +28,15 @@ public interface GroupServiceAsync {
 	void createOrUpdateSubscription(GroupPlusView groupPlusView,
 			AsyncCallback<Void> callback);
 
+	// TODO add pagination
+	// TODO add user_has_group.invisible
 	void getSubscriptions(GroupPlusView groupPlusView,
+			AsyncCallback<ArrayList<GroupSubscriptionView>> callback);
+	
+	// TODO add pagination
+	// TODO add user_has_group.invisible
+	void findSubscriptions(GroupPlusView groupPlusView,
+			String lastname,
 			AsyncCallback<ArrayList<GroupSubscriptionView>> callback);
 
 }

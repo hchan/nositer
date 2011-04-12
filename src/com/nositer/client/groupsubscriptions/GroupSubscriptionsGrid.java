@@ -9,6 +9,7 @@ import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelReader;
 import com.extjs.gxt.ui.client.data.ListLoadResult;
 import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.GridEvent;
@@ -36,6 +37,8 @@ import com.nositer.client.widget.menuitem.ViewMenuItem;
 
 @SuppressWarnings("rawtypes")
 public class GroupSubscriptionsGrid extends GroupsGrid {
+	public static final String USERCRITERIA = "USERCRITERIA";
+
 	private SearchCriteriaForGroupSubscriptionsPanel searchCriteriaForGroupsPanel;
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	protected RpcProxy<ArrayList<GroupSubscriptionView>> proxy;
@@ -132,61 +135,15 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		store.getLoader().load();
 	}
 
-	
-	public void load(Object loadConfig,
-			AsyncCallback<ArrayList<GroupSubscriptionView>> callback) {
-		/*
-		Location location = searchCriteriaForGroupsPanel.getLocation();
 
-		ErrorPanel errorPanel = searchCriteriaForGroupsPanel.getErrorPanel();
-
-		if (location.getCountry().getValue().getData(Location.COUNTRYCODE).equals(Location.COUNTRYCODE_CAN)) {					
-			Postalcode postalcode = location.getPostalcode().getBean();			
-			if (postalcode != null) {
-				searchCriteriaForGroupsPanel.setLatitude(postalcode.getLatitude());
-				searchCriteriaForGroupsPanel.setLongitude(postalcode.getLongitude());
-			}
+	public void load(Object loadConfig, AsyncCallback<ArrayList<GroupSubscriptionView>> callback) {
+		PagingLoadConfig config = (PagingLoadConfig) loadConfig;
+		if (config.get(USERCRITERIA) != null) {
+			ServiceBroker.groupService.findSubscriptions(groupSubscriptionsContainer.getGroupPlusView(), config.getProperties().get(GroupSubscriptionView.Column.lastname.toString()).toString(), callback);
 		} else {
-			Zipcode zipcode = location.getZipcode().getBean();		
-			if (zipcode != null) {
-				searchCriteriaForGroupsPanel.setLatitude(zipcode.getLatitude());
-				searchCriteriaForGroupsPanel.setLongitude(zipcode.getLongitude());
-			}
+			ServiceBroker.groupService.getSubscriptions(groupSubscriptionsContainer.getGroupPlusView(), callback);
 		}
-		ArrayList<String> errors = searchCriteriaForGroupsPanel.getErrors();
-		if (errors.size() > 0) {
-			errorPanel.setErrors(errors);
-			errorPanel.show();	
-			groupSubscriptionsContainer.getPagingToolBar().setEnabled(true);
-			groupSubscriptionsContainer.getPagingToolBar().setImages(groupSubscriptionsContainer.getPagingToolBar().getImages());
-			//getRefreshButton().setIcon(SearchForGroups.getInstance().getPagingToolBar().getImages().getRefresh());
-		} else {
-			errorPanel.hide();				
-			if (callback == null) {
-				callback = new AsyncCallback<ArrayList<GroupPlusView>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						GWTUtil.log("", caught);
-					}
-
-					@Override
-					public void onSuccess(ArrayList<GroupPlusView> result) {
-						GWTUtil.log("Wow, this actually succeeded");
-					}
-
-				};
-			}
-			ServiceBroker.groupService.search(
-					searchCriteriaForGroupsPanel.getLastname().getValue(), 
-					searchCriteriaForGroupsPanel.getLatitude(), 
-					searchCriteriaForGroupsPanel.getLongitude(), 
-					searchCriteriaForGroupsPanel.getRadius().getValue(), 
-					callback);
-		}		
 		unmask();
-		 */
-		ServiceBroker.groupService.getSubscriptions(groupSubscriptionsContainer.getGroupPlusView(), callback);
 	}
 
 

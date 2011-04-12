@@ -68,7 +68,7 @@ public class SqlHelper {
 		GroupPlusView.TABLENAME + "." + GroupPlusView.Column.postalcodeid + " = " +  Postalcode.TABLENAME + "." + Postalcode.Column.id +
 		" left outer join " + Zipcode.TABLENAME + " on " + 
 		GroupPlusView.TABLENAME + "." + GroupPlusView.Column.zipcodeid + " = " +  Zipcode.TABLENAME + "." + Zipcode.Column.id +
-		" where " + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.name + " like :" + GroupPlusView.Column.name + 
+		" where " + "lower(" + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.name + ") like lower(:" + GroupPlusView.Column.name + ") " + 
 		" and (" + GroupPlusView.TABLENAME + "." + GroupPlusView.Column.owner + " = 1" +
 		" or " + GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid + ")" + 
 		" and " + NOTDISABLE +
@@ -117,8 +117,12 @@ public class SqlHelper {
 		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + " and " +
 		GroupSubscriptionView.Column.user_disable + " = false " +
 		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
-
-
+	public static String FINDSUBSCRIPTIONS =
+		"select * from " + GroupSubscriptionView.TABLENAME + 
+		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
+		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
+		" and " + "lower(" + GroupSubscriptionView.Column.lastname + ") like lower(:" + GroupSubscriptionView.Column.lastname + ")" + 
+		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +

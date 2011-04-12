@@ -3,37 +3,26 @@ package com.nositer.client.groupsubscriptions;
 import java.util.ArrayList;
 
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
+import com.extjs.gxt.ui.client.data.LoadConfig;
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
-import com.extjs.gxt.ui.client.util.Margins;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.NumberField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.FormLayout;
-import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.Postalcode;
-import com.nositer.client.dto.generated.User;
-import com.nositer.client.dto.generated.Zipcode;
-import com.nositer.client.top.TopPanel;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
-import com.nositer.client.widget.Location;
 
-@SuppressWarnings("unchecked")
+
 public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
-
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
-	private TextField<String> lastname;
-	
+	private TextField<String> lastname;	
 	private Button searchButton;
 	private ErrorPanel errorPanel;
-	
-	
 
 
 	private GroupSubscriptionsGrid searchGroupsGrid;
@@ -87,7 +76,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		setLabelWidth(107);
 		setFieldWidth(200);
 		lastname = new TextField<String>();
-		lastname.setFieldLabel("Last name");
+		lastname.setFieldLabel("Last name (starts with)");
 	
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
@@ -127,8 +116,10 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
 
 	public void doSearch() {
-		searchGroupsGrid.load();
-		
+		PagingLoadConfig config = new BasePagingLoadConfig();
+		config.set(GroupSubscriptionsGrid.USERCRITERIA, new Boolean(true));
+		config.set(GroupSubscriptionView.Column.lastname.toString(), lastname.getValue());
+		searchGroupsGrid.getLoader().load(config);		
 		groupSubscriptionsContainer.resize(0, 0);
 	}
 
