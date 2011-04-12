@@ -36,6 +36,32 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 	private GroupSubscriptionsPagingToolBar pagingToolBar;
 	
 
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public GroupSubscriptionsGrid getGroupSubscriptionsGrid() {
+		return groupSubscriptionsGrid;
+	}
+
+	public void setGroupSubscriptionsGrid(
+			GroupSubscriptionsGrid groupSubscriptionsGrid) {
+		this.groupSubscriptionsGrid = groupSubscriptionsGrid;
+	}
+
+	public GroupSubscriptionsTopComponent getGroupSubscriptionsTopComponent() {
+		return groupSubscriptionsTopComponent;
+	}
+
+	public void setGroupSubscriptionsTopComponent(
+			GroupSubscriptionsTopComponent groupSubscriptionsTopComponent) {
+		this.groupSubscriptionsTopComponent = groupSubscriptionsTopComponent;
+	}
+
 	public GroupPlusView getGroupPlusView() {
 		return groupPlusView;
 	}
@@ -106,30 +132,11 @@ public class GroupSubscriptionsContainer extends LayoutContainer implements Resi
 	
 	@Override
 	public void resize(int width, int height) {
-		/*
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
-		//int gridHeightOffset = 258;
-		if (searchCriteriaForGroupSubscriptionsPanel.isRendered()) {
-			if (searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().isVisible()) {
-				searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().hide();
-				searchCriteriaForGroupSubscriptionsPanel.getErrorPanel().show();
-			}
-			//if (searchCriteriaForGroupsPanel.isCollapsed()) {
-			//	gridHeightOffset -= 200;
-			contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-30);
-			//}
-			//if (searchCriteriaForGroupsPanel.getErrorPanel().isVisible()) {
-			//	gridHeightOffset += searchCriteriaForGroupsPanel.getErrorPanel().getHeight();
-			//}
-		}
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-30);
-		searchCriteriaForGroupSubscriptionsPanel.getLocation().getGeographyCode().layout();
-		*/
-		
-		
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight()-55);
-		
-
-
+		// hackery to get the Collapse/Expand Working
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);
+		if (contentPanel.getTopComponent() != null && contentPanel.getTopComponent().isRendered()) {
+			contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-55);
+		}	
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);		
 	}
 }

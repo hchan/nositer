@@ -4,6 +4,8 @@ import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.nositer.client.main.MainPanel;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
 public class GroupSubscriptionsTopComponent extends ContentPanel implements Resizable {
@@ -53,15 +55,29 @@ public class GroupSubscriptionsTopComponent extends ContentPanel implements Resi
 		);
 		searchCriteriaForGroupSubscriptionsPanel.addListener(Events.Expand, new Listener<BaseEvent>() {
 			@Override
-			public void handleEvent(BaseEvent baseEvent) {	
+			public void handleEvent(BaseEvent baseEvent) {				
 				resize(0,0);				
+			}}
+		);
+		
+		
+		myGroupSubscription.addListener(Events.Collapse, new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent baseEvent) {				
+				resize(0,0);
+			}}
+		);
+		myGroupSubscription.addListener(Events.Expand, new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent baseEvent) {				
+				resize(0,0);
 			}}
 		);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		
+		groupSubscriptionsContainer.resize(width, height);
 	}
 	
 }
