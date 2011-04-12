@@ -203,7 +203,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 				try {
 					BeanModel beanModel = (BeanModel) model;
 					GroupSubscriptionView groupSubscriptionView = beanModel.getBean();
-					retval.setPathToSmallImage(HttpGetFileHelper.getUserPathURL(groupSubscriptionView.getAvatarlocation(), groupSubscriptionView.getId()));
+					retval.setPathToSmallImage(HttpGetFileHelper.getUserPathURL(groupSubscriptionView.getAvatarlocation(), groupSubscriptionView.getUserid()));
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
