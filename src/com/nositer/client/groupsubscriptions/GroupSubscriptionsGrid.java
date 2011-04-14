@@ -12,7 +12,9 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
+import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
@@ -28,7 +30,10 @@ import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.groups.GroupsGrid;
+import com.nositer.client.history.HistoryManager;
+import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.avatar.Avatar;
@@ -171,34 +176,49 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 
 
+	@Override
+	protected void addListeners() {
+		// sigh ... can't listen to single AND doubleclick - can listen to one of the two
+		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
+				BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
+				final GroupSubscriptionView subscriber = beanModel.getBean();	
+				doViewSubscriber(subscriber);
+			}
+		});
+	};
 
 	@Override
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final GroupPlusView groupPlusView = beanModel.getBean();	
+		final GroupSubscriptionView subscriber = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			contextMenu.removeAll();
 			ViewMenuItem viewMenuItem = new ViewMenuItem() {
 				public void doSelect() {
-					doViewGroup(groupPlusView);
+					doViewSubscriber(subscriber);
 				};
 			};
-
 			contextMenu.add(viewMenuItem);		
-			if (!groupPlusView.getUserid().equals(
-					Nositer.getInstance().getUser().getId())) {
+			if (Groups.isGroupIOwn(this.groupSubscriptionsContainer.getGroupPlusView())) {
+				
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {
-						doViewGroup(groupPlusView);
+						//doViewGroup(subscriber);
 					};
 				};
 				contextMenu.add(subscribeMenuItem);
 			}
-
-
 		} else {
 			gridEvent.setCancelled(true);
 		}
+	}
+	
+	private void doViewSubscriber(GroupSubscriptionView subscriber) {
+		HistoryManager.addHistory(HistoryToken.GROUPSSUBSCRIBER + HistoryManager.SUBTOKENSEPARATOR + subscriber.getUserid());
+		
 	}
 }

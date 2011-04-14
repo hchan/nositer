@@ -9,6 +9,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
@@ -187,4 +188,6 @@ public class Groups extends TabPanel {
 		|| groupPlusView.getUserHasGroupDisable();
 		return retval;
 	}
+
+	
 }
