@@ -142,6 +142,11 @@ public class HistoryManager {
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.SUBSCRIPTIONS);
 			setMainPanel(Groups.getInstance(true));
+		}  else if (historyToken.startsWith(GROUPSSUBSCRIBER.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.SUBSCRIBER);
+			setMainPanel(Groups.getInstance(true));
 		}
 	}
 

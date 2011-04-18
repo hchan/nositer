@@ -10,7 +10,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS
+		VIEW, EDIT, SUBSCRIPTIONS, SUBSCRIBER
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;

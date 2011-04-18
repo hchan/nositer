@@ -224,4 +224,22 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		}
 	}
 
+	@Override
+	public User getUser(Integer id) {
+		User retval = null;
+		Session sess = HibernateUtil.getSession();
+		try {
+			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, id, sess);
+			retval = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
+		} 
+		catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}		
+		return retval;
+	}
+
 }

@@ -23,4 +23,6 @@ public interface ProfileServiceAsync {
 
 	void updateAvatarOfCurrentUser(String avatarlocation,
 			AsyncCallback<Void> callback);
+	
+	void getUser(Integer id, AsyncCallback<User> callback);
 }
