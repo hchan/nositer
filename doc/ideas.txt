@@ -3,4 +3,4 @@ i.e i want to climb on Feb1st
 recap of events
 world events vs local events
 i want to ... for more information, see this LINK
-under /private have a .sharing file that contains names of people you want to share this folder with
+under /private have a acl.xml file that contains names of people you want to share this folder with

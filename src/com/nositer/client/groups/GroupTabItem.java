@@ -70,7 +70,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		addListener(Events.Close, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.removeSubHistoryToken();
+				
 			}
 		});
 		addListener(Events.Select, new Listener() {

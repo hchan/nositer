@@ -154,8 +154,8 @@ public class Groups extends TabPanel {
 		if (tabItem == null) {
 			if (tabItemType.equals(GroupTabPanel.TabItemType.SUBSCRIBER)) {
 				tabItem = new UserTabItem(tabId);
-			} else {
-				tabItem = new GroupTabItem(tabId, tabItemType);
+			} else {				
+				tabItem = new GroupTabItem(tabId, tabItemType);				
 			}
 			add(tabItem);
 		}	
