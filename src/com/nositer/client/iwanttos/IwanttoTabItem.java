@@ -19,5 +19,11 @@ public class IwanttoTabItem extends TabItemPlus {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void addDefaultListeners() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -19,7 +19,9 @@ public abstract class TabItemPlus extends TabItem implements Resizable {
 		addDefaultListeners();
 	}
 
-	public void addDefaultListeners() {
+	abstract public void addDefaultListeners();
+	/*
+	 
 		addListener(Events.Close, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
@@ -34,4 +36,5 @@ public abstract class TabItemPlus extends TabItem implements Resizable {
 			}
 		});
 	}
+	*/
 }

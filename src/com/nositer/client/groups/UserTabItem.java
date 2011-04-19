@@ -2,12 +2,9 @@ package com.nositer.client.groups;
 
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
@@ -15,19 +12,24 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
-public class GroupTabItem extends TabItemPlus implements Resizable{
-
-
+public class UserTabItem extends TabItemPlus implements Resizable{
 	private GroupTabPanel.TabItemType tabItemType;
 
+	public GroupTabPanel.TabItemType getTabItemType() {
+		return tabItemType;
+	}
 
+	public void setTabItemType(GroupTabPanel.TabItemType tabItemType) {
+		this.tabItemType = tabItemType;
+	}
 
-	public GroupTabItem(String tabId) {
+	public UserTabItem(String tabId) {
 		setItemId(tabId);
+		addDefaultListeners();
 		init();
 	}
 
-	public GroupTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
+	public UserTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
 		this.tabItemType = tabItemType;
 		setItemId(tabId);
 		init();
@@ -37,36 +39,29 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		setText("Loading...");
 		setClosable(true);
 
-		AsyncCallback<GroupPlusView> callback = new AsyncCallback<GroupPlusView>() {
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWTUtil.log("", caught);
 			}
 			@Override
-			public void onSuccess(GroupPlusView result) {
+			public void onSuccess(User result) {
 				init(result);
 			}
 		};
-		ServiceBroker.groupService.getGroupByTagname(getItemId(), callback);
+		ServiceBroker.profileService.getUser(Integer.parseInt(getItemId()), callback);
+
 	}
 
-
-
-
-	public void init(GroupPlusView groupPlusView) {
-		GroupTabItem.this.setText(groupPlusView.getName());
-		//setLayout(new FitLayout());
-		GroupTabPanel groupTabPanel = new GroupTabPanel(groupPlusView);		
-		add(groupTabPanel);
-		if (tabItemType != null) {
-			groupTabPanel.show(tabItemType);
-		}
+	public void init(User user) {
+		UserTabItem.this.setText(user.getFirstname() + " " + user.getLastname());
+		UserTabPanel userTabPanel = new UserTabPanel(user);
+		add(userTabPanel);
 		layout();
 	}
 
 	@Override
 	public void addDefaultListeners() {
-
 		addListener(Events.Close, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
@@ -76,13 +71,11 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				History.newItem(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + GroupTabItem.this.getItemId());
+				History.newItem(HistoryToken.USER + HistoryManager.SUBTOKENSEPARATOR + UserTabItem.this.getItemId());
 				resize(0,0);
 			}
 		});
 	}
-
-
 
 	@Override
 	public void resize(int width, int height) {		

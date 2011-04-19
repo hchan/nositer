@@ -142,7 +142,7 @@ public class Groups extends TabPanel {
 				//resize(0,0);
 
 			}});		
-		
+
 		retval.setLayout(new FitLayout());
 		retval.add(searchForGroupsContainer);
 		return retval;
@@ -152,7 +152,11 @@ public class Groups extends TabPanel {
 		TabItem tabItem = null;
 		tabItem = findItem(tabId, false);
 		if (tabItem == null) {
-			tabItem = new GroupTabItem(tabId, tabItemType);			
+			if (tabItemType.equals(GroupTabPanel.TabItemType.SUBSCRIBER)) {
+				tabItem = new UserTabItem(tabId, tabItemType);
+			} else {
+				tabItem = new GroupTabItem(tabId, tabItemType);
+			}
 			add(tabItem);
 		}	
 		setSelection(tabItem);		
@@ -189,5 +193,5 @@ public class Groups extends TabPanel {
 		return retval;
 	}
 
-	
+
 }

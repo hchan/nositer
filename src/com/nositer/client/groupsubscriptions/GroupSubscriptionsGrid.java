@@ -218,7 +218,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 	}
 	
 	private void doViewSubscriber(GroupSubscriptionView subscriber) {
-		HistoryManager.addHistory(HistoryToken.GROUPSSUBSCRIBER + HistoryManager.SUBTOKENSEPARATOR + subscriber.getUserid());
+		HistoryManager.addHistory(HistoryToken.USER + HistoryManager.SUBTOKENSEPARATOR + subscriber.getUserid());
 		
 	}
 }
