@@ -23,6 +23,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.history.HistoryManager;
+import com.nositer.client.history.HistoryToken;
 
 public class IwanttosGrid extends Grid<BeanModel> {
 
@@ -67,8 +68,8 @@ public class IwanttosGrid extends Grid<BeanModel> {
 			@Override
 			public void handleEvent(GridEvent<BeanModel> be) {  
 				BeanModel beanModel = be.getGrid().getSelectionModel().getSelectedItem();
-				Iwantto iwantto = beanModel.getBean();		    	
-				HistoryManager.addSubHistoryToken(iwantto.getId().toString());
+				Iwantto iwantto = beanModel.getBean();		    
+				HistoryManager.addHistory(HistoryToken.IWANTTOS + HistoryManager.SUBTOKENSEPARATOR + iwantto.getId());
 			}
 		});
 		

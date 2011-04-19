@@ -32,7 +32,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		Session sess = HibernateUtil.getSession();
 		try {
 			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, Application.getCurrentUser().getId(), sess);
-			retval = getCurrentUser(userDomain);
+			retval = getUserByDomain(userDomain);
 			Application.setCurrentUser(retval);
 		} 
 		catch (Exception e) {
@@ -107,7 +107,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 
 	}
 
-	public User getCurrentUser(com.nositer.hibernate.generated.domain.User userDomain) {
+	public User getUserByDomain(com.nositer.hibernate.generated.domain.User userDomain) {
 		User retval = null;
 		retval = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
 
@@ -230,7 +230,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 		Session sess = HibernateUtil.getSession();
 		try {
 			com.nositer.hibernate.generated.domain.User userDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.User.class, id, sess);
-			retval = BeanConversion.copyDomain2DTO(userDomain, com.nositer.client.dto.generated.User.class);
+			retval = getUserByDomain(userDomain);
 		} 
 		catch (Exception e) {
 			Application.log.error("", e);

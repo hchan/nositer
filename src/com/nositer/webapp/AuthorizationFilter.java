@@ -123,7 +123,7 @@ public class AuthorizationFilter implements Filter {
 					User userDomain = results.get(0);
 					if (userDomain.getPassword().equals(Encrypt.cryptPassword(password))) {
 						ProfileServiceImpl profileServiceImpl = new ProfileServiceImpl();
-						com.nositer.client.dto.generated.User userDTO = profileServiceImpl.getCurrentUser(userDomain);						
+						com.nositer.client.dto.generated.User userDTO = profileServiceImpl.getUserByDomain(userDomain);						
 						Application.setCurrentUser(userDTO);
 						userDomain.setLastlogin(new Date());
 						session.update(userDomain);

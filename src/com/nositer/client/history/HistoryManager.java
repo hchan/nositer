@@ -174,12 +174,7 @@ public class HistoryManager {
 		});
 	}
 
-	public static void addSubHistoryToken(String subHistoryToken) {		
-		String historyToken = History.getToken();
-		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
-		newHistoryToken += SUBTOKENSEPARATOR + subHistoryToken;
-		History.newItem(newHistoryToken);		
-	}
+	
 
 	public static String getSubHistoryToken() {
 		String retval = null;

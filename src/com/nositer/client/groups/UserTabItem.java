@@ -9,20 +9,15 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.viewprofile.ViewProfile;
+import com.nositer.client.viewprofile.ViewProfileContainer;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class UserTabItem extends TabItemPlus implements Resizable{
-	private GroupTabPanel.TabItemType tabItemType;
+	
 
-	public GroupTabPanel.TabItemType getTabItemType() {
-		return tabItemType;
-	}
-
-	public void setTabItemType(GroupTabPanel.TabItemType tabItemType) {
-		this.tabItemType = tabItemType;
-	}
 
 	public UserTabItem(String tabId) {
 		setItemId(tabId);
@@ -30,11 +25,6 @@ public class UserTabItem extends TabItemPlus implements Resizable{
 		init();
 	}
 
-	public UserTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
-		this.tabItemType = tabItemType;
-		setItemId(tabId);
-		init();
-	}
 
 	public void init() {
 		setText("Loading...");
@@ -56,8 +46,12 @@ public class UserTabItem extends TabItemPlus implements Resizable{
 
 	public void init(User user) {
 		UserTabItem.this.setText(user.getFirstname() + " " + user.getLastname());
-		UserTabPanel userTabPanel = new UserTabPanel(user);
-		add(userTabPanel);
+		
+		 ViewProfileContainer viewProfileContainer = new ViewProfileContainer();
+		viewProfileContainer.populate(user);
+		
+		
+		add(viewProfileContainer);
 		layout();
 	}
 
