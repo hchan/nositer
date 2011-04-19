@@ -101,6 +101,11 @@ public class HistoryManager {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getUploadFilesNavigationItem());
 			setMainPanel(new UploadFiles(new Scope(Scope.Type.user)));
+		} else if (historyToken.startsWith(UPLOADGROUP.toString() + SUBTOKENSEPARATOR)) {				
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.UPLOAD);
+			setMainPanel(Groups.getInstance(true));			
 		} else if (historyToken.equals(MANAGEFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());
@@ -183,11 +188,7 @@ public class HistoryManager {
 		return retval;
 	}
 
-	public static void removeSubHistoryToken() {
-		String historyToken = History.getToken();
-		String newHistoryToken = historyToken.replaceFirst(SUBTOKENSEPARATOR + ".*", "");
-		History.newItem(newHistoryToken);		
-	}
+
 
 	public static void addHistory(String historyToken) {
 		String currHistoryToken = History.getToken();

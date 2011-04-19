@@ -10,13 +10,13 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, SUBSCRIBER
+		VIEW, EDIT, SUBSCRIPTIONS, SUBSCRIBER, UPLOAD
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
 	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
-	private FilesGroupTabItem filesGroupTabItem;
 	private UploadGroupTabItem uploadGroupTabItem;
+	private FilesGroupTabItem filesGroupTabItem;
 	
 	private GroupPlusView groupPlusView;
 
@@ -89,7 +89,9 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		add(subscriptionsGroupTabItem);
 		if (Groups.isGroupIOwn(groupPlusView)) {
 			editGroupTabItem = new EditGroupTabItem(groupPlusView);
+			uploadGroupTabItem = new UploadGroupTabItem(groupPlusView);
 			add(editGroupTabItem);
+			add(uploadGroupTabItem);
 		}
 		resize(0,0);
 	}
@@ -107,6 +109,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(editGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.SUBSCRIPTIONS)) {
 			setSelection(subscriptionsGroupTabItem);
+		} else if (tabItemType.equals(TabItemType.UPLOAD)) {
+			setSelection(uploadGroupTabItem);
 		}
 	}
 }
