@@ -12,6 +12,7 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class UserTabItem extends TabItemPlus implements Resizable{
 	private GroupTabPanel.TabItemType tabItemType;
 
@@ -59,6 +60,7 @@ public class UserTabItem extends TabItemPlus implements Resizable{
 		add(userTabPanel);
 		layout();
 	}
+
 
 	@Override
 	public void addDefaultListeners() {

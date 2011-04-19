@@ -81,7 +81,7 @@ public class HistoryManager {
 
 	public static void onHistoryChangedForTokensOtherThanHome(String historyToken) {
 		LeftPanel leftPanel = LeftPanel.getInstance();
-		if (historyToken.equals(VIEWPROFILE.toString())) {
+		if (historyToken.equals(MYPROFILE.toString())) {
 			leftPanel.getProfile().expand();		
 			leftPanel.getNavigationTree().select(leftPanel.getViewProfileNavigationItem());
 			setMainPanel(new ViewProfile());

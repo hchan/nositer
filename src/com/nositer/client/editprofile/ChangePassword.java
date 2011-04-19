@@ -97,7 +97,7 @@ public class ChangePassword extends LayoutContainer {
 							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {								
-									History.newItem(HistoryToken.VIEWPROFILE.toString());									
+									History.newItem(HistoryToken.MYPROFILE.toString());									
 								}								
 							});										
 						}
@@ -116,7 +116,7 @@ public class ChangePassword extends LayoutContainer {
 		Listener cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				History.newItem(HistoryToken.VIEWPROFILE.toString());
+				History.newItem(HistoryToken.MYPROFILE.toString());
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);

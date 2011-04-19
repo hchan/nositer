@@ -1,7 +1,7 @@
 package com.nositer.client.history;
 
 public enum HistoryToken {
-	VIEWPROFILE, 
+	MYPROFILE, 
 	EDITBASICPROFILE, 
 	CHANGEPASSWORD, 
 	EDITABOUTME, 

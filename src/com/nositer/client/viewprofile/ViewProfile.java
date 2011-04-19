@@ -17,6 +17,16 @@ import com.nositer.client.util.GWTUtil;
 public class ViewProfile extends TabPanel {
 
 	private TabItem profileTabItem;
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public TabItem getProfileTabItem() {
 		return profileTabItem;
 	}
@@ -25,17 +35,37 @@ public class ViewProfile extends TabPanel {
 		this.profileTabItem = profileTabItem;
 	}
 
-	public ViewProfile() {
-		init();
+	public ViewProfile() {				
+		AsyncCallback<User> callback = new AsyncCallback<User>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				GWTUtil.log("", caught);
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				if (result != null) {
+					ViewProfile.this.user = result;
+					Nositer.getInstance().setUser(result);
+					TopPanel.getInstance().setFirstLastName(result);
+					init();
+					
+				}
+			}
+		};
+		ServiceBroker.profileService.getCurrentUser(callback);				
 	}
 
+	public ViewProfile(User user) {
+		this.user = user;
+		init();
+	}
+	
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-
-
-		profileTabItem = new TabItem("My Profile");  
-
+		profileTabItem = new TabItem(user.getFirstname() + " " + user.getLastname());  
 		profileTabItem.setClosable(false);
 
 		/*
@@ -45,34 +75,20 @@ public class ViewProfile extends TabPanel {
 		 */
 		FitLayout layout = new FitLayout();
 		profileTabItem.setLayout(layout);
-
+		
 
 		profileTabItem.setScrollMode(Scroll.AUTO);
 		profileTabItem.addListener(Events.Select, new Listener<ComponentEvent>() {  
 			public void handleEvent(ComponentEvent be) {  
-				final ViewProfileContainer viewProfile = new ViewProfileContainer();
-				AsyncCallback<User> callback = new AsyncCallback<User>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						GWTUtil.log("", caught);
-					}
-
-					@Override
-					public void onSuccess(User result) {
-						if (result != null) {
-							Nositer.getInstance().setUser(result);
-							TopPanel.getInstance().setFirstLastName(result);
-							viewProfile.populate(Nositer.getInstance().getUser());
-							profileTabItem.add(viewProfile);
-							ViewProfile.this.layout();
-						}
-					}
-				};
-				ServiceBroker.profileService.getCurrentUser(callback);
+				final ViewProfileContainer viewProfileContainer = new ViewProfileContainer();
+				viewProfileContainer.populate(user);
+				
+				profileTabItem.add(viewProfileContainer);
+				ViewProfile.this.layout();
 
 			}
 		});  
 		add(profileTabItem);
+		this.setSelection(profileTabItem);
 	}  
 }

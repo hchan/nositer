@@ -284,7 +284,7 @@ public class LeftPanel extends ContentPanel {
 		
 		// Profile
 		profile = createNavigationContentPanel("Profile", this);	
-		viewProfileNavigationItem = addNavigationItem("View Profile", profile, HistoryToken.VIEWPROFILE);
+		viewProfileNavigationItem = addNavigationItem("View Profile", profile, HistoryToken.MYPROFILE);
 		editBasicProfileNavigationItem = addNavigationItem("Edit Basic Profile", profile, HistoryToken.EDITBASICPROFILE);
 		changePasswordNavigationItem = addNavigationItem("Change Password", profile, HistoryToken.CHANGEPASSWORD);
 		editAboutMeNavigationItem = addNavigationItem("Edit About Me", profile, HistoryToken.EDITABOUTME);
@@ -344,7 +344,7 @@ public class LeftPanel extends ContentPanel {
 
 	/*
 	public void addListeners() {		
-		HistoryManager.addHistoryOnClick(viewProfileNavigationItem, HistoryToken.VIEWPROFILE.toString());
+		HistoryManager.addHistoryOnClick(viewProfileNavigationItem, HistoryToken.MYPROFILE.toString());
 		HistoryManager.addHistoryOnClick(editBasicProfileNavigationItem, HistoryToken.EDITBASICPROFILE.toString());
 		HistoryManager.addHistoryOnClick(changePasswordNavigationItem, HistoryToken.CHANGEPASSWORD.toString());
 		HistoryManager.addHistoryOnClick(editAboutMeNavigationItem, HistoryToken.EDITABOUTME.toString());
