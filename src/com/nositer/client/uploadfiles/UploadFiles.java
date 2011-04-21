@@ -168,9 +168,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		// upload URL
 		String uploadURL = Global.UPLOADURL + "?" + 
 		Global.UPLOADCREDENTIALKEY + "=" + sessionId;
-		if (scope.getType().equals(Scope.Type.group)) {
-			uploadURL += "&groupid=" + scope.getGroupPlusView().getId();
-		}
+		uploadURL += getAdditionalUploadURLParams();
 		builder.setUploadURL(uploadURL);
 
 
@@ -283,7 +281,9 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 
 					swfUpload.setUploadURL(Global.UPLOADURL + "?" + 
 							Global.UPLOADCREDENTIALKEY + "=" + sessionId + "&" +
-							"uploadDir=" + URL.encode(fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue())
+							"uploadDir=" + URL.encode(fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() +
+									getAdditionalUploadURLParams()
+							)
 					);
 
 					swfUpload.startUpload();
@@ -320,6 +320,13 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 
 	}
 
+	public String getAdditionalUploadURLParams() {
+		String retval = "";
+		if (scope.getType().equals(Scope.Type.group)) {
+			retval += "&groupid=" + scope.getGroupPlusView().getId();
+		}
+		return retval;
+	}
 
 }
 

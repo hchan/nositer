@@ -372,4 +372,23 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
+	
+	public GroupPlusView getGroupPlusView (Integer groupid) {
+		GroupPlusView retval = null;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			 com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.GroupPlusView.class, groupid, sess);
+			 retval = BeanConversion.copyDomain2DTO(groupPlusViewDomain, GroupPlusView.class);
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
 }

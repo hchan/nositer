@@ -17,7 +17,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
+import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.User;
+import com.nositer.server.service.GroupServiceImpl;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
 import com.thoughtworks.xstream.XStream;
@@ -33,7 +35,7 @@ public class UploadServlet extends HttpServlet {
 	throws ServletException, IOException {
 		doPost(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		User user = null;
@@ -41,12 +43,17 @@ public class UploadServlet extends HttpServlet {
 		try {
 			user = getUseridViaHttpCall(req, resp);
 			String uploadDirFromRequest = req.getParameter("uploadDir");
-			String groupid = req.getParameter("groupid");
-			System.out.println("groupid:" + groupid);
+			String groupidStr = req.getParameter("groupid");
+			System.out.println("groupid:" + groupidStr);
 			performSecurityCheck(uploadDirFromRequest);
-			uploadDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
-		
-			
+			if (groupidStr != null) {
+				int groupid = Integer.parseInt(groupidStr);
+				performSecurityCheck(user, groupid);
+				uploadDir = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupid) + "/" + uploadDirFromRequest;
+			} else {
+				uploadDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
+			}
+
 			ServletFileUpload fileUpload = new ServletFileUpload(new DiskFileItemFactory());
 			//fileUpload.setSizeMax(FILE_SIZE_LIMIT);
 
@@ -72,7 +79,7 @@ public class UploadServlet extends HttpServlet {
 
 						return;
 					}
-					*/
+					 */
 
 					InputStream in = item.getInputStream();
 
@@ -92,6 +99,16 @@ public class UploadServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			Application.log.debug("", e);
+		}
+	}
+
+	private void performSecurityCheck(User user, int groupid) throws Exception {
+		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();
+		GroupPlusView groupPlusView = groupServiceImpl.getGroupPlusView(groupid);
+		if (!(groupPlusView.getUserid().equals(user.getId()) &&
+				groupPlusView.getOwner().equals(true)
+		)) {
+			throw new Exception("Cannot upload to a group that you don't own");
 		}
 	}
 
