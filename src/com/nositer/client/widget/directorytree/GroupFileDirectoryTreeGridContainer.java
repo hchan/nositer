@@ -21,11 +21,17 @@ public class GroupFileDirectoryTreeGridContainer extends AbstractFileDirectoryTr
 	public GroupFileDirectoryTreeGridContainer(boolean useSelectedFilePanel, GroupPlusView groupPlusView) {
 		super(useSelectedFilePanel);
 		this.groupPlusView = groupPlusView;
+		super.init();
 	}
 
 	@Override
+	protected void init() {
+	
+	}
+	
+	@Override
 	public RpcProxy<List<FileModel>> createProxy() {
-		return createGroupProxy(groupPlusView);
+		return createGroupProxy(getGroupPlusView());
 	}
 
 	public static  RpcProxy<List<FileModel>> createGroupProxy(final GroupPlusView groupPlusView) {
@@ -33,7 +39,7 @@ public class GroupFileDirectoryTreeGridContainer extends AbstractFileDirectoryTr
 			@Override
 			protected void load(Object loadConfig,
 					AsyncCallback<List<FileModel>> callback) {
-				ServiceBroker.fileService.getImageFolderChildren((FileModel) loadConfig, groupPlusView, callback);  
+				ServiceBroker.fileService.getFolderChildren((FileModel) loadConfig, groupPlusView, callback);  
 			}  			
 		};  
 	}

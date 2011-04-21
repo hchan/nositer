@@ -240,4 +240,16 @@ abstract public class AbstractFileDirectoryTreeGridContainer extends LayoutConta
 			List<FileModel> result) {
 		
 	}
+	
+	
+	public void selectPublicFolder(List<FileModel> result) {
+		for (FileModel fileModel : result) {
+			if (fileModel.getPath() != null && fileModel.getPath().equals(Global.PUBLICFOLDER) && ("/" + fileModel.getName()).equals(Global.PUBLICFOLDER)) {
+				if (this.getSelectedFolderPanel().getFileModel() == null) {
+					this.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
+					break;
+				}
+			}
+		}
+	}
 }

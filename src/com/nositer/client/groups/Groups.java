@@ -154,12 +154,35 @@ public class Groups extends TabPanel {
 		if (tabItem == null) {
 			if (tabItemType.equals(GroupTabPanel.TabItemType.SUBSCRIBER)) {
 				tabItem = new UserTabItem(tabId);
-			} else {				
+			}
+			// fixes race condition of getGroupTabPanel not being created yet
+			else if (tabItemType.equals(GroupTabPanel.TabItemType.UPLOAD)) {
+				GroupTabItem groupTabItem = new GroupTabItem(tabId, tabItemType) {
+					public void init(GroupPlusView groupPlusView) {
+						super.init(groupPlusView);
+						getGroupTabPanel().getUploadGroupTabItem().initSWF();
+						getGroupTabPanel().getUploadGroupTabItem().layout();
+					};
+				};
+				tabItem = groupTabItem;
+			} 
+			
+			else {
 				tabItem = new GroupTabItem(tabId, tabItemType);				
 			}
 			add(tabItem);
-		}	
-		setSelection(tabItem);		
+		} else {
+			if (tabItemType.equals(GroupTabPanel.TabItemType.UPLOAD)) {
+				GroupTabItem groupTabItem = (GroupTabItem) tabItem;
+				groupTabItem.
+				getGroupTabPanel().
+				show(
+						tabItemType);
+				groupTabItem.getGroupTabPanel().getUploadGroupTabItem().initSWF();
+				groupTabItem.getGroupTabPanel().getUploadGroupTabItem().layout();
+			}
+		}
+		setSelection(tabItem);	
 		return tabItem;
 	}
 

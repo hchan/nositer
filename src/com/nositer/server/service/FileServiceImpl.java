@@ -38,13 +38,19 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	@Override
-	public List<FileModel> getImageFolderChildren(FileModel folder) {
+	public List<FileModel> getFolderChildren(FileModel folder) {
 		String rootDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId());
-		return getImageFolderChildren(folder, rootDir);
+		try {
+			FileUtil.createDirsIfNecessary(user);
+		} catch (IOException e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		return getFolderChildren(folder, rootDir);
 	}
 	
 	@Override
-	public List<FileModel> getImageFolderChildren(FileModel folder, GroupPlusView groupPlusView) {
+	public List<FileModel> getFolderChildren(FileModel folder, GroupPlusView groupPlusView) {
 		try {
 			FileUtil.createDirsIfNecessary(groupPlusView);
 		} catch (IOException e) {
@@ -52,7 +58,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 			throw new GWTException(e);
 		}
 		String rootDir = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId());
-		return getImageFolderChildren(folder, rootDir);
+		return getFolderChildren(folder, rootDir);
 	}
 	
 	private String getRelativePath(File root, String absolutePath) {
@@ -62,14 +68,9 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		return retval;
 	}
 
-	private List<FileModel> getImageFolderChildren(FileModel folder, String rootDir) {
+	private List<FileModel> getFolderChildren(FileModel folder, String rootDir) {
 		File root = new File(rootDir);
-		try {
-			FileUtil.createDirsIfNecessary(user);
-		} catch (IOException e) {
-			Application.log.error("", e);
-			throw new GWTException(e);
-		}
+		
 		File[] files = null;
 		if (folder == null) {
 			files = root.listFiles();

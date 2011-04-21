@@ -10,9 +10,9 @@ import com.nositer.client.widget.directorytree.FileModel;
 
 public interface FileServiceAsync {
 
-	void getImageFolderChildren(FileModel folder, AsyncCallback<List<FileModel>> callback);
+	void getFolderChildren(FileModel folder, AsyncCallback<List<FileModel>> callback);
 
-	void getImageFolderChildren(FileModel folder, GroupPlusView groupPlusView, AsyncCallback<List<FileModel>> callback);
+	void getFolderChildren(FileModel folder, GroupPlusView groupPlusView, AsyncCallback<List<FileModel>> callback);
 
 	void createFolder(String folder, AsyncCallback<Void> callback);
 	

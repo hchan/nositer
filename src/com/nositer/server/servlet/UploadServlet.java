@@ -41,6 +41,8 @@ public class UploadServlet extends HttpServlet {
 		try {
 			user = getUseridViaHttpCall(req, resp);
 			String uploadDirFromRequest = req.getParameter("uploadDir");
+			String groupid = req.getParameter("groupid");
+			System.out.println("groupid:" + groupid);
 			performSecurityCheck(uploadDirFromRequest);
 			uploadDir = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + "/" + uploadDirFromRequest;
 		

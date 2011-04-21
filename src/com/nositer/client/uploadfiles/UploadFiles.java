@@ -31,6 +31,7 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.directorytree.GroupFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.UserFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.shared.FileNameUtil;
@@ -45,8 +46,8 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private Scope scope;
 	private SWFUpload swfUpload;
-	
-	
+
+
 	public Scope getScope() {
 		return scope;
 	}
@@ -64,18 +65,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		TableLayout layout = new TableLayout(2);
 		layout.setWidth("100%");
 		this.setLayout(layout);
-		fileDirectoryTreeGridContainer = new UserFileDirectoryTreeGridContainer(false) {
-			public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
-				for (FileModel fileModel : result) {
-					if (fileModel.getPath() != null && fileModel.getPath().equals(Global.PUBLICFOLDER) && ("/" + fileModel.getName()).equals(Global.PUBLICFOLDER)) {
-						if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getFileModel() == null) {
-							fileDirectoryTreeGridContainer.setSelectedFileOrFolder(fileModel, getTree().findNode(fileModel));					
-							break;
-						}
-					}
-				}
-			};
-		};
+		fileDirectoryTreeGridContainer = createFileDirectoryTreeGridContainer();
 		FileManagerMenuBar fileManagerMenuBar = new FileManagerMenuBar(fileDirectoryTreeGridContainer);
 		fileDirectoryTreeGridContainer.getContentPanel().setTopComponent(fileManagerMenuBar);
 
@@ -93,7 +83,7 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 			}
 
 			@Override
-			public void onSuccess(String result) {
+			public void onSuccess(String result) {			
 				doSWFUploadInit(result);
 			}
 
@@ -114,6 +104,25 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		resize(0,0);
 		ServiceBroker.securityService.getSessionId(callbackWithSessionId);
 
+	}
+
+	private AbstractFileDirectoryTreeGridContainer createFileDirectoryTreeGridContainer() {
+		AbstractFileDirectoryTreeGridContainer retval = null;
+		if (scope.getType().equals(Scope.Type.user)) {
+			retval = new UserFileDirectoryTreeGridContainer(false) {
+				@Override
+				public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
+					selectPublicFolder(result);
+				};
+			};
+		} else if (scope.getType().equals(Scope.Type.group)) {
+			retval = new GroupFileDirectoryTreeGridContainer(false, scope.getGroupPlusView()) {
+				public void doAfterTreeIsLoaded(Object loadConfig, java.util.List<FileModel> result) {
+					selectPublicFolder(result);
+				};
+			};
+		}
+		return retval;
 	}
 
 	@Override
@@ -157,8 +166,12 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		setUploadBuilderSettings(builder, "flash_url", getFlashURL());
 
 		// upload URL
-		builder.setUploadURL(Global.UPLOADURL + "?" + 
-				Global.UPLOADCREDENTIALKEY + "=" + sessionId);
+		String uploadURL = Global.UPLOADURL + "?" + 
+		Global.UPLOADCREDENTIALKEY + "=" + sessionId;
+		if (scope.getType().equals(Scope.Type.group)) {
+			uploadURL += "&groupid=" + scope.getGroupPlusView().getId();
+		}
+		builder.setUploadURL(uploadURL);
 
 
 		// Configure the button to display

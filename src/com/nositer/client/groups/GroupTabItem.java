@@ -19,8 +19,25 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 
 	private GroupTabPanel.TabItemType tabItemType;
+	private GroupTabPanel groupTabPanel;
 
 
+
+	public GroupTabPanel.TabItemType getTabItemType() {
+		return tabItemType;
+	}
+
+	public void setTabItemType(GroupTabPanel.TabItemType tabItemType) {
+		this.tabItemType = tabItemType;
+	}
+
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
 
 	public GroupTabItem(String tabId) {
 		setItemId(tabId);
@@ -55,8 +72,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 
 	public void init(GroupPlusView groupPlusView) {
 		GroupTabItem.this.setText(groupPlusView.getName());
-		//setLayout(new FitLayout());
-		GroupTabPanel groupTabPanel = new GroupTabPanel(groupPlusView);		
+		groupTabPanel = new GroupTabPanel(groupPlusView);		
 		add(groupTabPanel);
 		if (tabItemType != null) {
 			groupTabPanel.show(tabItemType);

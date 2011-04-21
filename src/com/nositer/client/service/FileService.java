@@ -14,13 +14,13 @@ import com.nositer.shared.GWTException;
 public interface FileService extends RemoteService {
 
 
-	public List<FileModel> getImageFolderChildren(FileModel folder);
+	public List<FileModel> getFolderChildren(FileModel folder);
 
 	public void createFolder(String folder) throws GWTException;
 
 	
 
-	List<FileModel> getImageFolderChildren(FileModel folder,
+	List<FileModel> getFolderChildren(FileModel folder,
 			GroupPlusView groupPlusView);
 
 	void createFolder(String folder, GroupPlusView groupPlusView);

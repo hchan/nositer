@@ -22,7 +22,7 @@ public class UserFileDirectoryTreeGridContainer extends AbstractFileDirectoryTre
 			@Override
 			protected void load(Object loadConfig,
 					AsyncCallback<List<FileModel>> callback) {
-				ServiceBroker.fileService.getImageFolderChildren((FileModel) loadConfig, callback);  
+				ServiceBroker.fileService.getFolderChildren((FileModel) loadConfig, callback);  
 			}  			
 		};  
 	}

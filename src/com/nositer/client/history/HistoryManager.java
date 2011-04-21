@@ -184,7 +184,11 @@ public class HistoryManager {
 	public static String getSubHistoryToken() {
 		String retval = null;
 		retval = History.getToken();
-		retval = retval.replaceAll(".*" + SUBTOKENSEPARATOR, "");
+		if (retval.indexOf(SUBTOKENSEPARATOR) == -1) {
+			retval = null;
+		} else {
+			retval = retval.replaceAll(".*" + SUBTOKENSEPARATOR, "");
+		}
 		return retval;
 	}
 
