@@ -161,13 +161,15 @@ public class Groups extends TabPanel {
 				GroupTabItem groupTabItem = new GroupTabItem(tabId, tabItemType) {
 					public void init(GroupPlusView groupPlusView) {
 						super.init(groupPlusView);
-						getGroupTabPanel().getUploadGroupTabItem().initSWF();
-						getGroupTabPanel().getUploadGroupTabItem().layout();
+						if (Groups.isGroupIOwn(groupPlusView)) {
+							getGroupTabPanel().getUploadGroupTabItem().initSWF();
+							getGroupTabPanel().getUploadGroupTabItem().layout();
+						}
 					};
 				};
 				tabItem = groupTabItem;
 			} 
-			
+
 			else {
 				tabItem = new GroupTabItem(tabId, tabItemType);				
 			}

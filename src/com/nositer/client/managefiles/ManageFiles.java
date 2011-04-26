@@ -12,16 +12,16 @@ import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridCont
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 public class ManageFiles extends LayoutContainer implements Resizable {
-	private AbstractFileDirectoryTreeGridContainer fileManager;
+	private AbstractFileManager fileManager;
 	private FileViewerContainer fileViewerContainer;
 	private ContentPanel contentPanel;
 	private static ManageFiles instance;
 	
-	public AbstractFileDirectoryTreeGridContainer getFileManager() {
+	public AbstractFileManager getFileManager() {
 		return fileManager;
 	}
 
-	public void setFileManager(AbstractFileDirectoryTreeGridContainer fileManager) {
+	public void setFileManager(AbstractFileManager fileManager) {
 		this.fileManager = fileManager;
 	}
 

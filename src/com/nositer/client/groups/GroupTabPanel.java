@@ -5,6 +5,7 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.GroupTabPanel.TabItemType;
 import com.nositer.client.main.MainPanel;
+import com.nositer.client.managefiles.GroupFileManager;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
@@ -17,7 +18,7 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 	private EditGroupTabItem editGroupTabItem;
 	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
 	private UploadGroupTabItem uploadGroupTabItem;
-	private FilesGroupTabItem filesGroupTabItem;
+	private FileManagerGroupTabItem fileManagerGroupTabItem;
 	
 	private GroupPlusView groupPlusView;
 
@@ -105,8 +106,10 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		if (Groups.isGroupIOwn(groupPlusView)) {
 			editGroupTabItem = new EditGroupTabItem(groupPlusView);
 			uploadGroupTabItem = new UploadGroupTabItem(groupPlusView);
+			fileManagerGroupTabItem = new FileManagerGroupTabItem(groupPlusView);
 			add(editGroupTabItem);
 			add(uploadGroupTabItem);
+			add(fileManagerGroupTabItem);
 		}
 		resize(0,0);
 	}

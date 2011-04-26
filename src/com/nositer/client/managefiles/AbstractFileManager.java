@@ -7,8 +7,8 @@ import com.nositer.client.widget.fileviewer.FileViewerContainer;
 import com.nositer.shared.FileNameUtil;
 
 abstract public class AbstractFileManager extends AbstractFileDirectoryTreeGridContainer {
-	private FileManagerMenuBar fileManagerMenuBar;
-	private FileViewerContainer fileViewerContainer;
+	protected FileManagerMenuBar fileManagerMenuBar;
+	protected FileViewerContainer fileViewerContainer;
 
 	public AbstractFileManager(FileViewerContainer fileViewerContainer) {
 		super(false);
