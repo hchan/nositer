@@ -13,6 +13,7 @@ import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.TabItemPlus;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 

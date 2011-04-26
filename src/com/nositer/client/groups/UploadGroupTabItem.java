@@ -34,7 +34,7 @@ public class UploadGroupTabItem extends TabItem implements Resizable {
 			Scope scope = new Scope(Type.group);
 			scope.setGroupPlusView(groupPlusView);
 			uploadFiles = new UploadFiles(scope);
-			add(uploadFiles);
+			add(uploadFiles);			
 		}
 	}
 

@@ -41,7 +41,8 @@ public class HistoryManager {
 		doOnModuleLoadHistoryToken();
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event) {
-				String historyToken = event.getValue();
+				//String historyToken = event.getValue();
+				String historyToken = History.getToken();
 				onHistoryChanged(historyToken);
 			}			
 		});
@@ -125,10 +126,13 @@ public class HistoryManager {
 			Groups.getInstance(true).showNonClosableTab(Groups.TabItemType.SEARCHFORGROUPS);
 			setMainPanel(Groups.getInstance(true));
 		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
+			String subHistoryToken = getSubHistoryToken();
+			if (subHistoryToken != null) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.VIEW);
+			Groups.getInstance(true).showClosableTab(subHistoryToken, GroupTabPanel.TabItemType.VIEW);
 			setMainPanel(Groups.getInstance(true));
+			}
 		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
 			leftPanel.getIWantto().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateIwantToNavigationItem());
