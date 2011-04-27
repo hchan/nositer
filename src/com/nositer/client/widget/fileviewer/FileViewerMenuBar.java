@@ -10,7 +10,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.managefiles.ManageFiles;
+import com.nositer.client.managefiles.ManageMyFiles;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 import com.nositer.shared.Global;
@@ -61,7 +61,7 @@ public class FileViewerMenuBar extends MenuBar {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				
-				if (ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
+				if (ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
 					AsyncCallback<Void> callback = new AsyncCallback() {
 
 						@Override
@@ -71,13 +71,13 @@ public class FileViewerMenuBar extends MenuBar {
 
 						@Override
 						public void onSuccess(Object result) {
-							Nositer.getInstance().getUser().setAvatarlocation(ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
-							ManageFiles.getInstance().getFileManager().refreshSelectedTreeNode();
+							Nositer.getInstance().getUser().setAvatarlocation(ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
+							ManageMyFiles.getInstance().getFolderSelector().refreshSelectedTreeNode();
 							InfoMessageBox.show("Avatar updated");
 						}
 						
 					};
-					ServiceBroker.profileService.updateAvatarOfCurrentUser(ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(), callback);
+					ServiceBroker.profileService.updateAvatarOfCurrentUser(ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(), callback);
 				}
 			}
 		};
@@ -91,9 +91,9 @@ public class FileViewerMenuBar extends MenuBar {
 		retval = new Listener() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				if (ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
-					ManageFiles.getInstance().getFileViewerContainer().setImage(
-							ManageFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(),
+				if (ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue() != null) {
+					ManageMyFiles.getInstance().getFileViewerContainer().setImage(
+							ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue(),
 							percent);
 				}
 			}

@@ -5,7 +5,7 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.GroupTabPanel.TabItemType;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.managefiles.GroupFileManager;
+import com.nositer.client.managefiles.GroupFolderSelector;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 

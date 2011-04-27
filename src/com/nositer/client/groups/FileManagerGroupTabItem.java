@@ -6,12 +6,13 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.managefiles.GroupFileManager;
+import com.nositer.client.managefiles.GroupFolderSelector;
+import com.nositer.client.managefiles.GroupManageFiles;
 import com.nositer.client.widget.Resizable;
 
 public class FileManagerGroupTabItem extends TabItem implements Resizable {
 
-	private GroupFileManager groupFileManager;
+	private GroupManageFiles groupManageFiles;
 	private GroupPlusView groupPlusView;
 
 	public FileManagerGroupTabItem(GroupPlusView groupPlusView) {
@@ -25,9 +26,9 @@ public class FileManagerGroupTabItem extends TabItem implements Resizable {
 	}
 
 	public void initFileManager() {
-		if (groupFileManager == null) {
-			groupFileManager = new GroupFileManager(groupPlusView);
-			add(groupFileManager);			
+		if (groupManageFiles == null) {
+			groupManageFiles = new GroupManageFiles(groupPlusView);
+			add(groupManageFiles);			
 		}
 	}
 

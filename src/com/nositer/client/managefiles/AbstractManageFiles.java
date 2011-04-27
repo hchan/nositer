@@ -11,18 +11,17 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
-public class ManageFiles extends LayoutContainer implements Resizable {
-	private AbstractFileManager fileManager;
+abstract public class AbstractManageFiles extends LayoutContainer implements Resizable {
+	private AbstractFolderSelector folderSelector;
 	private FileViewerContainer fileViewerContainer;
 	private ContentPanel contentPanel;
-	private static ManageFiles instance;
-	
-	public AbstractFileManager getFileManager() {
-		return fileManager;
+
+	public AbstractFolderSelector getFolderSelector() {
+		return folderSelector;
 	}
 
-	public void setFileManager(AbstractFileManager fileManager) {
-		this.fileManager = fileManager;
+	public void setFolderSelector(AbstractFolderSelector folderSelector) {
+		this.folderSelector = folderSelector;
 	}
 
 	public FileViewerContainer getFileViewerContainer() {
@@ -41,19 +40,13 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 		this.contentPanel = contentPanel;
 	}
 
-	public static ManageFiles getInstance() {
-		return instance;
-	}
-
-	public static void setInstance(ManageFiles instance) {
-		ManageFiles.instance = instance;
-	}
-
-	public ManageFiles() {
+	public AbstractManageFiles() {
 		init();
-		instance = this;
 	}
 
+	abstract public FileViewerContainer createFileViewerContainer();
+	abstract public AbstractFolderSelector createFolderSelector();
+	
 	public void init() {
 		BorderLayout layout = new BorderLayout();
 		contentPanel = new ContentPanel();
@@ -64,24 +57,14 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 		contentPanel.setLayout(layout);
 		
 		
-		fileViewerContainer = new FileViewerContainer(new Scope(Scope.Type.user)) {
-			@Override
-			protected void onResize(int width, int height) {
-				resize(0,0);
-			};
-		};
+		fileViewerContainer = createFileViewerContainer();
 	
-		fileManager = new UserFileManager(fileViewerContainer) {
-			@Override
-			protected void onResize(int width, int height) {
-				resize(0,0);
-			};
-		};
+		folderSelector = createFolderSelector();
 
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 		westBorderLayoutData.setSize(MainPanel.getInstance().getWidth()/2);
 		westBorderLayoutData.setSplit(true);
-		contentPanel.add(fileManager, westBorderLayoutData);
+		contentPanel.add(folderSelector, westBorderLayoutData);
 		BorderLayoutData centerBorderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerBorderLayoutData.setSplit(true);
 		contentPanel.add(fileViewerContainer, centerBorderLayoutData);
@@ -92,8 +75,8 @@ public class ManageFiles extends LayoutContainer implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		fileManager.getContentPanel().setSize(fileManager.getWidth(), 
-				fileManager.getHeight());
+		folderSelector.getContentPanel().setSize(folderSelector.getWidth(), 
+				folderSelector.getHeight());
 		
 		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
 		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());

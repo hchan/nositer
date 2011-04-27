@@ -26,7 +26,7 @@ import com.nositer.client.groups.Groups;
 import com.nositer.client.iwanttos.IWanttos;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.managefiles.ManageFiles;
+import com.nositer.client.managefiles.ManageMyFiles;
 import com.nositer.client.searchforgroups.SearchForGroupsContainer;
 import com.nositer.client.uploadfiles.UploadFiles;
 import com.nositer.client.util.GWTUtil;
@@ -110,7 +110,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(MANAGEFILES.toString())) {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());
-			setMainPanel(new ManageFiles());
+			setMainPanel(new ManageMyFiles());
 		}	else if (historyToken.startsWith(MANAGEFILESGROUP.toString() + SUBTOKENSEPARATOR)) {				
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());

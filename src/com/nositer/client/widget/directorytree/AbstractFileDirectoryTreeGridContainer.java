@@ -89,6 +89,9 @@ abstract public class AbstractFileDirectoryTreeGridContainer extends LayoutConta
 	//	this(false);
 	//}
 
+	public AbstractFileDirectoryTreeGridContainer() {		
+	}
+	
 	public AbstractFileDirectoryTreeGridContainer(boolean useSelectedFilePanel) {
 		this.useSelectedFilePanel = useSelectedFilePanel;
 		init();

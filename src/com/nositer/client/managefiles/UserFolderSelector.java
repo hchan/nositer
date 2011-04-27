@@ -7,9 +7,9 @@ import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.directorytree.UserFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
-public class UserFileManager extends AbstractFileManager {
+public class UserFolderSelector extends AbstractFolderSelector {
 
-	public UserFileManager(FileViewerContainer fileViewerContainer) {
+	public UserFolderSelector(FileViewerContainer fileViewerContainer) {
 		super(fileViewerContainer);
 	}
 

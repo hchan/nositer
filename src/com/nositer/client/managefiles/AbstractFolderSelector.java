@@ -6,11 +6,15 @@ import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 import com.nositer.shared.FileNameUtil;
 
-abstract public class AbstractFileManager extends AbstractFileDirectoryTreeGridContainer {
+abstract public class AbstractFolderSelector extends AbstractFileDirectoryTreeGridContainer {
 	protected FileManagerMenuBar fileManagerMenuBar;
 	protected FileViewerContainer fileViewerContainer;
 
-	public AbstractFileManager(FileViewerContainer fileViewerContainer) {
+	public AbstractFolderSelector(){
+		
+	}
+	
+	public AbstractFolderSelector(FileViewerContainer fileViewerContainer) {
 		super(false);
 		this.fileViewerContainer = fileViewerContainer;
 	}
