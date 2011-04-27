@@ -12,9 +12,9 @@ import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridCont
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 abstract public class AbstractManageFiles extends LayoutContainer implements Resizable {
-	private AbstractFolderSelector folderSelector;
-	private FileViewerContainer fileViewerContainer;
-	private ContentPanel contentPanel;
+	protected AbstractFolderSelector folderSelector;
+	protected FileViewerContainer fileViewerContainer;
+	protected ContentPanel contentPanel;
 
 	public AbstractFolderSelector getFolderSelector() {
 		return folderSelector;
@@ -73,19 +73,5 @@ abstract public class AbstractManageFiles extends LayoutContainer implements Res
 		add(contentPanel);
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		folderSelector.getContentPanel().setSize(folderSelector.getWidth(), 
-				folderSelector.getHeight());
-		
-		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
-		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());
-		//fileViewerContainer.getSelectedFilePanel().getSelectedFile().setWidth(fileViewerContainer.getWidth());
-		
-		contentPanel.setSize(MainPanel.getInstance().getWidth(),
-				MainPanel.getInstance().getHeight());
-		fileViewerContainer.getSelectedFilePanel().setWidth(fileViewerContainer.getWidth() - 10);
-		
-	}
-
+	
 }

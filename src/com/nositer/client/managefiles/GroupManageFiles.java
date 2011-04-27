@@ -2,6 +2,7 @@ package com.nositer.client.managefiles;
 
 import com.nositer.client.Scope;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 public class GroupManageFiles extends AbstractManageFiles {
@@ -47,4 +48,20 @@ public class GroupManageFiles extends AbstractManageFiles {
 			};
 		};
 	}
+	
+	@Override
+	public void resize(int width, int height) {
+		folderSelector.getContentPanel().setSize(folderSelector.getWidth(), 
+				folderSelector.getHeight() - 52);
+		
+		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-65);
+		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());
+		//fileViewerContainer.getSelectedFilePanel().getSelectedFile().setWidth(fileViewerContainer.getWidth());
+		
+		contentPanel.setSize(MainPanel.getInstance().getWidth(),
+				MainPanel.getInstance().getHeight());
+		fileViewerContainer.getSelectedFilePanel().setWidth(fileViewerContainer.getWidth() - 10);
+		
+	}
+	
 }

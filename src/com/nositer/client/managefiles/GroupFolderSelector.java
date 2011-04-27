@@ -16,7 +16,7 @@ public class GroupFolderSelector extends AbstractFolderSelector {
 
 
 	public GroupFolderSelector(FileViewerContainer fileViewerContainer, GroupPlusView groupPlusView) {
-		super();
+		super(fileViewerContainer);
 		Scope scope = new Scope(Scope.Type.group);
 		scope.setGroupPlusView(groupPlusView);
 		
