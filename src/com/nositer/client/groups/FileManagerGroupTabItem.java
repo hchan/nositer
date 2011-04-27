@@ -20,7 +20,7 @@ public class FileManagerGroupTabItem extends TabItem implements Resizable {
 		init();
 	}
 	public void init() {
-		//initSWF();
+		initFileManager();
 		addDefaultListeners();
 	}
 

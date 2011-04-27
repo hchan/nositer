@@ -12,7 +12,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, SUBSCRIBER, UPLOAD
+		VIEW, EDIT, SUBSCRIPTIONS, SUBSCRIBER, UPLOAD, FILEMANAGER
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
@@ -129,6 +129,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(subscriptionsGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.UPLOAD)) {
 			setSelection(uploadGroupTabItem);
+		} else if (tabItemType.equals(TabItemType.FILEMANAGER)) {
+			setSelection(fileManagerGroupTabItem);
 		}
 	}
 }

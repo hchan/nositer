@@ -25,6 +25,12 @@ public class GroupFileManager extends AbstractFileManager {
 		scope.setGroupPlusView(groupPlusView);
 		fileViewerContainer = new FileViewerContainer(scope);
 		this.groupPlusView = groupPlusView;
+		super.init();
+	}
+	
+	@Override
+	protected void init() {
+		
 	}
 
 	@Override

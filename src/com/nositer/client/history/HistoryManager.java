@@ -111,6 +111,11 @@ public class HistoryManager {
 			leftPanel.getFiles().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getManageFilesNavigationItem());
 			setMainPanel(new ManageFiles());
+		}	else if (historyToken.startsWith(MANAGEFILESGROUP.toString() + SUBTOKENSEPARATOR)) {				
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.FILEMANAGER);
+			setMainPanel(Groups.getInstance(true));			
 		} else if (historyToken.equals(CREATEGROUP.toString())) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getCreateGroupNavigationItem());
@@ -128,10 +133,10 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(GROUPS.toString() + SUBTOKENSEPARATOR)) {
 			String subHistoryToken = getSubHistoryToken();
 			if (subHistoryToken != null) {
-			leftPanel.getGroups().expand();	
-			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
-			Groups.getInstance(true).showClosableTab(subHistoryToken, GroupTabPanel.TabItemType.VIEW);
-			setMainPanel(Groups.getInstance(true));
+				leftPanel.getGroups().expand();	
+				leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+				Groups.getInstance(true).showClosableTab(subHistoryToken, GroupTabPanel.TabItemType.VIEW);
+				setMainPanel(Groups.getInstance(true));
 			}
 		} else if (historyToken.equals(CREATEIWANTTO.toString())) {
 			leftPanel.getIWantto().expand();	
@@ -183,7 +188,7 @@ public class HistoryManager {
 		});
 	}
 
-	
+
 
 	public static String getSubHistoryToken() {
 		String retval = null;

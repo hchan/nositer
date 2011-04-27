@@ -157,6 +157,8 @@ public class Groups extends TabPanel {
 				tabItem = new UserTabItem(tabId);
 			}
 			// fixes race condition of getGroupTabPanel not being created yet
+			// uploads a are a special case as it uses flash so that means that we
+			// do lazy init as the focus has to be set so that the upload screen is selected
 			else if (tabItemType.equals(GroupTabPanel.TabItemType.UPLOAD)) {
 				GroupTabItem groupTabItem = new GroupTabItem(tabId, tabItemType) {
 					public void init(GroupPlusView groupPlusView) {
