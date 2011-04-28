@@ -187,6 +187,13 @@ public class Groups extends TabPanel {
 				groupTabItem.getGroupTabPanel().getUploadGroupTabItem().layout();
 			}
 		}
+
+		if (tabItem instanceof GroupTabItem) {
+			GroupTabItem groupTabItem = (GroupTabItem) tabItem;
+			if (groupTabItem.getGroupTabPanel() != null) {
+				groupTabItem.getGroupTabPanel().show(tabItemType);
+			}
+		}
 		setSelection(tabItem);	
 		return tabItem;
 	}

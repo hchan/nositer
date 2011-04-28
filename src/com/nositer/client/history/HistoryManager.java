@@ -63,6 +63,7 @@ public class HistoryManager {
 			accordionLayout.setActiveItem(null);
 			MainPanel.getInstance().removeAll();
 		} else {
+			/*
 			AsyncCallback<User> callback = new AsyncCallback<User>() {
 				@Override
 				public void onFailure(Throwable caught) {
@@ -77,6 +78,8 @@ public class HistoryManager {
 				}
 			};
 			ServiceBroker.profileService.getCurrentUser(callback);
+			*/
+			onHistoryChangedForTokensOtherThanHome(historyToken); 
 		}
 	}
 

@@ -39,10 +39,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		this.groupTabPanel = groupTabPanel;
 	}
 
-	public GroupTabItem(String tabId) {
-		setItemId(tabId);
-		init();
-	}
+	
 
 	public GroupTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
 		this.tabItemType = tabItemType;
