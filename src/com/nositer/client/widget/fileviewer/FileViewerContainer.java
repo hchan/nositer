@@ -10,6 +10,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.nositer.client.Scope;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
@@ -117,7 +118,8 @@ public class FileViewerContainer extends LayoutContainer {
 				}
 				@Override
 				public void onResponseReceived(Request request, Response response) {
-					fileContainer.setHtml("<DIV ID=\"textFile\" class=\"textFile\"><PRE>" + response.getText() + "</PRE></DIV>");
+					String htmlText = SafeHtmlUtils.htmlEscape(response.getText());
+					fileContainer.setHtml("<DIV ID=\"textFile\" class=\"textFile\"><PRE>" + htmlText + "</PRE></DIV>");
 					fileContainer.setStyleName("textFile");
 					fileContainer.setAutoHeight(true);
 				}

@@ -1,6 +1,10 @@
 package com.nositer.server.servlet;
 
+import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.User;
+import com.nositer.server.service.GroupServiceImpl;
 import com.nositer.shared.Global;
+import com.nositer.webapp.Application;
 
 @SuppressWarnings({"serial"})
 public class GroupFileServlet extends AbstractFileServlet {
@@ -20,5 +24,24 @@ public class GroupFileServlet extends AbstractFileServlet {
 		return Global.GROUPPUBLICDIR;
 	}
 	
+	@Override
+	public String getPrivateDir() {
+		return Global.GROUPPRIVATEDIR;
+	}
+
+	@Override
+	public boolean isPrivateFileIHaveAccessTo(String userOrGroupid,
+			String accessPath) {
+		boolean retval = false;
+		int groupid = Integer.parseInt(userOrGroupid);
+		User currentUser = Application.getCurrentUser();
+		int userid = currentUser.getId();
+		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();		
+		GroupSubscriptionView groupSubscriptionView = groupServiceImpl.getGroupSubscriptionByGroupAndUser(groupid, userid);
+		if (groupSubscriptionView != null) {
+			retval = true;
+		}
+		return retval;
+	}
 
 }

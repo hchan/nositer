@@ -26,6 +26,7 @@ public class FileNameUtil {
 	public static ArrayList<String> getTextExtensions() {
 		ArrayList<String> retval = new ArrayList<String>();
 		retval.add("txt");
+		retval.add("xml");
 		return retval;
 	}
 

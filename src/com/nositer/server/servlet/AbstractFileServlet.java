@@ -40,8 +40,8 @@ public abstract class AbstractFileServlet extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
 				return;
 			}
-		} catch (PrivateException e) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN); // 404.
+		} catch (FileAccessException e) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
 			return;
 		}
 
@@ -120,17 +120,19 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 	}
 
-	private boolean isValidRequestedFile(String str) throws PrivateException {
+	private boolean isValidRequestedFile(String str) throws FileAccessException {
 		boolean retval = true;
+		String userOrGroupid = null;
+		String accessPath = null;
 		try {
 			String[] dirPaths = str.split("/");
-			String userid = dirPaths[1];
-			String accessPath = dirPaths[2];
-			if (!userid.matches("^\\d+$")) {
+			userOrGroupid = dirPaths[1];
+			accessPath = dirPaths[2];
+			if (!userOrGroupid.matches("^\\d+$")) {
 				retval = false;
 			} else {
-				if (!("/" + accessPath).equals(getPublicDir())) {		
-					throw new PrivateException();
+				if (!(("/" + accessPath).equals(getPublicDir()) || ("/" + accessPath).equals(getPrivateDir()))) {		
+					throw new FileAccessException();
 				} else {
 					for (int i = 1; i < dirPaths.length; i++) {
 						String dirPath = dirPaths[i];
@@ -141,19 +143,24 @@ public abstract class AbstractFileServlet extends HttpServlet {
 					}			
 				}
 			}		
-		} catch (PrivateException e) {
+		} catch (FileAccessException e) {
 			throw e;	
 		}
 		catch (Exception e) {
 			Application.log.error("", e);
 			retval = false;
 		}
+		if (retval && ("/" + accessPath).equals(getPrivateDir())) {
+			retval = isPrivateFileIHaveAccessTo(userOrGroupid, accessPath);
+		}
 		return retval;
 	}
 
+
+
 	public abstract String getRootDir();
 	public abstract String getPublicDir();
-
-
+	public abstract String getPrivateDir();
+	public abstract boolean isPrivateFileIHaveAccessTo(String userOrGroupid, String accessPath);
 
 }

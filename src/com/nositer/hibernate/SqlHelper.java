@@ -123,6 +123,11 @@ public class SqlHelper {
 		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
 		" and " + "lower(" + GroupSubscriptionView.Column.lastname + ") like lower(:" + GroupSubscriptionView.Column.lastname + ")" + 
 		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
+	public static String FINDSUBSCRIBER =
+		"select * from " + GroupSubscriptionView.TABLENAME + 
+		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
+		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
+		" and " + GroupSubscriptionView.Column.userid + " = :" + GroupSubscriptionView.Column.userid;
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +

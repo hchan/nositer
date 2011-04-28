@@ -1,6 +1,8 @@
 package com.nositer.server.servlet;
 
+import com.nositer.client.dto.generated.User;
 import com.nositer.shared.Global;
+import com.nositer.webapp.Application;
 
 @SuppressWarnings({"serial"})
 public class UserFileServlet extends AbstractFileServlet {
@@ -17,6 +19,25 @@ public class UserFileServlet extends AbstractFileServlet {
 	@Override
 	public String getPublicDir() {		
 		return Global.USERPUBLICDIR;
+	}
+
+	@Override
+	public String getPrivateDir() {
+		return Global.USERPRIVATEDIR;
+	}
+
+	@Override
+	public boolean isPrivateFileIHaveAccessTo(String userOrGroupid,
+			String accessPath) {
+		boolean retval = false;
+		User currentUser = Application.getCurrentUser();
+		if (currentUser.getId().equals(Integer.parseInt(userOrGroupid))) {
+			retval = true;
+		} else {
+			// TODO permissions.xml
+			
+		}
+		return retval;
 	}
 	
 

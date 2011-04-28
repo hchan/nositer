@@ -77,7 +77,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		return retval;
 	}
-	
+
 	@Override
 	public Group updateGroup(Group group) throws GWTException {
 		Group retval = null;
@@ -312,9 +312,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.GETSUBSCRIPTIONS).
 			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
-		
+
 			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
-		
+
 			list();
 			if (results.size() == 0) {				
 				retval = new ArrayList<GroupSubscriptionView>();
@@ -350,7 +350,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
 			setString(GroupSubscriptionView.Column.lastname.toString(), lastname + "%").			
 			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
-		
+
 			list();
 			if (results.size() == 0) {				
 				retval = new ArrayList<GroupSubscriptionView>();
@@ -372,15 +372,48 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
-	
+	public GroupSubscriptionView getGroupSubscriptionByGroupAndUser(int groupid, int userid) {
+		GroupSubscriptionView retval = null;
+		Session sess = HibernateUtil.getSession();
+		//User user = null;
+		Transaction trx = null;
+		try {
+			//user = Application.getCurrentUser();
+			trx = sess.beginTransaction();		
+			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.FINDSUBSCRIBER).
+			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).		
+			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupid).
+			setInteger(GroupSubscriptionView.Column.userid.toString(), userid).		
+			list();
+			if (results.size() != 0) {				
+				retval = BeanConversion.copyDomain2DTO(results.get(0), GroupSubscriptionView.class);
+			} else {
+				retval = null;							
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
+		return retval;
+	}
+
+
 	public GroupPlusView getGroupPlusView (Integer groupid) {
 		GroupPlusView retval = null;
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		try {
 			trx = sess.beginTransaction();		
-			 com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.GroupPlusView.class, groupid, sess);
-			 retval = BeanConversion.copyDomain2DTO(groupPlusViewDomain, GroupPlusView.class);
+			com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.GroupPlusView.class, groupid, sess);
+			retval = BeanConversion.copyDomain2DTO(groupPlusViewDomain, GroupPlusView.class);
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
 			Application.log.error("", e);

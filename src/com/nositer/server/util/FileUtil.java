@@ -58,7 +58,18 @@ public class FileUtil {
 				Global.USER_URL_PREFIX + "/" + user.getId() + "/" + Global.DEFAULTUSERAVATAR
 		);		
 		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
+		FileUtils.writeStringToFile(privateREADME, "Any files in this directory are only viewable by yourself.  If you wish to share this folder or a subfolder, upload a permissions.xml to that folder.\n");
+		File permissionsXML = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/permissions.xml");
+		FileUtils.writeStringToFile(permissionsXML, "<permissions>\n" +
+				"\t<!--\n" +
+				"\tAdd user login names to whom you like to share this folder with\n" +
+				"\ti.e.\n" +
+				"\t<login>hchan</login>\n" +
+				"\t<login>hsimpson</login>\n" +
+				"\t<login>mburns</login>\n" +
+				"\t-->\n" +
+				"</permissions>"
+				);
 	}
 	
 	public static void createBasicFilesStructure(Group group) throws IOException {		
@@ -73,7 +84,7 @@ public class FileUtil {
 				Global.GROUP_URL_PREFIX + "/" + group.getId() + "/" + Global.DEFAULTGROUPAVATAR
 		);		
 		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, group.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for you to upload files to private (not be viewable to anyone else");
+		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for the owner and subscribers of this group");
 	}
 	
 }
