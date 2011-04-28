@@ -38,5 +38,7 @@ public class Global {
 	public static final String DEFAULTUSERAVATAR = "defaultUserAvatar.png";
 	public static final String DEFAULTGROUPAVATAR = "defaultGroupAvatar.jpg";
 	
+	public static final String PERMISSIONSXML = "permissions.xml";
+	
 
 }

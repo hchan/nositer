@@ -59,7 +59,7 @@ public class FileUtil {
 		);		
 		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/README.txt");
 		FileUtils.writeStringToFile(privateREADME, "Any files in this directory are only viewable by yourself.  If you wish to share this folder or a subfolder, upload a permissions.xml to that folder.\n");
-		File permissionsXML = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/permissions.xml");
+		File permissionsXML = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/" + Global.PERMISSIONSXML);
 		FileUtils.writeStringToFile(permissionsXML, "<permissions>\n" +
 				"\t<!--\n" +
 				"\tAdd user login names to whom you like to share this folder with\n" +
