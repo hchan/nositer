@@ -29,10 +29,13 @@ abstract public class AbstractFolderSelector extends AbstractFileDirectoryTreeGr
 
 	@Override
 	public void doFileModelClick(FileModel fileModel) {
+		fileViewerContainer.setLoading(fileModel);
 		if (FileNameUtil.isImageFile(fileModel.getName())) {
 			fileViewerContainer.setImage(fileModel);
 		} else if (FileNameUtil.isTextFile(fileModel.getName())) {
 			fileViewerContainer.setText(fileModel);
+		} else {
+			fileViewerContainer.setUnknownFile(fileModel);
 		}
 		fileViewerContainer.getSelectedFilePanel().getSelectedFile().setValue(fileModel.getPath());
 	}

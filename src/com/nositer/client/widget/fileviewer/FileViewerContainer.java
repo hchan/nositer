@@ -87,6 +87,10 @@ public class FileViewerContainer extends LayoutContainer {
 	}
 
 
+	public void setLoading(FileModel fileModel) {
+		fileContainer.setHtml("Loading " + fileModel.getName() + ".  Please wait.");
+	}
+	
 	public void setImage(FileModel fileModel) {
 		fileViewerMenuBar.enable();
 		String imageUrl = getUrl(fileModel.getPath());
@@ -123,6 +127,12 @@ public class FileViewerContainer extends LayoutContainer {
 		}	
 	}
 
+	public void setUnknownFile(FileModel fileModel) {
+		String url = getUrl(fileModel.getPath());
+		fileContainer.setHtml("This file can be downloaded at <A HREF='" + url + "'>" + fileModel.getName() + "</A>");		
+	}
+	
+	
 	private String getUrl(String relativePath) {
 		String retval = null;
 		if (scope.getType().equals(Scope.Type.user)) {
