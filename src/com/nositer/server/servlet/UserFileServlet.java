@@ -1,14 +1,17 @@
 package com.nositer.server.servlet;
 
 import java.io.File;
-import java.io.FileReader;
 import java.text.MessageFormat;
+import java.util.List;
+
+import org.dom4j.Document;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
 
 import com.nositer.client.dto.generated.User;
+import com.nositer.server.util.Permissions;
 import com.nositer.shared.Global;
 import com.nositer.webapp.Application;
-import com.thoughtworks.xstream.XStream;
-
 @SuppressWarnings({"serial"})
 public class UserFileServlet extends AbstractFileServlet {
 	/**
@@ -36,18 +39,30 @@ public class UserFileServlet extends AbstractFileServlet {
 			String accessPath) {
 		boolean retval = false;
 		User currentUser = Application.getCurrentUser();
-		if (currentUser.getId().equals(Integer.parseInt(userOrGroupid))) {
-			retval = true;
-		} else {
-			File permissionsXML = new File(MessageFormat.format(Global.USERDIRTEMPLATE, userOrGroupid) + "/" + accessPath + "/" + Global.PERMISSIONSXML);
-			if (permissionsXML.exists()) {
-				try {
-					XStream xstream = new XStream();
-					FileReader fileReader = new FileReader(permissionsXML);
-					// TODO
-					Object a = xstream.fromXML(fileReader);
-				} catch (Exception e) {
-					Application.log.error("", e);
+		if (currentUser != null) {
+			if (currentUser.getId().equals(Integer.parseInt(userOrGroupid))) {
+				retval = true;
+			} else {
+				File permissionsXML = new File(MessageFormat.format(Global.USERDIRTEMPLATE, userOrGroupid) + "/" + accessPath + "/" + Global.PERMISSIONSXML);
+				if (permissionsXML.exists()) {
+					try {
+						Permissions permissions = new Permissions();
+						Document document = null;
+					      SAXReader reader = new SAXReader();
+					 
+					         document = reader.read(permissionsXML);
+					         String xPath = "//permissions/login";
+					         List<Node> nodes = document.selectNodes( xPath );
+					         for (Node node : nodes)
+					         {
+					           
+					            permissions.getLogin().add(node.getStringValue());
+					            System.out.println(node.getStringValue());
+					         }
+					         System.out.println(permissions);
+					} catch (Exception e) {
+						Application.log.error("", e);
+					}
 				}
 			}
 		}

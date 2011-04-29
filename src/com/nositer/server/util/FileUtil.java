@@ -53,12 +53,18 @@ public class FileUtil {
 		FileUtils.copyFileToDirectory(defaultAvatar, publicDir);
 		File publicREADME = new File(MessageFormat.format(Global.USERPUBLICDIRTEMPLATE, user.getId()) + "/README.txt");
 		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your userid is: " + user.getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.USER_URL_PREFIX + "/" + user.getId() +
-				"\nFor example, your default avatar is viewable at this location: " +
-				Global.USER_URL_PREFIX + "/" + user.getId() + "/" + Global.DEFAULTUSERAVATAR
+				"\nAny files in your public directory can be accessed with a relative URL of \n" + 
+				Global.USER_URL_PREFIX + "/" + user.getId() + Global.USERPUBLICDIR + 
+				"\nFor example, your default avatar is viewable at this location: \n" +
+				Global.USER_URL_PREFIX + "/" + user.getId() + Global.USERPUBLICDIR + "/" + Global.DEFAULTUSERAVATAR
 		);		
 		File privateREADME = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "Any files in this directory are only viewable by yourself.  If you wish to share this folder or a subfolder, upload a permissions.xml to that folder.\n");
+		FileUtils.writeStringToFile(privateREADME, "Any files in this directory are only viewable by yourself.  " +
+				"If you wish to share this folder or a subfolder, upload a permissions.xml to that folder.\n" +
+				"Your userid is: " + user.getId() + "\n" +
+				"The root of this folder is: \n" + 
+				Global.USER_URL_PREFIX + "/" + user.getId() + Global.PRIVATEFOLDER
+				);
 		File permissionsXML = new File(MessageFormat.format(Global.USERPRIVATEDIRTEMPLATE, user.getId()) + "/" + Global.PERMISSIONSXML);
 		FileUtils.writeStringToFile(permissionsXML, "<permissions>\n" +
 				"\t<!--\n" +
@@ -78,13 +84,19 @@ public class FileUtil {
 		File publicDir = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()));
 		FileUtils.copyFileToDirectory(defaultAvatar, publicDir);
 		File publicREADME = new File(MessageFormat.format(Global.GROUPPUBLICDIRTEMPLATE, group.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.  Your groupid is: " + group.getId() + 
-				"\nAny files in your public directory can be accessed with a relative URL of " + Global.GROUP_URL_PREFIX + "/" + group.getId() +
-				"\nFor example, your default avatar is viewable at this location: " +
-				Global.GROUP_URL_PREFIX + "/" + group.getId() + "/" + Global.DEFAULTGROUPAVATAR
+		FileUtils.writeStringToFile(publicREADME, "The public folder is viewable by the general public.\n" +
+				"Your groupid is: " + group.getId() + 
+				"\nAny files in your public directory can be accessed with a relative URL of \n" + 
+				Global.GROUP_URL_PREFIX + "/" + group.getId() + Global.GROUPPUBLICDIR + 
+				"\nFor example, your default avatar is viewable at this location: \n" +
+				Global.GROUP_URL_PREFIX + "/" + group.getId() + Global.GROUPPUBLICDIR + "/" + Global.DEFAULTGROUPAVATAR
 		);		
 		File privateREADME = new File(MessageFormat.format(Global.GROUPPRIVATEDIRTEMPLATE, group.getId()) + "/README.txt");
-		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for the owner and subscribers of this group");
+		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for the owner and subscribers of this group.\n" +
+				"Your groupid is: " + group.getId() + 
+				"\nThe root of this folder is:\n" + 
+				Global.GROUP_URL_PREFIX + "/" + group.getId() + Global.GROUPPUBLICDIR
+				);
 	}
 	
 }

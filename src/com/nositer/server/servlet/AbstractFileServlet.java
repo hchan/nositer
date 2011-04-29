@@ -37,7 +37,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		try {
 			if (!isValidRequestedFile(requestedFile)) {
 				Application.log.info("requestedFile is invalid");
-				response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
+				response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
 				return;
 			}
 		} catch (FileAccessException e) {

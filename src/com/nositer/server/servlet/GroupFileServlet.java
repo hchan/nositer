@@ -23,7 +23,7 @@ public class GroupFileServlet extends AbstractFileServlet {
 	public String getPublicDir() {
 		return Global.GROUPPUBLICDIR;
 	}
-	
+
 	@Override
 	public String getPrivateDir() {
 		return Global.GROUPPRIVATEDIR;
@@ -35,11 +35,13 @@ public class GroupFileServlet extends AbstractFileServlet {
 		boolean retval = false;
 		int groupid = Integer.parseInt(userOrGroupid);
 		User currentUser = Application.getCurrentUser();
-		int userid = currentUser.getId();
-		GroupServiceImpl groupServiceImpl = new GroupServiceImpl();		
-		GroupSubscriptionView groupSubscriptionView = groupServiceImpl.getGroupSubscriptionByGroupAndUser(groupid, userid);
-		if (groupSubscriptionView != null) {
-			retval = true;
+		if (currentUser != null) {
+			int userid = currentUser.getId();
+			GroupServiceImpl groupServiceImpl = new GroupServiceImpl();		
+			GroupSubscriptionView groupSubscriptionView = groupServiceImpl.getGroupSubscriptionByGroupAndUser(groupid, userid);
+			if (groupSubscriptionView != null) {
+				retval = true;
+			}
 		}
 		return retval;
 	}
