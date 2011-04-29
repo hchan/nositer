@@ -48,18 +48,18 @@ public class UserFileServlet extends AbstractFileServlet {
 					try {
 						Permissions permissions = new Permissions();
 						Document document = null;
-					      SAXReader reader = new SAXReader();
-					 
-					         document = reader.read(permissionsXML);
-					         String xPath = "//permissions/login";
-					         List<Node> nodes = document.selectNodes( xPath );
-					         for (Node node : nodes)
-					         {
-					           
-					            permissions.getLogin().add(node.getStringValue());
-					            System.out.println(node.getStringValue());
-					         }
-					         System.out.println(permissions);
+						SAXReader reader = new SAXReader();					 
+						document = reader.read(permissionsXML);
+						String xPath = "//permissions/login";
+						List<Node> nodes = document.selectNodes( xPath );
+						for (Node node : nodes) {
+							String login = node.getStringValue();
+							permissions.getLogin().add(login);
+							if (currentUser.getLogin().equals(login)) {
+								retval = true;
+								break;
+							}
+						}
 					} catch (Exception e) {
 						Application.log.error("", e);
 					}
