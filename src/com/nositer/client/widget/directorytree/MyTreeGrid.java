@@ -32,7 +32,7 @@ public class MyTreeGrid extends TreeGrid<ModelData>{
 		FileModel fileModel = (FileModel)model;
 		if (model instanceof FolderModel && isLeaf(model)) {
 			retval = IconHelper.createPath("/public/image/emptyFolder.png");
-		} if (fileModel.getPath().equals(Nositer.getInstance().getUser().getAvatarlocation())) {
+		} else if (fileModel.getPath().equals(Nositer.getInstance().getUser().getAvatarlocation())) {
 			retval = IconHelper.createPath("/public/image/avataricon.png");
 		} else {
 			retval = super.calculateIconStyle(model);
