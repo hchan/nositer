@@ -12,16 +12,16 @@ import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridCont
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
 abstract public class AbstractManageFiles extends LayoutContainer implements Resizable {
-	protected AbstractFolderSelector folderSelector;
+	protected AbstractFileSelector fileSelector;
 	protected FileViewerContainer fileViewerContainer;
 	protected ContentPanel contentPanel;
 
-	public AbstractFolderSelector getFolderSelector() {
-		return folderSelector;
+	public AbstractFileSelector getFileSelector() {
+		return fileSelector;
 	}
 
-	public void setFolderSelector(AbstractFolderSelector folderSelector) {
-		this.folderSelector = folderSelector;
+	public void setFileSelector(AbstractFileSelector fileSelector) {
+		this.fileSelector = fileSelector;
 	}
 
 	public FileViewerContainer getFileViewerContainer() {
@@ -45,7 +45,7 @@ abstract public class AbstractManageFiles extends LayoutContainer implements Res
 	}
 
 	abstract public FileViewerContainer createFileViewerContainer();
-	abstract public AbstractFolderSelector createFolderSelector();
+	abstract public AbstractFileSelector createFileSelector();
 	
 	public void init() {
 		BorderLayout layout = new BorderLayout();
@@ -59,12 +59,12 @@ abstract public class AbstractManageFiles extends LayoutContainer implements Res
 		
 		fileViewerContainer = createFileViewerContainer();
 	
-		folderSelector = createFolderSelector();
+		fileSelector = createFileSelector();
 
 		BorderLayoutData westBorderLayoutData = new BorderLayoutData(LayoutRegion.WEST);
 		westBorderLayoutData.setSize(MainPanel.getInstance().getWidth()/2);
 		westBorderLayoutData.setSplit(true);
-		contentPanel.add(folderSelector, westBorderLayoutData);
+		contentPanel.add(fileSelector, westBorderLayoutData);
 		BorderLayoutData centerBorderLayoutData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerBorderLayoutData.setSplit(true);
 		contentPanel.add(fileViewerContainer, centerBorderLayoutData);

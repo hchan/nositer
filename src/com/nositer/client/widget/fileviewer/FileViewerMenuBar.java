@@ -72,7 +72,7 @@ public class FileViewerMenuBar extends MenuBar {
 						@Override
 						public void onSuccess(Object result) {
 							Nositer.getInstance().getUser().setAvatarlocation(ManageMyFiles.getInstance().getFileViewerContainer().getSelectedFilePanel().getSelectedFile().getValue());
-							ManageMyFiles.getInstance().getFolderSelector().refreshSelectedTreeNode();
+							ManageMyFiles.getInstance().getFileSelector().refreshSelectedTreeNode();
 							InfoMessageBox.show("Avatar updated");
 						}
 						

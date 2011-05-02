@@ -69,7 +69,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		errorPanel = new ErrorPanel();
 		//errorPanel.init();
 		errorPanel.hide();
-		setHeading("Group Subscriptions Search Criteria");
+		setHeading("Subscribers (to filter out the subscribers click the expand icon on the right for filter options)");
 		setCollapsible(true);
 		setBodyBorder(false);
 		//addSearchLabel();

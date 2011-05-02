@@ -40,8 +40,8 @@ public class GroupManageFiles extends AbstractManageFiles {
 	}
 	
 	@Override
-	public AbstractFolderSelector createFolderSelector() {
-		return new GroupFolderSelector(getFileViewerContainer(), groupPlusView) {
+	public AbstractFileSelector createFileSelector() {
+		return new GroupFileSelector(getFileViewerContainer(), groupPlusView) {
 			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
@@ -51,8 +51,8 @@ public class GroupManageFiles extends AbstractManageFiles {
 	
 	@Override
 	public void resize(int width, int height) {
-		folderSelector.getContentPanel().setSize(folderSelector.getWidth(), 
-				folderSelector.getHeight() - 52);
+		fileSelector.getContentPanel().setSize(fileSelector.getWidth(), 
+				fileSelector.getHeight() - 52);
 		
 		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-65);
 		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());

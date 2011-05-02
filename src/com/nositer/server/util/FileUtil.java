@@ -95,7 +95,7 @@ public class FileUtil {
 		FileUtils.writeStringToFile(privateREADME, "The private folder is intended for the owner and subscribers of this group.\n" +
 				"Your groupid is: " + group.getId() + 
 				"\nThe root of this folder is:\n" + 
-				Global.GROUP_URL_PREFIX + "/" + group.getId() + Global.GROUPPUBLICDIR
+				Global.GROUP_URL_PREFIX + "/" + group.getId() + Global.GROUPPRIVATEDIR
 				);
 	}
 	

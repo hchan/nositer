@@ -7,15 +7,21 @@ import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.directorytree.UserFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
-public class UserFolderSelector extends AbstractFolderSelector {
+public class UserFileSelector extends AbstractFileSelector {
 
-	public UserFolderSelector(FileViewerContainer fileViewerContainer) {
+	public UserFileSelector(FileViewerContainer fileViewerContainer) {
 		super(fileViewerContainer);
 	}
 
 	@Override
 	public RpcProxy<List<FileModel>> createProxy() {
 		return UserFileDirectoryTreeGridContainer.createUserProxy();
+	}
+
+	@Override
+	public AbstractFileSelectorMenuBar createFileSelectorMenuBar() {
+		AbstractFileSelectorMenuBar retval = new UserFileSelectorMenuBar(this);
+		return retval;
 	}
 
 }

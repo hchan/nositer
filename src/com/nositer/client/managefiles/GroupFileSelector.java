@@ -9,13 +9,13 @@ import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.directorytree.GroupFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.fileviewer.FileViewerContainer;
 
-public class GroupFolderSelector extends AbstractFolderSelector {
+public class GroupFileSelector extends AbstractFileSelector {
 	private GroupPlusView groupPlusView;
 
 	
 
 
-	public GroupFolderSelector(FileViewerContainer fileViewerContainer, GroupPlusView groupPlusView) {
+	public GroupFileSelector(FileViewerContainer fileViewerContainer, GroupPlusView groupPlusView) {
 		super(fileViewerContainer);
 		Scope scope = new Scope(Scope.Type.group);
 		scope.setGroupPlusView(groupPlusView);
@@ -32,6 +32,12 @@ public class GroupFolderSelector extends AbstractFolderSelector {
 	@Override
 	public RpcProxy<List<FileModel>> createProxy() {
 		return GroupFileDirectoryTreeGridContainer.createGroupProxy(groupPlusView);
+	}
+
+	@Override
+	public AbstractFileSelectorMenuBar createFileSelectorMenuBar() {
+		AbstractFileSelectorMenuBar retval = new GroupFileSelectorMenuBar(this, groupPlusView);
+		return retval;
 	}
 
 }

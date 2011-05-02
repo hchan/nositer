@@ -26,7 +26,8 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.main.MainPanel;
-import com.nositer.client.managefiles.FileManagerMenuBar;
+import com.nositer.client.managefiles.AbstractFileSelectorMenuBar;
+import com.nositer.client.managefiles.UserFileSelectorMenuBar;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
@@ -66,8 +67,8 @@ public class UploadFiles extends LayoutContainer implements Resizable {
 		layout.setWidth("100%");
 		this.setLayout(layout);
 		fileDirectoryTreeGridContainer = createFileDirectoryTreeGridContainer();
-		FileManagerMenuBar fileManagerMenuBar = new FileManagerMenuBar(fileDirectoryTreeGridContainer);
-		fileDirectoryTreeGridContainer.getContentPanel().setTopComponent(fileManagerMenuBar);
+		AbstractFileSelectorMenuBar abstractFileSelectorMenuBar = new UserFileSelectorMenuBar(fileDirectoryTreeGridContainer);
+		fileDirectoryTreeGridContainer.getContentPanel().setTopComponent(abstractFileSelectorMenuBar);
 
 
 		add(fileDirectoryTreeGridContainer);

@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.managefiles.GroupFolderSelector;
+import com.nositer.client.managefiles.GroupFileSelector;
 import com.nositer.client.managefiles.GroupManageFiles;
 import com.nositer.client.widget.Resizable;
 

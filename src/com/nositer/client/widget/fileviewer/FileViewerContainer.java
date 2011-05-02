@@ -131,7 +131,7 @@ public class FileViewerContainer extends LayoutContainer {
 
 	public void setUnknownFile(FileModel fileModel) {
 		String url = getUrl(fileModel.getPath());
-		fileContainer.setHtml("This file can be downloaded at <A HREF='" + url + "'>" + fileModel.getName() + "</A>");		
+		fileContainer.setHtml("This file can be downloaded by clicking on this link: <A HREF='" + url + "'>" + fileModel.getName() + "</A>");		
 	}
 	
 	

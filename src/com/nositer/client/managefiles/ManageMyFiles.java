@@ -31,8 +31,8 @@ public class ManageMyFiles extends AbstractManageFiles {
 	}
 
 	@Override
-	public AbstractFolderSelector createFolderSelector() {
-		return new UserFolderSelector(getFileViewerContainer()) {
+	public AbstractFileSelector createFileSelector() {
+		return new UserFileSelector(getFileViewerContainer()) {
 			@Override
 			protected void onResize(int width, int height) {
 				resize(0,0);
@@ -43,8 +43,8 @@ public class ManageMyFiles extends AbstractManageFiles {
 	
 	@Override
 	public void resize(int width, int height) {
-		folderSelector.getContentPanel().setSize(folderSelector.getWidth(), 
-				folderSelector.getHeight());
+		fileSelector.getContentPanel().setSize(fileSelector.getWidth(), 
+				fileSelector.getHeight());
 		
 		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
 		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());

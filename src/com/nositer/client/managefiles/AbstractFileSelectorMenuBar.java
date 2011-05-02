@@ -21,20 +21,34 @@ import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.PromptMessageBox;
 
-public class FileManagerMenuBar extends MenuBar {
+abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	private MenuBarItem file;
 	private MenuItem createFolder;
 	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
+	private Menu menu;
 
-	public FileManagerMenuBar(AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public AbstractFileSelectorMenuBar(AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer) {
 		this.fileDirectoryTreeGridContainer = fileDirectoryTreeGridContainer;
-		Menu subMenu = new Menu();
-		initCreateFolder();
-		subMenu.add(createFolder);
-		file = new MenuBarItem("File", subMenu);
+		menu = createMenu();		
+		file = new MenuBarItem("File", menu);
 		setBorders(true);
 		this.add(file);
+	}
+
+	public Menu createMenu() {
+		Menu retval = new Menu();
+		initCreateFolder();
+		retval.add(createFolder);
+		return retval;
 	}
 
 	private void initCreateFolder() {
@@ -43,6 +57,7 @@ public class FileManagerMenuBar extends MenuBar {
 
 			@Override
 			public void handleEvent(BaseEvent be) {
+				
 				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
 					PromptMessageBox.show("Create Folder", "Enter the name of the folder", new Listener<MessageBoxEvent>() {
 						@Override
@@ -97,6 +112,10 @@ public class FileManagerMenuBar extends MenuBar {
 			}	
 
 		};
-		ServiceBroker.fileService.createFolder(fullFolderName, callback);
+		doCreateFolderService(fullFolderName, callback);
+		
 	}
+
+	abstract public void doCreateFolderService(String fullFolderName,
+			AsyncCallback<Void> callback) ;
 }
