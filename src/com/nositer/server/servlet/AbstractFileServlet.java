@@ -68,7 +68,13 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 
 		// Get content type by filename.
-		String contentType = getServletContext().getMimeType(file.getName());
+		String contentType = null;
+		if (request.getParameter(Global.DOWNLOAD) != null && request.getParameter(Global.DOWNLOAD).equals("true")) {
+			contentType = "application/octet-stream";
+		} else {
+			contentType = getServletContext().getMimeType(file.getName());
+		}
+		
 		/*
 		// Check if file is actually an image (avoid download of other files by hackers!).
 		// For all content types, see: http://www.w3schools.com/media/media_mimeref.asp

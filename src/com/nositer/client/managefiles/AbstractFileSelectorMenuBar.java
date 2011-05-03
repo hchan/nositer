@@ -13,10 +13,7 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
-import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.ServiceBroker;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
@@ -63,7 +60,7 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 			@Override
 			public void handleEvent(BaseEvent be) {
 				FileModel fileModel = (FileModel) fileDirectoryTreeGridContainer.getTree().getSelectionModel().getSelectedItem();
-				GWTUtil.log(fileModel.getName());
+				doDownloadFile(fileModel);
 			}
 		});
 	}
@@ -72,10 +69,8 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		createFolder = new MenuItemManageFiles("Create Folder");
 		createFolder.setFolderMenuItem(true);
 		createFolder.addListener(Events.Select, new Listener<BaseEvent>() {
-
 			@Override
-			public void handleEvent(BaseEvent be) {
-				
+			public void handleEvent(BaseEvent be) {				
 				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
 					PromptMessageBox.show("Create Folder", "Enter the name of the folder", new Listener<MessageBoxEvent>() {
 						@Override
@@ -124,16 +119,14 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 				}
 				);
-
-
 				fileDirectoryTreeGridContainer.refreshSelectedTreeNode();
 			}	
-
 		};
-		doCreateFolderService(fullFolderName, callback);
-		
+		doCreateFolderService(fullFolderName, callback);		
 	}
 
 	abstract public void doCreateFolderService(String fullFolderName,
 			AsyncCallback<Void> callback) ;
+
+	abstract public void doDownloadFile(FileModel fileModel);
 }
