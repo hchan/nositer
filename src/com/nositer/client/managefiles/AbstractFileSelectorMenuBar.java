@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
@@ -24,7 +25,8 @@ import com.nositer.client.widget.messagebox.PromptMessageBox;
 abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	private MenuBarItem file;
-	private MenuItem createFolder;
+	private MenuItemManageFiles createFolder;
+	private MenuItemManageFiles downloadFile;
 	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private Menu menu;
 
@@ -48,11 +50,27 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		Menu retval = new Menu();
 		initCreateFolder();
 		retval.add(createFolder);
+		initDownloadFile();
+		retval.add(downloadFile);
 		return retval;
 	}
 
+	private void initDownloadFile() {
+		downloadFile = new MenuItemManageFiles("Download");
+		downloadFile.setFolderMenuItem(false);
+		downloadFile.addListener(Events.Select, new Listener<BaseEvent>() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				FileModel fileModel = (FileModel) fileDirectoryTreeGridContainer.getTree().getSelectionModel().getSelectedItem();
+				GWTUtil.log(fileModel.getName());
+			}
+		});
+	}
+
 	private void initCreateFolder() {
-		createFolder = new MenuItem("Create Folder");
+		createFolder = new MenuItemManageFiles("Create Folder");
+		createFolder.setFolderMenuItem(true);
 		createFolder.addListener(Events.Select, new Listener<BaseEvent>() {
 
 			@Override

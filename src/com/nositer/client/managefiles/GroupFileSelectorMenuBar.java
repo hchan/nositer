@@ -15,11 +15,8 @@ public class GroupFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 	}
 
 	@Override
-	public void doCreateFolderService(String fullFolderName,
-			AsyncCallback<Void> callback) 
-	{
+	public void doCreateFolderService(String fullFolderName, AsyncCallback<Void> callback) {
 		ServiceBroker.fileService.createFolder(fullFolderName, groupPlusView, callback);
-
 	}
 }
 
