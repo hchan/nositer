@@ -13,17 +13,21 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 import com.nositer.client.widget.messagebox.PromptMessageBox;
+import com.nositer.shared.Global;
 
 abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	private MenuBarItem file;
 	private MenuItemManageFiles createFolder;
 	private MenuItemManageFiles downloadFile;
+	private MenuItemManageFiles showURLPath;
 	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private Menu menu;
 
@@ -49,9 +53,24 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		retval.add(createFolder);
 		initDownloadFile();
 		retval.add(downloadFile);
+		initShowURLPath();
+		retval.add(showURLPath);
 		return retval;
 	}
 
+	private void initShowURLPath() {
+		showURLPath = new MenuItemManageFiles("Show URL Path");
+		showURLPath.setFolderMenuItem(false);
+		showURLPath.addListener(Events.Select, new Listener<BaseEvent>() {
+
+			@Override
+			public void handleEvent(BaseEvent be) {
+				FileModel fileModel = (FileModel) fileDirectoryTreeGridContainer.getTree().getSelectionModel().getSelectedItem();
+				doShowURLPath(fileModel);
+			}
+		});
+	}
+	
 	private void initDownloadFile() {
 		downloadFile = new MenuItemManageFiles("Download");
 		downloadFile.setFolderMenuItem(false);
@@ -125,8 +144,21 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		doCreateFolderService(fullFolderName, callback);		
 	}
 
-	abstract public void doCreateFolderService(String fullFolderName,
-			AsyncCallback<Void> callback) ;
 
-	abstract public void doDownloadFile(FileModel fileModel);
+	
+	public void doDownloadFile(FileModel fileModel) {
+		Window.open(getURLPath(fileModel)
+				+ "?" + Global.DOWNLOAD + "=true",
+				"_blank", 
+				null);		
+	}
+	
+	public void doShowURLPath(FileModel fileModel) {
+		InfoMessageBox.show(getURLPath(fileModel));
+	}
+
+	abstract public String getURLPath(FileModel fileModel);
+	
+	abstract public void doCreateFolderService(String fullFolderName, AsyncCallback<Void> callback) ;
+	
 }

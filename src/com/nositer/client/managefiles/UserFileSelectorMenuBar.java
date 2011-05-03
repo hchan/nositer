@@ -1,6 +1,5 @@
 package com.nositer.client.managefiles;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
@@ -20,12 +19,10 @@ public class UserFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 
 	}
 
+	
 	@Override
-	public void doDownloadFile(FileModel fileModel) {
-		Window.open(Global.USER_URL_PREFIX + "/" + Nositer.getInstance().getUser() + fileModel.getPath() 
-				+ "?" + Global.DOWNLOAD + "=true",
-				"_blank", 
-				null);		
+	public String getURLPath(FileModel fileModel) {
+		return Global.USER_URL_PREFIX + "/" + Nositer.getInstance().getUser() + fileModel.getPath();
 	}
 }
 

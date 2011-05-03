@@ -1,6 +1,5 @@
 package com.nositer.client.managefiles;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.GroupPlusView;
@@ -22,11 +21,10 @@ public class GroupFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 		ServiceBroker.fileService.createFolder(fullFolderName, groupPlusView, callback);
 	}
 
+
 	@Override
-	public void doDownloadFile(FileModel fileModel) {
-		Window.open(Global.GROUP_URL_PREFIX + "/" + groupPlusView.getId() + fileModel.getPath() + 
-				"?" + Global.DOWNLOAD + "=true", 
-				"_blank", null);		
+	public String getURLPath(FileModel fileModel) {
+		return Global.GROUP_URL_PREFIX + "/" + groupPlusView.getId() + fileModel.getPath();
 	}
 }
 
