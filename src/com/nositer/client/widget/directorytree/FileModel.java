@@ -11,8 +11,8 @@ public class FileModel extends BaseModelData implements IsSerializable {
 	public enum Attribute {
 		size, errorMessage, date, id, name, path
 	}
-	
-	
+
+
 	protected FileModel() {
 
 	}
@@ -44,7 +44,7 @@ public class FileModel extends BaseModelData implements IsSerializable {
 	public String getName() {
 		return get(Attribute.name.toString());
 	}
-	
+
 	public boolean isDirectory() {
 		return get(Attribute.size.toString()) == null;
 	}
@@ -61,11 +61,24 @@ public class FileModel extends BaseModelData implements IsSerializable {
 			if (objPath == null) {
 				objPath = "";
 			}
-			
+
 			return getName().equals(mobj.getName()) 
 			&& curPath.equals(objPath);
 		}
 		return super.equals(obj);
+	}
+
+	public FileModel getParent() {
+		FolderModel retval = new FolderModel();
+		if (this.getName() != null) {
+			int indexOfLastSlash = this.getPath().lastIndexOf("/");
+			String newPath = this.getPath().substring(0, indexOfLastSlash);
+			retval.setPath(newPath);
+			indexOfLastSlash = newPath.lastIndexOf("/");
+			String newName = newPath.substring(indexOfLastSlash+1);
+			retval.setName(newName);
+		}
+		return retval;
 	}
 
 }

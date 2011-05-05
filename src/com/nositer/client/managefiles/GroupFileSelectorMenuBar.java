@@ -26,6 +26,15 @@ public class GroupFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 	public String getURLPath(FileModel fileModel) {
 		return Global.GROUP_URL_PREFIX + "/" + groupPlusView.getId() + fileModel.getPath();
 	}
+	
+
+
+	@Override
+	public void doRenameFolderService(String pathName,
+			String oldRelativeFolderName, String newRelativeFolderName,
+			AsyncCallback<Void> callback) {
+		ServiceBroker.fileService.renameFolder(pathName, oldRelativeFolderName, newRelativeFolderName, groupPlusView, callback);
+	}
 }
 
 

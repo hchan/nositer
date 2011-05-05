@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -48,7 +49,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		}
 		return getFolderChildren(folder, rootDir);
 	}
-	
+
 	@Override
 	public List<FileModel> getFolderChildren(FileModel folder, GroupPlusView groupPlusView) {
 		try {
@@ -60,7 +61,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		String rootDir = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId());
 		return getFolderChildren(folder, rootDir);
 	}
-	
+
 	private String getRelativePath(File root, String absolutePath) {
 		String retval = absolutePath;
 		retval = absolutePath.substring(root.getAbsolutePath().length());
@@ -69,8 +70,9 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	}
 
 	private List<FileModel> getFolderChildren(FileModel folder, String rootDir) {
+		List<FileModel> retval = new ArrayList<FileModel>();
 		File root = new File(rootDir);
-		
+
 		File[] files = null;
 		if (folder == null) {
 			files = root.listFiles();
@@ -79,43 +81,45 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 			files = f.listFiles();
 		}
 
-		int counter = 0;
-		HashMap<File, String> idMap = new HashMap<File, String>();
-		List<FileModel> models = new ArrayList<FileModel>();
-		for (File f : files) {
-			FileModel m = null;
-			if (f.isDirectory()) {			
-				m = new FolderModel(f.getName(), 
-						getRelativePath(root, f.getAbsolutePath()));
-				//f.getAbsolutePath());
-			} else {
-				m = new FileModel(f.getName(), 
-						getRelativePath(root, f.getAbsolutePath()));
-				//f.getAbsolutePath());
-				m.set(FileModel.Attribute.size.toString(), f.length());
-				m.set(FileModel.Attribute.date.toString(), new Date(f.lastModified()));
+		if (files != null) {
+			int counter = 0;
+			HashMap<File, String> idMap = new HashMap<File, String>();
+
+			for (File f : files) {
+				FileModel m = null;
+				if (f.isDirectory()) {			
+					m = new FolderModel(f.getName(), 
+							getRelativePath(root, f.getAbsolutePath()));
+					//f.getAbsolutePath());
+				} else {
+					m = new FileModel(f.getName(), 
+							getRelativePath(root, f.getAbsolutePath()));
+					//f.getAbsolutePath());
+					m.set(FileModel.Attribute.size.toString(), f.length());
+					m.set(FileModel.Attribute.date.toString(), new Date(f.lastModified()));
+				}
+
+				if (idMap.containsKey(f)) {
+					m.set(FileModel.Attribute.id.toString(), idMap.get(f));
+				} else {
+					String id = String.valueOf(counter++);
+					idMap.put(f, id);
+					m.set(FileModel.Attribute.id.toString(), id);
+				}
+
+				retval.add(m);
 			}
 
-			if (idMap.containsKey(f)) {
-				m.set(FileModel.Attribute.id.toString(), idMap.get(f));
-			} else {
-				String id = String.valueOf(counter++);
-				idMap.put(f, id);
-				m.set(FileModel.Attribute.id.toString(), id);
-			}
-
-			models.add(m);
+			Collections.sort(retval, new Comparator<FileModel>() {
+				public int compare(FileModel o1, FileModel o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
 		}
-
-		Collections.sort(models, new Comparator<FileModel>() {
-			public int compare(FileModel o1, FileModel o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
-		return models;
+		return retval;
 	}
 
-	
+
 
 	@Override
 	public void createFolder(String folder) throws GWTException {
@@ -127,13 +131,13 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		createFolder(folder, MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + folder);
 	}
 
-	private void createFolder(String folder, String fullFolderPath) throws GWTException {
+	private void createFolder(String folder, String systemFolderPath) throws GWTException {
 		try {
 			String baseName = FilenameUtils.getBaseName(folder);
 			if (!FileNameUtil.isValidFileName(baseName)) {
 				throw new GWTException(baseName + " has illegal characters");
 			}		
-			File dirToCreate = new File(fullFolderPath);
+			File dirToCreate = new File(systemFolderPath);
 			if (dirToCreate.exists()) {
 				throw new GWTException(baseName + " already exists");
 			}
@@ -142,8 +146,42 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 			throw e;
 		} catch (Exception e) {	
 			Application.log.error("", e);
-			throw new GWTException("Server Error");
+			throw new GWTException(e);
 		}
+	}
+
+
+
+
+	private void renameFolderInSystem(String systemPath, 
+			String oldRelativeFolder,
+			String newRelativeFolder) {
+		String baseName = FilenameUtils.getBaseName(systemPath);
+		if (!FileNameUtil.isValidFileName(baseName)) {
+			throw new GWTException(baseName + " has illegal characters");
+		}	
+		File srcDir = new File(systemPath + "/" + oldRelativeFolder);
+		File destDir = new File(systemPath + "/" + newRelativeFolder);
+		try {
+			FileUtils.moveDirectory(srcDir, destDir);
+		} catch (IOException e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+	}
+
+	@Override
+	public void renameFolder(String pathName, String oldRelativeFolder,
+			String newRelativeFolder) {
+		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + pathName;
+		renameFolderInSystem(systemPath, oldRelativeFolder, newRelativeFolder);
+	}
+
+	@Override
+	public void renameFolder(String pathName, String oldRelativeFolder,
+			String newRelativeFolder, GroupPlusView groupPlusView) {
+		String systemPath = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + pathName;
+		renameFolderInSystem(systemPath, oldRelativeFolder, newRelativeFolder);
 	}
 
 

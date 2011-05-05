@@ -13,16 +13,21 @@ import com.nositer.shared.GWTException;
 @RemoteServiceRelativePath("ServiceResolver.gwtrpc")
 public interface FileService extends RemoteService {
 
+	List<FileModel> getFolderChildren(FileModel folder);
 
-	public List<FileModel> getFolderChildren(FileModel folder);
+	void createFolder(String folder);
 
-	public void createFolder(String folder) throws GWTException;
-
-	
+	void createFolder(String folder, GroupPlusView groupPlusView);
 
 	List<FileModel> getFolderChildren(FileModel folder,
 			GroupPlusView groupPlusView);
 
-	void createFolder(String folder, GroupPlusView groupPlusView);
+	void renameFolder(String pathName, String oldRelativeFolder,
+			String newRelativeFolder);
+
+	void renameFolder(String pathName, String oldRelativeFolder,
+			String newRelativeFolder, GroupPlusView groupPlusView);
+
+	
 
 }

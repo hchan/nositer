@@ -16,13 +16,20 @@ public class UserFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 	@Override
 	public void doCreateFolderService(String fullFolderName, AsyncCallback<Void> callback) {
 		ServiceBroker.fileService.createFolder(fullFolderName, callback);
-
 	}
 
 	
 	@Override
 	public String getURLPath(FileModel fileModel) {
 		return Global.USER_URL_PREFIX + "/" + Nositer.getInstance().getUser() + fileModel.getPath();
+	}
+
+
+	@Override
+	public void doRenameFolderService(String pathName,
+			String oldRelativeFolderName, String newRelativeFolderName,
+			AsyncCallback<Void> callback) {
+		ServiceBroker.fileService.renameFolder(pathName, oldRelativeFolderName, newRelativeFolderName, callback);
 	}
 }
 

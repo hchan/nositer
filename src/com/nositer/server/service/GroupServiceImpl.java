@@ -302,7 +302,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 	@Override
 	public ArrayList<GroupSubscriptionView> getSubscriptions(
-			GroupPlusView groupPlusView) {
+			GroupPlusView groupPlusView) throws GWTException {
 		ArrayList<GroupSubscriptionView> retval = null;
 		Session sess = HibernateUtil.getSession();
 		//User user = null;
@@ -338,7 +338,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 	@Override
 	public ArrayList<GroupSubscriptionView> findSubscriptions(
-			GroupPlusView groupPlusView, String lastname) {
+			GroupPlusView groupPlusView, String lastname) throws GWTException {
 		ArrayList<GroupSubscriptionView> retval = null;
 		Session sess = HibernateUtil.getSession();
 		//User user = null;
