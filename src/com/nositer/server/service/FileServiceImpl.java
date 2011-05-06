@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -156,15 +157,25 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 	private void renameFolderInSystem(String systemPath, 
 			String oldRelativeFolder,
 			String newRelativeFolder) {
-		String baseName = FilenameUtils.getBaseName(systemPath);
-		if (!FileNameUtil.isValidFileName(baseName)) {
-			throw new GWTException(baseName + " has illegal characters");
-		}	
-		File srcDir = new File(systemPath + "/" + oldRelativeFolder);
-		File destDir = new File(systemPath + "/" + newRelativeFolder);
 		try {
-			FileUtils.moveDirectory(srcDir, destDir);
-		} catch (IOException e) {
+			String baseName = FilenameUtils.getBaseName(systemPath);
+			if (!FileNameUtil.isValidFileName(baseName)) {
+				throw new GWTException(baseName + " has illegal characters");
+			}	
+			if (("/" + oldRelativeFolder).equals(Global.PUBLICFOLDER) ||
+					("/" + oldRelativeFolder).equals(Global.PRIVATEFOLDER)) {
+				throw new GWTException("Cannot rename " + Global.PUBLICFOLDER + " or " + Global.PRIVATEFOLDER);
+			} else {
+				File srcDir = new File(systemPath + "/" + oldRelativeFolder);
+				File destDir = new File(systemPath + "/" + newRelativeFolder);
+				FileUtils.moveDirectory(srcDir, destDir);
+			} 
+		} catch (GWTException e) {
+			throw e;
+		}
+		catch (FileExistsException e) {
+			throw new GWTException(newRelativeFolder + " already exists");
+		} catch (Exception e) {
 			Application.log.error("", e);
 			throw new GWTException(e);
 		}
@@ -172,16 +183,48 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 
 	@Override
 	public void renameFolder(String pathName, String oldRelativeFolder,
-			String newRelativeFolder) {
+			String newRelativeFolder) throws GWTException {
 		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + pathName;
 		renameFolderInSystem(systemPath, oldRelativeFolder, newRelativeFolder);
 	}
 
 	@Override
 	public void renameFolder(String pathName, String oldRelativeFolder,
-			String newRelativeFolder, GroupPlusView groupPlusView) {
+			String newRelativeFolder, GroupPlusView groupPlusView) throws GWTException {
 		String systemPath = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + pathName;
 		renameFolderInSystem(systemPath, oldRelativeFolder, newRelativeFolder);
+	}
+
+	@Override
+	public void deleteFolder(FolderModel folderModel) throws GWTException {
+		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + folderModel.getPath();
+		deleteFolderInSystem(systemPath, folderModel.getPath());
+
+	}
+
+	@Override
+	public void deleteFolder(FolderModel folderModel,
+			GroupPlusView groupPlusView) throws GWTException {
+		String systemPath = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + folderModel.getPath();
+		deleteFolderInSystem(systemPath, folderModel.getPath());
+
+	}
+
+	private void deleteFolderInSystem(String systemPath, String relativePath) {
+		try {
+			if (relativePath.equals(Global.PUBLICFOLDER) ||
+					relativePath.equals(Global.PRIVATEFOLDER)) {
+				throw new GWTException("Cannot delete " + Global.PUBLICFOLDER + " or " + Global.PRIVATEFOLDER);
+			} else {
+				FileUtils.deleteDirectory(new File(systemPath));
+			} 
+		} catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
 	}
 
 

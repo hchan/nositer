@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.directorytree.FolderModel;
 import com.nositer.shared.GWTException;
 
 public interface FileServiceAsync {
@@ -22,4 +23,9 @@ public interface FileServiceAsync {
 	void renameFolder(String pathName, String oldRelativeFolder, String newRelativeFolder, AsyncCallback<Void> callback) throws GWTException;
 	
 	void renameFolder(String pathName, String oldRelativeFolder, String newRelativeFolder, GroupPlusView groupPlusView, AsyncCallback<Void> callback) throws GWTException;
+	
+	void deleteFolder(FolderModel folderModel, AsyncCallback<Void> callback) throws GWTException;
+
+	void deleteFolder(FolderModel folderModel, GroupPlusView groupPlusView,
+			AsyncCallback<Void> callback) throws GWTException;
 }

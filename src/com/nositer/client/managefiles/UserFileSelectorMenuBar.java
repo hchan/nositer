@@ -5,6 +5,7 @@ import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
+import com.nositer.client.widget.directorytree.FolderModel;
 import com.nositer.shared.Global;
 
 public class UserFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
@@ -30,6 +31,12 @@ public class UserFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 			String oldRelativeFolderName, String newRelativeFolderName,
 			AsyncCallback<Void> callback) {
 		ServiceBroker.fileService.renameFolder(pathName, oldRelativeFolderName, newRelativeFolderName, callback);
+	}
+
+	@Override
+	public void doDeleteFolderService(FolderModel folderModel,
+			AsyncCallback<Void> callback) {
+		ServiceBroker.fileService.deleteFolder(folderModel, callback);
 	}
 }
 

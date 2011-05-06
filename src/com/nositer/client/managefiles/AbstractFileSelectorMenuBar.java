@@ -1,28 +1,20 @@
 package com.nositer.client.managefiles;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.extjs.gxt.ui.client.data.ListLoadResult;
-import com.extjs.gxt.ui.client.data.ListLoader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
-import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
-import com.extjs.gxt.ui.client.event.SelectionEvent;
 import com.extjs.gxt.ui.client.store.StoreEvent;
 import com.extjs.gxt.ui.client.store.StoreListener;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
-import com.gargoylesoftware.htmlunit.javascript.host.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.directorytree.AbstractFileDirectoryTreeGridContainer;
 import com.nositer.client.widget.directorytree.FileModel;
 import com.nositer.client.widget.directorytree.FolderModel;
@@ -162,7 +154,7 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 						@Override
 						public void handleEvent(MessageBoxEvent be) {
 							Button buttonClicked = be.getButtonClicked();
-							if (buttonClicked.getText().equals("OK")) {
+							if (buttonClicked.getText().equals("Yes")) {
 								doDeleteFolder(folderModel);
 							}
 						}
@@ -180,6 +172,10 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		doCreateFolderService(fullFolderName, getRefreshFolderCallbackForCreate(folderName));
 	}
 
+	private void doDeleteFolder(FolderModel folderModel) {
+		doDeleteFolderService(folderModel, getRefreshFolderCallbackOnParentFolder());
+	}
+	
 	private void doRenameFolder(String oldFullFolderName, String newRelativeFolderName) {
 
 		int lastIndexOfSlash = oldFullFolderName.lastIndexOf("/");
@@ -187,11 +183,11 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 		String oldRelativeFolderName = oldFullFolderName.substring(lastIndexOfSlash + 1);
 
-		doRenameFolderService(pathName, oldRelativeFolderName , newRelativeFolderName, getRefreshFolderCallbackForRename(pathName));
+		doRenameFolderService(pathName, oldRelativeFolderName , newRelativeFolderName, getRefreshFolderCallbackOnParentFolder());
 	}
 
 
-	private AsyncCallback<Void> getRefreshFolderCallbackForRename(final String folderName) {
+	private AsyncCallback<Void> getRefreshFolderCallbackOnParentFolder() {
 		AsyncCallback<Void> retval =  new AsyncCallback<Void>() {
 
 			@Override
@@ -263,6 +259,6 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	abstract public void doRenameFolderService(String pathName, String oldRelativeFolderName, String newRelativeFolderName, AsyncCallback<Void> callback);
 
-	public void doDeleteFolder(FolderModel folderModel){};
+	abstract public void doDeleteFolderService(FolderModel folderModel, AsyncCallback<Void> callback);
 
 }
