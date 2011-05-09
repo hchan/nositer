@@ -28,4 +28,16 @@ public interface FileServiceAsync {
 
 	void deleteFolder(FolderModel folderModel, GroupPlusView groupPlusView,
 			AsyncCallback<Void> callback) throws GWTException;
+
+	void renameFile(String pathName, String oldRelativeFolder,
+			String newRelativeFolder, AsyncCallback<Void> callback);
+
+	void renameFile(String pathName, String oldRelativeFolder,
+			String newRelativeFolder, GroupPlusView groupPlusView,
+			AsyncCallback<Void> callback);
+
+	void deleteFile(FileModel fileModel, AsyncCallback<Void> callback);
+
+	void deleteFile(FileModel fileModel, GroupPlusView groupPlusView,
+			AsyncCallback<Void> callback);
 }

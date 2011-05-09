@@ -38,6 +38,19 @@ public class UserFileSelectorMenuBar extends AbstractFileSelectorMenuBar {
 			AsyncCallback<Void> callback) {
 		ServiceBroker.fileService.deleteFolder(folderModel, callback);
 	}
+
+	@Override
+	public void doDeleteFileService(FileModel fileModel,
+			AsyncCallback<Void> callback) {
+		ServiceBroker.fileService.deleteFile(fileModel, callback);
+	}
+
+	@Override
+	public void doRenameFileService(String pathName,
+			String oldRelativeFileName, String newRelativeFileName,
+			AsyncCallback<Void> callback) {
+		ServiceBroker.fileService.renameFile(pathName, oldRelativeFileName, newRelativeFileName, callback);
+	}
 }
 
 

@@ -33,6 +33,9 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	private MenuItemManageFiles downloadFile;
 	private MenuItemManageFiles showURLPath;
+	private MenuItemManageFiles deleteFile;
+	private MenuItemManageFiles renameFile;
+	
 	private AbstractFileDirectoryTreeGridContainer fileDirectoryTreeGridContainer;
 	private Menu menu;
 
@@ -65,8 +68,14 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		retval.add(downloadFile);
 		initShowURLPath();
 		retval.add(showURLPath);
+		initDeleteFile();
+		retval.add(deleteFile);
+		initRenameFile();
+		retval.add(renameFile);
 		return retval;
 	}
+
+	
 
 	private void initShowURLPath() {
 		showURLPath = new MenuItemManageFiles("Show URL Path");
@@ -141,6 +150,31 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		});
 	}
 
+	
+	private void initRenameFile() {
+		renameFile = new MenuItemManageFiles("Rename File");
+		renameFile.setFolderMenuItem(false);
+		renameFile.addListener(Events.Select, new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent be) {		
+				final FileModel fileModel = (FileModel) fileDirectoryTreeGridContainer.getTree().getSelectionModel().getSelectedItem();
+				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
+					PromptMessageBox.show("Rename File", "Enter the name of the file you want <B>" + fileModel.getName() + "</B> to be renamed to", new Listener<MessageBoxEvent>() {
+						@Override
+						public void handleEvent(MessageBoxEvent be) {
+							Button buttonClicked = be.getButtonClicked();
+							if (buttonClicked.getText().equals("OK")) {
+								doRenameFile(fileModel, be.getValue());
+							}
+						}
+					});
+				} else {
+					AlertMessageBox.show("Error", "You must choose a folder", null);
+				}
+			}
+		});
+	}
+	
 	private void initDeleteFolder() {
 		deleteFolder = new MenuItemManageFiles("Delete Folder");
 		deleteFolder.setFolderMenuItem(true);
@@ -160,12 +194,34 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 						}
 					});
 				} else {
-					AlertMessageBox.show("Error", "You must choose folder", null);
+					AlertMessageBox.show("Error", "You must choose a folder", null);
 				}
 			}
 		});
 	}
 
+	private void initDeleteFile() {
+		deleteFile = new MenuItemManageFiles("Delete File");
+		deleteFile.setFolderMenuItem(false);
+		deleteFile.addListener(Events.Select, new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent be) {				
+				final FileModel fileModel = (FileModel) fileDirectoryTreeGridContainer.getTree().getSelectionModel().getSelectedItem();
+				if (fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() != null) {
+					ConfirmMessageBox.show("Delete File", "You are about to delete the file: " + fileModel.getPath(),
+							new Listener<MessageBoxEvent>() {
+						@Override
+						public void handleEvent(MessageBoxEvent be) {
+							Button buttonClicked = be.getButtonClicked();
+							if (buttonClicked.getText().equals("Yes")) {
+								doDeleteFile(fileModel);
+							}
+						}
+					});
+				} 
+			}
+		});
+	}
 
 	private void doCreateFolder(final String folderName) {
 		String fullFolderName = fileDirectoryTreeGridContainer.getSelectedFolderPanel().getSelectedFolder().getValue() + "/" + folderName;
@@ -176,17 +232,25 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 		doDeleteFolderService(folderModel, getRefreshFolderCallbackOnParentFolder());
 	}
 	
+	private void doDeleteFile(FileModel fileModel) {
+		doDeleteFileService(fileModel, getRefreshFolderCallbackOnParentFolder());
+	}
+	
 	private void doRenameFolder(String oldFullFolderName, String newRelativeFolderName) {
-
 		int lastIndexOfSlash = oldFullFolderName.lastIndexOf("/");
 		String pathName = oldFullFolderName.substring(0, lastIndexOfSlash);
-
 		String oldRelativeFolderName = oldFullFolderName.substring(lastIndexOfSlash + 1);
-
 		doRenameFolderService(pathName, oldRelativeFolderName , newRelativeFolderName, getRefreshFolderCallbackOnParentFolder());
 	}
 
+	private void doRenameFile(FileModel fileModel, String newFileName) {	
+		int lastIndexOfSlash = fileModel.getPath().lastIndexOf("/");
+		String pathName = fileModel.getPath().substring(0, lastIndexOfSlash);
+		doRenameFileService(pathName, fileModel.getName() , newFileName, getRefreshFolderCallbackOnParentFolder());
+	}
 
+	
+	
 	private AsyncCallback<Void> getRefreshFolderCallbackOnParentFolder() {
 		AsyncCallback<Void> retval =  new AsyncCallback<Void>() {
 
@@ -259,6 +323,9 @@ abstract public class AbstractFileSelectorMenuBar extends MenuBar {
 
 	abstract public void doRenameFolderService(String pathName, String oldRelativeFolderName, String newRelativeFolderName, AsyncCallback<Void> callback);
 
+	abstract public void doRenameFileService(String pathName, String oldRelativeFileName, String newRelativeFileName, AsyncCallback<Void> callback);
+	
 	abstract public void doDeleteFolderService(FolderModel folderModel, AsyncCallback<Void> callback);
 
+	abstract public void doDeleteFileService(FileModel fileModel, AsyncCallback<Void> callback);
 }

@@ -32,5 +32,16 @@ public interface FileService extends RemoteService {
 	void deleteFolder(FolderModel folderModel) throws GWTException;
 
 	void deleteFolder(FolderModel folderModel, GroupPlusView groupPlusView) throws GWTException;
+	
+	
+	void renameFile(String pathName, String oldRelativeFolder,
+			String newRelativeFolder) throws GWTException;
+
+	void renameFile(String pathName, String oldRelativeFolder,
+			String newRelativeFolder, GroupPlusView groupPlusView) throws GWTException;
+
+	void deleteFile(FileModel fileModel) throws GWTException;
+
+	void deleteFile(FileModel fileModel, GroupPlusView groupPlusView) throws GWTException;
 
 }

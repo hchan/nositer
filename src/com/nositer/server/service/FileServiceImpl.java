@@ -195,6 +195,7 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		renameFolderInSystem(systemPath, oldRelativeFolder, newRelativeFolder);
 	}
 
+
 	@Override
 	public void deleteFolder(FolderModel folderModel) throws GWTException {
 		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + folderModel.getPath();
@@ -227,5 +228,68 @@ public class FileServiceImpl extends RemoteServiceServlet implements FileService
 		}
 	}
 
+	@Override
+	public void renameFile(String pathName, String oldRelativeFile,
+			String newRelativeFile) throws GWTException {
+		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + pathName;
+		renameFileInSystem(systemPath, oldRelativeFile, newRelativeFile);
+	}
+
+	@Override
+	public void renameFile(String pathName, String oldRelativeFile,
+			String newRelativeFile, GroupPlusView groupPlusView)
+	throws GWTException {
+		String systemPath = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + pathName;
+		renameFileInSystem(systemPath, oldRelativeFile, newRelativeFile);
+	}
+
+	private void renameFileInSystem(String systemPath, 
+			String oldRelativeFile,
+			String newRelativeFile) {
+		try {			
+			if (!FileNameUtil.isValidFileName(newRelativeFile)) {
+				throw new GWTException(newRelativeFile + " has illegal characters");
+			}	
+
+			File srcDir = new File(systemPath + "/" + oldRelativeFile);
+			File destDir = new File(systemPath + "/" + newRelativeFile);
+			FileUtils.moveFile(srcDir, destDir);
+
+		} catch (GWTException e) {
+			throw e;
+		}
+		catch (FileExistsException e) {
+			throw new GWTException(newRelativeFile + " already exists");
+		} catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+	}
+
+	@Override
+	public void deleteFile(FileModel fileModel) throws GWTException {
+		String systemPath = MessageFormat.format(Global.USERDIRTEMPLATE, user.getId()) + fileModel.getPath();
+		deleteFileInSystem(systemPath, fileModel.getPath());
+	}
+
+	@Override
+	public void deleteFile(FileModel fileModel, GroupPlusView groupPlusView)
+	throws GWTException {
+		String systemPath = MessageFormat.format(Global.GROUPDIRTEMPLATE, groupPlusView.getId()) + fileModel.getPath();
+		deleteFileInSystem(systemPath, fileModel.getPath());
+	}
+
+	private void deleteFileInSystem(String systemPath, String relativePath) {
+		try {
+			File file = (new File(systemPath));
+			file.delete();
+		} catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+	}
 
 }
