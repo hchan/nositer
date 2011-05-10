@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated May 10, 2011 10:32:55 AM by Hibernate Tools 3.2.4.GA
+// Generated May 10, 2011 3:35:24 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -32,6 +32,7 @@ public class Group implements java.io.Serializable, IsSerializable, Cloneable,
 	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Set<Grouptopic> grouptopics = new HashSet<Grouptopic>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	public static final String TABLENAME = "nositer.group";
 
@@ -53,7 +54,8 @@ public class Group implements java.io.Serializable, IsSerializable, Cloneable,
 	public Group(Zipcode zipcode, Postalcode postalcode, String tagname,
 			String countrycode, String name, String description,
 			String avatarlocation, Boolean disable, Date createdtime,
-			Date modifiedtime, Set<UserHasGroup> userHasGroups) {
+			Date modifiedtime, Set<Grouptopic> grouptopics,
+			Set<UserHasGroup> userHasGroups) {
 		this.zipcode = zipcode;
 		this.postalcode = postalcode;
 		this.tagname = tagname;
@@ -64,6 +66,7 @@ public class Group implements java.io.Serializable, IsSerializable, Cloneable,
 		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.grouptopics = grouptopics;
 		this.userHasGroups = userHasGroups;
 	}
 
@@ -173,6 +176,14 @@ public class Group implements java.io.Serializable, IsSerializable, Cloneable,
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	public Set<Grouptopic> getGrouptopics() {
+		return this.grouptopics;
+	}
+
+	public void setGrouptopics(Set<Grouptopic> grouptopics) {
+		this.grouptopics = grouptopics;
 	}
 
 	public Set<UserHasGroup> getUserHasGroups() {

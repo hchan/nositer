@@ -26,7 +26,9 @@
         <mapping class="com.nositer.hibernate.generated.domain.Securityquestioncode" />
         <mapping class="com.nositer.hibernate.generated.domain.GroupSubscriptionView" />
         <mapping class="com.nositer.hibernate.generated.domain.Blog" />
+        <mapping class="com.nositer.hibernate.generated.domain.Groupmessage" />
         <mapping class="com.nositer.hibernate.generated.domain.Iwantto" />
+        <mapping class="com.nositer.hibernate.generated.domain.Grouptopic" />
         <mapping class="com.nositer.hibernate.generated.domain.Postalcode" />
         <mapping class="com.nositer.hibernate.generated.domain.Relationshipcode" />
         <mapping class="com.nositer.hibernate.generated.domain.GroupPlusView" />
