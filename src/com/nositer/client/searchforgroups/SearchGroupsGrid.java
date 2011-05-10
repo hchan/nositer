@@ -25,6 +25,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.Postalcode;
+import com.nositer.client.dto.generated.UserHasGroup;
 import com.nositer.client.dto.generated.Zipcode;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.Groups;
@@ -205,8 +206,10 @@ public class SearchGroupsGrid extends GroupsGrid {
 							}
 							
 						};
-						ServiceBroker.groupService.createOrUpdateSubscription(groupPlusView, callback);
-						
+						UserHasGroup userHasGroup = new UserHasGroup();
+						userHasGroup.setGroupid(groupPlusView.getId());
+						userHasGroup.setInvisible(false);
+						ServiceBroker.groupService.createOrUpdateSubscription(userHasGroup, callback);
 						
 					};
 				};

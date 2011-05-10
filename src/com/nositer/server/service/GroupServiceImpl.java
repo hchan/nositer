@@ -265,7 +265,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 	@Override
-	public void createOrUpdateSubscription(GroupPlusView groupPlusView)
+	public void createOrUpdateSubscription(com.nositer.client.dto.generated.UserHasGroup userHasGroup)
 	throws GWTException {
 		Session sess = HibernateUtil.getSession();
 		User user = null;
@@ -273,6 +273,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		try {
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();		
+			/*
 			if (user.getId().equals(groupPlusView.getUserid())) {	
 				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
 				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.disable.toString(), groupPlusView.getUserHasGroupDisable()).
@@ -280,12 +281,27 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.id.toString(), groupPlusView.getUserHasGroupId()).
 				executeUpdate();				
 			} else {
+			*/
+			try {
 				sess.createSQLQuery(SqlHelper.CREATESUBSCRIPTION).
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.userid.toString(), user.getId()).
-				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.groupid.toString(), groupPlusView.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.groupid.toString(), userHasGroup.getGroupid()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.invisible.toString(), userHasGroup.getInvisible()).
 				executeUpdate();
-			}			
-			trx.commit();			
+				trx.commit();			
+			} catch (ConstraintViolationException e) {
+				trx.rollback();
+				trx = sess.beginTransaction();		
+				sess.createSQLQuery(SqlHelper.UPDATESUBSCRIPTION).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.disable.toString(), userHasGroup.getDisable()).
+				setBoolean(com.nositer.client.dto.generated.UserHasGroup.Column.invisible.toString(), userHasGroup.getInvisible()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.userid.toString(), user.getId()).
+				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.groupid.toString(), userHasGroup.getGroupid()).
+				executeUpdate();	
+				trx.commit();
+			}
+						
+			
 		}
 		catch (GWTException e) {
 			throw e;
@@ -305,16 +321,20 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			GroupPlusView groupPlusView) throws GWTException {
 		ArrayList<GroupSubscriptionView> retval = null;
 		Session sess = HibernateUtil.getSession();
-		//User user = null;
+		User user = null;
+		int invisible = 0;
 		Transaction trx = null;
 		try {
-			//user = Application.getCurrentUser();
+			user = Application.getCurrentUser();
+			if (isOwner(groupPlusView, user)) {
+				invisible = 1;
+			}
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.GETSUBSCRIPTIONS).
 			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
 
 			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
-
+			setInteger(GroupSubscriptionView.Column.invisible.toString(), invisible).
 			list();
 			if (results.size() == 0) {				
 				retval = new ArrayList<GroupSubscriptionView>();
@@ -335,22 +355,34 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}	
 		return retval;
 	}
+	
+	private boolean isOwner(GroupPlusView groupPlusView, User user) {
+		boolean retval = false;
+		if (groupPlusView.getOwner() && groupPlusView.getUserid().equals(user.getId())) {
+			retval = true;
+		}
+		return retval;
+	}
 
 	@Override
 	public ArrayList<GroupSubscriptionView> findSubscriptions(
 			GroupPlusView groupPlusView, String lastname) throws GWTException {
 		ArrayList<GroupSubscriptionView> retval = null;
 		Session sess = HibernateUtil.getSession();
-		//User user = null;
+		User user = null;
+		int invisible = 0;
 		Transaction trx = null;
 		try {
-			//user = Application.getCurrentUser();
+			user = Application.getCurrentUser();
+			if (isOwner(groupPlusView, user)) {
+				invisible = 1;
+			}
 			trx = sess.beginTransaction();		
 			List<com.nositer.hibernate.generated.domain.GroupSubscriptionView> results = sess.createSQLQuery(SqlHelper.FINDSUBSCRIPTIONS).
 			addEntity(com.nositer.hibernate.generated.domain.GroupSubscriptionView.class).
 			setString(GroupSubscriptionView.Column.lastname.toString(), lastname + "%").			
 			setInteger(GroupSubscriptionView.Column.groupid.toString(), groupPlusView.getId()).
-
+			setInteger(GroupSubscriptionView.Column.invisible.toString(), invisible).
 			list();
 			if (results.size() == 0) {				
 				retval = new ArrayList<GroupSubscriptionView>();

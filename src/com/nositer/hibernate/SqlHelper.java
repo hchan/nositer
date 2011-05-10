@@ -89,7 +89,8 @@ public class SqlHelper {
 		UserHasGroup.Column.disable + " = :" + UserHasGroup.Column.disable + ", " +
 		UserHasGroup.Column.invisible + " = :" + UserHasGroup.Column.invisible + ", " +
 		MODIFIEDTIMENOW + 
-		" where " + UserHasGroup.Column.id + "= :" + UserHasGroup.Column.id;
+		" where " + UserHasGroup.Column.userid + " = :" + UserHasGroup.Column.userid +
+		" and " + UserHasGroup.Column.groupid + " = :" + UserHasGroup.Column.groupid;
 	public static String CREATESUBSCRIPTION =
 		"insert into " + UserHasGroup.TABLENAME + "(" +
 		UserHasGroup.Column.userid + ", " +
@@ -102,26 +103,30 @@ public class SqlHelper {
 		":" + UserHasGroup.Column.userid + ", " +
 		":" + UserHasGroup.Column.groupid + ", " +
 		"false, " +
-		"false, " +
+		":" + UserHasGroup.Column.invisible + ", " +
 		"false, " +
 		NOW +
 		")";
 	public static String DISABLEGROUP =
 		"update " + GroupPlusView.TABLENAME + " set " +
 		GroupPlusView.Column.disable + " = true " +
-		" where " + GroupPlusView.Column.id + "= :" + GroupPlusView.Column.id + " and " +
+		" where " + GroupPlusView.Column.id + " = :" + GroupPlusView.Column.id + " and " +
 		GroupPlusView.Column.owner + " = true " +
-		GroupPlusView.Column.userid + " =:" + GroupPlusView.Column.userid;
+		GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid;
 	public static String GETSUBSCRIPTIONS =
 		"select * from " + GroupSubscriptionView.TABLENAME + 
-		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + " and " +
-		GroupSubscriptionView.Column.user_disable + " = false " +
+		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
+		" and " + GroupSubscriptionView.Column.invisible + " <= :" + GroupSubscriptionView.Column.invisible + 
+		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
+		" and " + GroupSubscriptionView.Column.disable + " = false " +
 		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
 	public static String FINDSUBSCRIPTIONS =
 		"select * from " + GroupSubscriptionView.TABLENAME + 
 		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
 		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
+		" and " + GroupSubscriptionView.Column.disable + " = false " +
 		" and " + "lower(" + GroupSubscriptionView.Column.lastname + ") like lower(:" + GroupSubscriptionView.Column.lastname + ")" + 
+		" and " + GroupSubscriptionView.Column.invisible + " <= :" + GroupSubscriptionView.Column.invisible + 
 		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
 	public static String FINDSUBSCRIBER =
 		"select * from " + GroupSubscriptionView.TABLENAME + 

@@ -25,7 +25,7 @@ public interface GroupServiceAsync {
 
 	void updateGroup(Group group, AsyncCallback<Group> callback);
 
-	void createOrUpdateSubscription(GroupPlusView groupPlusView,
+	void createOrUpdateSubscription(UserHasGroup userHasGroup,
 			AsyncCallback<Void> callback);
 
 	// TODO add pagination

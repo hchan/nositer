@@ -35,6 +35,7 @@ public class RegisterServiceImpl extends RemoteServiceServlet implements Registe
 			userDomain.setAvatarlocation(Global.USERPUBLICDIR + "/" + Global.DEFAULTUSERAVATAR);
 			userDomain.setPassword(Encrypt.cryptPassword(userDomain.getPassword()));
 			userDomain.setLastlogin(new Date());
+			userDomain.setDisable(false);
 			sess.save(userDomain);
 			trx.commit();
 			user = BeanConversion.copyDomain2DTO(userDomain, User.class);
