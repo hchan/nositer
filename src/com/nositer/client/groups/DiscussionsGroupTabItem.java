@@ -16,6 +16,27 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 	private GroupPlusView groupPlusView;
 	
 
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
+	}
+
+
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
+	}
+
+
 	public DiscussionsGroupTabItem(GroupPlusView groupPlusView) {
 		super("Discussions");		
 		this.groupPlusView = groupPlusView;

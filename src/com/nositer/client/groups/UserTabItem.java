@@ -16,7 +16,7 @@ import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class UserTabItem extends TabItemPlus implements Resizable{
-	
+
 
 
 	public UserTabItem(String tabId) {
@@ -46,11 +46,11 @@ public class UserTabItem extends TabItemPlus implements Resizable{
 
 	public void init(User user) {
 		UserTabItem.this.setText(user.getFirstname() + " " + user.getLastname());
-		
-		 ViewProfileContainer viewProfileContainer = new ViewProfileContainer();
+
+		ViewProfileContainer viewProfileContainer = new ViewProfileContainer();
 		viewProfileContainer.populate(user);
-		
-		
+
+
 		add(viewProfileContainer);
 		layout();
 	}
@@ -61,7 +61,7 @@ public class UserTabItem extends TabItemPlus implements Resizable{
 		addListener(Events.Close, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				
+
 			}
 		});
 		addListener(Events.Select, new Listener() {

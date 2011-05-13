@@ -12,7 +12,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER 
+		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER, DISCUSSIONSTOOLS 
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
@@ -27,58 +27,34 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		return uploadGroupTabItem;
 	}
 
-
-
-
 	public void setUploadGroupTabItem(UploadGroupTabItem uploadGroupTabItem) {
 		this.uploadGroupTabItem = uploadGroupTabItem;
 	}
 
-
-
-
 	public ViewGroupTabItem getViewGroupTabItem() {
 		return viewGroupTabItem;
 	}
-
-
-
-
+	
 	public SubscriptionsGroupTabItem getSubscriptionsGroupTabItem() {
 		return subscriptionsGroupTabItem;
 	}
-
-
-
 
 	public void setSubscriptionsGroupTabItem(
 			SubscriptionsGroupTabItem subscriptionsGroupTabItem) {
 		this.subscriptionsGroupTabItem = subscriptionsGroupTabItem;
 	}
 
-
-
-
 	public void setGroupPlusView(GroupPlusView groupPlusView) {
 		this.groupPlusView = groupPlusView;
 	}
 
-
-
-
 	public void setViewGroupTabItem(ViewGroupTabItem viewGroupTabItem) {
 		this.viewGroupTabItem = viewGroupTabItem;
 	}
-
-
-
-
+	
 	public EditGroupTabItem getEditGroupTabItem() {
 		return editGroupTabItem;
 	}
-
-
-
 
 	public void setEditGroupTabItem(EditGroupTabItem editGroupTabItem) {
 		this.editGroupTabItem = editGroupTabItem;
@@ -136,6 +112,11 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(fileManagerGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.DISCUSSIONS)) {
 			setSelection(discussionsGroupTabItem);
+		} else if (tabItemType.equals(TabItemType.DISCUSSIONSTOOLS)) {
+			setSelection(discussionsGroupTabItem);
+			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().
+			setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGrouptoolsTabItem());
+			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().resize(0,0);
 		}
 	}
 }
