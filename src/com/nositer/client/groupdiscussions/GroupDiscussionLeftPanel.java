@@ -2,6 +2,9 @@ package com.nositer.client.groupdiscussions;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.Resizable;
 
 public class GroupDiscussionLeftPanel extends ContentPanel {
 
@@ -10,10 +13,10 @@ public class GroupDiscussionLeftPanel extends ContentPanel {
 	private GrouptopicTabItem grouptopicTabItem;
 	private GroupmessageTabItem groupmessageTabItem;
 	private GrouptoolsTabItem grouptoolsTabItem;
-	
-	
-	
-	
+
+
+
+
 
 	public GroupDiscussionTabPanel getGroupDiscussionTabPanel() {
 		return groupDiscussionTabPanel;
@@ -68,6 +71,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel {
 	}
 
 	private void init() {
+		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		groupDiscussionTabPanel = new GroupDiscussionTabPanel();
 		grouptopicTabItem = new GrouptopicTabItem(groupDiscussionsContainer);
@@ -77,5 +81,14 @@ public class GroupDiscussionLeftPanel extends ContentPanel {
 		groupDiscussionTabPanel.add(groupmessageTabItem);		
 		groupDiscussionTabPanel.add(grouptoolsTabItem);
 		add(groupDiscussionTabPanel);
+	}
+
+	@Override
+	protected void onResize(int width, int height) {
+		Resizable resizable = (Resizable) groupDiscussionTabPanel.getSelectedItem();
+		if (resizable != null) {
+			resizable.resize(0,0);
+		}
+		super.onResize(width, height);
 	}
 }

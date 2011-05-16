@@ -7,10 +7,10 @@ import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.dto.generated.GroupPlusView;
-import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
 public class GroupDiscussionsContainer extends LayoutContainer implements Resizable {
@@ -61,18 +61,26 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 	}
 
 	public void init() {
-		setLayout(new FitLayout());
+		//setLayout(new FitLayout());
+		setLayout(new FlowLayout(0));
 		contentPanel = new ContentPanel();
+	
+		
+		
 		contentPanel.setHeaderVisible(false);
 		BorderLayout borderLayout = new BorderLayout();
 		contentPanel.setLayout(borderLayout);
 		groupDiscussionLeftPanel = new GroupDiscussionLeftPanel(this);
-		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST, DEFAULTLEFTPANELWIDTH);
+		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST);//, DEFAULTLEFTPANELWIDTH);
 		westData.setSplit(true);
 		westData.setMargins(new Margins(0, 2, 0, 0));
+		westData.setSize(DEFAULTLEFTPANELWIDTH);
+		
+		
 		contentPanel.add(groupDiscussionLeftPanel, westData);
 		
 		groupDiscussionMainPanel = new GroupDiscussionMainPanel(this);
+		groupDiscussionMainPanel.setLayout(new FlowLayout(0));  
 		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerData.setSplit(true);
 		contentPanel.add(groupDiscussionMainPanel, centerData);
@@ -88,13 +96,20 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 	
 	@Override
 	public void resize(int width, int height) {	
+		//contentPanel.setWidth(groupDiscussionLeftPanel.getWidth()+100);
+		//GWTUtil.log("contentPanel: " + contentPanel.getWidth());
+		//GWTUtil.log("groupDiscussionLeftPanel: " + groupDiscussionLeftPanel.getWidth());
+		//GWTUtil.log("groupDiscussionLeftPanel.getGroupDiscussionTabPanel: " + groupDiscussionLeftPanel.getGrouptoolsTabItem().getWidth());
+		
+		
+		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 55);
 		// hackery to get the Collapse/Expand Working
 	
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);
-		if (contentPanel.getTopComponent() != null && contentPanel.getTopComponent().isRendered()) {
-			contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-55);
-		}	
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);		
+		//contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);
+		//if (contentPanel.getTopComponent() != null && contentPanel.getTopComponent().isRendered()) {
+		//	contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-55);
+		//}	
+		//contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);		
 	
 		
 		

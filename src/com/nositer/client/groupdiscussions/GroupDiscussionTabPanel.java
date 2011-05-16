@@ -14,6 +14,7 @@ public class GroupDiscussionTabPanel extends TabPanel implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
+		setHeight(MainPanel.getInstance().getHeight()-29);
 		//setSize(MainPanel.getInstance().getWidth()-3, 
 		//	MainPanel.getInstance().getHeight()-29);
 		//setHeight(200);
@@ -28,7 +29,7 @@ public class GroupDiscussionTabPanel extends TabPanel implements Resizable {
 		//else {
 			//setAutoHeight(true);
 			//setWidth(300);
-			setHeight(MainPanel.getInstance().getHeight() - 60);
+			//setHeight(MainPanel.getInstance().getHeight() - 60);
 		//}
 		
 		
@@ -36,6 +37,7 @@ public class GroupDiscussionTabPanel extends TabPanel implements Resizable {
 		
 		
 	}
+
 
 
 
