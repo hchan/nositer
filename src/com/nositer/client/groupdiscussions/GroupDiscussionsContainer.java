@@ -85,10 +85,6 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 		centerData.setSplit(true);
 		contentPanel.add(groupDiscussionMainPanel, centerData);
 		add(contentPanel);
-		//add(new Button("Hi"));
-		//setAutoHeight(true);
-		//setAutoWidth(true);
-		//setStateful(false);
 		resize(0,0);
 		
 		
@@ -96,36 +92,7 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 	
 	@Override
 	public void resize(int width, int height) {	
-		//contentPanel.setWidth(groupDiscussionLeftPanel.getWidth()+100);
-		//GWTUtil.log("contentPanel: " + contentPanel.getWidth());
-		//GWTUtil.log("groupDiscussionLeftPanel: " + groupDiscussionLeftPanel.getWidth());
-		//GWTUtil.log("groupDiscussionLeftPanel.getGroupDiscussionTabPanel: " + groupDiscussionLeftPanel.getGrouptoolsTabItem().getWidth());
-		
-		
 		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 55);
-		// hackery to get the Collapse/Expand Working
-	
-		//contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);
-		//if (contentPanel.getTopComponent() != null && contentPanel.getTopComponent().isRendered()) {
-		//	contentPanel.setSize(MainPanel.getInstance().getWidth()-6, MainPanel.getInstance().getHeight()-55);
-		//}	
-		//contentPanel.setSize(MainPanel.getInstance().getWidth()-5, MainPanel.getInstance().getHeight() - 55);		
-	
-		
-		
-		/*
-		fileSelector.getContentPanel().setSize(fileSelector.getWidth(), 
-				fileSelector.getHeight());
-		
-		fileViewerContainer.setHeight(MainPanel.getInstance().getHeight()-13);
-		fileViewerContainer.getContentPanel().setHeight(fileViewerContainer.getHeight());
-		//fileViewerContainer.getSelectedFilePanel().getSelectedFile().setWidth(fileViewerContainer.getWidth());
-		
-		contentPanel.setSize(MainPanel.getInstance().getWidth(),
-				MainPanel.getInstance().getHeight());
-		fileViewerContainer.getSelectedFilePanel().setWidth(fileViewerContainer.getWidth() - 10);
-		
-		*/
 	}
 
 }

@@ -1,7 +1,12 @@
 package com.nositer.client.groupdiscussions;
 
+import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.Container;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.layout.MarginData;
 import com.google.gwt.user.client.ui.Button;
 
 public class GroupDiscussionMainPanel extends ContentPanel {
