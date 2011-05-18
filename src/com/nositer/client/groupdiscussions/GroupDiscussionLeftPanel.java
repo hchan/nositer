@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
-public class GroupDiscussionLeftPanel extends ContentPanel {
+public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable {
 
 	private GroupDiscussionTabPanel groupDiscussionTabPanel;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
@@ -83,12 +83,19 @@ public class GroupDiscussionLeftPanel extends ContentPanel {
 		add(groupDiscussionTabPanel);
 	}
 
+	// called when the borderlayout slider is resized
 	@Override
 	protected void onResize(int width, int height) {
+		resize(0,0);
+		super.onResize(width, height);
+	}
+
+	@Override
+	public void resize(int width, int height) {
 		Resizable resizable = (Resizable) groupDiscussionTabPanel.getSelectedItem();
 		if (resizable != null) {
 			resizable.resize(0,0);
 		}
-		super.onResize(width, height);
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0,0);
 	}
 }

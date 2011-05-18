@@ -94,6 +94,7 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 	public void resize(int width, int height) {	
 		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 55);
 		groupDiscussionMainPanel.resize(0,0);
+		groupDiscussionLeftPanel.resize(0,0);
 	}
 
 }

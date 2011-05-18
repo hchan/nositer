@@ -6,6 +6,9 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
+import com.extjs.gxt.ui.client.widget.layout.FillData;
+import com.extjs.gxt.ui.client.widget.layout.FillLayout;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
 import com.nositer.client.main.MainPanel;
@@ -27,6 +30,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	}
 
 	public void populateMainPanel() {
+		this.setHeaderVisible(false);
 		
 		theHeading = new Label("Create New Topic");
 		theHeading.setStyleName("formHeading");
@@ -55,12 +59,25 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		GWTUtil.log("WIDTH:" + MainPanel.getInstance().getWidth());
 		GWTUtil.log("WIDTH22:" + groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth());
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth();
-		this.setWidth(newWidth);
-		formPanel.setWidth(newWidth - 5);
+		GWTUtil.log("newWidth: " + newWidth);
+		this.setWidth(newWidth - 15);
+		
+		formPanel.setWidth(newWidth - 15);
 		setDescriptionHeight();
+		formPanel.layout();
+		
+		this.setWidth(newWidth - 10);
+		
+		
+		layout();
+		//groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().setWidth(newWidth);
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 	}
 	
 	private void setDescriptionHeight() {
+		
+		setHeight(MainPanel.getInstance().getHeight()-60);
 		//int heightOfComponents = 150;
 		//if (errorPanel.isRendered() && !errorPanel.isHidden()) {
 		//	heightOfComponents = heightOfComponents + errorPanel.getHeight();
