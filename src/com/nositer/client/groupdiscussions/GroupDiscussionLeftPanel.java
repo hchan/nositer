@@ -86,8 +86,8 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 	// called when the borderlayout slider is resized
 	@Override
 	protected void onResize(int width, int height) {
-		resize(0,0);
 		super.onResize(width, height);
+		resize(0,0);
 	}
 
 	@Override
