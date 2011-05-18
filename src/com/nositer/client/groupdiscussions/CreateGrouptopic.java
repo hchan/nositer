@@ -2,6 +2,7 @@ package com.nositer.client.groupdiscussions;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
@@ -22,7 +23,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	private FormPanel formPanel;	
 	private TextField<String> name;
 	private HtmlEditor description;
-	
+	private Button saveButton;
 	
 	public CreateGrouptopic(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -47,9 +48,11 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		description.setFieldLabel("Message");
 		formPanel.add(name, new FormData("100%"));
 		formPanel.add(description, new FormData("100%"));
+		saveButton = new Button("Save");
+		formPanel.addButton(saveButton);
 		this.add(formPanel, new MarginData(5, 5, 65, 0));
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
-		groupDiscussionsContainer.layout();
+		resize(0,0);
 	}
 	
 
@@ -78,6 +81,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	private void setDescriptionHeight() {
 		
 		setHeight(MainPanel.getInstance().getHeight()-60);
+		description.setHeight(getHeight()-150);
 		//int heightOfComponents = 150;
 		//if (errorPanel.isRendered() && !errorPanel.isHidden()) {
 		//	heightOfComponents = heightOfComponents + errorPanel.getHeight();
