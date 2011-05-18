@@ -5,6 +5,8 @@ import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
 import com.nositer.client.dto.generated.User;
@@ -133,6 +135,32 @@ public class SqlHelper {
 		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
 		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
 		" and " + GroupSubscriptionView.Column.userid + " = :" + GroupSubscriptionView.Column.userid;
+	public static String CREATEGROUPTOPIC =
+		"insert into " + Grouptopic.TABLENAME + "(" +
+		Grouptopic.Column.userid + ", " +
+		Grouptopic.Column.groupid + ", " +
+		Grouptopic.Column.name + ", " +
+		Grouptopic.Column.createdtime +
+		")" + " values( " +
+		":" + Grouptopic.Column.userid + ", " +
+		":" + Grouptopic.Column.groupid + ", " +
+		":" + Grouptopic.Column.name + ", " +
+		NOW +
+		")";
+	public static String CREATEGROUPMESSAGE =
+		"insert into " + Groupmessage.TABLENAME + "(" +
+		Groupmessage.Column.userid + ", " +
+		Groupmessage.Column.grouptopicid + ", " +
+		Groupmessage.Column.description + ", " +
+		Groupmessage.Column.createdtime +
+		")" + " values( " +
+		":" + Groupmessage.Column.userid + ", " +
+		":" + Groupmessage.Column.grouptopicid + ", " +
+		":" + Groupmessage.Column.description + ", " +
+		NOW +
+		")";
+
+
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +

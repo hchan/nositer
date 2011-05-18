@@ -1,5 +1,8 @@
 package com.nositer.client.groupdiscussions;
 
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -52,17 +55,23 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		formPanel.addButton(saveButton);
 		this.add(formPanel, new MarginData(5, 5, 65, 0));
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
+		addDefaultListeners();
 		resize(0,0);
 	}
 	
 
+	private void addDefaultListeners() {
+		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent be) {
+				
+			}
+		});
+	}
+
 	@Override
 	public void resize(int width, int height) {
-		
-		GWTUtil.log("WIDTH:" + MainPanel.getInstance().getWidth());
-		GWTUtil.log("WIDTH22:" + groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth());
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth();
-		GWTUtil.log("newWidth: " + newWidth);
 		this.setWidth(newWidth - 15);
 		
 		formPanel.setWidth(newWidth - 15);

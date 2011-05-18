@@ -11,6 +11,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.service.GroupService;
@@ -281,7 +283,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.id.toString(), groupPlusView.getUserHasGroupId()).
 				executeUpdate();				
 			} else {
-			*/
+			 */
 			try {
 				sess.createSQLQuery(SqlHelper.CREATESUBSCRIPTION).
 				setInteger(com.nositer.client.dto.generated.UserHasGroup.Column.userid.toString(), user.getId()).
@@ -300,8 +302,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				executeUpdate();	
 				trx.commit();
 			}
-						
-			
+
+
 		}
 		catch (GWTException e) {
 			throw e;
@@ -355,7 +357,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}	
 		return retval;
 	}
-	
+
 	private boolean isOwner(GroupPlusView groupPlusView, User user) {
 		boolean retval = false;
 		if (groupPlusView.getOwner() && groupPlusView.getUserid().equals(user.getId())) {
@@ -454,6 +456,45 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		finally {
 			HibernateUtil.closeSession(sess);
 		}	
+		return retval;
+	}
+
+	@Override
+	public Grouptopic createGrouptopic(Grouptopic grouptopic) throws GWTException {
+		Grouptopic retval = null;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+
+			int grouptopicid = sess.createSQLQuery(SqlHelper.CREATEGROUPTOPIC).
+			setInteger(Grouptopic.Column.userid.toString(), grouptopic.getUserid()).
+			setInteger(Grouptopic.Column.groupid.toString(), grouptopic.getGroupid()).		
+			setString(Grouptopic.Column.name.toString(), grouptopic.getName()).
+			executeUpdate();
+
+			Groupmessage groupmessage = grouptopic.getGroupmessages().toArray(new Groupmessage[]{})[0];
+			sess.createSQLQuery(SqlHelper.CREATEGROUPMESSAGE).
+			setInteger(Groupmessage.Column.userid.toString(), groupmessage.getUserid()).
+			setInteger(Groupmessage.Column.grouptopicid.toString(), grouptopicid).		
+			setString(Groupmessage.Column.description.toString(), groupmessage.getDescription()).
+			executeUpdate();
+
+			trx.commit();
+			retval = grouptopic;
+			retval.setId(grouptopicid);
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
 		return retval;
 	}
 }
