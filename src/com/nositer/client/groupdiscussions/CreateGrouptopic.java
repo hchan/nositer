@@ -1,5 +1,6 @@
 package com.nositer.client.groupdiscussions;
 
+import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -57,11 +58,19 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		formPanel.setLabelAlign(LabelAlign.TOP);
 		name = new TextField<String>();
 		name.setFieldLabel("Topic name");
-		description = new HtmlEditor();
+		description = new HtmlEditor() {
+			protected void afterRender() {
+				resize(0,0);
+				super.afterRender();
+			};
+		};
 		description.setFieldLabel("Message");
+		
+		
 		formPanel.add(name, new FormData("100%"));
 		formPanel.add(description, new FormData("100%"));
 		saveButton = new Button("Save");
+		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		formPanel.addButton(saveButton);
 		this.add(formPanel, new MarginData(5, 5, 65, 0));
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
@@ -113,10 +122,18 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		this.setWidth(newWidth - 15);
 
 		formPanel.setWidth(newWidth - 15);
-		setDescriptionHeight();
+		this.setHeight(MainPanel.getInstance().getHeight()-60);
+		
+		formPanel.setHeight(MainPanel.getInstance().getHeight()-100);
+		if (description.isRendered()) {
+			description.setHeight(MainPanel.getInstance().getHeight()-210);
+			
+
+		}
+		
 		formPanel.layout();
 
-		this.setWidth(newWidth - 10);
+		
 
 
 		layout();
@@ -125,16 +142,5 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 	}
 
-	private void setDescriptionHeight() {
-
-		setHeight(MainPanel.getInstance().getHeight()-60);
-		if (description.isRendered()) {
-			description.setHeight(getHeight()-150);
-		}
-		//int heightOfComponents = 150;
-		//if (errorPanel.isRendered() && !errorPanel.isHidden()) {
-		//	heightOfComponents = heightOfComponents + errorPanel.getHeight();
-		//}
-		//description.setHeight(MainPanel.getInstance().getHeight() - heightOfComponents);
-	}
+	
 }
