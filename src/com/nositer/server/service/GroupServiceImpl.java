@@ -474,7 +474,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			executeUpdate();
 
 			Groupmessage groupmessage = grouptopic.getGroupmessages().toArray(new Groupmessage[]{})[0];
-			sess.createSQLQuery(SqlHelper.CREATEGROUPMESSAGE).
+			int groupmessageid = sess.createSQLQuery(SqlHelper.CREATEGROUPMESSAGE).
 			setInteger(Groupmessage.Column.userid.toString(), groupmessage.getUserid()).
 			setInteger(Groupmessage.Column.grouptopicid.toString(), grouptopicid).		
 			setString(Groupmessage.Column.description.toString(), groupmessage.getDescription()).
@@ -482,7 +482,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 			trx.commit();
 			retval = grouptopic;
+			groupmessage.setId(groupmessageid);
 			retval.setId(grouptopicid);
+			
 		}
 		catch (GWTException e) {
 			throw e;

@@ -3,6 +3,7 @@ package com.nositer.client.groupdiscussions;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -15,9 +16,18 @@ import com.extjs.gxt.ui.client.widget.layout.FillLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.nositer.client.Nositer;
+import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.Grouptopic;
+import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
+import com.nositer.client.widget.messagebox.InfoMessageBox;
 
 public class CreateGrouptopic extends ContentPanel implements Resizable {
 
@@ -27,7 +37,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	private TextField<String> name;
 	private HtmlEditor description;
 	private Button saveButton;
-	
+
 	public CreateGrouptopic(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		formPanel = new FormPanel();
@@ -35,12 +45,12 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 
 	public void populateMainPanel() {
 		this.setHeaderVisible(false);
-		
+
 		theHeading = new Label("Create New Topic");
 		theHeading.setStyleName("formHeading");
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 		this.add(theHeading, new MarginData(5, 0, 0, 5));
-		
+
 		formPanel.setBodyBorder(false);
 		formPanel.setHeaderVisible(false);
 		formPanel.setWidth("100%");
@@ -58,13 +68,41 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		addDefaultListeners();
 		resize(0,0);
 	}
-	
+
 
 	private void addDefaultListeners() {
 		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				
+				Grouptopic grouptopic = new Grouptopic();
+				grouptopic.setUserid(Nositer.getInstance().getUser().getId());
+				grouptopic.setGroupid(groupDiscussionsContainer.getGroupPlusView().getId());
+				grouptopic.setName(name.getValue());
+
+				Groupmessage groupmessage = new Groupmessage();
+				groupmessage.setUserid(Nositer.getInstance().getUser().getId());
+				groupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
+				groupmessage.setDescription(description.getValue());
+
+				grouptopic.getGroupmessages().add(groupmessage);
+				AsyncCallback<Grouptopic> callback = new AsyncCallback<Grouptopic>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						AlertMessageBox.show("Error", caught.getMessage(), null);
+						GWTUtil.log("", caught);
+					}
+
+					@Override
+					public void onSuccess(Grouptopic result) {
+						InfoMessageBox.show("Saved", new Listener<MessageBoxEvent>() {
+							@Override
+							public void handleEvent(MessageBoxEvent be) {								
+								//History.newItem(HistoryToken.MYPROFILE.toString());									
+							}								
+						});										
+					}
+				};
+				ServiceBroker.groupService.createGrouptopic(grouptopic, callback);
 			}
 		});
 	}
@@ -73,24 +111,26 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	public void resize(int width, int height) {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth();
 		this.setWidth(newWidth - 15);
-		
+
 		formPanel.setWidth(newWidth - 15);
 		setDescriptionHeight();
 		formPanel.layout();
-		
+
 		this.setWidth(newWidth - 10);
-		
-		
+
+
 		layout();
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().setWidth(newWidth);
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 	}
-	
+
 	private void setDescriptionHeight() {
-		
+
 		setHeight(MainPanel.getInstance().getHeight()-60);
-		description.setHeight(getHeight()-150);
+		if (description.isRendered()) {
+			description.setHeight(getHeight()-150);
+		}
 		//int heightOfComponents = 150;
 		//if (errorPanel.isRendered() && !errorPanel.isHidden()) {
 		//	heightOfComponents = heightOfComponents + errorPanel.getHeight();
