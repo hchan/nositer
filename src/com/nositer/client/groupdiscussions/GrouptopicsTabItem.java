@@ -2,12 +2,12 @@ package com.nositer.client.groupdiscussions;
 
 import com.extjs.gxt.ui.client.widget.TabItem;
 
-public class GrouptopicTabItem extends TabItem {
+public class GrouptopicsTabItem extends TabItem {
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	
-	public GrouptopicTabItem(GroupDiscussionsContainer groupDiscussionsContainer) {
+	public GrouptopicsTabItem(GroupDiscussionsContainer groupDiscussionsContainer) {
 		super();
-		this.setText("Topic");
+		this.setText("Topics");
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 	}
 }

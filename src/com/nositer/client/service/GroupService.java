@@ -7,6 +7,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.UserHasGroup;
 import com.nositer.shared.GWTException;
@@ -25,5 +27,6 @@ public interface GroupService extends RemoteService {
 	void createOrUpdateSubscription(UserHasGroup userHasGroup) throws GWTException;
 	ArrayList<GroupSubscriptionView> getSubscriptions(GroupPlusView groupPlusView) throws GWTException;
 	ArrayList<GroupSubscriptionView> findSubscriptions(GroupPlusView groupPlusView, String lastname) throws GWTException;
-	Grouptopic createGrouptopic(Grouptopic grouptopic) throws GWTException;
+	Grouptopic createGrouptopic(GroupPlusView groupPlusView, Grouptopic grouptopic) throws GWTException;
+	ArrayList<GroupmessagePlusView> getGroupmessages(GroupPlusView groupPlusView) throws GWTException;
 }

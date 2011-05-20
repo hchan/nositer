@@ -6,6 +6,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.UserHasGroup;
 
@@ -40,6 +42,7 @@ public interface GroupServiceAsync {
 			String lastname,
 			AsyncCallback<ArrayList<GroupSubscriptionView>> callback);
 	
-	void createGrouptopic(Grouptopic grouptopic, AsyncCallback<Grouptopic> callback);
+	void createGrouptopic(GroupPlusView groupPlusView, Grouptopic grouptopic, AsyncCallback<Grouptopic> callback);
 
+	void getGroupmessages(GroupPlusView groupPlusView, AsyncCallback<ArrayList<GroupmessagePlusView>> callback);
 }

@@ -12,6 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
@@ -366,6 +367,14 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
+	private boolean isGroupIBelongTo(GroupPlusView groupPlusView, User user) {
+		boolean retval = false;
+		if (groupPlusView.getUserid().equals(user.getId()) && !groupPlusView.getUserHasGroupDisable()) {
+			retval = true;
+		}
+		return retval;
+	}
+	
 	@Override
 	public ArrayList<GroupSubscriptionView> findSubscriptions(
 			GroupPlusView groupPlusView, String lastname) throws GWTException {
@@ -460,13 +469,17 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 	@Override
-	public Grouptopic createGrouptopic(Grouptopic grouptopic) throws GWTException {
+	public Grouptopic createGrouptopic(GroupPlusView groupPlusView, Grouptopic grouptopic) throws GWTException {
 		Grouptopic retval = null;
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
+		User user = null;
 		try {
-			trx = sess.beginTransaction();		
-
+			trx = sess.beginTransaction();	
+			user = Application.getCurrentUser();
+			if (!isGroupIBelongTo(groupPlusView, user)) {
+				throw new GWTException("You do not have permissions to create a group topic");
+			}
 			int grouptopicid = sess.createSQLQuery(SqlHelper.CREATEGROUPTOPIC).
 			setInteger(Grouptopic.Column.userid.toString(), grouptopic.getUserid()).
 			setInteger(Grouptopic.Column.groupid.toString(), grouptopic.getGroupid()).		
@@ -497,6 +510,43 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		finally {
 			HibernateUtil.closeSession(sess);
 		}
+		return retval;
+	}
+
+	@Override
+	public ArrayList<GroupmessagePlusView> getGroupmessages(GroupPlusView groupPlusView) throws GWTException {
+		ArrayList<GroupmessagePlusView> retval = null;
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			if (!isGroupIBelongTo(groupPlusView, user)) {
+				throw new GWTException("You do not have permissions to retrieve messages in this group");
+			}
+			trx = sess.beginTransaction();		
+			
+			List<com.nositer.hibernate.generated.domain.GroupmessagePlusView> results =
+				sess.createSQLQuery(SqlHelper.FINDGROUPMESSAGES).addEntity(com.nositer.hibernate.generated.domain.GroupmessagePlusView.class).
+				list();
+			
+			if (results.size() == 0) {				
+				retval = new ArrayList<GroupmessagePlusView>();
+			} else {
+				retval = BeanConversion.copyDomain2DTO(results, GroupmessagePlusView.class);									
+			}
+		}
+		catch (GWTException e) {
+			throw e;
+		}		
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
 		return retval;
 	}
 }

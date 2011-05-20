@@ -36,6 +36,7 @@
         <mapping class="com.nositer.hibernate.generated.domain.Zipcode" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasGroup" />
         <mapping class="com.nositer.hibernate.generated.domain.UserHasSecurityquestioncode" />
+        <mapping class="com.nositer.hibernate.generated.domain.GroupmessagePlusView" />
         <mapping class="com.nositer.hibernate.generated.domain.Group" />
         <mapping class="com.nositer.hibernate.generated.domain.Salutationcode" />
     </session-factory>

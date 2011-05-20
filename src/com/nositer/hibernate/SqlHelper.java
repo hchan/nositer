@@ -6,6 +6,7 @@ import com.nositer.client.dto.Lookupcode;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.Iwantto;
 import com.nositer.client.dto.generated.Postalcode;
@@ -159,8 +160,10 @@ public class SqlHelper {
 		":" + Groupmessage.Column.description + ", " +
 		NOW +
 		")";
-
-
+	public static String FINDGROUPMESSAGES = 
+		"select * from " + GroupmessagePlusView.TABLENAME + 
+		" order by " + GroupmessagePlusView.Column.createdtime + 
+		" limit 10";
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +

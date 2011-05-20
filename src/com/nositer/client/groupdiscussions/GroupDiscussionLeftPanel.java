@@ -10,8 +10,8 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 
 	private GroupDiscussionTabPanel groupDiscussionTabPanel;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
-	private GrouptopicTabItem grouptopicTabItem;
-	private GroupmessageTabItem groupmessageTabItem;
+	private GrouptopicsTabItem grouptopicsTabItem;
+	private GroupmessagesTabItem groupmessagesTabItem;
 	private GrouptoolsTabItem grouptoolsTabItem;
 
 
@@ -36,20 +36,20 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 	}
 
-	public GrouptopicTabItem getGrouptopicTabItem() {
-		return grouptopicTabItem;
+	public GrouptopicsTabItem getGrouptopicsTabItem() {
+		return grouptopicsTabItem;
 	}
 
-	public void setGrouptopicTabItem(GrouptopicTabItem grouptopicTabItem) {
-		this.grouptopicTabItem = grouptopicTabItem;
+	public void setGrouptopicsTabItem(GrouptopicsTabItem grouptopicsTabItem) {
+		this.grouptopicsTabItem = grouptopicsTabItem;
 	}
 
-	public GroupmessageTabItem getGroupmessageTabItem() {
-		return groupmessageTabItem;
+	public GroupmessagesTabItem getGroupmessagesTabItem() {
+		return groupmessagesTabItem;
 	}
 
-	public void setGroupmessageTabItem(GroupmessageTabItem groupmessageTabItem) {
-		this.groupmessageTabItem = groupmessageTabItem;
+	public void setGroupmessagesTabItem(GroupmessagesTabItem groupmessagesTabItem) {
+		this.groupmessagesTabItem = groupmessagesTabItem;
 	}
 
 	public GrouptoolsTabItem getGrouptoolsTabItem() {
@@ -74,11 +74,11 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		groupDiscussionTabPanel = new GroupDiscussionTabPanel();
-		grouptopicTabItem = new GrouptopicTabItem(groupDiscussionsContainer);
-		groupmessageTabItem = new GroupmessageTabItem(groupDiscussionsContainer);
+		grouptopicsTabItem = new GrouptopicsTabItem(groupDiscussionsContainer);
+		groupmessagesTabItem = new GroupmessagesTabItem(groupDiscussionsContainer);
 		grouptoolsTabItem = new GrouptoolsTabItem(groupDiscussionsContainer);
-		groupDiscussionTabPanel.add(grouptopicTabItem);
-		groupDiscussionTabPanel.add(groupmessageTabItem);		
+		groupDiscussionTabPanel.add(grouptopicsTabItem);
+		groupDiscussionTabPanel.add(groupmessagesTabItem);		
 		groupDiscussionTabPanel.add(grouptoolsTabItem);
 		add(groupDiscussionTabPanel);
 	}

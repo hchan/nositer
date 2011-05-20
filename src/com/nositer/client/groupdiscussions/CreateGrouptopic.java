@@ -47,7 +47,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	public void populateMainPanel() {
 		this.setHeaderVisible(false);
 
-		theHeading = new Label("Create New Topic");
+		theHeading = new Label("Create New Topic and Message");
 		theHeading.setStyleName("formHeading");
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 		this.add(theHeading, new MarginData(5, 0, 0, 5));
@@ -111,7 +111,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 						});										
 					}
 				};
-				ServiceBroker.groupService.createGrouptopic(grouptopic, callback);
+				ServiceBroker.groupService.createGrouptopic(groupDiscussionsContainer.getGroupPlusView(), grouptopic, callback);
 			}
 		});
 	}
@@ -120,22 +120,13 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 	public void resize(int width, int height) {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth();
 		this.setWidth(newWidth - 15);
-
 		formPanel.setWidth(newWidth - 15);
-		this.setHeight(MainPanel.getInstance().getHeight()-60);
-		
+		this.setHeight(MainPanel.getInstance().getHeight()-60);		
 		formPanel.setHeight(MainPanel.getInstance().getHeight()-100);
 		if (description.isRendered()) {
 			description.setHeight(MainPanel.getInstance().getHeight()-210);
-			
-
-		}
-		
+		}		
 		formPanel.layout();
-
-		
-
-
 		layout();
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().setWidth(newWidth);
