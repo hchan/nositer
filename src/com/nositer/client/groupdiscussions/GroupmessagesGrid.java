@@ -46,7 +46,7 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
 @SuppressWarnings({"rawtypes"})
 public class GroupmessagesGrid extends Grid<BeanModel> {
-/*
+
 	protected RpcProxy<ArrayList<GroupPlusView>> proxy;
 	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
 	protected GroupingView groupingView;
@@ -149,30 +149,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		contextMenu = new Menu();
 
 		setContextMenu(contextMenu);
-		groupingView = new GroupingView();
-
-
-		groupingView.setForceFit(true);
-		//groupingView.setShowGroupedColumn(false);
-		groupingView.setGroupRenderer(new GridGroupRenderer() {
-
-			@Override
-			public String render(GroupColumnData data) {
-				BeanModel beanModel = (BeanModel) data.models.get(0);
-				GroupPlusView groupPlusView = beanModel.getBean();
-				String text = null;
-				if (Groups.isGroupIOwn(groupPlusView)) {
-					text = "Groups I own";
-				} else {
-					text = "Groups I am subscribed too";
-				}
-				String length = data.models.size() == 1 ? "Item" : "Items";  				
-				return text + ": (" + data.models.size() + " " + length + ")";  
-			}
-
-
-		});
-		setView(groupingView);
+	
 
 		addListeners();
 
@@ -230,6 +207,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 
 
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
+		/*
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
 		final GroupPlusView groupPlusView = beanModel.getBean();	
 		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
@@ -260,6 +238,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		} else {
 			gridEvent.setCancelled(true);
 		}
+		*/
 	}
 
 	public void doViewGroup(GroupPlusView groupPlusView) {
@@ -302,5 +281,5 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	public void refresh() {
 		store.getLoader().load();
 	}
-*/
+
 }

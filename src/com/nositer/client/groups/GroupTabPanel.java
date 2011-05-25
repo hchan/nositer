@@ -12,7 +12,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER, DISCUSSIONSTOOLS 
+		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER, DISCUSSIONSTOOLS, DISCUSSIONSMESSAGES 
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
@@ -116,6 +116,11 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(discussionsGroupTabItem);
 			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().
 			setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGrouptoolsTabItem());
+			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().resize(0,0);
+		} else if (tabItemType.equals(TabItemType.DISCUSSIONSMESSAGES)) {
+			setSelection(discussionsGroupTabItem);
+			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().
+			setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupmessagesTabItem());
 			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().resize(0,0);
 		}
 	}

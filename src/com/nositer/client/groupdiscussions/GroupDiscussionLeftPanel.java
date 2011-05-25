@@ -10,7 +10,6 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 
 	private GroupDiscussionTabPanel groupDiscussionTabPanel;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
-	private GrouptopicsTabItem grouptopicsTabItem;
 	private GroupmessagesTabItem groupmessagesTabItem;
 	private GrouptoolsTabItem grouptoolsTabItem;
 
@@ -36,13 +35,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 	}
 
-	public GrouptopicsTabItem getGrouptopicsTabItem() {
-		return grouptopicsTabItem;
-	}
 
-	public void setGrouptopicsTabItem(GrouptopicsTabItem grouptopicsTabItem) {
-		this.grouptopicsTabItem = grouptopicsTabItem;
-	}
 
 	public GroupmessagesTabItem getGroupmessagesTabItem() {
 		return groupmessagesTabItem;
@@ -74,10 +67,10 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		groupDiscussionTabPanel = new GroupDiscussionTabPanel();
-		grouptopicsTabItem = new GrouptopicsTabItem(groupDiscussionsContainer);
+		
 		groupmessagesTabItem = new GroupmessagesTabItem(groupDiscussionsContainer);
 		grouptoolsTabItem = new GrouptoolsTabItem(groupDiscussionsContainer);
-		groupDiscussionTabPanel.add(grouptopicsTabItem);
+	
 		groupDiscussionTabPanel.add(groupmessagesTabItem);		
 		groupDiscussionTabPanel.add(grouptoolsTabItem);
 		add(groupDiscussionTabPanel);
