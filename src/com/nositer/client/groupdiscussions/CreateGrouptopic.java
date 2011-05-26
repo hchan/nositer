@@ -118,7 +118,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGrouptoolsTabItem().getTabPanel().getWidth();
+		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
 		this.setWidth(newWidth - 15);
 		formPanel.setWidth(newWidth - 15);
 		this.setHeight(MainPanel.getInstance().getHeight()-60);		

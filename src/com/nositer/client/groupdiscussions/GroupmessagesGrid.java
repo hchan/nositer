@@ -57,12 +57,12 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	public RpcProxy getProxy() {
 		return proxy;
 	}
-	
+
 	public Loader getLoader() {
 		return loader;
 	}
-	
-	
+
+
 	public GroupmessagesGrid(final GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		proxy = new RpcProxy<ArrayList<GroupmessagePlusView>>() {
@@ -75,7 +75,8 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
 		loader.setRemoteSort(false);  
-		store = new GroupingStore<BeanModel>(loader);  
+
+		store = new ListStore<BeanModel>(loader);  
 		cm = createColumnModel();
 		this.view = new GridView();
 		disabledStyle = null;
@@ -91,9 +92,12 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		ColumnConfig messageColumnConfig = new ColumnConfig(GroupmessagePlusView.Column.description.toString(), "Message", 100);
 		messageColumnConfig.setRenderer(getDescriptionGridCellRenderer());
 		columns.add(messageColumnConfig);  
-		columns.add(new ColumnConfig(GroupmessagePlusView.Column.name.toString(), "Topic", 100));		
-		ColumnConfig descriptionColumnConfig = new ColumnConfig("author", "Author", 200);
-		columns.add(descriptionColumnConfig);  
+		ColumnConfig topicColumnConfig = new ColumnConfig(GroupmessagePlusView.Column.name.toString(), "Topic", 100);	
+		topicColumnConfig.setRenderer(getNameGridCellRenderer());
+		columns.add(topicColumnConfig);
+		ColumnConfig authorColumnConfig = new ColumnConfig("author", "Author", 100);
+		authorColumnConfig.setRenderer(getAuthorGridCellRenderer());
+		columns.add(authorColumnConfig);  
 		ColumnConfig date = new ColumnConfig(Group.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
@@ -101,7 +105,22 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	
+
+
+	protected GridCellRenderer getAuthorGridCellRenderer() {
+		GridCellRenderer retval = new GridCellRenderer() {
+
+			@Override
+			public Object render(ModelData model, String property,
+					ColumnData config, int rowIndex, int colIndex,
+					ListStore store, Grid grid) {
+				String retval = "";
+				retval += model.get(GroupmessagePlusView.Column.firstname.toString()) + " " + model.get(GroupmessagePlusView.Column.lastname.toString());
+				return retval;
+			}  
+		};
+		return retval;
+	}
 
 	protected GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
@@ -110,37 +129,60 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 			public Object render(ModelData model, String property,
 					ColumnData config, int rowIndex, int colIndex,
 					ListStore store, Grid grid) {
-				HtmlContainer retval = new HtmlContainer();
-				retval.setHtml("BLAH");
-				/*
-				retval.setStyleName("myGroupsRow");
-				try {
-					BeanModel beanModel = (BeanModel) model;
-					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setHtml(groupPlusView.getDescription());
-				} catch (Exception e) {
-					GWTUtil.log("", e);
+				String retval = "";
+				int showLength = 20;
+				BeanModel beanModel = (BeanModel) model;
+				GroupmessagePlusView groupmessagePlusView = beanModel.getBean();
+				
+				if (groupmessagePlusView.getDescription().length() > showLength) {
+					retval = groupmessagePlusView.getDescription().substring(0,showLength);
+					retval += "...";
+				} else {
+					retval = groupmessagePlusView.getDescription();
 				}
-				*/
 				return retval;
 			}  
 		};
 		return retval;
 	}
 	
+	protected GridCellRenderer getNameGridCellRenderer() {
+		GridCellRenderer retval = new GridCellRenderer() {
+
+			@Override
+			public Object render(ModelData model, String property,
+					ColumnData config, int rowIndex, int colIndex,
+					ListStore store, Grid grid) {
+				String retval = "";
+				int showLength = 20;
+				BeanModel beanModel = (BeanModel) model;
+				GroupmessagePlusView groupmessagePlusView = beanModel.getBean();
+				
+				if (groupmessagePlusView.getDescription().length() > showLength) {
+					retval = groupmessagePlusView.getName().substring(0,showLength);
+					retval += "...";
+				} else {
+					retval = groupmessagePlusView.getName();
+				}
+				return retval;
+			}  
+		};
+		return retval;
+	}
+
 	public void init() {
 		contextMenu = new Menu();
 
 		setContextMenu(contextMenu);
-	
+
 
 		addListeners();
 
-		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
-		groupingStore.groupBy(GroupPlusView.Column.userid.toString());
+
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
+		
 		//setAutoExpandColumn(GroupPlusView.Column.description.toString());  
 
 	}
@@ -221,7 +263,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		} else {
 			gridEvent.setCancelled(true);
 		}
-		*/
+		 */
 	}
 
 	public void doViewGroup(GroupPlusView groupPlusView) {
@@ -232,7 +274,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	public void doEditGroup(GroupPlusView groupPlusView) {
 		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
-	
+
 	public void doSubscriptionsGroup(GroupPlusView groupPlusView) {
 		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}

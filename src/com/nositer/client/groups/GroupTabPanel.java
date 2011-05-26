@@ -13,7 +13,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER, DISCUSSIONSTOOLS, DISCUSSIONSMESSAGES 
+		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
@@ -113,16 +113,6 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(fileManagerGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.DISCUSSIONS)) {
 			setSelection(discussionsGroupTabItem);
-		} else if (tabItemType.equals(TabItemType.DISCUSSIONSTOOLS)) {
-			setSelection(discussionsGroupTabItem);
-			GroupDiscussionTabPanel groupDiscussionTabPanel = discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel();
-			groupDiscussionTabPanel.setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGrouptoolsTabItem());
-			groupDiscussionTabPanel.resize(0,0);
-		} else if (tabItemType.equals(TabItemType.DISCUSSIONSMESSAGES)) {
-			setSelection(discussionsGroupTabItem);
-			GroupDiscussionTabPanel groupDiscussionTabPanel = discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel();
-			groupDiscussionTabPanel.setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupmessagesTabItem());
-			groupDiscussionTabPanel.resize(0,0);
-		}
+		} 
 	}
 }

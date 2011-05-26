@@ -8,50 +8,9 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable {
 
-	private GroupDiscussionTabPanel groupDiscussionTabPanel;
+
 	private GroupDiscussionsContainer groupDiscussionsContainer;
-	private GroupmessagesTabItem groupmessagesTabItem;
-	private GrouptoolsTabItem grouptoolsTabItem;
 
-
-
-
-
-	public GroupDiscussionTabPanel getGroupDiscussionTabPanel() {
-		return groupDiscussionTabPanel;
-	}
-
-	public void setGroupDiscussionTabPanel(
-			GroupDiscussionTabPanel groupDiscussionTabPanel) {
-		this.groupDiscussionTabPanel = groupDiscussionTabPanel;
-	}
-
-	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
-		return groupDiscussionsContainer;
-	}
-
-	public void setGroupDiscussionsContainer(
-			GroupDiscussionsContainer groupDiscussionsContainer) {
-		this.groupDiscussionsContainer = groupDiscussionsContainer;
-	}
-
-
-
-	public GroupmessagesTabItem getGroupmessagesTabItem() {
-		return groupmessagesTabItem;
-	}
-
-	public void setGroupmessagesTabItem(GroupmessagesTabItem groupmessagesTabItem) {
-		this.groupmessagesTabItem = groupmessagesTabItem;
-	}
-
-	public GrouptoolsTabItem getGrouptoolsTabItem() {
-		return grouptoolsTabItem;
-	}
-
-	public void setGrouptoolsTabItem(GrouptoolsTabItem grouptoolsTabItem) {
-		this.grouptoolsTabItem = grouptoolsTabItem;
-	}
 
 	public GroupDiscussionLeftPanel() {
 		init();
@@ -66,14 +25,9 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 	private void init() {
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
-		groupDiscussionTabPanel = new GroupDiscussionTabPanel();
-		
-		groupmessagesTabItem = new GroupmessagesTabItem(groupDiscussionsContainer);
-		grouptoolsTabItem = new GrouptoolsTabItem(groupDiscussionsContainer);
-	
-		groupDiscussionTabPanel.add(groupmessagesTabItem);		
-		groupDiscussionTabPanel.add(grouptoolsTabItem);
-		add(groupDiscussionTabPanel);
+		GroupmessagesGrid groupmessagesGrid = new GroupmessagesGrid(groupDiscussionsContainer);
+		groupmessagesGrid.setHeight(400);
+		this.add(groupmessagesGrid);
 	}
 
 	// called when the borderlayout split is resized
@@ -85,10 +39,12 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 
 	@Override
 	public void resize(int width, int height) {
+		/*
 		Resizable resizable = (Resizable) groupDiscussionTabPanel.getSelectedItem();
 		if (resizable != null) {
 			resizable.resize(0,0);
 		}
+		*/
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0,0);
 	}
 }
