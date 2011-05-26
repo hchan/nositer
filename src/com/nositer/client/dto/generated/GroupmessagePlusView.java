@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated May 20, 2011 11:15:00 AM by Hibernate Tools 3.2.4.GA
+// Generated May 25, 2011 4:44:43 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -28,6 +28,9 @@ public class GroupmessagePlusView implements java.io.Serializable,
 	private Date createdtime;
 	private Date modifiedtime;
 	private String name;
+	private String firstname;
+	private String lastname;
+	private String login;
 	public static final String TABLENAME = "nositer.groupmessage_plus_view";
 
 	public String getTablename() {
@@ -43,7 +46,8 @@ public class GroupmessagePlusView implements java.io.Serializable,
 
 	public GroupmessagePlusView(Integer id, Integer userid,
 			Integer grouptopicid, String description, Date createdtime,
-			Date modifiedtime, String name) {
+			Date modifiedtime, String name, String firstname, String lastname,
+			String login) {
 		this.id = id;
 		this.userid = userid;
 		this.grouptopicid = grouptopicid;
@@ -51,6 +55,9 @@ public class GroupmessagePlusView implements java.io.Serializable,
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
 	}
 
 	public Integer getId() {
@@ -109,6 +116,30 @@ public class GroupmessagePlusView implements java.io.Serializable,
 		this.name = name;
 	}
 
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public GroupmessagePlusView clone() {
 
 		GroupmessagePlusView retval = new GroupmessagePlusView();
@@ -133,11 +164,20 @@ public class GroupmessagePlusView implements java.io.Serializable,
 		if (name != null) {
 			retval.setName(new String(name));
 		}
+		if (firstname != null) {
+			retval.setFirstname(new String(firstname));
+		}
+		if (lastname != null) {
+			retval.setLastname(new String(lastname));
+		}
+		if (login != null) {
+			retval.setLogin(new String(login));
+		}
 
 		return retval;
 	}
 
 	public enum Column {
-		id, userid, grouptopicid, description, createdtime, modifiedtime, name,
+		id, userid, grouptopicid, description, createdtime, modifiedtime, name, firstname, lastname, login,
 	}
 }

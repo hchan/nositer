@@ -3,6 +3,7 @@ package com.nositer.client.groups;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.groupdiscussions.GroupDiscussionTabPanel;
 import com.nositer.client.groups.GroupTabPanel.TabItemType;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.managefiles.GroupFileSelector;
@@ -114,14 +115,14 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(discussionsGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.DISCUSSIONSTOOLS)) {
 			setSelection(discussionsGroupTabItem);
-			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().
-			setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGrouptoolsTabItem());
-			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().resize(0,0);
+			GroupDiscussionTabPanel groupDiscussionTabPanel = discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel();
+			groupDiscussionTabPanel.setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGrouptoolsTabItem());
+			groupDiscussionTabPanel.resize(0,0);
 		} else if (tabItemType.equals(TabItemType.DISCUSSIONSMESSAGES)) {
 			setSelection(discussionsGroupTabItem);
-			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().
-			setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupmessagesTabItem());
-			discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel().resize(0,0);
+			GroupDiscussionTabPanel groupDiscussionTabPanel = discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupDiscussionTabPanel();
+			groupDiscussionTabPanel.setSelection(discussionsGroupTabItem.getGroupDiscussionsContainer().getGroupDiscussionLeftPanel().getGroupmessagesTabItem());
+			groupDiscussionTabPanel.resize(0,0);
 		}
 	}
 }

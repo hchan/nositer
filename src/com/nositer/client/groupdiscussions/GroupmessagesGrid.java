@@ -34,6 +34,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
@@ -47,7 +48,7 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 @SuppressWarnings({"rawtypes"})
 public class GroupmessagesGrid extends Grid<BeanModel> {
 
-	protected RpcProxy<ArrayList<GroupPlusView>> proxy;
+	protected RpcProxy<ArrayList<GroupmessagePlusView>> proxy;
 	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
 	protected GroupingView groupingView;
 	protected Menu contextMenu;
@@ -62,13 +63,13 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	}
 	
 	
-	public GroupmessagesGrid(GroupDiscussionsContainer groupDiscussionsContainer) {
+	public GroupmessagesGrid(final GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
-		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
+		proxy = new RpcProxy<ArrayList<GroupmessagePlusView>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<GroupPlusView>> callback) {
-				ServiceBroker.groupService.getMyGroups(callback);  
+					AsyncCallback<ArrayList<GroupmessagePlusView>> callback) {
+				ServiceBroker.groupService.getGroupmessages(groupDiscussionsContainer.getGroupPlusView(), callback);  
 			}
 		};  		
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
@@ -87,13 +88,11 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	public ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
-		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.Column.avatarlocation.toString(), "Avatar", 50);
-		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
-		columns.add(avatarColumnConfig);  
-		columns.add(new ColumnConfig(Group.Column.name.toString(), "Name", 100));		
-		columns.add(new ColumnConfig(Group.Column.tagname.toString(), "Tag Name", 100));
-		ColumnConfig descriptionColumnConfig = new ColumnConfig(Group.Column.description.toString(), "Description", 200);
-		descriptionColumnConfig.setRenderer(getDescriptionGridCellRenderer());
+		ColumnConfig messageColumnConfig = new ColumnConfig(GroupmessagePlusView.Column.description.toString(), "Message", 100);
+		messageColumnConfig.setRenderer(getDescriptionGridCellRenderer());
+		columns.add(messageColumnConfig);  
+		columns.add(new ColumnConfig(GroupmessagePlusView.Column.name.toString(), "Topic", 100));		
+		ColumnConfig descriptionColumnConfig = new ColumnConfig("author", "Author", 200);
 		columns.add(descriptionColumnConfig);  
 		ColumnConfig date = new ColumnConfig(Group.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
@@ -102,26 +101,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	protected GridCellRenderer getAvatarGridCellRenderer() {
-		GridCellRenderer retval = new GridCellRenderer() {
-
-			@Override
-			public Object render(ModelData model, String property,
-					ColumnData config, int rowIndex, int colIndex,
-					ListStore store, Grid grid) {
-				Avatar retval = new Avatar();
-				try {
-					BeanModel beanModel = (BeanModel) model;
-					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setPathToSmallImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
-				} catch (Exception e) {
-					GWTUtil.log("", e);
-				}
-				return retval;
-			}  
-		};
-		return retval;
-	}
+	
 
 	protected GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
@@ -131,6 +111,8 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 					ColumnData config, int rowIndex, int colIndex,
 					ListStore store, Grid grid) {
 				HtmlContainer retval = new HtmlContainer();
+				retval.setHtml("BLAH");
+				/*
 				retval.setStyleName("myGroupsRow");
 				try {
 					BeanModel beanModel = (BeanModel) model;
@@ -139,6 +121,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
+				*/
 				return retval;
 			}  
 		};
@@ -158,7 +141,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(GroupPlusView.Column.description.toString());  
+		//setAutoExpandColumn(GroupPlusView.Column.description.toString());  
 
 	}
 

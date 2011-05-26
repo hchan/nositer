@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated May 20, 2011 11:14:59 AM by Hibernate Tools 3.2.4.GA
+// Generated May 25, 2011 4:44:42 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -31,6 +31,9 @@ public class GroupmessagePlusView implements java.io.Serializable, Domain {
 	private Date createdtime;
 	private Date modifiedtime;
 	private String name;
+	private String firstname;
+	private String lastname;
+	private String login;
 
 	public GroupmessagePlusView() {
 	}
@@ -41,7 +44,8 @@ public class GroupmessagePlusView implements java.io.Serializable, Domain {
 
 	public GroupmessagePlusView(Integer id, Integer userid,
 			Integer grouptopicid, String description, Date createdtime,
-			Date modifiedtime, String name) {
+			Date modifiedtime, String name, String firstname, String lastname,
+			String login) {
 		this.id = id;
 		this.userid = userid;
 		this.grouptopicid = grouptopicid;
@@ -49,6 +53,9 @@ public class GroupmessagePlusView implements java.io.Serializable, Domain {
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
 		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
 	}
 
 	@Id
@@ -115,6 +122,33 @@ public class GroupmessagePlusView implements java.io.Serializable, Domain {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "firstname", length = 128)
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	@Column(name = "lastname", length = 128)
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	@Column(name = "login", length = 128)
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 }
