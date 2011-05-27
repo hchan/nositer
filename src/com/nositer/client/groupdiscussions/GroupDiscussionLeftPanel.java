@@ -47,6 +47,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		 */
 		if (groupmessagesGrid.isRendered()) {
 			groupmessagesGrid.setHeight(this.getHeight());
+			groupmessagesGrid.setWidth(this.getWidth());
 		}
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0,0);
 	}
