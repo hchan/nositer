@@ -10,6 +10,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
+	private GroupDiscussionsAccordionContainer groupDiscussionsAccordionContainer;
 	private GroupmessagesGrid groupmessagesGrid;
 
 	public GroupDiscussionLeftPanel() {
@@ -26,7 +27,8 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		groupmessagesGrid = new GroupmessagesGrid(groupDiscussionsContainer);
-
+		groupDiscussionsAccordionContainer = new GroupDiscussionsAccordionContainer();
+		this.add(groupDiscussionsAccordionContainer);
 		this.add(groupmessagesGrid);
 	}
 

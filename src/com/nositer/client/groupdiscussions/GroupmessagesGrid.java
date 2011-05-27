@@ -99,6 +99,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		authorColumnConfig.setRenderer(getAuthorGridCellRenderer());
 		columns.add(authorColumnConfig);  
 		ColumnConfig date = new ColumnConfig(GroupmessagePlusView.Column.createdtime.toString(), "Created On", 100);  
+
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
 		setAutoExpandColumn(Group.Column.createdtime.toString());  
@@ -177,7 +178,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		setContextMenu(contextMenu);
 
 
-		addListeners();
+		//addListeners();
 
 
 		store.getLoader().load();
@@ -188,7 +189,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 
 	}
 
-
+/*
 	protected void addListeners() {
 		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
 
@@ -231,7 +232,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		});
 	}
 
-
+*/
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		/*
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
@@ -266,18 +267,18 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		}
 		 */
 	}
-
+/*
 	public void doViewGroup(GroupPlusView groupPlusView) {
 		//HistoryManager.addSubHistoryToken(group.getTagname());
-		HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+		//HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 
 	public void doEditGroup(GroupPlusView groupPlusView) {
-		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+		//HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 
 	public void doSubscriptionsGroup(GroupPlusView groupPlusView) {
-		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+		//HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 	}
 
 	public void doDeleteGroup(final GroupPlusView groupPlusView) {
@@ -303,7 +304,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		};
 		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + groupPlusView.getName(), callback);
 	}
-
+*/
 	public void refresh() {
 		store.getLoader().load();
 	}

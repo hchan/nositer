@@ -56,7 +56,7 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {				
-				//HistoryManager.addHistory(HistoryToken.DISCUSSIONSTOOLSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+				HistoryManager.addHistory(HistoryToken.DISCUSSIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 				resize(0,0);				
 			}
 		});
