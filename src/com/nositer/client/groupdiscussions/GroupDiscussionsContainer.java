@@ -14,7 +14,7 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
 public class GroupDiscussionsContainer extends LayoutContainer implements Resizable {
-	public static int DEFAULTLEFTPANELWIDTH = 300;
+	//public static int DEFAULTLEFTPANELWIDTH = 400;
 	private GroupPlusView groupPlusView;
 	private GroupDiscussionLeftPanel groupDiscussionLeftPanel;
 	private GroupDiscussionMainPanel groupDiscussionMainPanel; 
@@ -74,7 +74,7 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST);//, DEFAULTLEFTPANELWIDTH);
 		westData.setSplit(true);
 		westData.setMargins(new Margins(0, 2, 0, 0));
-		westData.setSize(DEFAULTLEFTPANELWIDTH);
+		westData.setSize(MainPanel.getInstance().getWidth()/2);
 		
 		
 		contentPanel.add(groupDiscussionLeftPanel, westData);
@@ -92,6 +92,7 @@ public class GroupDiscussionsContainer extends LayoutContainer implements Resiza
 	
 	@Override
 	public void resize(int width, int height) {	
+		
 		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 55);
 		groupDiscussionMainPanel.resize(0,0);
 		groupDiscussionLeftPanel.resize(0,0);

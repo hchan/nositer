@@ -98,9 +98,10 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		ColumnConfig authorColumnConfig = new ColumnConfig("author", "Author", 100);
 		authorColumnConfig.setRenderer(getAuthorGridCellRenderer());
 		columns.add(authorColumnConfig);  
-		ColumnConfig date = new ColumnConfig(Group.Column.createdtime.toString(), "Created On", 100);  
+		ColumnConfig date = new ColumnConfig(GroupmessagePlusView.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
+		setAutoExpandColumn(Group.Column.createdtime.toString());  
 		retval = new ColumnModel(columns);
 		return retval;
 	}
@@ -183,7 +184,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		setLoadMask(true);  
 		setBorders(true);  
 		
-		//setAutoExpandColumn(GroupPlusView.Column.description.toString());  
+		
 
 	}
 
