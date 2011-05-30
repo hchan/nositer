@@ -104,8 +104,10 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
 								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().add(groupmessagePanel);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().add(groupmessagePanel, new MarginData(5, 5, 5, 5));
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
+								//groupmessagePanel.setWidth(groupDiscussionsContainer.getGroupDiscussionMainPanel().getWidth() - 20);
+								groupDiscussionsContainer.resize(0, 0);
 							}								
 						});										
 					}

@@ -3,8 +3,11 @@ package com.nositer.client.groupdiscussions;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.Label;
+import com.extjs.gxt.ui.client.widget.Layout;
+import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 
 public class GroupmessagePanel extends ContentPanel implements Resizable {
@@ -21,6 +24,9 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	}
 
 	private void init() {
+		this.setHeaderVisible(false);
+		FlowLayout flowLayout = new FlowLayout();
+		this.setLayout(flowLayout);
 		Groupmessage[] groupmessages = grouptopic.getGroupmessages().toArray(new Groupmessage[] {});
 		htmlContainer = new HtmlContainer(groupmessages[0].getDescription());
 		topicName = new Label(grouptopic.getName());
@@ -30,7 +36,9 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
+		setWidth(newWidth - 20);
 		
+		setHeight(groupDiscussionsContainer.getGroupDiscussionMainPanel().getHeight() - 10);
 	}
 }
