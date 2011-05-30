@@ -9,21 +9,16 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
-import com.extjs.gxt.ui.client.widget.layout.FillData;
-import com.extjs.gxt.ui.client.widget.layout.FillLayout;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
-import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
@@ -106,7 +101,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 						InfoMessageBox.show("Saved", new Listener<MessageBoxEvent>() {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
-								//History.newItem(HistoryToken.MYPROFILE.toString());									
+								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
 							}								
 						});										
 					}

@@ -3,8 +3,11 @@ package com.nositer.client.groupdiscussions;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.button.RefreshButton;
 
 public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable {
 
@@ -12,6 +15,41 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private GroupDiscussionsAccordionContainer groupDiscussionsAccordionContainer;
 	private GroupmessagesGrid groupmessagesGrid;
+	private ToolBar toolBar;
+	
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+	public GroupDiscussionsAccordionContainer getGroupDiscussionsAccordionContainer() {
+		return groupDiscussionsAccordionContainer;
+	}
+
+	public void setGroupDiscussionsAccordionContainer(
+			GroupDiscussionsAccordionContainer groupDiscussionsAccordionContainer) {
+		this.groupDiscussionsAccordionContainer = groupDiscussionsAccordionContainer;
+	}
+
+	public GroupmessagesGrid getGroupmessagesGrid() {
+		return groupmessagesGrid;
+	}
+
+	public void setGroupmessagesGrid(GroupmessagesGrid groupmessagesGrid) {
+		this.groupmessagesGrid = groupmessagesGrid;
+	}
+
+	public ToolBar getToolBar() {
+		return toolBar;
+	}
+
+	public void setToolBar(ToolBar toolBar) {
+		this.toolBar = toolBar;
+	}
 
 	public GroupDiscussionLeftPanel() {
 		init();
@@ -28,6 +66,15 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setHeaderVisible(false);
 		groupmessagesGrid = new GroupmessagesGrid(groupDiscussionsContainer);
 		groupDiscussionsAccordionContainer = new GroupDiscussionsAccordionContainer(groupDiscussionsContainer);
+		toolBar = new ToolBar();			
+		toolBar.add(new FillToolItem());
+		toolBar.add(new RefreshButton() {			
+			@Override
+			public void doSelect() {
+				groupmessagesGrid.refresh();
+			}
+		});
+		this.setBottomComponent(toolBar);
 		this.add(groupDiscussionsAccordionContainer);
 		this.add(groupmessagesGrid);
 	}

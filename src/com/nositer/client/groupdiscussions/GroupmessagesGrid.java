@@ -29,6 +29,8 @@ import com.extjs.gxt.ui.client.widget.grid.GridView;
 import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
 import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
+import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
@@ -40,6 +42,7 @@ import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.util.HttpGetFileHelper;
 import com.nositer.client.widget.avatar.Avatar;
+import com.nositer.client.widget.button.RefreshButton;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
@@ -53,6 +56,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 	protected GroupingView groupingView;
 	protected Menu contextMenu;
 	protected GroupDiscussionsContainer groupDiscussionsContainer;
+	
 
 	public RpcProxy getProxy() {
 		return proxy;
@@ -160,7 +164,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 				BeanModel beanModel = (BeanModel) model;
 				GroupmessagePlusView groupmessagePlusView = beanModel.getBean();
 				
-				if (groupmessagePlusView.getDescription().length() > showLength) {
+				if (groupmessagePlusView.getName().length() > showLength) {
 					retval = groupmessagePlusView.getName().substring(0,showLength);
 					retval += "...";
 				} else {
@@ -172,7 +176,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 		return retval;
 	}
 
-	public void init() {
+	public void init() {		
 		contextMenu = new Menu();
 
 		setContextMenu(contextMenu);

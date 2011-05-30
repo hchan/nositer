@@ -162,7 +162,7 @@ public class SqlHelper {
 		")";
 	public static String FINDGROUPMESSAGES = 
 		"select * from " + GroupmessagePlusView.TABLENAME + 
-		" order by " + GroupmessagePlusView.Column.createdtime + 
+		" order by " + GroupmessagePlusView.Column.createdtime + " desc" +
 		" limit 10";
 	public static String disableSQL(DTO dto) {
 		String retval = null;
