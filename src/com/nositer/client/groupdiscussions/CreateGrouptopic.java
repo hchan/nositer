@@ -97,11 +97,15 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 					}
 
 					@Override
-					public void onSuccess(Grouptopic result) {
+					public void onSuccess(final Grouptopic result) {
 						InfoMessageBox.show("Saved", new Listener<MessageBoxEvent>() {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
 								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
+								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().add(groupmessagePanel);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 							}								
 						});										
 					}
