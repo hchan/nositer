@@ -3,9 +3,9 @@ package com.nositer.client.groupdiscussions;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.Label;
-import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.main.MainPanel;
@@ -41,7 +41,10 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		add(messageInfo);
 		htmlContainer = new HtmlContainer(groupmessage.getDescription());
 		add(htmlContainer, new MarginData(5, 0, 0, 0));
+	
 	}
+
+	
 
 	@Override
 	public void resize(int width, int height) {

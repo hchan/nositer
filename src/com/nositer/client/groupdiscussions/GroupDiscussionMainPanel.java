@@ -16,7 +16,25 @@ public class GroupDiscussionMainPanel extends ContentPanel implements Resizable 
 
 	
 	private GroupDiscussionsContainer groupDiscussionsContainer;
+	private LayoutContainer bottomContainer;
 	
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+	public LayoutContainer getBottomContainer() {
+		return bottomContainer;
+	}
+
+	public void setBottomContainer(LayoutContainer bottomContainer) {
+		this.bottomContainer = bottomContainer;
+	}
+
 	public GroupDiscussionMainPanel() {
 		init();
 	}
@@ -29,6 +47,10 @@ public class GroupDiscussionMainPanel extends ContentPanel implements Resizable 
 
 	private void init() {
 		this.setHeaderVisible(false);
+		bottomContainer = new LayoutContainer();
+		setBottomComponent(bottomContainer);
+		//bottomContainer.add(new GrouptopicToolBar(null, null));
+		getBottomComponent().hide();
 	}
 
 	@Override

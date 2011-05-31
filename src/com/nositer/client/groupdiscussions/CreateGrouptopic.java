@@ -14,6 +14,7 @@ import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Nositer;
 import com.nositer.client.ServiceBroker;
@@ -69,6 +70,8 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		formPanel.addButton(saveButton);
 		this.add(formPanel, new MarginData(5, 5, 65, 0));
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
+		
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().hide();
 		addDefaultListeners();
 		resize(0,0);
 	}
@@ -105,9 +108,24 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().add(groupmessagePanel, new MarginData(5, 5, 5, 5));
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
+								
+								GrouptopicToolBar grouptopicToolBar = 
+									new GrouptopicToolBar(
+											groupDiscussionsContainer, 
+											result);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().removeAll();
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(new Button("HELLO YELLOW"));
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(grouptopicToolBar);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().show();
+								
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().layout(true);
+								
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(500);
+								
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0, 0);
 								//groupmessagePanel.setWidth(groupDiscussionsContainer.getGroupDiscussionMainPanel().getWidth() - 20);
-								groupDiscussionsContainer.resize(0, 0);
+							
 							}								
 						});										
 					}
