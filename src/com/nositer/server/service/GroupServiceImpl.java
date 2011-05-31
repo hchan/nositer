@@ -2,6 +2,7 @@ package com.nositer.server.service;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -496,6 +497,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			trx.commit();
 			retval = grouptopic;
 			groupmessage.setId(groupmessageid);
+			groupmessage.setUser(Application.getCurrentUser());
+			groupmessage.setCreatedtime(new Date());
 			retval.setId(grouptopicid);
 			
 		}

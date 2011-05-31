@@ -284,3 +284,8 @@
 	word-wrap: break-word;
 	overflow: auto;
 }
+
+.groupmessageInfo {
+	font-size: 8pt;
+	font-style: italic; 
+}

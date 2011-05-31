@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.layout.MarginData;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.main.MainPanel;
@@ -15,6 +16,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private HtmlContainer htmlContainer;
 	private Grouptopic grouptopic;
 	private Label topicName;
+	private HtmlContainer messageInfo;
 	
 	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Grouptopic grouptopic) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -25,13 +27,20 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 
 	private void init() {
 		this.setHeaderVisible(false);
+		setBorders(false);
+		setBodyBorder(false);
 		FlowLayout flowLayout = new FlowLayout();
 		this.setLayout(flowLayout);
 		Groupmessage[] groupmessages = grouptopic.getGroupmessages().toArray(new Groupmessage[] {});
-		htmlContainer = new HtmlContainer(groupmessages[0].getDescription());
+		Groupmessage groupmessage = groupmessages[0];
 		topicName = new Label(grouptopic.getName());
+		topicName.setStyleName("formHeading");
 		add(topicName);
-		add(htmlContainer);
+		messageInfo = new HtmlContainer("message posted by " + groupmessage.getUser().getFirstname() + " on " + groupmessage.getCreatedtime());
+		messageInfo.setStyleName("groupmessageInfo");
+		add(messageInfo);
+		htmlContainer = new HtmlContainer(groupmessage.getDescription());
+		add(htmlContainer, new MarginData(5, 0, 0, 0));
 	}
 
 	@Override
