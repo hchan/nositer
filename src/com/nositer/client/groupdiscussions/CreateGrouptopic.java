@@ -72,6 +72,8 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
 		
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().hide();
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(MainPanel.getInstance().getHeight());
+		//groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
 		addDefaultListeners();
 		resize(0,0);
 	}
@@ -114,14 +116,16 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 											groupDiscussionsContainer, 
 											result);
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().removeAll();
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(new Button("HELLO YELLOW"));
+								
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(grouptopicToolBar);
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().show();
 								
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().layout(true);
 								
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(500);
+								groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(MainPanel.getInstance().getHeight()
+										-
+										groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().getHeight() - 30);
 								
 								groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0, 0);
 								//groupmessagePanel.setWidth(groupDiscussionsContainer.getGroupDiscussionMainPanel().getWidth() - 20);
