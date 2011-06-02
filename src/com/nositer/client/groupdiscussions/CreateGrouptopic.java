@@ -108,28 +108,7 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 							public void handleEvent(MessageBoxEvent be) {								
 								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
 								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().add(groupmessagePanel, new MarginData(5, 5, 5, 5));
-								
-								GrouptopicToolBar grouptopicToolBar = 
-									new GrouptopicToolBar(
-											groupDiscussionsContainer, 
-											result);
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().removeAll();
-								
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(grouptopicToolBar);
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().show();
-								
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().layout(true);
-								
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(MainPanel.getInstance().getHeight()
-										-
-										groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().getHeight() - 30);
-								
-								groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0, 0);
-								//groupmessagePanel.setWidth(groupDiscussionsContainer.getGroupDiscussionMainPanel().getWidth() - 20);
-							
+								groupmessagePanel.show();
 							}								
 						});										
 					}

@@ -1,15 +1,25 @@
 package com.nositer.server.service;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.engine.query.NamedParameterDescriptor;
+import org.hibernate.engine.query.ParamLocationRecognizer.NamedParameterDescription;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.jdbc.Work;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.mysql.jdbc.Statement;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Groupmessage;
@@ -375,7 +385,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		return retval;
 	}
-	
+
 	@Override
 	public ArrayList<GroupSubscriptionView> findSubscriptions(
 			GroupPlusView groupPlusView, String lastname) throws GWTException {
@@ -470,9 +480,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 	@Override
-	public Grouptopic createGrouptopic(GroupPlusView groupPlusView, Grouptopic grouptopic) throws GWTException {
+	public Grouptopic createGrouptopic(GroupPlusView groupPlusView, final Grouptopic grouptopic) throws GWTException {
 		Grouptopic retval = null;
-		Session sess = HibernateUtil.getSession();
+		final Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		User user = null;
 		try {
@@ -481,26 +491,73 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			if (!isGroupIBelongTo(groupPlusView, user)) {
 				throw new GWTException("You do not have permissions to create a group topic");
 			}
-			int grouptopicid = sess.createSQLQuery(SqlHelper.CREATEGROUPTOPIC).
+			final HashSet<Integer> grouptopicidHM = new HashSet<Integer>();
+			/*
+			sess.createSQLQuery(SqlHelper.CREATEGROUPTOPIC).
 			setInteger(Grouptopic.Column.userid.toString(), grouptopic.getUserid()).
 			setInteger(Grouptopic.Column.groupid.toString(), grouptopic.getGroupid()).		
 			setString(Grouptopic.Column.name.toString(), grouptopic.getName()).
 			executeUpdate();
+			 */
 
-			Groupmessage groupmessage = grouptopic.getGroupmessages().toArray(new Groupmessage[]{})[0];
+			sess.doWork(new Work() {
+
+				@Override
+				public void execute(Connection con) throws SQLException {
+
+
+					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPTOPIC, Statement.RETURN_GENERATED_KEYS);
+					pstmt.setInt(1, grouptopic.getUserid());
+					pstmt.setInt(2, grouptopic.getGroupid());
+					pstmt.setString(3, grouptopic.getName());
+					pstmt.execute();
+
+					ResultSet resultSet = pstmt.getGeneratedKeys();
+
+					if (resultSet != null && resultSet.next()) { 
+						grouptopicidHM.add(resultSet.getInt(1));
+					}
+				}
+			});
+
+			final int grouptopicid = grouptopicidHM.toArray(new Integer[]{})[0];
+			final Groupmessage groupmessage = grouptopic.getGroupmessages().toArray(new Groupmessage[]{})[0];
+			final HashSet<Integer> groupmessageidHM = new HashSet<Integer>();
+
+			sess.doWork(new Work() {
+				@Override
+				public void execute(Connection con) throws SQLException {
+
+
+					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPMESSAGE, Statement.RETURN_GENERATED_KEYS);
+					pstmt.setInt(1, groupmessage.getUserid());
+					pstmt.setInt(2, grouptopicid);
+					pstmt.setString(3, groupmessage.getDescription());
+					pstmt.execute();
+
+					ResultSet resultSet = pstmt.getGeneratedKeys();
+
+					if (resultSet != null && resultSet.next()) { 
+						groupmessageidHM.add(resultSet.getInt(1));
+					}
+				}
+			});
+			/*
 			int groupmessageid = sess.createSQLQuery(SqlHelper.CREATEGROUPMESSAGE).
 			setInteger(Groupmessage.Column.userid.toString(), groupmessage.getUserid()).
 			setInteger(Groupmessage.Column.grouptopicid.toString(), grouptopicid).		
 			setString(Groupmessage.Column.description.toString(), groupmessage.getDescription()).
 			executeUpdate();
+			 */
 
 			trx.commit();
 			retval = grouptopic;
+			int groupmessageid = groupmessageidHM.toArray(new Integer[]{})[0];
 			groupmessage.setId(groupmessageid);
 			groupmessage.setUser(Application.getCurrentUser());
 			groupmessage.setCreatedtime(new Date());
 			retval.setId(grouptopicid);
-			
+
 		}
 		catch (GWTException e) {
 			throw e;
@@ -528,11 +585,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				throw new GWTException("You do not have permissions to retrieve messages in this group");
 			}
 			trx = sess.beginTransaction();		
-			
+
 			List<com.nositer.hibernate.generated.domain.GroupmessagePlusView> results =
 				sess.createSQLQuery(SqlHelper.FINDGROUPMESSAGES).addEntity(com.nositer.hibernate.generated.domain.GroupmessagePlusView.class).
 				list();
-			
+
 			if (results.size() == 0) {				
 				retval = new ArrayList<GroupmessagePlusView>();
 			} else {

@@ -143,9 +143,9 @@ public class SqlHelper {
 		Grouptopic.Column.name + ", " +
 		Grouptopic.Column.createdtime +
 		")" + " values( " +
-		":" + Grouptopic.Column.userid + ", " +
-		":" + Grouptopic.Column.groupid + ", " +
-		":" + Grouptopic.Column.name + ", " +
+		"?, " +
+		"?, " +
+		"?, " +
 		NOW +
 		")";
 	public static String CREATEGROUPMESSAGE =
@@ -155,9 +155,9 @@ public class SqlHelper {
 		Groupmessage.Column.description + ", " +
 		Groupmessage.Column.createdtime +
 		")" + " values( " +
-		":" + Groupmessage.Column.userid + ", " +
-		":" + Groupmessage.Column.grouptopicid + ", " +
-		":" + Groupmessage.Column.description + ", " +
+		"?, " +
+		"?, " +
+		"?, " +
 		NOW +
 		")";
 	public static String FINDGROUPMESSAGES = 

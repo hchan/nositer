@@ -1,5 +1,6 @@
 package com.nositer.client.groupdiscussions;
 
+import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
@@ -66,8 +67,9 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setHeaderVisible(false);
 		groupmessagesGrid = new GroupmessagesGrid(groupDiscussionsContainer);
 		groupDiscussionsAccordionContainer = new GroupDiscussionsAccordionContainer(groupDiscussionsContainer);
-		toolBar = new ToolBar();			
-		toolBar.add(new FillToolItem());
+		toolBar = new ToolBar();	
+		toolBar.setAlignment(HorizontalAlignment.CENTER);
+		//toolBar.add(new FillToolItem());
 		toolBar.add(new RefreshButton() {			
 			@Override
 			public void doSelect() {
