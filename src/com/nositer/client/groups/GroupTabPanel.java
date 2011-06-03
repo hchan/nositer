@@ -72,16 +72,16 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 
 	public void init() {
 		setTabPosition(TabPosition.BOTTOM);
-		viewGroupTabItem = new ViewGroupTabItem(groupPlusView);
+		viewGroupTabItem = new ViewGroupTabItem(groupPlusView, this);
 		add(viewGroupTabItem);
-		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(groupPlusView);
+		subscriptionsGroupTabItem = new SubscriptionsGroupTabItem(groupPlusView, this);
 		add(subscriptionsGroupTabItem);
-		discussionsGroupTabItem = new DiscussionsGroupTabItem(groupPlusView);
+		discussionsGroupTabItem = new DiscussionsGroupTabItem(groupPlusView, this);
 		add(discussionsGroupTabItem);
 		if (Groups.isGroupIOwn(groupPlusView)) {
-			editGroupTabItem = new EditGroupTabItem(groupPlusView);
-			uploadGroupTabItem = new UploadGroupTabItem(groupPlusView);
-			fileManagerGroupTabItem = new FileManagerGroupTabItem(groupPlusView);
+			editGroupTabItem = new EditGroupTabItem(groupPlusView, this);
+			uploadGroupTabItem = new UploadGroupTabItem(groupPlusView, this);
+			fileManagerGroupTabItem = new FileManagerGroupTabItem(groupPlusView, this);
 			add(editGroupTabItem);
 			add(uploadGroupTabItem);
 			add(fileManagerGroupTabItem);

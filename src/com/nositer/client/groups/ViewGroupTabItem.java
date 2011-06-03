@@ -25,10 +25,52 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 
 	private Avatar avatar;
 	private GroupPlusView groupPlusView;
+	private GroupTabPanel groupTabPanel;
 
-	public ViewGroupTabItem(GroupPlusView group) {
+	public HtmlContainer getDescription() {
+		return description;
+	}
+
+	public void setDescription(HtmlContainer description) {
+		this.description = description;
+	}
+
+	public ContentPanel getContentPanel() {
+		return contentPanel;
+	}
+
+	public void setContentPanel(ContentPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public Avatar getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
+	}
+
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
+	}
+
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
+	}
+
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
+	public ViewGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("View");
-		this.groupPlusView = group;
+		this.groupPlusView = groupPlusView;
+		this.groupTabPanel = groupTabPanel;
 		init();
 	}
 
@@ -44,9 +86,10 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		contentPanel.setScrollMode(Scroll.AUTO);
 		contentPanel.setId(getItemId());
 		description = new HtmlContainer();
-		description.setHtml(groupPlusView.getDescription());
+		//description.setHtml(groupPlusView.getDescription());
 		avatar = new Avatar();
-		avatar.setPathToImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
+		//avatar.setPathToImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
+		populate(groupPlusView);
 		LayoutContainer avatarContentPanel = new LayoutContainer();
 		avatarContentPanel.add(avatar);
 		contentPanel.add(avatarContentPanel);
@@ -56,12 +99,24 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		addDefaultListeners();
 	}
 	
+	public void populate(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
+		description.setHtml(groupPlusView.getDescription());
+		avatar.setPathToImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
+	}
+	
+	
+	public void populate(Group group) {		
+		description.setHtml(group.getDescription());
+		avatar.setPathToImage(HttpGetFileHelper.getGroupPathURL(group.getAvatarlocation(), group.getId()));
+	}
+	
 	
 	private void addDefaultListeners() {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				//HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+				HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
 				resize(0,0);
 			}
 		});

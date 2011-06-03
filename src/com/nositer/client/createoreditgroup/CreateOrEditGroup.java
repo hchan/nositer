@@ -24,6 +24,7 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.groups.EditGroupTabItem;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -43,6 +44,12 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 	private HtmlEditor description;
 	private ErrorPanel errorPanel;
 	private AvatarSelector avatarSelector;
+	private EditGroupTabItem editGroupTabItem;
+
+	
+	public EditGroupTabItem getEditGroupTabItem() {
+		return editGroupTabItem;
+	}
 
 	public Integer getGroupid() {
 		return groupid;
@@ -236,7 +243,8 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 						public void onSuccess(final Group result) {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
-								public void handleEvent(MessageBoxEvent be) {								
+								public void handleEvent(MessageBoxEvent be) {		
+									editGroupTabItem.getGroupTabPanel().getViewGroupTabItem().populate(result);
 									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
 								}								
 							});										
@@ -303,5 +311,9 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		layoutContainer.add(label);
 		layoutContainer.setStyleName("formHeading");
 		formPanel.add(layoutContainer);
+	}
+
+	public void setEditGroupTabItem(EditGroupTabItem editGroupTabItem) {
+		this.editGroupTabItem = editGroupTabItem;
 	}
 }

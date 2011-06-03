@@ -7,7 +7,6 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groupdiscussions.GroupDiscussionsContainer;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -15,7 +14,18 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private GroupPlusView groupPlusView;
+	private GroupTabPanel groupTabPanel;
 	
+
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
 
 	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
 		return groupDiscussionsContainer;
@@ -38,9 +48,10 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 	}
 
 
-	public DiscussionsGroupTabItem(GroupPlusView groupPlusView) {
+	public DiscussionsGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("Discussions");		
 		this.groupPlusView = groupPlusView;
+		this.groupTabPanel = groupTabPanel;
 		init();
 	}
 

@@ -4,7 +4,6 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
-import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
@@ -15,10 +14,36 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 
 	private CreateOrEditGroup createOrEditGroup;
 	private GroupPlusView groupPlusView;
+	private GroupTabPanel groupTabPanel;
 
-	public EditGroupTabItem(GroupPlusView groupPlusView) {
+	public CreateOrEditGroup getCreateOrEditGroup() {
+		return createOrEditGroup;
+	}
+
+	public void setCreateOrEditGroup(CreateOrEditGroup createOrEditGroup) {
+		this.createOrEditGroup = createOrEditGroup;
+	}
+
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
+	}
+
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
+	}
+
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
+	public EditGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("Edit");
 		this.groupPlusView = groupPlusView;
+		this.groupTabPanel = groupTabPanel;
 		init();
 	}
 
@@ -29,6 +54,7 @@ public class EditGroupTabItem extends TabItem implements Resizable {
 				return 300;
 			};
 		};		
+		createOrEditGroup.setEditGroupTabItem(this);
 		createOrEditGroup.populate(groupPlusView);
 		add(createOrEditGroup);
 		addDefaultListeners();

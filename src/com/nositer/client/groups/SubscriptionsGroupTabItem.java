@@ -3,8 +3,6 @@ package com.nositer.client.groups;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
-import com.nositer.client.createoreditgroup.CreateOrEditGroup;
-import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groupsubscriptions.GroupSubscriptionsContainer;
 import com.nositer.client.history.HistoryManager;
@@ -17,7 +15,16 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	private GroupPlusView groupPlusView;
 	private boolean populated;
+	private GroupTabPanel groupTabPanel;
 	
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
 	public GroupSubscriptionsContainer getGroupSubscriptionsContainer() {
 		return groupSubscriptionsContainer;
 	}
@@ -43,10 +50,11 @@ public class SubscriptionsGroupTabItem extends TabItem implements Resizable {
 		this.populated = populated;
 	}
 
-	public SubscriptionsGroupTabItem(GroupPlusView groupPlusView) {
+	public SubscriptionsGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("Subscriptions");
 		this.populated = false;
 		this.groupPlusView = groupPlusView;
+		this.groupTabPanel = groupTabPanel;
 		init();
 	}
 

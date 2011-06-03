@@ -9,7 +9,6 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.uploadfiles.UploadFiles;
-import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -17,10 +16,36 @@ public class UploadGroupTabItem extends TabItem implements Resizable {
 
 	private UploadFiles uploadFiles;
 	private GroupPlusView groupPlusView;
+	private GroupTabPanel groupTabPanel;
 
-	public UploadGroupTabItem(GroupPlusView groupPlusView) {
+	public UploadFiles getUploadFiles() {
+		return uploadFiles;
+	}
+
+	public void setUploadFiles(UploadFiles uploadFiles) {
+		this.uploadFiles = uploadFiles;
+	}
+
+	public GroupPlusView getGroupPlusView() {
+		return groupPlusView;
+	}
+
+	public void setGroupPlusView(GroupPlusView groupPlusView) {
+		this.groupPlusView = groupPlusView;
+	}
+
+	public GroupTabPanel getGroupTabPanel() {
+		return groupTabPanel;
+	}
+
+	public void setGroupTabPanel(GroupTabPanel groupTabPanel) {
+		this.groupTabPanel = groupTabPanel;
+	}
+
+	public UploadGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("Upload");
 		this.groupPlusView = groupPlusView;
+		this.groupTabPanel = groupTabPanel;
 		init();
 	}
 
