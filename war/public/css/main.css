@@ -289,3 +289,11 @@
 	font-size: 8pt;
 	font-style: italic; 
 }
+
+.clickableUsername {
+	color: #7FAAFF !important;
+	cursor: pointer;
+}
+.clickableUsername:hover {
+	background-color: #0000FF !important;
+}

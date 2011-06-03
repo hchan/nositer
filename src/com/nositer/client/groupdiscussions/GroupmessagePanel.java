@@ -16,7 +16,8 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private HtmlContainer htmlContainer;
 	private Grouptopic grouptopic;
 	private Label topicName;
-	private HtmlContainer messageInfo;
+	private Label messageInfo;
+	private Label clickableUsername;
 	
 	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Grouptopic grouptopic) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -36,9 +37,16 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		topicName = new Label(grouptopic.getName());
 		topicName.setStyleName("formHeading");
 		add(topicName);
-		messageInfo = new HtmlContainer("message posted by " + groupmessage.getUser().getFirstname() + " on " + groupmessage.getCreatedtime());
+		add(new HtmlContainer()); // new line
+		clickableUsername = new Label(groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname());
+		clickableUsername.setStyleName("clickableUsername");
+		add(clickableUsername);
+		messageInfo = new Label("message posted on " + groupmessage.getCreatedtime() + " by ");
 		messageInfo.setStyleName("groupmessageInfo");
+		
+		
 		add(messageInfo);
+		add(clickableUsername);
 		htmlContainer = new HtmlContainer(groupmessage.getDescription());
 		add(htmlContainer, new MarginData(5, 0, 0, 0));
 	

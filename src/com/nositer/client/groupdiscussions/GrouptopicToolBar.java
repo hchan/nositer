@@ -16,8 +16,8 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 	private RefreshButton refreshButton;
 	private NextButton nextButton;
 	private PreviousButton previousButton;
-private Label filler1;
-	
+	private Label filler1;
+
 	public GrouptopicToolBar(GroupDiscussionsContainer groupDiscussionsContainer, Grouptopic grouptopic) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		this.grouptopic = grouptopic;
@@ -30,13 +30,13 @@ private Label filler1;
 		nextButton = new NextButton();
 		refreshButton = new RefreshButton();
 		//setAlignment(HorizontalAlignment.CENTER);
-		
+
 		add(previousButton);
 		filler1 = new Label("x");
 		filler1.setStyleAttribute("margin-right", "200");
 		add(filler1);
 		add(nextButton);
-	
+
 	}
 
 	@Override
