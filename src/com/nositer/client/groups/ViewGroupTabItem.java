@@ -14,11 +14,12 @@ import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.HttpGetFileHelper;
+import com.nositer.client.widget.HistoryWidget;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.Avatar;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class ViewGroupTabItem extends TabItem implements Resizable {
+public class ViewGroupTabItem extends TabItem implements Resizable, HistoryWidget {
 
 	private HtmlContainer description;
 	private ContentPanel contentPanel;
@@ -116,7 +117,7 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+				HistoryManager.addHistory(getNewHistory());
 				resize(0,0);
 			}
 		});
@@ -126,6 +127,11 @@ public class ViewGroupTabItem extends TabItem implements Resizable {
 	public void resize(int width, int height) {
 		contentPanel.setHeight(MainPanel.getInstance().getHeight()-57);
 		contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
+	}
+
+	@Override
+	public String getNewHistory() {
+		return HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname();
 	}
 
 	

@@ -12,6 +12,7 @@ import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.HistoryWidget;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.TabItemPlus;
 
@@ -39,7 +40,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		this.groupTabPanel = groupTabPanel;
 	}
 
-	
+
 
 	public GroupTabItem(String tabId, GroupTabPanel.TabItemType tabItemType) {
 		this.tabItemType = tabItemType;
@@ -83,13 +84,17 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 		addListener(Events.Close, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				
+
 			}
 		});
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				History.newItem(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + GroupTabItem.this.getItemId());
+				//History.newItem(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + GroupTabItem.this.getItemId());
+				if (groupTabPanel != null) {
+					HistoryWidget historyWidget = (HistoryWidget) groupTabPanel.getSelectedItem();
+					History.newItem(historyWidget.getNewHistory(), false);
+				}
 				resize(0,0);
 			}
 		});

@@ -7,9 +7,10 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.managefiles.GroupManageFiles;
+import com.nositer.client.widget.HistoryWidget;
 import com.nositer.client.widget.Resizable;
 
-public class FileManagerGroupTabItem extends TabItem implements Resizable {
+public class FileManagerGroupTabItem extends TabItem implements Resizable, HistoryWidget {
 
 	private GroupManageFiles groupManageFiles;
 	private GroupPlusView groupPlusView;
@@ -57,7 +58,7 @@ public class FileManagerGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {					
-				HistoryManager.addHistory(HistoryToken.MANAGEFILESGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());				
+				HistoryManager.addHistory(getNewHistory());				
 				resize(0,0);
 			}
 		});
@@ -71,6 +72,10 @@ public class FileManagerGroupTabItem extends TabItem implements Resizable {
 		//contentPanel.setWidth(MainPanel.getInstance().getWidth()-3);
 
 
+	}
+	@Override
+	public String getNewHistory() {
+		return HistoryToken.MANAGEFILESGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname();
 	}
 
 	

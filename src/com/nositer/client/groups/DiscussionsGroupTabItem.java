@@ -7,10 +7,11 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groupdiscussions.GroupDiscussionsContainer;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.widget.HistoryWidget;
 import com.nositer.client.widget.Resizable;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class DiscussionsGroupTabItem extends TabItem implements Resizable {
+public class DiscussionsGroupTabItem extends TabItem implements Resizable, HistoryWidget {
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private GroupPlusView groupPlusView;
@@ -67,7 +68,7 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 		addListener(Events.Select, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {				
-				HistoryManager.addHistory(HistoryToken.DISCUSSIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
+				HistoryManager.addHistory(getNewHistory());
 				resize(0,0);				
 			}
 		});
@@ -78,5 +79,11 @@ public class DiscussionsGroupTabItem extends TabItem implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		groupDiscussionsContainer.resize(0,0);
+	}
+
+
+	@Override
+	public String getNewHistory() {
+		return HistoryToken.DISCUSSIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname();
 	}
 }
