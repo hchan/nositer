@@ -212,6 +212,7 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 				Groupmessage groupmessage = new Groupmessage();
 				groupmessage.setCreatedtime(groupmessagePlusView.getCreatedtime());
 				User user = new User();
+				user.setId(groupmessagePlusView.getUserid());
 				user.setFirstname(groupmessagePlusView.getFirstname());
 				user.setLastname(groupmessagePlusView.getLastname());
 				groupmessage.setUser(user);
