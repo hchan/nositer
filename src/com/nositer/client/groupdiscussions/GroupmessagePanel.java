@@ -24,6 +24,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private Label topicName;
 	private Label messageInfo;
 	private Label clickableUsername;
+	private GrouptopicToolBar grouptopicToolBar;
 
 	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Grouptopic grouptopic) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -69,7 +70,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this, new MarginData(5, 5, 5, 5));
 
-		GrouptopicToolBar grouptopicToolBar = 
+		grouptopicToolBar = 
 			new GrouptopicToolBar(
 					groupDiscussionsContainer, 
 					grouptopic);
@@ -96,5 +97,6 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		setWidth(newWidth - 20);
 
 		setHeight(groupDiscussionsContainer.getGroupDiscussionMainPanel().getHeight() - 10);
+		grouptopicToolBar.resize(0, 0);
 	}
 }

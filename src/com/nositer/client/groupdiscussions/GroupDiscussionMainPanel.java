@@ -59,5 +59,7 @@ public class GroupDiscussionMainPanel extends ContentPanel implements Resizable 
 			Resizable resizable = (Resizable) component;
 			resizable.resize(width, height);
 		}
+		
+	
 	}
 }

@@ -183,21 +183,12 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 
 	public void init() {		
 		//contextMenu = new Menu();
-
 		//setContextMenu(contextMenu);
-
-
 		addListeners();
-
-
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-
-
-
 	}
-
 
 	protected void addListeners() {
 		addListener(Events.RowClick, new Listener<GridEvent>() {
@@ -208,6 +199,9 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 				BeanModel beanModel = GroupmessagesGrid.this.getSelectionModel().getSelectedItem();
 				final GroupmessagePlusView groupmessagePlusView = beanModel.getBean();	
 				Grouptopic grouptopic = new Grouptopic();
+				// TODO STOP HERE - fetch group topic from Service
+				
+				
 				HashSet<Groupmessage> groupmessages = new HashSet<Groupmessage>();
 				Groupmessage groupmessage = new Groupmessage();
 				groupmessage.setCreatedtime(groupmessagePlusView.getCreatedtime());
