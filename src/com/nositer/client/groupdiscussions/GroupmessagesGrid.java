@@ -198,24 +198,38 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 
 				BeanModel beanModel = GroupmessagesGrid.this.getSelectionModel().getSelectedItem();
 				final GroupmessagePlusView groupmessagePlusView = beanModel.getBean();	
-				Grouptopic grouptopic = new Grouptopic();
-				// TODO STOP HERE - fetch group topic from Service
+				AsyncCallback<Groupmessage> callback = new AsyncCallback<Groupmessage>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						GWTUtil.log("", caught);
+					}
+
+					@Override
+					public void onSuccess(Groupmessage result) {
+						/*
+						Grouptopic grouptopic = result.getGrouptopic();
+						HashSet<Groupmessage> groupmessages = new HashSet<Groupmessage>();
+						Groupmessage groupmessage = new Groupmessage();
+						groupmessage.setCreatedtime(groupmessagePlusView.getCreatedtime());
+						User user = new User();
+						user.setId(groupmessagePlusView.getUserid());
+						user.setFirstname(groupmessagePlusView.getFirstname());
+						user.setLastname(groupmessagePlusView.getLastname());
+						groupmessage.setUser(user);
+						groupmessage.setDescription(groupmessagePlusView.getDescription());
+						groupmessages.add(groupmessage);
+						grouptopic.setGroupmessages(groupmessages);
+						grouptopic.setName(groupmessagePlusView.getName());
+						*/
+						GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
+						groupmessagePanel.show();
+						
+					}
+					
+				};
+				ServiceBroker.groupService.getGroupmessage(groupmessagePlusView.getId(), callback);
 				
-				
-				HashSet<Groupmessage> groupmessages = new HashSet<Groupmessage>();
-				Groupmessage groupmessage = new Groupmessage();
-				groupmessage.setCreatedtime(groupmessagePlusView.getCreatedtime());
-				User user = new User();
-				user.setId(groupmessagePlusView.getUserid());
-				user.setFirstname(groupmessagePlusView.getFirstname());
-				user.setLastname(groupmessagePlusView.getLastname());
-				groupmessage.setUser(user);
-				groupmessage.setDescription(groupmessagePlusView.getDescription());
-				groupmessages.add(groupmessage);
-				grouptopic.setGroupmessages(groupmessages);
-				grouptopic.setName(groupmessagePlusView.getName());
-				GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, grouptopic);
-				groupmessagePanel.show();
 
 			}
 		});

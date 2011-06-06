@@ -20,15 +20,16 @@ import com.nositer.client.widget.Resizable;
 public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private HtmlContainer htmlContainer;
-	private Grouptopic grouptopic;
+	private Groupmessage groupmessage;
 	private Label topicName;
 	private Label messageInfo;
 	private Label clickableUsername;
+	private Grouptopic grouptopic;
 	private GrouptopicToolBar grouptopicToolBar;
 
-	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Grouptopic grouptopic) {
+	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Groupmessage groupmessage) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
-		this.grouptopic = grouptopic;
+		this.groupmessage = groupmessage;
 
 		init();
 	}
@@ -39,8 +40,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		setBodyBorder(false);
 		FlowLayout flowLayout = new FlowLayout();
 		this.setLayout(flowLayout);
-		Groupmessage[] groupmessages = grouptopic.getGroupmessages().toArray(new Groupmessage[] {});
-		final Groupmessage groupmessage = groupmessages[0];
+		grouptopic = groupmessage.getGrouptopic();
 		topicName = new Label(grouptopic.getName());
 		topicName.setStyleName("formHeading");
 		add(topicName);

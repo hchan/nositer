@@ -107,7 +107,9 @@ public class CreateGrouptopic extends ContentPanel implements Resizable {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
 								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
-								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
+								Groupmessage groupmessage = result.getGroupmessages().toArray(new Groupmessage[]{})[0];
+								groupmessage.setGrouptopic(result);
+								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, groupmessage);
 								groupmessagePanel.show();
 							}								
 						});										

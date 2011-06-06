@@ -164,6 +164,11 @@ public class SqlHelper {
 		"select * from " + GroupmessagePlusView.TABLENAME + 
 		" order by " + GroupmessagePlusView.Column.createdtime + " desc" +
 		" limit 10";
+	public static String GETNUMGROUPMESSAGESBYGROUPTOPIC = 
+		"select count(*) from " + Groupmessage.TABLENAME + 
+		" where " + Groupmessage.Column.grouptopicid + "= :" + Groupmessage.Column.grouptopicid;
+	
+	
 	public static String disableSQL(DTO dto) {
 		String retval = null;
 		retval = "update " + dto.getTablename() + " set " +

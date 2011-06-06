@@ -1,6 +1,7 @@
 package com.nositer.server.service;
 
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -556,6 +557,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			groupmessage.setId(groupmessageid);
 			groupmessage.setUser(Application.getCurrentUser());
 			groupmessage.setCreatedtime(new Date());
+
 			retval.setId(grouptopicid);
 
 		}
@@ -600,6 +602,40 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			throw e;
 		}		
 		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
+
+
+	@Override
+	public Groupmessage getGroupmessage(Integer groupmessageid) throws GWTException {
+		Groupmessage retval = null;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			com.nositer.hibernate.generated.domain.Groupmessage groupmessageDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.Groupmessage.class, groupmessageid, sess);
+			retval = BeanConversion.copyDomain2DTO(groupmessageDomain, Groupmessage.class);
+			com.nositer.hibernate.generated.domain.Grouptopic grouptopicDomain = groupmessageDomain.getGrouptopic();
+			Grouptopic grouptopic = BeanConversion.copyDomain2DTO(grouptopicDomain, Grouptopic.class);		
+			retval.setGrouptopic(grouptopic);
+				
+			BigInteger bigInteger = (BigInteger) sess.createSQLQuery(SqlHelper.GETNUMGROUPMESSAGESBYGROUPTOPIC).
+			setInteger(Groupmessage.Column.grouptopicid.toString(), retval.getGrouptopicid()).uniqueResult();
+			Integer numGroupmessages = bigInteger.intValue(); 
+			HashSet<Groupmessage> bogusGroupmessages = new HashSet<Groupmessage>(numGroupmessages);
+			grouptopic.setGroupmessages(bogusGroupmessages);
+			
+			com.nositer.hibernate.generated.domain.User userDomain = groupmessageDomain.getUser();
+			User user = BeanConversion.copyDomain2DTO(userDomain, User.class);
+			retval.setUser(user);
+		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
 			Application.log.error("", e);
 			throw new GWTException(e);
