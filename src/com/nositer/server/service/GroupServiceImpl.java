@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
@@ -642,10 +643,11 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			uniqueResult();
 			Integer indexOfGroupmessageInGrouptopic = bigInteger.intValue();
 
-			HashSet<Groupmessage> bogusGroupmessages = new HashSet<Groupmessage>(numGroupmessages);
 
+			HashSet<Groupmessage> bogusGroupmessages = new HashSet<Groupmessage>(numGroupmessages);
+		
 			// add a whole bunch of bogus groupmessage
-			// however ONE of them is really the one we are returning AND it is placed in the correct order sequence
+			// however ONE of them is really the one we are returning
 			for (int i = 0; i < numGroupmessages; i++) {			
 				Groupmessage bogusGroupmessage = new Groupmessage();
 				if (i == indexOfGroupmessageInGrouptopic) {
