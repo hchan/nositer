@@ -466,8 +466,13 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		try {
-			trx = sess.beginTransaction();		
-			com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.GroupPlusView.class, groupid, sess);
+			trx = sess.beginTransaction();								
+			com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain =
+				(com.nositer.hibernate.generated.domain.GroupPlusView) sess.createSQLQuery(SqlHelper.GETGROUPPLUSVIEW).addEntity(com.nositer.hibernate.generated.domain.GroupPlusView.class).
+				setInteger(GroupPlusView.Column.id.toString(), groupid).
+				uniqueResult();
+
+			//	com.nositer.hibernate.generated.domain.GroupPlusView groupPlusViewDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.GroupPlusView.class, groupid, sess);
 			retval = BeanConversion.copyDomain2DTO(groupPlusViewDomain, GroupPlusView.class);
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		

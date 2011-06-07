@@ -133,7 +133,7 @@ public class SqlHelper {
 		" order by " + GroupSubscriptionView.Column.lastname + ", " + GroupSubscriptionView.Column.firstname;
 	public static String FINDSUBSCRIBER =
 		"select * from " + GroupSubscriptionView.TABLENAME + 
-		" where " + GroupSubscriptionView.Column.groupid + "= :" + GroupSubscriptionView.Column.groupid + 
+		" where " + GroupSubscriptionView.Column.groupid + " = :" + GroupSubscriptionView.Column.groupid + 
 		" and " + GroupSubscriptionView.Column.user_disable + " = false " +
 		" and " + GroupSubscriptionView.Column.userid + " = :" + GroupSubscriptionView.Column.userid;
 	public static String CREATEGROUPTOPIC =
@@ -166,11 +166,16 @@ public class SqlHelper {
 		" limit 10";
 	public static String GETNUMGROUPMESSAGESBYGROUPTOPIC = 
 		"select count(*) from " + Groupmessage.TABLENAME + 
-		" where " + Groupmessage.Column.grouptopicid + "= :" + Groupmessage.Column.grouptopicid;
+		" where " + Groupmessage.Column.grouptopicid + " = :" + Groupmessage.Column.grouptopicid;
 	public static String GETINDEXOFGROUPMESSAGEINGROUPTOPIC = 
 		"select count(*) from " + Groupmessage.TABLENAME + 
 		" where " + Groupmessage.Column.grouptopicid + "= :" + Groupmessage.Column.grouptopicid + 
 		" and " + Groupmessage.Column.id + " < :" + Groupmessage.Column.id;
+	public static String GETGROUPPLUSVIEW =
+		"select * from " + GroupPlusView.TABLENAME +
+		" where " + GroupPlusView.Column.id + " = :" + GroupPlusView.Column.id +
+		" and " + GroupPlusView.Column.owner + " = true";
+	
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;
