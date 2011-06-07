@@ -167,7 +167,10 @@ public class SqlHelper {
 	public static String GETNUMGROUPMESSAGESBYGROUPTOPIC = 
 		"select count(*) from " + Groupmessage.TABLENAME + 
 		" where " + Groupmessage.Column.grouptopicid + "= :" + Groupmessage.Column.grouptopicid;
-	
+	public static String GETINDEXOFGROUPMESSAGEINGROUPTOPIC = 
+		"select count(*) from " + Groupmessage.TABLENAME + 
+		" where " + Groupmessage.Column.grouptopicid + "= :" + Groupmessage.Column.grouptopicid + 
+		" and " + Groupmessage.Column.id + " < :" + Groupmessage.Column.id;
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;

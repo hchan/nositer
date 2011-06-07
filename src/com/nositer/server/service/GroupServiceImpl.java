@@ -625,13 +625,34 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			com.nositer.hibernate.generated.domain.Grouptopic grouptopicDomain = groupmessageDomain.getGrouptopic();
 			Grouptopic grouptopic = BeanConversion.copyDomain2DTO(grouptopicDomain, Grouptopic.class);		
 			retval.setGrouptopic(grouptopic);
-				
+
 			BigInteger bigInteger = (BigInteger) sess.createSQLQuery(SqlHelper.GETNUMGROUPMESSAGESBYGROUPTOPIC).
 			setInteger(Groupmessage.Column.grouptopicid.toString(), retval.getGrouptopicid()).uniqueResult();
 			Integer numGroupmessages = bigInteger.intValue(); 
+
+
+			bigInteger = (BigInteger) sess.createSQLQuery(SqlHelper.GETINDEXOFGROUPMESSAGEINGROUPTOPIC).
+			setInteger(Groupmessage.Column.grouptopicid.toString(), retval.getGrouptopicid()).
+			setInteger(Groupmessage.Column.id.toString(), retval.getId()).
+			uniqueResult();
+			Integer indexOfGroupmessageInGrouptopic = bigInteger.intValue();
+
 			HashSet<Groupmessage> bogusGroupmessages = new HashSet<Groupmessage>(numGroupmessages);
+
+			// add a whole bunch of bogus groupmessage
+			// however ONE of them is really the one we are returning AND it is placed in the correct order sequence
+			for (int i = 0; i < numGroupmessages; i++) {			
+				Groupmessage bogusGroupmessage = new Groupmessage();
+				if (i == indexOfGroupmessageInGrouptopic) {
+					bogusGroupmessages.add(retval);
+				} else {
+					int bogusId = (i+1) * -1;
+					bogusGroupmessage.setId(bogusId);
+					bogusGroupmessages.add(bogusGroupmessage);
+				}
+			}
 			grouptopic.setGroupmessages(bogusGroupmessages);
-			
+
 			com.nositer.hibernate.generated.domain.User userDomain = groupmessageDomain.getUser();
 			User user = BeanConversion.copyDomain2DTO(userDomain, User.class);
 			retval.setUser(user);
