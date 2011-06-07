@@ -11,7 +11,7 @@ import com.nositer.client.widget.Resizable;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class MainPanelAccordionContainer extends ContentPanel implements Resizable {
 	private ContentPanel tools;
-	private NavigationItem createGrouptopicNavigationItem;
+	private NavigationItem addGroupmessageNavigationItem;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 
 	public MainPanelAccordionContainer(GroupDiscussionsContainer groupDiscussionsContainer) {
@@ -25,27 +25,20 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 		tools = new ContentPanel();
 		tools.setHeading("Options");
 		tools.collapse();
-		createGrouptopicNavigationItem = new NavigationItem("Change me");
-		tools.add(createGrouptopicNavigationItem);
+		addGroupmessageNavigationItem = new NavigationItem("Add message to this topic");
+		tools.add(addGroupmessageNavigationItem);
 		this.add(tools);
 		addDefaultListeners();
 	}
 	
 	
 	private void addDefaultListeners() {
-		addListener(Events.Select, new Listener() {
-			@Override
-			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {				
-				//HistoryManager.addHistory(HistoryToken.DISCUSSIONSTOOLSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupDiscussionsContainer.getGroupPlusView().getTagname());
-
-			}
-		});
 		
-		createGrouptopicNavigationItem.addListener(Events.OnClick, new Listener() {
+		addGroupmessageNavigationItem.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				CreateGrouptopic createGrouptopic = new CreateGrouptopic(groupDiscussionsContainer);
-				createGrouptopic.populateMainPanel();
+				AddGroupmessage addGroupmessage = new AddGroupmessage(groupDiscussionsContainer);
+				addGroupmessage.populateGroupmessagePanel();
 			}
 		});
 	}
@@ -54,7 +47,6 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 	public void resize(int width, int height) {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
 		setWidth(newWidth-10);
-
 	}
 
 }
