@@ -14,7 +14,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
-	private GroupDiscussionsAccordionContainer groupDiscussionsAccordionContainer;
+	private LeftPanelAccordionContainer leftPanelAccordionContainer;
 	private GroupmessagesGrid groupmessagesGrid;
 	private ToolBar toolBar;
 	
@@ -27,13 +27,13 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 	}
 
-	public GroupDiscussionsAccordionContainer getGroupDiscussionsAccordionContainer() {
-		return groupDiscussionsAccordionContainer;
+	public LeftPanelAccordionContainer getLeftPanelAccordionContainer() {
+		return leftPanelAccordionContainer;
 	}
 
-	public void setGroupDiscussionsAccordionContainer(
-			GroupDiscussionsAccordionContainer groupDiscussionsAccordionContainer) {
-		this.groupDiscussionsAccordionContainer = groupDiscussionsAccordionContainer;
+	public void setLeftPanelAccordionContainer(
+			LeftPanelAccordionContainer leftPanelAccordionContainer) {
+		this.leftPanelAccordionContainer = leftPanelAccordionContainer;
 	}
 
 	public GroupmessagesGrid getGroupmessagesGrid() {
@@ -66,7 +66,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		groupmessagesGrid = new GroupmessagesGrid(groupDiscussionsContainer);
-		groupDiscussionsAccordionContainer = new GroupDiscussionsAccordionContainer(groupDiscussionsContainer);
+		leftPanelAccordionContainer = new LeftPanelAccordionContainer(groupDiscussionsContainer);
 		toolBar = new ToolBar();	
 		toolBar.setAlignment(HorizontalAlignment.CENTER);
 		//toolBar.add(new FillToolItem());
@@ -77,7 +77,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 			}
 		});
 		this.setBottomComponent(toolBar);
-		this.add(groupDiscussionsAccordionContainer);
+		this.add(leftPanelAccordionContainer);
 		this.add(groupmessagesGrid);
 	}
 
@@ -99,7 +99,7 @@ public class GroupDiscussionLeftPanel extends ContentPanel implements Resizable 
 		if (groupmessagesGrid.isRendered()) {
 			groupmessagesGrid.setHeight(this.getHeight());
 			groupmessagesGrid.setWidth(this.getWidth());
-			groupDiscussionsAccordionContainer.setWidth(this.getWidth());
+			leftPanelAccordionContainer.setWidth(this.getWidth());
 		}
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().resize(0,0);
 	}

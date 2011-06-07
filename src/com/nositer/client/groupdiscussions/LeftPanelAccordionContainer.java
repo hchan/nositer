@@ -6,12 +6,13 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.nositer.client.left.NavigationItem;
 
-public class GroupDiscussionsAccordionContainer extends ContentPanel {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class LeftPanelAccordionContainer extends ContentPanel {
 	private ContentPanel tools;
 	private NavigationItem createGrouptopicNavigationItem;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 
-	public GroupDiscussionsAccordionContainer(GroupDiscussionsContainer groupDiscussionsContainer) {
+	public LeftPanelAccordionContainer(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		init();
 	}
@@ -20,13 +21,14 @@ public class GroupDiscussionsAccordionContainer extends ContentPanel {
 		this.setHeaderVisible(false);
 		setLayout(new AccordionLayout());
 		tools = new ContentPanel();
-		tools.setHeading("Tools");
+		tools.setHeading("Options");
 		tools.collapse();
 		createGrouptopicNavigationItem = new NavigationItem("Create New Topic");
 		tools.add(createGrouptopicNavigationItem);
 		this.add(tools);
 		addDefaultListeners();
 	}
+	
 	
 	private void addDefaultListeners() {
 		addListener(Events.Select, new Listener() {

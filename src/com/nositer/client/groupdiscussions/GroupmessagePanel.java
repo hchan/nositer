@@ -19,6 +19,7 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private GroupDiscussionsContainer groupDiscussionsContainer;
+	private MainPanelAccordionContainer mainPanelAccordionContainer;
 	private HtmlContainer htmlContainer;
 	private Groupmessage groupmessage;
 	private Label topicName;
@@ -43,6 +44,9 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		grouptopic = groupmessage.getGrouptopic();
 		topicName = new Label(grouptopic.getName());
 		topicName.setStyleName("formHeading");
+		
+		mainPanelAccordionContainer = new MainPanelAccordionContainer(groupDiscussionsContainer);
+	
 		add(topicName);
 		add(new HtmlContainer()); // new line
 		clickableUsername = new Label(groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname());
@@ -68,6 +72,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 
 	public void show() {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
+		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(mainPanelAccordionContainer);
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this, new MarginData(5, 5, 5, 5));
 
 		grouptopicToolBar = 
