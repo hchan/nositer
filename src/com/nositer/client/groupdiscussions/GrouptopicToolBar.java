@@ -63,7 +63,8 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 		Label tallyCount = new Label();
 		int indexOfMessage = getIndexOfMessage(grouptopic);
 		tallyCount.setText(new Integer(indexOfMessage).toString());
-
+		tallyCount.setStyleName("tallyCount");
+		
 		groupmessageTallyContainer.add(tallyCount);
 		groupmessageTallyContainer.add(new Label(" of " + grouptopic.getGroupmessages().size()));
 		//groupmessageTallyContainer.add(new Label(), new MarginData(0, widthOfToolBar/3 - 70, 0, 0));

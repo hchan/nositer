@@ -290,10 +290,11 @@
 	font-style: italic; 
 }
 
-.clickableUsername {
-	color: #7FAAFF !important;
+.clickableUsername, .tallyCount {
+	color: #7F2222 !important;
+	background-color: #C5D9FF;
 	cursor: pointer;
 }
-.clickableUsername:hover {
+.clickableUsername:hover, .tallyCount:hover {
 	background-color: #0000FF !important;
 }
