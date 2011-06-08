@@ -69,7 +69,12 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		filler = new Label();
 		formPanel.add(filler, new FormData("100%"));
 		
-		referenceMessage = new TextArea();
+		referenceMessage = new TextArea()  {
+			protected void afterRender() {
+				resize(0,0);
+				super.afterRender();
+			};
+		};
 		referenceMessage.setFieldLabel("Reference Message (copy and paste what you need below to your new message above)");
 		
 		formPanel.add(referenceMessage, new FormData("100%"));
@@ -142,11 +147,26 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
 		this.setWidth(newWidth - 10);
 		formPanel.setWidth(newWidth - 10);
-		this.setHeight(MainPanel.getInstance().getHeight()-60);		
-		formPanel.setHeight(MainPanel.getInstance().getHeight()-90);
+		
+		this.setHeight(MainPanel.getInstance().getHeight()-60);	
+		int heightMainPanelAccordionContainer = 0;
+		
+		for (Component component : groupDiscussionsContainer.getGroupDiscussionMainPanel().getItems()) {
+			if (component instanceof MainPanelAccordionContainer) {
+				MainPanelAccordionContainer mainPanelAccordionContainer = (MainPanelAccordionContainer)component;
+				heightMainPanelAccordionContainer = mainPanelAccordionContainer.getHeight();
+				break;
+			}
+		}
+		int addGroupMessageHeight = MainPanel.getInstance().getHeight() - heightMainPanelAccordionContainer;
+		
+		formPanel.setHeight(addGroupMessageHeight - 90);
 		if (description.isRendered()) {
-			description.setHeight(MainPanel.getInstance().getHeight()/2-100);
+			description.setHeight(addGroupMessageHeight/2-100);
 		}		
+		if (referenceMessage.isRendered()) {
+			referenceMessage.setHeight(addGroupMessageHeight/2-150);
+		}
 		formPanel.layout();
 		layout();
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
