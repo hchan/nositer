@@ -37,6 +37,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	private Label filler;
 	private TextArea referenceMessage;
 	private Button saveButton;
+	private Grouptopic grouptopic;
 
 	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -109,7 +110,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		newReferenceMessageValue += "Posted by: " + groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname() + "\n\n";
 		
 		newReferenceMessageValue +=	groupmessage.getDescription();
-		
+		grouptopic = groupmessage.getGrouptopic();
 		referenceMessage.setValue(newReferenceMessageValue);
 	}
 	
@@ -117,17 +118,15 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				Grouptopic grouptopic = new Grouptopic();
-				grouptopic.setUserid(Nositer.getInstance().getUser().getId());
-				grouptopic.setGroupid(groupDiscussionsContainer.getGroupPlusView().getId());
+				
 
-				Groupmessage groupmessage = new Groupmessage();
-				groupmessage.setUserid(Nositer.getInstance().getUser().getId());
-				groupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
-				groupmessage.setDescription(description.getValue());
+				Groupmessage newGroupMessage = new Groupmessage();
+				newGroupMessage.setUserid(Nositer.getInstance().getUser().getId());
+				newGroupMessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
+				newGroupMessage.setDescription(description.getValue());
 
-				grouptopic.getGroupmessages().add(groupmessage);
-				AsyncCallback<Grouptopic> callback = new AsyncCallback<Grouptopic>() {
+				
+				AsyncCallback<Groupmessage> callback = new AsyncCallback<Groupmessage>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						AlertMessageBox.show("Error", caught.getMessage(), null);
@@ -135,20 +134,19 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 					}
 
 					@Override
-					public void onSuccess(final Grouptopic result) {
+					public void onSuccess(final Groupmessage result) {
 						InfoMessageBox.show("Saved", new Listener<MessageBoxEvent>() {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
-								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
-								Groupmessage groupmessage = result.getGroupmessages().toArray(new Groupmessage[]{})[0];
-								groupmessage.setGrouptopic(result);
-								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, groupmessage);
+								result.setGrouptopic(grouptopic);
+								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
 								groupmessagePanel.show();
+								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
 							}								
 						});										
 					}
 				};
-				ServiceBroker.groupService.createGrouptopic(groupDiscussionsContainer.getGroupPlusView(), grouptopic, callback);
+				ServiceBroker.groupService.addGroupmessage(groupDiscussionsContainer.getGroupPlusView(), newGroupMessage, callback);
 			}
 		});
 	}

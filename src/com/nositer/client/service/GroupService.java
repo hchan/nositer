@@ -30,4 +30,5 @@ public interface GroupService extends RemoteService {
 	Grouptopic createGrouptopic(GroupPlusView groupPlusView, Grouptopic grouptopic) throws GWTException;
 	ArrayList<GroupmessagePlusView> getGroupmessages(GroupPlusView groupPlusView) throws GWTException;
 	Groupmessage getGroupmessage(Integer groupmessageid) throws GWTException;
+	Groupmessage addGroupmessage(GroupPlusView groupPlusView, Groupmessage groupmessage) throws GWTException;
 }

@@ -673,4 +673,65 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}	
 		return retval;
 	}
+	
+	@Override
+	public Groupmessage addGroupmessage(GroupPlusView groupPlusView, final Groupmessage groupmessage) throws GWTException {
+		Groupmessage retval = groupmessage;
+		final Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		User user = null;
+		try {
+			trx = sess.beginTransaction();	
+			user = Application.getCurrentUser();
+			if (!isGroupIBelongTo(groupPlusView, user)) {
+				throw new GWTException("You do not have permissions to create a group message");
+			}
+
+
+			final int grouptopicid = groupmessage.getGrouptopicid();
+			final HashSet<Integer> groupmessageidHM = new HashSet<Integer>();
+
+			sess.doWork(new Work() {
+				@Override
+				public void execute(Connection con) throws SQLException {
+
+
+					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPMESSAGE, Statement.RETURN_GENERATED_KEYS);
+					pstmt.setInt(1, groupmessage.getUserid());
+					pstmt.setInt(2, grouptopicid);
+					pstmt.setString(3, groupmessage.getDescription());
+					pstmt.execute();
+
+					ResultSet resultSet = pstmt.getGeneratedKeys();
+
+					if (resultSet != null && resultSet.next()) { 
+						groupmessageidHM.add(resultSet.getInt(1));
+					}
+				}
+			});
+		
+
+			trx.commit();
+			int groupmessageid = groupmessageidHM.toArray(new Integer[]{})[0];
+			groupmessage.setId(groupmessageid);
+			groupmessage.setUser(Application.getCurrentUser());
+			groupmessage.setCreatedtime(new Date());
+
+			retval.setId(groupmessageid);
+
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
+		return retval;
+	}
+
 }
