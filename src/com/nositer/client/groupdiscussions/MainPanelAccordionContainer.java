@@ -38,7 +38,7 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
 				AddGroupmessage addGroupmessage = new AddGroupmessage(groupDiscussionsContainer);
-				addGroupmessage.populateGroupmessagePanel();
+				addGroupmessage.populateInsideMainPanel();
 			}
 		});
 	}

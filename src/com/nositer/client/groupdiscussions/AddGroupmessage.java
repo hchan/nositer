@@ -5,12 +5,14 @@ import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Label;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
+import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.MarginData;
@@ -32,6 +34,8 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	private Label theHeading;
 	private FormPanel formPanel;	
 	private HtmlEditor description;
+	private Label filler;
+	private TextArea referenceMessage;
 	private Button saveButton;
 
 	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
@@ -39,19 +43,19 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		formPanel = new FormPanel();
 	}
 
-	public void populateGroupmessagePanel() {
+	public void populateInsideMainPanel() {
 		this.setHeaderVisible(false);
 
 		theHeading = new Label("Add Message");
 		theHeading.setStyleName("formHeading");
-		groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
+		//groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 		this.add(theHeading, new MarginData(5, 0, 0, 5));
 
 		formPanel.setBodyBorder(false);
 		formPanel.setHeaderVisible(false);
 		formPanel.setWidth("100%");
 		formPanel.setLabelAlign(LabelAlign.TOP);
-		
+
 		description = new HtmlEditor() {
 			protected void afterRender() {
 				resize(0,0);
@@ -59,16 +63,32 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 			};
 		};
 		description.setFieldLabel("Message");
-		
-		
-		
+
 		formPanel.add(description, new FormData("100%"));
+		
+		filler = new Label();
+		formPanel.add(filler, new FormData("100%"));
+		
+		referenceMessage = new TextArea();
+		referenceMessage.setFieldLabel("Reference Message (copy and paste what you need below to your new message above)");
+		
+		formPanel.add(referenceMessage, new FormData("100%"));
+		
 		saveButton = new Button("Save");
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
 		formPanel.addButton(saveButton);
-		this.add(formPanel, new MarginData(5, 5, 65, 0));
-		groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
-		
+		this.add(formPanel);
+
+		for (Component component : groupDiscussionsContainer.getGroupDiscussionMainPanel().getItems()) {
+			if (component instanceof GroupmessagePanel) {
+				GroupmessagePanel groupmessagePanel = (com.nositer.client.groupdiscussions.GroupmessagePanel) component;
+				groupDiscussionsContainer.getGroupDiscussionMainPanel().remove(groupmessagePanel);
+				groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
+				groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
+				break;
+			}
+		}
+
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().hide();
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(MainPanel.getInstance().getHeight());
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
@@ -120,12 +140,12 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
-		this.setWidth(newWidth - 15);
-		formPanel.setWidth(newWidth - 15);
+		this.setWidth(newWidth - 10);
+		formPanel.setWidth(newWidth - 10);
 		this.setHeight(MainPanel.getInstance().getHeight()-60);		
-		formPanel.setHeight(MainPanel.getInstance().getHeight()-100);
+		formPanel.setHeight(MainPanel.getInstance().getHeight()-90);
 		if (description.isRendered()) {
-			description.setHeight(MainPanel.getInstance().getHeight()-210);
+			description.setHeight(MainPanel.getInstance().getHeight()/2-100);
 		}		
 		formPanel.layout();
 		layout();
@@ -134,5 +154,5 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 	}
 
-	
+
 }
