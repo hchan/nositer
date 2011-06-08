@@ -75,6 +75,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 				super.afterRender();
 			};
 		};
+
 		referenceMessage.setFieldLabel("Reference Message (copy and paste what you need below to your new message above)");
 		
 		formPanel.add(referenceMessage, new FormData("100%"));
@@ -87,6 +88,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		for (Component component : groupDiscussionsContainer.getGroupDiscussionMainPanel().getItems()) {
 			if (component instanceof GroupmessagePanel) {
 				GroupmessagePanel groupmessagePanel = (com.nositer.client.groupdiscussions.GroupmessagePanel) component;
+				populate(groupmessagePanel.getGroupmessage());
 				groupDiscussionsContainer.getGroupDiscussionMainPanel().remove(groupmessagePanel);
 				groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
 				groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
@@ -101,7 +103,16 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		resize(0,0);
 	}
 
-
+	public void populate(Groupmessage groupmessage) {
+		String newReferenceMessageValue = "Topic: " + groupmessage.getGrouptopic().getName() + "\n"; 
+		newReferenceMessageValue += "Posted on: " + groupmessage.getCreatedtime() + "\n";
+		newReferenceMessageValue += "Posted by: " + groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname() + "\n\n";
+		
+		newReferenceMessageValue +=	groupmessage.getDescription();
+		
+		referenceMessage.setValue(newReferenceMessageValue);
+	}
+	
 	private void addDefaultListeners() {
 		saveButton.addListener(Events.Select, new Listener<BaseEvent>() {
 			@Override

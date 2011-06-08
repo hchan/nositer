@@ -27,6 +27,80 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	private Label clickableUsername;
 	private Grouptopic grouptopic;
 	private GrouptopicToolBar grouptopicToolBar;
+	
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+	public MainPanelAccordionContainer getMainPanelAccordionContainer() {
+		return mainPanelAccordionContainer;
+	}
+
+	public void setMainPanelAccordionContainer(
+			MainPanelAccordionContainer mainPanelAccordionContainer) {
+		this.mainPanelAccordionContainer = mainPanelAccordionContainer;
+	}
+
+	public HtmlContainer getHtmlContainer() {
+		return htmlContainer;
+	}
+
+	public void setHtmlContainer(HtmlContainer htmlContainer) {
+		this.htmlContainer = htmlContainer;
+	}
+
+	public Groupmessage getGroupmessage() {
+		return groupmessage;
+	}
+
+	public void setGroupmessage(Groupmessage groupmessage) {
+		this.groupmessage = groupmessage;
+	}
+
+	public Label getTopicName() {
+		return topicName;
+	}
+
+	public void setTopicName(Label topicName) {
+		this.topicName = topicName;
+	}
+
+	public Label getMessageInfo() {
+		return messageInfo;
+	}
+
+	public void setMessageInfo(Label messageInfo) {
+		this.messageInfo = messageInfo;
+	}
+
+	public Label getClickableUsername() {
+		return clickableUsername;
+	}
+
+	public void setClickableUsername(Label clickableUsername) {
+		this.clickableUsername = clickableUsername;
+	}
+
+	public Grouptopic getGrouptopic() {
+		return grouptopic;
+	}
+
+	public void setGrouptopic(Grouptopic grouptopic) {
+		this.grouptopic = grouptopic;
+	}
+
+	public GrouptopicToolBar getGrouptopicToolBar() {
+		return grouptopicToolBar;
+	}
+
+	public void setGrouptopicToolBar(GrouptopicToolBar grouptopicToolBar) {
+		this.grouptopicToolBar = grouptopicToolBar;
+	}
 
 	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Groupmessage groupmessage) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
