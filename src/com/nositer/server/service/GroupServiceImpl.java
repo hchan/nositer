@@ -676,7 +676,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	
 	@Override
 	public Groupmessage addGroupmessage(GroupPlusView groupPlusView, final Groupmessage groupmessage) throws GWTException {
-		Groupmessage retval = groupmessage;
+		Groupmessage retval = null;
 		final Session sess = HibernateUtil.getSession();
 		Transaction trx = null;
 		User user = null;
@@ -713,12 +713,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 			trx.commit();
 			int groupmessageid = groupmessageidHM.toArray(new Integer[]{})[0];
-			groupmessage.setId(groupmessageid);
-			groupmessage.setUser(Application.getCurrentUser());
-			groupmessage.setCreatedtime(new Date());
-
-			retval.setId(groupmessageid);
-
+			retval = getGroupmessage(groupmessageid);
 		}
 		catch (GWTException e) {
 			throw e;

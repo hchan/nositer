@@ -37,7 +37,6 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	private Label filler;
 	private TextArea referenceMessage;
 	private Button saveButton;
-	private Grouptopic grouptopic;
 
 	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -110,7 +109,6 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		newReferenceMessageValue += "Posted by: " + groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname() + "\n\n";
 		
 		newReferenceMessageValue +=	groupmessage.getDescription();
-		grouptopic = groupmessage.getGrouptopic();
 		referenceMessage.setValue(newReferenceMessageValue);
 	}
 	
@@ -138,10 +136,9 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 						InfoMessageBox.show("Saved", new Listener<MessageBoxEvent>() {
 							@Override
 							public void handleEvent(MessageBoxEvent be) {								
-								result.setGrouptopic(grouptopic);
 								GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
 								groupmessagePanel.show();
-								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();
+								groupDiscussionsContainer.getGroupDiscussionLeftPanel().getGroupmessagesGrid().refresh();								
 							}								
 						});										
 					}

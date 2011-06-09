@@ -153,6 +153,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 			new GrouptopicToolBar(
 					groupDiscussionsContainer, 
 					grouptopic);
+		grouptopicToolBar.setWidth(MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth()-10);
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().removeAll();
 
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomContainer().add(grouptopicToolBar);
@@ -174,7 +175,7 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 	public void resize(int width, int height) {
 		int newWidth = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
 		setWidth(newWidth - 20);
-
+		grouptopicToolBar.setWidth(newWidth - 10);
 		setHeight(groupDiscussionsContainer.getGroupDiscussionMainPanel().getHeight() - 10);
 		grouptopicToolBar.resize(0, 0);
 	}

@@ -49,6 +49,7 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 		add(groupmessageTallyContainer);
 		add(new FillToolItem());
 		add(nextButton);
+		layout();
 		resize(0,0);
 	}
 
