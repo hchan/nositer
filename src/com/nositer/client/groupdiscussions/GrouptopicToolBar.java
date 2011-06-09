@@ -59,7 +59,7 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 
 		int widthOfToolBar = MainPanel.getInstance().getWidth() - groupDiscussionsContainer.getGroupDiscussionLeftPanel().getWidth();
 		//groupmessageTallyContainer.add(new Label(), new MarginData(0, widthOfToolBar - 145, 0, 0));
-		groupmessageTallyContainer.add(new Label(), new MarginData(0, widthOfToolBar/2 - 100, 0, 0));
+		groupmessageTallyContainer.add(new Label(), new MarginData(0, widthOfToolBar/2 - 120, 0, 0));
 		groupmessageTallyContainer.add(new Label("Message "));
 		Label tallyCount = new Label();
 		int indexOfMessage = getIndexOfMessage(grouptopic);
@@ -68,6 +68,15 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 		
 		groupmessageTallyContainer.add(tallyCount);
 		groupmessageTallyContainer.add(new Label(" of " + grouptopic.getGroupmessages().size()));
+		
+		if (indexOfMessage == grouptopic.getGroupmessages().size()) {
+			nextButton.disable();
+		}
+		
+		if (indexOfMessage == 1) {
+			previousButton.disable();
+		}
+		
 		//groupmessageTallyContainer.add(new Label(), new MarginData(0, widthOfToolBar/3 - 70, 0, 0));
 		layout();
 	}
