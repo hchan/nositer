@@ -49,6 +49,9 @@ public interface GroupServiceAsync {
 	void getGroupmessage(Integer groupmessageid,
 			AsyncCallback<Groupmessage> callback);
 
+	void getGroupmessage(Integer grouptopicid, Integer indexOfGroupmessage,
+			AsyncCallback<Groupmessage> callback);
+	
 	void addGroupmessage(GroupPlusView groupPlusView,
 			Groupmessage groupmessage, AsyncCallback<Groupmessage> callback);
 }

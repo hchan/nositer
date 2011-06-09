@@ -175,7 +175,12 @@ public class SqlHelper {
 		"select * from " + GroupPlusView.TABLENAME +
 		" where " + GroupPlusView.Column.id + " = :" + GroupPlusView.Column.id +
 		" and " + GroupPlusView.Column.owner + " = true";
-	
+	public static String GETGROUPMESSAGEBYGROUPMESSAGEINDEX = 
+		"select * from " + Groupmessage.TABLENAME +
+		" left outer join " + Grouptopic.TABLENAME +
+		" on " + Groupmessage.Column.grouptopicid + " = " + Grouptopic.TABLENAME + "." + Grouptopic.Column.id +
+		" where " + Groupmessage.Column.grouptopicid + " = :" + Groupmessage.Column.grouptopicid +
+		" limit :" + OFFSET + ", 1"; 
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;

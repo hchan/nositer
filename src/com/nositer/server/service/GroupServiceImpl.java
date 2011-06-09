@@ -30,6 +30,7 @@ import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.service.GroupService;
+import com.nositer.hibernate.CommonSql;
 import com.nositer.hibernate.HibernateUtil;
 import com.nositer.hibernate.SqlHelper;
 import com.nositer.hibernate.generated.domain.UserHasGroup;
@@ -619,6 +620,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 	}
 
 
+	// returns groupmessage with a bunch of groupmessages in Grouptopic
 	@Override
 	public Groupmessage getGroupmessage(Integer groupmessageid) throws GWTException {
 		Groupmessage retval = null;
@@ -663,6 +665,37 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			com.nositer.hibernate.generated.domain.User userDomain = groupmessageDomain.getUser();
 			User user = BeanConversion.copyDomain2DTO(userDomain, User.class);
 			retval.setUser(user);
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+		return retval;
+	}
+	
+	
+	@Override
+	public Groupmessage getGroupmessage(Integer grouptopicid,
+			Integer indexOfGroupmessage) throws GWTException {
+		Groupmessage retval = null;
+		com.nositer.hibernate.generated.domain.Groupmessage groupmessageDomain = null;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			
+
+			groupmessageDomain = (com.nositer.hibernate.generated.domain.Groupmessage) sess.createSQLQuery(SqlHelper.GETGROUPMESSAGEBYGROUPMESSAGEINDEX).
+			addEntity(com.nositer.hibernate.generated.domain.Groupmessage.class).
+			setInteger(Groupmessage.Column.grouptopicid.toString(), grouptopicid).
+			setInteger(CommonSql.OFFSET, indexOfGroupmessage - 1).
+			uniqueResult();
+
+			retval = getGroupmessage(groupmessageDomain.getId());
+			
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
 			Application.log.error("", e);
@@ -728,5 +761,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		return retval;
 	}
+
+
 
 }
