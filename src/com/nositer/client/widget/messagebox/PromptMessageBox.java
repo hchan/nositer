@@ -8,13 +8,15 @@ import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.MessageBox.MessageBoxType;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class PromptMessageBox {
 	public static void show (String title, String msg, Listener<MessageBoxEvent> callback) {
 		MessageBox.prompt(title, msg, callback);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	public static void show (String title, String msg, final String textFieldValue, Listener<MessageBoxEvent> callback) {
+	
 		final MessageBox messageBox = new MessageBox();
 
 		messageBox.setTitle(title);
@@ -35,5 +37,6 @@ public class PromptMessageBox {
 			}
 		});
 		dialog.show();
+		
 	}
 }

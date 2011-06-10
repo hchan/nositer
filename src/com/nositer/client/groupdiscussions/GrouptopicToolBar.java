@@ -27,7 +27,7 @@ import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.button.NextButton;
 import com.nositer.client.widget.button.PreviousButton;
-import com.nositer.client.widget.button.RefreshButton;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.PromptMessageBox;
 
 public class GrouptopicToolBar extends ToolBar implements Resizable {
@@ -65,32 +65,20 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 	}
 
 	private void addDefaultListeners() {
-		final AsyncCallback<Groupmessage> calback = new AsyncCallback<Groupmessage>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				GWTUtil.log("", caught);
-			}
-
-			@Override
-			public void onSuccess(Groupmessage result) {
-				GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
-				groupmessagePanel.show();
-			}
-
-		};
-
-
+		
 		previousButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				ServiceBroker.groupService.getGroupmessage(grouptopic.getId(), cacheGroupmessageIndex-1, calback);
+				int newGroupmessageIndex = cacheGroupmessageIndex-1;
+				ServiceBroker.groupService.getGroupmessage(grouptopic.getId(), newGroupmessageIndex, createGroupmessageCallback(newGroupmessageIndex));
 			}
 		});
 
 		nextButton.addListener(Events.OnClick, new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				ServiceBroker.groupService.getGroupmessage(grouptopic.getId(), cacheGroupmessageIndex+1, calback);
+				int newGroupmessageIndex = cacheGroupmessageIndex+1;
+				ServiceBroker.groupService.getGroupmessage(grouptopic.getId(), newGroupmessageIndex, createGroupmessageCallback(newGroupmessageIndex));
 			}
 		});
 		
@@ -100,11 +88,34 @@ public class GrouptopicToolBar extends ToolBar implements Resizable {
 				PromptMessageBox.show("", "Enter the message index you would like to view", new Integer(cacheGroupmessageIndex).toString(), new Listener<MessageBoxEvent>()  {
 					@Override
 					public void handleEvent(MessageBoxEvent be) {
-						ServiceBroker.groupService.getGroupmessage(grouptopic.getId(),  new Integer(be.getValue()), calback);
+						int newGroupmessageIndex = 0;
+						try {
+							newGroupmessageIndex = new Integer(be.getValue());
+							ServiceBroker.groupService.getGroupmessage(grouptopic.getId(), newGroupmessageIndex, createGroupmessageCallback(newGroupmessageIndex));
+						} catch (Exception e) {
+							AlertMessageBox.show("Error", be.getValue() + " is not a valid index", null);
+						}
 					}
 				});
 			}
 		});
+	}
+	
+	private AsyncCallback<Groupmessage> createGroupmessageCallback(final int newGroupmessageIndex) {
+		AsyncCallback<Groupmessage> retval =  new AsyncCallback<Groupmessage>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				AlertMessageBox.show("Error", "Could not load message with index: " + newGroupmessageIndex, null);
+			}
+
+			@Override
+			public void onSuccess(Groupmessage result) {
+				GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer, result);
+				groupmessagePanel.show();
+			}
+
+		};
+		return retval;
 	}
 
 	@Override

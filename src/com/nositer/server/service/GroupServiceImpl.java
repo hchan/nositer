@@ -694,9 +694,16 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			setInteger(CommonSql.OFFSET, indexOfGroupmessage - 1).
 			uniqueResult();
 
+			if (groupmessageDomain == null) {
+				throw new GWTException("Groupmessage with index: " + indexOfGroupmessage + " not found");
+			}
 			retval = getGroupmessage(groupmessageDomain.getId());
 			
-		} catch (Exception e) {
+		}	
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
 			Application.log.error("", e);
 			throw new GWTException(e);
