@@ -7,13 +7,58 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.nositer.client.left.NavigationItem;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.messagebox.AlertMessageBox;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class MainPanelAccordionContainer extends ContentPanel implements Resizable {
 	private ContentPanel tools;
 	private NavigationItem addGroupmessageNavigationItem;
+	private NavigationItem editGroupmessageNavigationItem;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private AccordionLayout accordionLayout;
+
+	public ContentPanel getTools() {
+		return tools;
+	}
+
+	public void setTools(ContentPanel tools) {
+		this.tools = tools;
+	}
+
+	public NavigationItem getAddGroupmessageNavigationItem() {
+		return addGroupmessageNavigationItem;
+	}
+
+	public void setAddGroupmessageNavigationItem(
+			NavigationItem addGroupmessageNavigationItem) {
+		this.addGroupmessageNavigationItem = addGroupmessageNavigationItem;
+	}
+
+	public NavigationItem getEditGroupmessageNavigationItem() {
+		return editGroupmessageNavigationItem;
+	}
+
+	public void setEditGroupmessageNavigationItem(
+			NavigationItem editGroupmessageNavigationItem) {
+		this.editGroupmessageNavigationItem = editGroupmessageNavigationItem;
+	}
+
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+	public AccordionLayout getAccordionLayout() {
+		return accordionLayout;
+	}
+
+	public void setAccordionLayout(AccordionLayout accordionLayout) {
+		this.accordionLayout = accordionLayout;
+	}
 
 	public MainPanelAccordionContainer(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -29,6 +74,11 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 		tools.collapse();
 		addGroupmessageNavigationItem = new NavigationItem("Add message to this topic");
 		tools.add(addGroupmessageNavigationItem);
+		
+		editGroupmessageNavigationItem = new NavigationItem("Edit this message");
+		
+		//editGroupmessageNavigationItem.disable();
+		tools.add(editGroupmessageNavigationItem);
 		this.add(tools);
 		addDefaultListeners();
 	}
@@ -44,6 +94,13 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 			}
 		});
 
+		editGroupmessageNavigationItem.addListener(Events.OnClick, new Listener() {
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				AlertMessageBox.show("", "Hello", null);
+			}
+		});
+		
 		tools.addListener(Events.Collapse,  new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {

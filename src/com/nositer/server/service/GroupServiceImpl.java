@@ -517,7 +517,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPTOPIC, Statement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, grouptopic.getUserid());
 					pstmt.setInt(2, grouptopic.getGroupid());
-					pstmt.setString(3, grouptopic.getName());
+					String name = HTMLPurifier.getCleanHTML(grouptopic.getName());
+					pstmt.setString(3, name);
 					pstmt.execute();
 
 					ResultSet resultSet = pstmt.getGeneratedKeys();
@@ -540,7 +541,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPMESSAGE, Statement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, groupmessage.getUserid());
 					pstmt.setInt(2, grouptopicid);
-					pstmt.setString(3, groupmessage.getDescription());
+					String description = groupmessage.getDescription();
+					description = HTMLPurifier.getCleanHTML(description);
+					pstmt.setString(3, description);
 					pstmt.execute();
 
 					ResultSet resultSet = pstmt.getGeneratedKeys();
@@ -739,7 +742,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 					PreparedStatement pstmt = con.prepareStatement(SqlHelper.CREATEGROUPMESSAGE, Statement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, groupmessage.getUserid());
 					pstmt.setInt(2, grouptopicid);
-					pstmt.setString(3, groupmessage.getDescription());
+					String description = groupmessage.getDescription();
+					description = HTMLPurifier.getCleanHTML(description);
+					pstmt.setString(3, description);
 					pstmt.execute();
 
 					ResultSet resultSet = pstmt.getGeneratedKeys();
