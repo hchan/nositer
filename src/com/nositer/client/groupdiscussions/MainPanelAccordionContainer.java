@@ -77,7 +77,7 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 		
 		editGroupmessageNavigationItem = new NavigationItem("Edit this message");
 		
-		//editGroupmessageNavigationItem.disable();
+		editGroupmessageNavigationItem.disable();
 		tools.add(editGroupmessageNavigationItem);
 		this.add(tools);
 		addDefaultListeners();
@@ -97,7 +97,8 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 		editGroupmessageNavigationItem.addListener(Events.OnClick, new Listener() {
 			@Override
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
-				AlertMessageBox.show("", "Hello", null);
+				EditGroupmessage editGroupmessage = new EditGroupmessage(groupDiscussionsContainer);
+				editGroupmessage.populateInsideMainPanel();
 			}
 		});
 		

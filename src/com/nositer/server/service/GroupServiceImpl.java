@@ -29,6 +29,7 @@ import com.nositer.client.dto.generated.GroupmessagePlusView;
 import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.service.GroupService;
 import com.nositer.hibernate.CommonSql;
 import com.nositer.hibernate.HibernateUtil;
@@ -389,6 +390,15 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		return retval;
 	}
 
+	// TODO setup so that owner of the group can also modify anyone's messages;
+	private boolean isGroupmessageICanEdit(Groupmessage groupmessage, User user) {
+		boolean retval = false;
+		if (groupmessage.getUserid().equals(user.getId())) {
+			retval = true;
+		}
+		return retval;
+	}
+
 	@Override
 	public ArrayList<GroupSubscriptionView> findSubscriptions(
 			GroupPlusView groupPlusView, String lastname) throws GWTException {
@@ -650,7 +660,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 
 			HashSet<Groupmessage> bogusGroupmessages = new HashSet<Groupmessage>(numGroupmessages);
-		
+
 			// add a whole bunch of bogus groupmessage
 			// however ONE of them is really the one we are returning
 			for (int i = 0; i < numGroupmessages; i++) {			
@@ -678,8 +688,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}	
 		return retval;
 	}
-	
-	
+
+
 	@Override
 	public Groupmessage getGroupmessage(Integer grouptopicid,
 			Integer indexOfGroupmessage) throws GWTException {
@@ -689,7 +699,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		Transaction trx = null;
 		try {
 			trx = sess.beginTransaction();		
-			
+
 
 			groupmessageDomain = (com.nositer.hibernate.generated.domain.Groupmessage) sess.createSQLQuery(SqlHelper.GETGROUPMESSAGEBYGROUPMESSAGEINDEX).
 			addEntity(com.nositer.hibernate.generated.domain.Groupmessage.class).
@@ -701,7 +711,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				throw new GWTException("Groupmessage with index: " + indexOfGroupmessage + " not found");
 			}
 			retval = getGroupmessage(groupmessageDomain.getId());
-			
+
 		}	
 		catch (GWTException e) {
 			throw e;
@@ -716,7 +726,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}	
 		return retval;
 	}
-	
+
 	@Override
 	public Groupmessage addGroupmessage(GroupPlusView groupPlusView, final Groupmessage groupmessage) throws GWTException {
 		Groupmessage retval = null;
@@ -754,11 +764,46 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 					}
 				}
 			});
-		
+
 
 			trx.commit();
 			int groupmessageid = groupmessageidHM.toArray(new Integer[]{})[0];
 			retval = getGroupmessage(groupmessageid);
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
+		return retval;
+	}
+
+
+
+	@Override
+	public Groupmessage editGroupmessage(GroupPlusView groupPlusView,
+			Groupmessage groupmessage) throws GWTException {
+		Groupmessage retval = groupmessage;
+		final Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		User user = null;
+		try {
+			trx = sess.beginTransaction();	
+			user = Application.getCurrentUser();
+			if (!isGroupmessageICanEdit(groupmessage, user)) {
+				throw new GWTException("You do not have permissions to edit this message");
+			}
+
+			com.nositer.hibernate.generated.domain.Groupmessage groupmessageDomain = BeanConversion.copyDTO2Domain(groupmessage, com.nositer.hibernate.generated.domain.Groupmessage.class);
+
+			sess.update(groupmessageDomain);
+			trx.commit();
 		}
 		catch (GWTException e) {
 			throw e;

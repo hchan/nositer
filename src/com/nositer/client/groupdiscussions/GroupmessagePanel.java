@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -120,6 +121,9 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		topicName.setStyleName("formHeading");
 		
 		mainPanelAccordionContainer = new MainPanelAccordionContainer(groupDiscussionsContainer);
+		if (Groups.isGroupmessageICanEdit(groupmessage)) {
+			mainPanelAccordionContainer.getEditGroupmessageNavigationItem().enable();
+		}
 	
 		add(topicName);
 		add(new HtmlContainer()); // new line

@@ -28,17 +28,17 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 
-public class AddGroupmessage extends ContentPanel implements Resizable {
+public class EditGroupmessage extends ContentPanel implements Resizable {
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private Label theHeading;
 	private FormPanel formPanel;	
 	private HtmlEditor description;
-	private Label filler;
-	private TextArea referenceMessage;
+	
 	private Button saveButton;
+	private Groupmessage groupmessage;
 
-	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
+	public EditGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		formPanel = new FormPanel();
 	}
@@ -46,7 +46,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	public void populateInsideMainPanel() {
 		this.setHeaderVisible(false);
 
-		theHeading = new Label("Add Message");
+		theHeading = new Label("Edit Message");
 		theHeading.setStyleName("formHeading");
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().removeAll();
 		this.add(theHeading, new MarginData(5, 0, 0, 5));
@@ -66,19 +66,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 
 		formPanel.add(description, new FormData("100%"));
 		
-		filler = new Label();
-		formPanel.add(filler, new FormData("100%"));
 		
-		referenceMessage = new TextArea()  {
-			protected void afterRender() {
-				resize(0,0);
-				super.afterRender();
-			};
-		};
-
-		referenceMessage.setFieldLabel("Reference Message (copy and paste what you need below to your new message above)");
-		
-		formPanel.add(referenceMessage, new FormData("100%"));
 		
 		saveButton = new Button("Save");
 		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
@@ -104,12 +92,8 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	}
 
 	public void populate(Groupmessage groupmessage) {
-		String newReferenceMessageValue = "Topic: " + groupmessage.getGrouptopic().getName() + "\n"; 
-		newReferenceMessageValue += "Posted on: " + groupmessage.getCreatedtime() + "\n";
-		newReferenceMessageValue += "Posted by: " + groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname() + "\n\n";
-		
-		newReferenceMessageValue +=	groupmessage.getDescription();
-		referenceMessage.setValue(newReferenceMessageValue);
+		this.groupmessage = groupmessage;
+		description.setValue(groupmessage.getDescription());
 	}
 	
 	private void addDefaultListeners() {
@@ -118,10 +102,11 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 			public void handleEvent(BaseEvent be) {
 				
 
-				Groupmessage newGroupmessage = new Groupmessage();
-				newGroupmessage.setUserid(Nositer.getInstance().getUser().getId());
-				newGroupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
-				newGroupmessage.setDescription(description.getValue());
+				Groupmessage modifiedGroupmessage = new Groupmessage();
+				modifiedGroupmessage.setId(groupmessage.getId());
+				modifiedGroupmessage.setUserid(Nositer.getInstance().getUser().getId());
+				modifiedGroupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
+				modifiedGroupmessage.setDescription(description.getValue());
 
 				
 				AsyncCallback<Groupmessage> callback = new AsyncCallback<Groupmessage>() {
@@ -143,7 +128,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 						});										
 					}
 				};
-				ServiceBroker.groupService.addGroupmessage(groupDiscussionsContainer.getGroupPlusView(), newGroupmessage, callback);
+				ServiceBroker.groupService.editGroupmessage(groupDiscussionsContainer.getGroupPlusView(), modifiedGroupmessage, callback);
 			}
 		});
 	}
@@ -168,11 +153,9 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		
 		formPanel.setHeight(addGroupMessageHeight - 90);
 		if (description.isRendered()) {
-			description.setHeight(addGroupMessageHeight/2-100);
+			description.setHeight(addGroupMessageHeight-200);
 		}		
-		if (referenceMessage.isRendered()) {
-			referenceMessage.setHeight(addGroupMessageHeight/2-150);
-		}
+		
 		formPanel.layout();
 		layout();
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);

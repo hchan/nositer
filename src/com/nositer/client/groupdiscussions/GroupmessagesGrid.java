@@ -140,17 +140,20 @@ public class GroupmessagesGrid extends Grid<BeanModel> {
 			public Object render(ModelData model, String property,
 					ColumnData config, int rowIndex, int colIndex,
 					ListStore store, Grid grid) {
-				String retval = "";
+				HtmlContainer retval = new HtmlContainer();
+				retval.setStyleName("myGroupmessageRow");
+				String html = "";
 				int showLength = 20;
 				BeanModel beanModel = (BeanModel) model;
 				GroupmessagePlusView groupmessagePlusView = beanModel.getBean();
 
 				if (groupmessagePlusView.getDescription().length() > showLength) {
-					retval = groupmessagePlusView.getDescription().substring(0,showLength);
-					retval += "...";
+					html = groupmessagePlusView.getDescription().substring(0,showLength);
+					html += "...";
 				} else {
-					retval = groupmessagePlusView.getDescription();
+					html = groupmessagePlusView.getDescription();
 				}
+				retval.setHtml(html);
 				return retval;
 			}  
 		};

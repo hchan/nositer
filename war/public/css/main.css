@@ -272,6 +272,11 @@
 	overflow: auto;
 }
 
+.myGroupmessageRow {
+	height: 35px !important;
+	overflow: auto;
+}
+
 .overflowAuto {
 	overflow: auto;
 }
