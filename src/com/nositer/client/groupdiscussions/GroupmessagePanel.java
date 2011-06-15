@@ -3,6 +3,7 @@ package com.nositer.client.groupdiscussions;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.Label;
@@ -103,6 +104,10 @@ public class GroupmessagePanel extends ContentPanel implements Resizable, Groupm
 		this.grouptopicToolBar = grouptopicToolBar;
 	}
 
+	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+	
 	public GroupmessagePanel(GroupDiscussionsContainer groupDiscussionsContainer, Groupmessage groupmessage) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
 		this.groupmessage = groupmessage;
@@ -186,6 +191,14 @@ public class GroupmessagePanel extends ContentPanel implements Resizable, Groupm
 
 	@Override
 	public void populateInsideMainPanel() {
+		for (Component component : groupDiscussionsContainer.getGroupDiscussionMainPanel().getItems()) {
+			if (component instanceof GroupmessageContainer) {
+				GroupmessageContainer groupmessageContainer = (com.nositer.client.groupdiscussions.GroupmessageContainer) component;
+				groupmessage = groupmessageContainer.getGroupmessage();				
+				break;
+			}
+		}
+		init();
 		show();
 	}
 }

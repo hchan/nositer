@@ -14,8 +14,19 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 	private ContentPanel tools;
 	private NavigationItem addGroupmessageNavigationItem;
 	private NavigationItem editGroupmessageNavigationItem;
+	private NavigationItem viewGroupmessageNavigationItem;
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private AccordionLayout accordionLayout;
+	
+	
+	public NavigationItem getViewGroupmessageNavigationItem() {
+		return viewGroupmessageNavigationItem;
+	}
+
+	public void setViewGroupmessageNavigationItem(
+			NavigationItem viewGroupmessageNavigationItem) {
+		this.viewGroupmessageNavigationItem = viewGroupmessageNavigationItem;
+	}
 
 	public ContentPanel getTools() {
 		return tools;
@@ -79,6 +90,9 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 		
 		editGroupmessageNavigationItem.disable();
 		tools.add(editGroupmessageNavigationItem);
+		
+		viewGroupmessageNavigationItem = new NavigationItem("View message");
+		tools.add(viewGroupmessageNavigationItem);
 		this.add(tools);
 		addDefaultListeners();
 	}
@@ -99,6 +113,14 @@ public class MainPanelAccordionContainer extends ContentPanel implements Resizab
 			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
 				EditGroupmessage editGroupmessage = new EditGroupmessage(groupDiscussionsContainer);
 				editGroupmessage.populateInsideMainPanel();
+			}
+		});
+		
+		viewGroupmessageNavigationItem.addListener(Events.OnClick, new Listener() {
+			@Override
+			public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {
+				GroupmessagePanel groupmessagePanel = new GroupmessagePanel(groupDiscussionsContainer);
+				groupmessagePanel.populateInsideMainPanel();
 			}
 		});
 		
