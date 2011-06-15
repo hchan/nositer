@@ -37,6 +37,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	private Label filler;
 	private TextArea referenceMessage;
 	private Button saveButton;
+	private Groupmessage groupmessage;
 
 	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -99,17 +100,19 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().getBottomComponent().hide();
 		groupDiscussionsContainer.getGroupDiscussionMainPanel().setHeight(MainPanel.getInstance().getHeight());
 		//groupDiscussionsContainer.getGroupDiscussionMainPanel().layout(true);
-		addDefaultListeners();
+		
 		resize(0,0);
 	}
 
 	public void populate(Groupmessage groupmessage) {
+		this.groupmessage = groupmessage;
 		String newReferenceMessageValue = "Topic: " + groupmessage.getGrouptopic().getName() + "\n"; 
 		newReferenceMessageValue += "Posted on: " + groupmessage.getCreatedtime() + "\n";
 		newReferenceMessageValue += "Posted by: " + groupmessage.getUser().getFirstname() + " " + groupmessage.getUser().getLastname() + "\n\n";
 		
 		newReferenceMessageValue +=	groupmessage.getDescription();
 		referenceMessage.setValue(newReferenceMessageValue);
+		addDefaultListeners();
 	}
 	
 	private void addDefaultListeners() {
@@ -120,7 +123,7 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 
 				Groupmessage newGroupmessage = new Groupmessage();
 				newGroupmessage.setUserid(Nositer.getInstance().getUser().getId());
-				newGroupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
+				newGroupmessage.setGrouptopicid(groupmessage.getGrouptopic().getId());
 				newGroupmessage.setDescription(description.getValue());
 
 				
