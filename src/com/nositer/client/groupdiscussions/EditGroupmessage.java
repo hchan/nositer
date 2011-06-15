@@ -104,8 +104,9 @@ public class EditGroupmessage extends ContentPanel implements Resizable {
 
 				Groupmessage modifiedGroupmessage = new Groupmessage();
 				modifiedGroupmessage.setId(groupmessage.getId());
-				modifiedGroupmessage.setUserid(Nositer.getInstance().getUser().getId());
-				modifiedGroupmessage.setGrouptopicid(groupDiscussionsContainer.getGroupPlusView().getId());
+				modifiedGroupmessage.setUser(groupmessage.getUser());
+				modifiedGroupmessage.setUserid(groupmessage.getUser().getId());
+				modifiedGroupmessage.setGrouptopic(groupmessage.getGrouptopic());
 				modifiedGroupmessage.setDescription(description.getValue());
 
 				

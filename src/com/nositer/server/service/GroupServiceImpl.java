@@ -800,8 +800,8 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 				throw new GWTException("You do not have permissions to edit this message");
 			}
 
-			com.nositer.hibernate.generated.domain.Groupmessage groupmessageDomain = BeanConversion.copyDTO2Domain(groupmessage, com.nositer.hibernate.generated.domain.Groupmessage.class);
-
+			com.nositer.hibernate.generated.domain.Groupmessage groupmessageDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.Groupmessage.class, groupmessage.getId(), sess);
+			groupmessageDomain.setDescription(groupmessage.getDescription());
 			sess.update(groupmessageDomain);
 			trx.commit();
 		}
