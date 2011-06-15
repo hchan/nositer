@@ -18,7 +18,7 @@ import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
 
-public class GroupmessagePanel extends ContentPanel implements Resizable {
+public class GroupmessagePanel extends ContentPanel implements Resizable, GroupmessageContainer {
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private MainPanelAccordionContainer mainPanelAccordionContainer;
 	private HtmlContainer htmlContainer;
@@ -182,5 +182,10 @@ public class GroupmessagePanel extends ContentPanel implements Resizable {
 		grouptopicToolBar.setWidth(newWidth - 10);
 		setHeight(groupDiscussionsContainer.getGroupDiscussionMainPanel().getHeight() - 10);
 		grouptopicToolBar.resize(0, 0);
+	}
+
+	@Override
+	public void populateInsideMainPanel() {
+		show();
 	}
 }

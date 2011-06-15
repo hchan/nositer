@@ -28,7 +28,7 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.messagebox.AlertMessageBox;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 
-public class AddGroupmessage extends ContentPanel implements Resizable {
+public class AddGroupmessage extends ContentPanel implements Resizable, GroupmessageContainer {
 
 	private GroupDiscussionsContainer groupDiscussionsContainer;
 	private Label theHeading;
@@ -38,6 +38,71 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 	private TextArea referenceMessage;
 	private Button saveButton;
 	private Groupmessage groupmessage;
+
+	public GroupDiscussionsContainer getGroupDiscussionsContainer() {
+		return groupDiscussionsContainer;
+	}
+
+	public void setGroupDiscussionsContainer(
+			GroupDiscussionsContainer groupDiscussionsContainer) {
+		this.groupDiscussionsContainer = groupDiscussionsContainer;
+	}
+
+	public Label getTheHeading() {
+		return theHeading;
+	}
+
+	public void setTheHeading(Label theHeading) {
+		this.theHeading = theHeading;
+	}
+
+	public FormPanel getFormPanel() {
+		return formPanel;
+	}
+
+	public void setFormPanel(FormPanel formPanel) {
+		this.formPanel = formPanel;
+	}
+
+	public HtmlEditor getDescription() {
+		return description;
+	}
+
+	public void setDescription(HtmlEditor description) {
+		this.description = description;
+	}
+
+	public Label getFiller() {
+		return filler;
+	}
+
+	public void setFiller(Label filler) {
+		this.filler = filler;
+	}
+
+	public TextArea getReferenceMessage() {
+		return referenceMessage;
+	}
+
+	public void setReferenceMessage(TextArea referenceMessage) {
+		this.referenceMessage = referenceMessage;
+	}
+
+	public Button getSaveButton() {
+		return saveButton;
+	}
+
+	public void setSaveButton(Button saveButton) {
+		this.saveButton = saveButton;
+	}
+
+	public Groupmessage getGroupmessage() {
+		return groupmessage;
+	}
+
+	public void setGroupmessage(Groupmessage groupmessage) {
+		this.groupmessage = groupmessage;
+	}
 
 	public AddGroupmessage(GroupDiscussionsContainer groupDiscussionsContainer) {
 		this.groupDiscussionsContainer = groupDiscussionsContainer;
@@ -87,10 +152,10 @@ public class AddGroupmessage extends ContentPanel implements Resizable {
 		this.add(formPanel);
 
 		for (Component component : groupDiscussionsContainer.getGroupDiscussionMainPanel().getItems()) {
-			if (component instanceof GroupmessagePanel) {
-				GroupmessagePanel groupmessagePanel = (com.nositer.client.groupdiscussions.GroupmessagePanel) component;
-				populate(groupmessagePanel.getGroupmessage());
-				groupDiscussionsContainer.getGroupDiscussionMainPanel().remove(groupmessagePanel);
+			if (component instanceof GroupmessageContainer) {
+				GroupmessageContainer groupmessageContainer = (com.nositer.client.groupdiscussions.GroupmessageContainer) component;
+				populate(groupmessageContainer.getGroupmessage());
+				groupDiscussionsContainer.getGroupDiscussionMainPanel().remove(component);
 				groupDiscussionsContainer.getGroupDiscussionMainPanel().add(this);
 				groupDiscussionsContainer.getGroupDiscussionMainPanel().layout();
 				break;
