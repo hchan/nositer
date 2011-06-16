@@ -1,2 +1,0 @@
-serviceClass: com.nositer.client.service.IWantToService
-path: B0D0970D64E047D99D189076E1AB25CF.gwt.rpc

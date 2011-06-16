@@ -1,2 +1,0 @@
-serviceClass: com.nositer.client.service.LookupcodeService
-path: D8DEF74F1874A0C571A76FAD0595F799.gwt.rpc
