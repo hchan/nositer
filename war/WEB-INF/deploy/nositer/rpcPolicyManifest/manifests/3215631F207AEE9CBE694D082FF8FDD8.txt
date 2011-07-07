@@ -1,2 +1,0 @@
-serviceClass: com.nositer.client.service.SecurityService
-path: 0949D643A9C0F924A203B2315DE0B4C9.gwt.rpc

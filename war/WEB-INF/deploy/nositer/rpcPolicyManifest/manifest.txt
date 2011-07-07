@@ -1,2 +1,10 @@
 # Module nositer
 # RPC service class, partial path of RPC policy file
+com.nositer.client.service.SecurityService, 74CFF447701BD357B167053E1213EEB1.gwt.rpc
+com.nositer.client.service.NoopService, 39B4A54D1E757D1EFC18353285544E78.gwt.rpc
+com.nositer.client.service.IWantToService, 67C68D3D6C0584217E542F3E5E7F6171.gwt.rpc
+com.nositer.client.service.LookupcodeService, AE10A1697ED4DB818A9133BE09FFC1B1.gwt.rpc
+com.nositer.client.service.ProfileService, 5AFA8FA4648341E4E7E76B61C91B136B.gwt.rpc
+com.nositer.client.service.GroupService, 26B445C2DEB9D2771AFFCB0604D74EC9.gwt.rpc
+com.nositer.client.service.FileService, 13EAB9506EA4CE82374C23DF72C1E1A0.gwt.rpc
+com.nositer.client.service.RegisterService, D73CBF29096220218A8D4A195288BCFA.gwt.rpc

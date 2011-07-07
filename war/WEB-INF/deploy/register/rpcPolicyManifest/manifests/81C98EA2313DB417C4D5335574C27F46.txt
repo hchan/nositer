@@ -1,2 +1,0 @@
-serviceClass: com.nositer.client.service.NoopService
-path: BFF121E8F8CD16C563F0CE9CEFB8A18E.gwt.rpc

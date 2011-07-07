@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/gwt-user.jar">
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/gwt-user.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/doc/javadoc/"/>
+			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/doc/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/gwt-dev.jar">
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/gwt-dev.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/doc/javadoc/"/>
+			<attribute name="javadoc_location" value="file:/C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/doc/javadoc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="lib" path="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/validation-api-1.0.0.GA.jar" sourcepath="C:/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.3.0.r36v201105191508/gwt-2.3.0/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="lib" path="buildlib/gxt.jar"/>
