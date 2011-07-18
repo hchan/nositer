@@ -8,12 +8,13 @@ import com.nositer.client.widget.Resizable;
 
 public class GroupTabPanel extends TabPanel implements Resizable {
 	public enum TabItemType {
-		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, SUBSCRIBER, UPLOAD, FILEMANAGER
+		VIEW, EDIT, SUBSCRIPTIONS, DISCUSSIONS, CHAT, SUBSCRIBER, UPLOAD, FILEMANAGER
 	}
 	private ViewGroupTabItem viewGroupTabItem;
 	private EditGroupTabItem editGroupTabItem;
 	private SubscriptionsGroupTabItem subscriptionsGroupTabItem;
 	private DiscussionsGroupTabItem discussionsGroupTabItem;
+	private ChatGroupTabItem chatGroupTabItem;
 	private UploadGroupTabItem uploadGroupTabItem;
 	private FileManagerGroupTabItem fileManagerGroupTabItem;
 	
@@ -38,6 +39,27 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 	public void setSubscriptionsGroupTabItem(
 			SubscriptionsGroupTabItem subscriptionsGroupTabItem) {
 		this.subscriptionsGroupTabItem = subscriptionsGroupTabItem;
+	}
+	
+	
+	
+	
+
+	public DiscussionsGroupTabItem getDiscussionsGroupTabItem() {
+		return discussionsGroupTabItem;
+	}
+
+	public void setDiscussionsGroupTabItem(
+			DiscussionsGroupTabItem discussionsGroupTabItem) {
+		this.discussionsGroupTabItem = discussionsGroupTabItem;
+	}
+
+	public ChatGroupTabItem getChatGroupTabItem() {
+		return chatGroupTabItem;
+	}
+
+	public void setChatGroupTabItem(ChatGroupTabItem chatGroupTabItem) {
+		this.chatGroupTabItem = chatGroupTabItem;
 	}
 
 	public void setGroupPlusView(GroupPlusView groupPlusView) {
@@ -78,6 +100,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 		add(subscriptionsGroupTabItem);
 		discussionsGroupTabItem = new DiscussionsGroupTabItem(groupPlusView, this);
 		add(discussionsGroupTabItem);
+		chatGroupTabItem = new ChatGroupTabItem(groupPlusView, this);
+		add(chatGroupTabItem);
 		if (Groups.isGroupIOwn(groupPlusView)) {
 			editGroupTabItem = new EditGroupTabItem(groupPlusView, this);
 			uploadGroupTabItem = new UploadGroupTabItem(groupPlusView, this);
@@ -108,6 +132,8 @@ public class GroupTabPanel extends TabPanel implements Resizable {
 			setSelection(fileManagerGroupTabItem);
 		} else if (tabItemType.equals(TabItemType.DISCUSSIONS)) {
 			setSelection(discussionsGroupTabItem);
+		} else if (tabItemType.equals(TabItemType.CHAT)) {
+			setSelection(chatGroupTabItem);
 		} 
 	}
 }

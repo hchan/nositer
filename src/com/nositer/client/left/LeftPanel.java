@@ -26,7 +26,6 @@ public class LeftPanel extends ContentPanel {
 	private ContentPanel files;
 	private ContentPanel iwantto;
 	private ContentPanel blog;
-	private ContentPanel chat;
 	private NavigationItem viewProfileNavigationItem;
 	private NavigationItem editBasicProfileNavigationItem;
 	private NavigationItem editAboutMeNavigationItem;
@@ -147,15 +146,6 @@ public class LeftPanel extends ContentPanel {
 		this.blog = blog;
 	}
 
-
-	public ContentPanel getChat() {
-		return chat;
-	}
-
-
-	public void setChat(ContentPanel chat) {
-		this.chat = chat;
-	}
 
 
 	public NavigationItem getViewProfileNavigationItem() {
@@ -309,8 +299,6 @@ public class LeftPanel extends ContentPanel {
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
 		
-		// chat
-		chat = createNavigationContentPanel("Chat", this);	
 		
 		collapseAccordion();
 		this.layout();
