@@ -4,6 +4,8 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.groupchat.GroupChatContainer;
+import com.nositer.client.groupdiscussions.GroupDiscussionsContainer;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.widget.HistoryWidget;
@@ -12,7 +14,7 @@ import com.nositer.client.widget.Resizable;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ChatGroupTabItem extends TabItem implements Resizable, HistoryWidget {
 
-
+	private GroupChatContainer groupChatContainer;
 	private GroupPlusView groupPlusView;
 	private GroupTabPanel groupTabPanel;
 
@@ -33,6 +35,14 @@ public class ChatGroupTabItem extends TabItem implements Resizable, HistoryWidge
 		this.groupTabPanel = groupTabPanel;
 	}
 
+	public GroupChatContainer getGroupChatContainer() {
+		return groupChatContainer;
+	}
+
+	public void setGroupChatContainer(GroupChatContainer groupChatContainer) {
+		this.groupChatContainer = groupChatContainer;
+	}
+
 	public ChatGroupTabItem(GroupPlusView groupPlusView, GroupTabPanel groupTabPanel) {
 		super("Chat");
 		this.groupPlusView = groupPlusView;
@@ -41,7 +51,8 @@ public class ChatGroupTabItem extends TabItem implements Resizable, HistoryWidge
 	}
 
 	public void init() {
-		
+		groupChatContainer = new GroupChatContainer(groupPlusView);		
+		add(groupChatContainer);
 		addDefaultListeners();
 	}
 

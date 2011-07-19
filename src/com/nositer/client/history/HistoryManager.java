@@ -163,6 +163,11 @@ public class HistoryManager {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.DISCUSSIONS);
+			setMainPanel(Groups.getInstance(true));
+		} else if (historyToken.startsWith(CHATGROUP.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getGroups().expand();	
+			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
+			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.CHAT);
 			setMainPanel(Groups.getInstance(true));		
 		}  else if (historyToken.startsWith(USER.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
