@@ -17,7 +17,7 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 	//public static int DEFAULTLEFTPANELWIDTH = 400;
 	private GroupPlusView groupPlusView;
 	private ContentPanel contentPanel;
-	private Button hi;
+	private GroupChatLeftPanel groupChatLeftPanel;
 	
 	public GroupPlusView getGroupPlusView() {
 		return groupPlusView;
@@ -25,9 +25,15 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 
 	public void setGroupPlusView(GroupPlusView groupPlusView) {
 		this.groupPlusView = groupPlusView;
+	}	
+
+	public GroupChatLeftPanel getGroupChatLeftPanel() {
+		return groupChatLeftPanel;
 	}
 
-	
+	public void setGroupChatLeftPanel(GroupChatLeftPanel groupChatLeftPanel) {
+		this.groupChatLeftPanel = groupChatLeftPanel;
+	}
 
 	public ContentPanel getContentPanel() {
 		return contentPanel;
@@ -47,8 +53,8 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 		setLayout(new FlowLayout(0));
 		contentPanel = new ContentPanel();
 		contentPanel.setHeaderVisible(false);
-		hi = new Button("HI");
-		contentPanel.add(hi);
+		groupChatLeftPanel = new GroupChatLeftPanel(this);
+		contentPanel.add(groupChatLeftPanel);
 		add(contentPanel);
 		resize(0,0);
 		
