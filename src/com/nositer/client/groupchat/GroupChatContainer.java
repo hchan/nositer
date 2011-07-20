@@ -18,6 +18,8 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 	private GroupPlusView groupPlusView;
 	private ContentPanel contentPanel;
 	private GroupChatLeftPanel groupChatLeftPanel;
+	private GroupChatMainPanel groupChatMainPanel;
+	private GroupChatBottomPanel groupChatBottomPanel;
 	
 	public GroupPlusView getGroupPlusView() {
 		return groupPlusView;
@@ -42,6 +44,14 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 	public void setContentPanel(ContentPanel contentPanel) {
 		this.contentPanel = contentPanel;
 	}
+	
+	public GroupChatMainPanel getGroupChatMainPanel() {
+		return groupChatMainPanel;
+	}
+
+	public void setGroupChatMainPanel(GroupChatMainPanel groupChatMainPanel) {
+		this.groupChatMainPanel = groupChatMainPanel;
+	}
 
 	public GroupChatContainer(GroupPlusView groupPlusView) {
 		this.groupPlusView = groupPlusView;
@@ -50,15 +60,24 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 
 	public void init() {
 		//setLayout(new FitLayout());
-		setLayout(new FlowLayout(0));
+		setLayout(new BorderLayout());
 		contentPanel = new ContentPanel();
 		contentPanel.setHeaderVisible(false);
-		groupChatLeftPanel = new GroupChatLeftPanel(this);
-		contentPanel.add(groupChatLeftPanel);
 		add(contentPanel);
-		resize(0,0);
 		
+		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST);
+		groupChatLeftPanel = new GroupChatLeftPanel(this);
+		contentPanel.add(groupChatLeftPanel, westData);
 		
+		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
+		groupChatMainPanel = new GroupChatMainPanel(this);
+		contentPanel.add(groupChatMainPanel, centerData);
+		
+		BorderLayoutData bottomData = new BorderLayoutData(LayoutRegion.SOUTH);
+		groupChatBottomPanel = new GroupChatBottomPanel(this);
+		contentPanel.add(groupChatBottomPanel, bottomData);
+		
+		resize(0,0);		
 	}
 	
 	@Override

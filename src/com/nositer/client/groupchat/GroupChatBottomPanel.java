@@ -8,7 +8,7 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.Resizable;
 
-public class GroupChatLeftPanel extends ContentPanel implements Resizable {
+public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 
 
 	private GroupChatContainer groupChatContainer;
@@ -30,11 +30,11 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		this.listField = listField;
 	}
 
-	public GroupChatLeftPanel() {
+	public GroupChatBottomPanel() {
 		init();
 	}
 
-	public GroupChatLeftPanel(
+	public GroupChatBottomPanel(
 			GroupChatContainer groupChatContainer) {
 		this.groupChatContainer = groupChatContainer;
 		init();
@@ -58,7 +58,7 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 	@Override
 	public void resize(int width, int height) {
 		
-		listField.setHeight(MainPanel.getInstance().getHeight() - 160);
+		listField.setHeight(MainPanel.getInstance().getHeight() - 60);
 		//groupChatContainer.getGroupChatMainPanel().resize(0,0);
 	}
 }
