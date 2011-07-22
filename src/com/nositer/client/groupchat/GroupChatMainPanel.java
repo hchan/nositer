@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.google.gwt.user.client.Element;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.Resizable;
@@ -58,9 +59,18 @@ public class GroupChatMainPanel extends ContentPanel implements Resizable {
 
 	@Override
 	public void resize(int width, int height) {
-		
-		//listField.setHeight(MainPanel.getInstance().getHeight() - 60);
-		listField.setWidth(500);
+
+		//listField.setHeight(MainPanel.getInstance().getHeight() - 160);
+		if (this.isRendered()) {
+			listField.setHeight(this.getHeight());
+			listField.setWidth(this.getWidth());
+		}
 		//groupChatContainer.getGroupChatMainPanel().resize(0,0);
+	}
+
+	@Override
+	protected void onRender(Element parent, int pos) {
+		super.onRender(parent, pos);
+		resize(0,0);
 	}
 }

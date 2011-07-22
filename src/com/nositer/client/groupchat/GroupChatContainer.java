@@ -65,15 +65,17 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 		contentPanel.setHeaderVisible(false);
 		add(contentPanel);
 		
-		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST);
+		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST, 100);
+		westData.setSplit(true);
 		groupChatLeftPanel = new GroupChatLeftPanel(this);
 		contentPanel.add(groupChatLeftPanel, westData);
 		
 		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
+		centerData.setSplit(true);
 		groupChatMainPanel = new GroupChatMainPanel(this);
 		contentPanel.add(groupChatMainPanel, centerData);
 		
-		BorderLayoutData bottomData = new BorderLayoutData(LayoutRegion.SOUTH);
+		BorderLayoutData bottomData = new BorderLayoutData(LayoutRegion.SOUTH, 50);
 		groupChatBottomPanel = new GroupChatBottomPanel(this);
 		contentPanel.add(groupChatBottomPanel, bottomData);
 		
@@ -83,7 +85,7 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 	@Override
 	public void resize(int width, int height) {	
 		
-		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 55);
+		contentPanel.setHeight(MainPanel.getInstance().getHeight() - 57);
 	}
 
 }
