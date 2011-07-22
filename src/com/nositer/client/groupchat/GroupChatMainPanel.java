@@ -41,6 +41,7 @@ public class GroupChatMainPanel extends ContentPanel implements Resizable {
 	}
 
 	private void init() {
+		this.setId(this.getClass().getName());
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
 		listField = new ListField<ModelData>();

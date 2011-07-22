@@ -60,8 +60,8 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 
 	public void init() {
 		//setLayout(new FitLayout());
-		setLayout(new BorderLayout());
 		contentPanel = new ContentPanel();
+		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setHeaderVisible(false);
 		add(contentPanel);
 		
