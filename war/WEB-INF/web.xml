@@ -80,6 +80,41 @@
 		<servlet-name>UserFileServlet</servlet-name>
 		<servlet-class>com.nositer.server.servlet.UserFileServlet</servlet-class>
 	</servlet>
+	
+	
+	
+	<servlet>
+        <description>AtmosphereServlet</description>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+        <init-param>
+            <!-- prevent deadlocks -->
+            <param-name>org.atmosphere.disableOnStateEvent</param-name>
+            <param-value>true</param-value>
+        </init-param>
+<!--        <init-param>
+            <param-name>org.atmosphere.useWebSocket</param-name>
+            <param-value>true</param-value>
+        </init-param>-->
+        <!--<init-param>
+            <param-name>org.atmosphere.useNative</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.atmosphere.useBlocking</param-name>
+            <param-value>true</param-value>
+        </init-param>-->
+        <load-on-startup>1</load-on-startup>
+        <!--Uncomment if you want to use Servlet 3.0 Async Support-->
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <url-pattern>/atmosphere/gwtComet</url-pattern>
+    </servlet-mapping>
+	
+	
+	
 
 	<servlet-mapping>
 		<servlet-name>UserFileServlet</servlet-name>

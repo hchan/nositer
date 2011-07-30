@@ -67,6 +67,8 @@ public class AuthorizationFilter implements Filter {
 					chain.doFilter(request, response);
 				} else if (urlStr.startsWith(Global.USER_URL_PREFIX)) {
 					chain.doFilter(request, response);
+				} else if (urlStr.startsWith(Global.COMET_URL)) {
+					chain.doFilter(request, response);
 				} else {
 					doSessionCheck(request, response, chain);
 				}

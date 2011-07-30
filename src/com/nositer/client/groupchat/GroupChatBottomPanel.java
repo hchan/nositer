@@ -1,21 +1,24 @@
 package com.nositer.client.groupchat;
 
+import java.io.Serializable;
+import java.util.List;
+
+import org.atmosphere.gwt.client.AtmosphereClient;
+import org.atmosphere.gwt.client.AtmosphereGWTSerializer;
+import org.atmosphere.gwt.client.AtmosphereListener;
+
 import com.extjs.gxt.ui.client.Style.Orientation;
-import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
-import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.extjs.gxt.ui.client.widget.form.TextArea;
-import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
-import com.extjs.gxt.ui.client.widget.layout.FillLayout;
-import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
-import com.nositer.client.main.MainPanel;
-import com.nositer.client.top.TopPanel;
 import com.nositer.client.widget.Resizable;
+import com.nositer.shared.Global;
 
 public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 
@@ -23,7 +26,8 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private GroupChatContainer groupChatContainer;
 	private TextArea textArea;
 	private Button button;
-	
+	private AtmosphereClient client;
+
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
 	}
@@ -53,19 +57,36 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private void init() {
 		this.setId(this.getClass().getName());
 		this.setLayout(new RowLayout(Orientation.HORIZONTAL));
-	
 		this.setHeaderVisible(false);
-		
 		textArea = new TextArea();
-	
-		
-	
-		button = new Button("Send");
-		button.setWidth(50);
-		
+		initializeAtmosphere();
+		initButton();
 		this.add(textArea);
 		this.add(button);
 		resize(0,0);
+	}
+
+	public void initializeAtmosphere() {
+
+		AtmosphereListener cometListener = new CometListener();
+
+		AtmosphereGWTSerializer serializer = GWT.create(EventSerializer.class);
+		// set a small length parameter to force refreshes
+		// normally you should remove the length parameter
+		client = new AtmosphereClient(Global.COMET_URL, serializer, cometListener, true);
+		client.start();
+	}
+
+	private void initButton() {
+		button = new Button("Send");
+		button.setWidth(50);
+		Listener<BaseEvent> listener = new Listener<BaseEvent>() {
+			@Override
+			public void handleEvent(BaseEvent be) {
+				client.broadcast("Hello");
+			}
+		};
+		button.addListener(Events.Select, listener);
 	}
 
 	// called when the borderlayout split is resized

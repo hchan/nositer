@@ -41,5 +41,7 @@ public class Global {
 	public static final String PERMISSIONSXML = "permissions.xml";
 	
 	public static final String DOWNLOAD = "download";
+	
+	public static final String COMET_URL = "/atmosphere/gwtComet";
 
 }
