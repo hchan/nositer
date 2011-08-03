@@ -1,14 +1,26 @@
 package com.nositer.server.atmosphere;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import javax.servlet.ServletException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.gwt.server.GwtAtmosphereResource;
 import org.atmosphere.gwt.server.AtmosphereGwtHandler;
+
+import com.nositer.client.util.GWTUtil;
+import com.nositer.webapp.Application;
 /**
  *
  * @author p.havelaar
@@ -18,6 +30,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
+		Application.log.info("inside init");
 		Logger.getLogger("").setLevel(Level.INFO);
 		Logger.getLogger("gwtcomettest").setLevel(Level.ALL);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.ALL);
@@ -26,6 +39,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 
 	@Override
 	public int doComet(GwtAtmosphereResource resource) throws ServletException, IOException {
+		Application.log.info("inside doComet");
 		resource.getBroadcaster().setID("GWT_COMET");
 		HttpSession session = resource.getAtmosphereResource().getRequest().getSession(false);
 		if (session != null) {
@@ -49,11 +63,90 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		} catch (Exception e){}
 		return retval;	
 	}
+	
 
+@Override
+public void onRequest(
+		AtmosphereResource<HttpServletRequest, HttpServletResponse> resource)
+		throws IOException {
+
+	HttpServletRequest req = resource.getRequest();
+	
+	HttpServletResponse resp = resource.getResponse();
+	//resp.getWriter().print("Hello");
+	super.onRequest(resource);
+}
 	@Override
 	public void cometTerminated(GwtAtmosphereResource cometResponse, boolean serverInitiated) {
 		super.cometTerminated(cometResponse, serverInitiated);
 		logger.debug("Comet disconnected");
 	}
 
+	@Override
+	public void broadcast(List<Serializable> messages,
+			GwtAtmosphereResource resource) {
+		// TODO Auto-generated method stub
+		super.broadcast(messages, resource);
+	}
+	
+	@Override
+	public void doPost(List<Serializable> messages, GwtAtmosphereResource r) {
+		// TODO Auto-generated method stub
+		super.doPost(messages, r);
+	}
+	
+	@Override
+	protected void doServerMessage(BufferedReader data, int connectionID) {
+		 List<Serializable> postMessages = new ArrayList<Serializable>();
+	        try {
+	            while (true) {
+	                String event = data.readLine();
+	                if (event == null) {
+	                    break;
+	                }
+	                String messageData = data.readLine();
+	                if (messageData == null) {
+	                    break;
+	                }
+	                data.readLine();
+	              
+	                if (event.equals("o")) {
+	                    if (messageData.charAt(0) == 'p') {
+	                        Serializable message = deserialize(messageData.substring(1));
+	                        if (message != null) {
+	                            postMessages.add(message);
+	                        }
+	                    } else if (messageData.charAt(0) == 'b') {
+	                        Serializable message = deserialize(messageData.substring(1));
+	                        //broadcast(message);
+	                    }
+	                    
+	                } else if (event.equals("s")) {
+	                    
+	                    if (messageData.charAt(0) == 'p') {
+	                        String message = messageData.substring(1);
+	                        postMessages.add(message);
+	                    } else if (messageData.charAt(0) == 'b') {
+	                        Serializable message = messageData.substring(1);
+	                        //broadcast(message);
+	                    }
+	                    
+	                } else if (event.equals("c")) {
+	                    
+	                    if (messageData.equals("d")) {
+	                        //disconnect(connectionID);
+	                    }
+	                }
+	            }
+	        } catch (IOException ex) {
+	            logger.error("["+connectionID+"] Failed to read", ex);
+	        }
+
+	}
+	
+	@Override
+	protected Serializable deserialize(String arg0) {
+		int a = 5;
+		return super.deserialize(arg0);
+	}
 }

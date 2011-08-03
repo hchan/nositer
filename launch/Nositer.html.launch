@@ -14,7 +14,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gwt.eclipse.core.moduleClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -startupUrl Nositer.html -logLevel INFO -port 8888 -codeServerPort 9997 -war C:\workspace\nositer\war com.nositer.Register com.nositer.Nositer"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-server de.csenk.gwt.jetty.JettyLauncher -port 8888 -remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -startupUrl Nositer.html -logLevel INFO -codeServerPort 9997 -war C:\workspace\nositer\war com.nositer.Register com.nositer.Nositer"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="nositer"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx512m"/>
 </launchConfiguration>

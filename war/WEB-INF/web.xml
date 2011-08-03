@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-<web-app>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:j2ee="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_3.0.xsd">
+
 
 	<context-param>
 		<!-- max size of the upload request -->
@@ -22,7 +22,8 @@
 	<filter>
 		<filter-name>AuthorizationFilter</filter-name>
 		<description>This Filter authorizes user access to application
-			components based upon request URI.</description>
+			components based upon request URI.
+		</description>
 		<filter-class>com.nositer.webapp.AuthorizationFilter</filter-class>
 		<init-param>
 			<param-name>error_page</param-name>
@@ -40,6 +41,14 @@
 		</init-param>
 	</filter>
 
+
+	<filter>
+		<filter-name>JettyContinuationFilter</filter-name>
+		<filter-class>org.eclipse.jetty.continuation.ContinuationFilter
+		</filter-class>
+	</filter>
+
+ 
 	<filter-mapping>
 		<filter-name>AuthorizationFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -58,74 +67,77 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>GwtServiceResolver</servlet-name>
-		<servlet-class>com.google.gwt.user.server.rpc.GwtServiceResolver</servlet-class>
+		<servlet-class>com.google.gwt.user.server.rpc.GwtServiceResolver
+		</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
-		<servlet-class>com.nositer.server.servlet.UploadServlet</servlet-class>
+		<servlet-class>com.nositer.server.servlet.UploadServlet
+		</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
-		<servlet-class>com.nositer.server.servlet.CurrentUserAsJsonServlet</servlet-class>
+		<servlet-class>com.nositer.server.servlet.CurrentUserAsJsonServlet
+		</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>GroupFileServlet</servlet-name>
-		<servlet-class>com.nositer.server.servlet.GroupFileServlet</servlet-class>
+		<servlet-class>com.nositer.server.servlet.GroupFileServlet
+		</servlet-class>
 	</servlet>
 
 	<servlet>
 		<servlet-name>UserFileServlet</servlet-name>
-		<servlet-class>com.nositer.server.servlet.UserFileServlet</servlet-class>
+		<servlet-class>com.nositer.server.servlet.UserFileServlet
+		</servlet-class>
 	</servlet>
-	
-	
-	
+
+
+
 	<servlet>
-        <description>AtmosphereServlet</description>
-        <servlet-name>AtmosphereServlet</servlet-name>
-        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
-        <init-param>
-            <!-- prevent deadlocks -->
-            <param-name>org.atmosphere.disableOnStateEvent</param-name>
-            <param-value>true</param-value>
-        </init-param>
-<!--        <init-param>
-            <param-name>org.atmosphere.useWebSocket</param-name>
-            <param-value>true</param-value>
-        </init-param>-->
-        <!--<init-param>
-            <param-name>org.atmosphere.useNative</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>org.atmosphere.useBlocking</param-name>
-            <param-value>true</param-value>
-        </init-param>-->
-        <load-on-startup>1</load-on-startup>
-        <!--Uncomment if you want to use Servlet 3.0 Async Support-->
-        <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AtmosphereServlet</servlet-name>
-        <url-pattern>/atmosphere/gwtComet</url-pattern>
-    </servlet-mapping>
-	
-	
-	
+		<description>AtmosphereServlet</description>
+		<servlet-name>AtmosphereServlet</servlet-name>
+		<servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+		<init-param>
+			<!-- prevent deadlocks -->
+			<param-name>org.atmosphere.disableOnStateEvent</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.useWebSocket</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>org.atmosphere.useNative</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>org.atmosphere.useBlocking</param-name> <param-value>true</param-value> 
+			</init-param> -->
+		<load-on-startup>0</load-on-startup>
+		<!--Uncomment if you want to use Servlet 3.0 Async Support -->
+		<!-- <async-supported>true</async-supported> -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AtmosphereServlet</servlet-name>
+		<url-pattern>/atmosphere/gwtComet</url-pattern>
+	</servlet-mapping>
+
+
+
 
 	<servlet-mapping>
 		<servlet-name>UserFileServlet</servlet-name>
 		<url-pattern>/userfile/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>GroupFileServlet</servlet-name>
 		<url-pattern>/groupfile/*</url-pattern>
 	</servlet-mapping>
-	
+
 
 	<servlet-mapping>
 		<servlet-name>CurrentUserAsJsonServlet</servlet-name>
@@ -149,6 +161,6 @@
 	</welcome-file-list>
 
 	<session-config>
-		<session-timeout>0</session-timeout>
+		<session-timeout>30</session-timeout>
 	</session-config>
 </web-app>
