@@ -17,6 +17,7 @@ import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
+import com.nositer.client.Nositer;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
 
@@ -68,7 +69,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 
 	public void initializeAtmosphere() {
 
-		AtmosphereListener cometListener = new CometListener();
+		AtmosphereListener cometListener = new CometListener(groupChatContainer);
 
 		AtmosphereGWTSerializer serializer = GWT.create(EventSerializer.class);
 		// set a small length parameter to force refreshes
@@ -83,7 +84,10 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		Listener<BaseEvent> listener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				client.broadcast("Hello");
+				Event event = new Event();
+				event.setLogin(Nositer.getInstance().getUser().getLogin());
+				event.setData(textArea.getValue());
+				client.broadcast(event);
 			}
 		};
 		button.addListener(Events.Select, listener);

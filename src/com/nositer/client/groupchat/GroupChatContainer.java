@@ -21,6 +21,14 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 	private GroupChatMainPanel groupChatMainPanel;
 	private GroupChatBottomPanel groupChatBottomPanel;
 	
+	public GroupChatBottomPanel getGroupChatBottomPanel() {
+		return groupChatBottomPanel;
+	}
+
+	public void setGroupChatBottomPanel(GroupChatBottomPanel groupChatBottomPanel) {
+		this.groupChatBottomPanel = groupChatBottomPanel;
+	}
+
 	public GroupPlusView getGroupPlusView() {
 		return groupPlusView;
 	}

@@ -1,20 +1,23 @@
 package com.nositer.client.groupchat;
 
-import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
 import com.google.gwt.user.client.Element;
-import com.nositer.client.main.MainPanel;
-import com.nositer.client.top.TopPanel;
+import com.nositer.client.widget.HtmlContainerPlus;
 import com.nositer.client.widget.Resizable;
 
 public class GroupChatMainPanel extends ContentPanel implements Resizable {
-
-
 	private GroupChatContainer groupChatContainer;
-	private ListField<ModelData> listField;
-	
+	private HtmlContainerPlus htmlContainerPlus;
+
+	public HtmlContainerPlus getHtmlContainerPlus() {
+		return htmlContainerPlus;
+	}
+
+	public void setHtmlContainerPlus(HtmlContainerPlus htmlContainerPlus) {
+		this.htmlContainerPlus = htmlContainerPlus;
+	}
+
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
 	}
@@ -23,14 +26,7 @@ public class GroupChatMainPanel extends ContentPanel implements Resizable {
 		this.groupChatContainer = groupChatContainer;
 	}
 
-	public ListField<ModelData> getListField() {
-		return listField;
-	}
-
-	public void setListField(ListField<ModelData> listField) {
-		this.listField = listField;
-	}
-
+	
 	public GroupChatMainPanel() {
 		init();
 	}
@@ -45,8 +41,10 @@ public class GroupChatMainPanel extends ContentPanel implements Resizable {
 		this.setId(this.getClass().getName());
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
-		listField = new ListField<ModelData>();
-		this.add(listField);
+		htmlContainerPlus = new HtmlContainerPlus();
+		htmlContainerPlus.setStyleName("textFile");
+		//htmlContainerPlus.setAutoHeight(true);
+		this.add(htmlContainerPlus);
 		resize(0,0);
 	}
 
@@ -62,8 +60,9 @@ public class GroupChatMainPanel extends ContentPanel implements Resizable {
 
 		//listField.setHeight(MainPanel.getInstance().getHeight() - 160);
 		if (this.isRendered()) {
-			listField.setHeight(this.getHeight());
-			listField.setWidth(this.getWidth());
+		
+			htmlContainerPlus.setHeight(this.getHeight());
+			htmlContainerPlus.setWidth(this.getWidth());
 		}
 		//groupChatContainer.getGroupChatMainPanel().resize(0,0);
 	}

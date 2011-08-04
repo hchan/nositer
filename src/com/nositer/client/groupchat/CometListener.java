@@ -8,10 +8,25 @@ import org.atmosphere.gwt.client.AtmosphereListener;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.StatusCodeException;
+import com.nositer.client.util.GWTUtil;
+import com.nositer.client.widget.HtmlContainerPlus;
 
 public class CometListener implements AtmosphereListener {
+	private GroupChatContainer groupChatContainer;
+	
+    public CometListener(GroupChatContainer groupChatContainer) {
+		this.groupChatContainer = groupChatContainer;
+	}
 
-    @Override
+	public GroupChatContainer getGroupChatContainer() {
+		return groupChatContainer;
+	}
+
+	public void setGroupChatContainer(GroupChatContainer groupChatContainer) {
+		this.groupChatContainer = groupChatContainer;
+	}
+
+	@Override
     public void onConnected(int heartbeat, int connectionID) {
         GWT.log("comet.connected [" +heartbeat+", "+connectionID+"]");
     }
@@ -49,8 +64,21 @@ public class CometListener implements AtmosphereListener {
     public void onMessage(List<? extends Serializable> messages) {
         StringBuilder result = new StringBuilder();
         for(Serializable obj : messages) {
-            result.append(obj.toString()).append("<br/>");
+        	Event event = (Event)obj;
+        	String html = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus().getHtmlHistory();
+        	html += event.toString() + "<BR/>";
+        	HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
+        	htmlContainerPlus.setHtmlHistory(html);
+        	htmlContainerPlus.setHtml(html);
+        	htmlContainerPlus.
+        	getElement().
+        	setScrollTop(
+        			htmlContainerPlus.getElement().getScrollHeight()
+        	);
+        	
+        	groupChatContainer.getGroupChatMainPanel().layout();
         }
+        GWTUtil.log("inside onMessage:"  + result);
         //logger.log(Level.INFO, "comet.message ["+client.getConnectionID()+"] " + result.toString());
         //Info.display("["+client.getConnectionID()+"] Received " + messages.size() + " messages", result.toString());
     }
