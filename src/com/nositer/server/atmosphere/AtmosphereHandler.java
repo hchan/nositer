@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,9 @@ import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.gwt.server.AtmosphereGwtHandler;
 import org.atmosphere.gwt.server.GwtAtmosphereResource;
 
+import com.nositer.client.groupchat.ChatEvent;
+import com.nositer.client.groupchat.ChatEventType;
+import com.nositer.util.HTMLPurifier;
 import com.nositer.webapp.Application;
 
 /**
@@ -25,7 +29,8 @@ import com.nositer.webapp.Application;
  * @author p.havelaar
  */
 public class AtmosphereHandler extends AtmosphereGwtHandler {
-
+	public static TreeSet<String> logins;
+	
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
@@ -34,6 +39,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		Logger.getLogger("gwtcomettest").setLevel(Level.ALL);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.ALL);
 		logger.trace("Updated logging levels");
+		logins = new TreeSet<String>();
 	}
 
 	@Override
@@ -127,8 +133,11 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 					} else if (messageData.charAt(0) == 'b') {
 						Serializable message = deserialize(messageData
 								.substring(1));
+						ChatEvent chatEventMsg = (ChatEvent) message;
 						GwtAtmosphereResource resource = lookupResource(connectionID);
-						broadcast(message, resource);
+						reBroadcastMsg(chatEventMsg, resource);
+						//GwtAtmosphereResource resource = lookupResource(connectionID);
+						//broadcast(message, resource);
 						// broadcast(message);
 					}
 
@@ -140,8 +149,11 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 					} else if (messageData.charAt(0) == 'b') {
 						Serializable message = messageData.substring(1);
 
+						ChatEvent chatEvent = (ChatEvent) message;
+						
 						GwtAtmosphereResource resource = lookupResource(connectionID);
-						broadcast(message, resource);
+						reBroadcastMsg(chatEvent, resource);
+						//broadcast(eventMsg, resource);
 						// broadcast(message);
 					}
 
@@ -156,6 +168,18 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 			logger.error("[" + connectionID + "] Failed to read", ex);
 		}
 
+	}
+
+	// TODO
+	// not the most efficent way - investiage post instead of braodcast
+	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
+		if (chatEvent.getChatEventType() == null) {
+			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
+		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
+			logins.add(chatEvent.getLogin());
+			chatEvent.setLogins(logins);
+		}
+		broadcast(chatEvent, resource);
 	}
 
 	@Override

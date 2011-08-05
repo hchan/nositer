@@ -27,8 +27,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private GroupChatContainer groupChatContainer;
 	private TextArea textArea;
 	private Button button;
-	private AtmosphereClient client;
-
+	
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
 	}
@@ -60,23 +59,12 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		this.setLayout(new RowLayout(Orientation.HORIZONTAL));
 		this.setHeaderVisible(false);
 		textArea = new TextArea();
-		initializeAtmosphere();
 		initButton();
 		this.add(textArea);
 		this.add(button);
 		resize(0,0);
 	}
 
-	public void initializeAtmosphere() {
-
-		AtmosphereListener cometListener = new CometListener(groupChatContainer);
-
-		AtmosphereGWTSerializer serializer = GWT.create(EventSerializer.class);
-		// set a small length parameter to force refreshes
-		// normally you should remove the length parameter
-		client = new AtmosphereClient(Global.COMET_URL, serializer, cometListener, true);
-		client.start();
-	}
 
 	private void initButton() {
 		button = new Button("Send");
@@ -84,10 +72,10 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		Listener<BaseEvent> listener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				Event event = new Event();
-				event.setLogin(Nositer.getInstance().getUser().getLogin());
-				event.setData(textArea.getValue());
-				client.broadcast(event);
+				ChatEvent chatEvent = new ChatEvent();
+				chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+				chatEvent.setData(textArea.getValue());
+				groupChatContainer.getClient().broadcast(chatEvent);
 			}
 		};
 		button.addListener(Events.Select, listener);

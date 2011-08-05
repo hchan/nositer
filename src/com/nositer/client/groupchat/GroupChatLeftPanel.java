@@ -3,6 +3,7 @@ package com.nositer.client.groupchat;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style.SortDir;
+import com.extjs.gxt.ui.client.data.BaseModel;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelFactory;
 import com.extjs.gxt.ui.client.data.BeanModelLookup;
@@ -29,7 +30,7 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 
 
 	private GroupChatContainer groupChatContainer;
-	private ListField<ModelData> listField;
+	private ListField<BaseModel> listField;
 
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
@@ -39,11 +40,11 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		this.groupChatContainer = groupChatContainer;
 	}
 
-	public ListField<ModelData> getListField() {
+	public ListField<BaseModel> getListField() {
 		return listField;
 	}
 
-	public void setListField(ListField<ModelData> listField) {
+	public void setListField(ListField<BaseModel> listField) {
 		this.listField = listField;
 	}
 
@@ -62,16 +63,16 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		this.setId(this.getClass().getName());
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
-		listField = new ListField<ModelData>();
+		listField = new ListField<BaseModel>();
 		listField.setDisplayField(User.Column.login.name());
-		User user = Nositer.getInstance().getUser();	
+		//User user = Nositer.getInstance().getUser();	
 		
 	   
 	 
-		ListStore<ModelData> store = new ListStore<ModelData>();
-		BeanModelFactory factory = BeanModelLookup.get().getFactory(User.class);
-		BeanModel val = factory.createModel(user);
-		store.add(val);
+		ListStore<BaseModel> store = new ListStore<BaseModel>();
+		//BeanModelFactory factory = BeanModelLookup.get().getFactory(User.class);
+		//BeanModel val = factory.createModel(user);
+		//store.add(val);
 		listField.setStore(store);  
 		this.add(listField);
 		resize(0,0);

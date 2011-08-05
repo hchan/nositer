@@ -18,6 +18,6 @@ package com.nositer.client.groupchat;
 import org.atmosphere.gwt.client.AtmosphereGWTSerializer;
 import org.atmosphere.gwt.client.SerialTypes;
 
-@SerialTypes(value = {Event.class, String.class})
+@SerialTypes(value = {ChatEvent.class, String.class})
 public abstract class EventSerializer extends AtmosphereGWTSerializer {
 }
