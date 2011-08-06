@@ -92,11 +92,7 @@ public class GroupChatContainer extends LayoutContainer implements Resizable {
 		// normally you should remove the length parameter
 		client = new AtmosphereClient(Global.COMET_URL, serializer, cometListener, true);
 		client.start();
-		ChatEvent chatEvent = new ChatEvent();
-		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
-		chatEvent.setGrouptagname(getGroupPlusView().getTagname());
-		chatEvent.setChatEventType(ChatEventType.CONNECT);
-		client.broadcast(chatEvent);
+	
 	}
 
 

@@ -10,6 +10,7 @@ import com.extjs.gxt.ui.client.data.BaseModel;
 import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.StatusCodeException;
+import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.HtmlContainerPlus;
@@ -32,6 +33,11 @@ public class CometListener implements AtmosphereListener {
 	@Override
 	public void onConnected(int heartbeat, int connectionID) {
 		GWT.log("comet.connected [" +heartbeat+", "+connectionID+"]");
+		ChatEvent chatEvent = new ChatEvent();
+		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
+		chatEvent.setChatEventType(ChatEventType.CONNECT);
+		groupChatContainer.getClient().broadcast(chatEvent);
 	}
 
 	@Override
@@ -42,6 +48,11 @@ public class CometListener implements AtmosphereListener {
 	@Override
 	public void onDisconnected() {
 		GWT.log("comet.disconnected");
+		ChatEvent chatEvent = new ChatEvent();
+		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
+		chatEvent.setChatEventType(ChatEventType.DISCONNECT);
+		groupChatContainer.getClient().broadcast(chatEvent);
 	}
 
 	@Override
@@ -84,7 +95,8 @@ public class CometListener implements AtmosphereListener {
 				groupChatContainer.getGroupChatMainPanel().layout();
 			} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
 				ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
-				listField.clear();
+				//listField.clear();
+				listField.getStore().removeAll();
 				for (String login : chatEvent.getLogins()) {
 					BaseModel baseModel = new BaseModel();
 					baseModel.set(User.Column.login.name(), login);

@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.gwt.server.AtmosphereGwtHandler;
 import org.atmosphere.gwt.server.GwtAtmosphereResource;
+import org.atmosphere.gwt.server.impl.GwtAtmosphereResourceImpl;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 import com.nositer.client.groupchat.ChatEvent;
 import com.nositer.client.groupchat.ChatEventType;
@@ -30,7 +33,7 @@ import com.nositer.webapp.Application;
  */
 public class AtmosphereHandler extends AtmosphereGwtHandler {
 	public static TreeSet<String> logins;
-	
+
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
@@ -45,25 +48,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	@Override
 	public int doComet(GwtAtmosphereResource resource) throws ServletException,
 	IOException {
-		Application.log.info("inside doComet");
-		resource.getBroadcaster().setID("GWT_COMET");
-		HttpSession session = resource.getAtmosphereResource().getRequest()
-		.getSession(false);
-		if (session != null) {
-			logger.debug("Got session with id: " + session.getId());
-			logger.debug("Time attribute: " + session.getAttribute("time"));
-		} else {
-			logger.warn("No session");
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Url: "
-					+ resource.getAtmosphereResource().getRequest()
-					.getRequestURL()
-					+ "?"
-					+ resource.getAtmosphereResource().getRequest()
-					.getQueryString());
-		}
-		return NO_TIMEOUT;
+		return super.doComet(resource);
 	}
 
 	@Override
@@ -76,12 +61,14 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		return retval;
 	}
 
+
 	@Override
 	public void onRequest(
 			AtmosphereResource<HttpServletRequest, HttpServletResponse> resource)
 	throws IOException {
 		HttpServletRequest req = resource.getRequest();
 		HttpServletResponse resp = resource.getResponse();
+
 		super.onRequest(resource);
 	}
 
@@ -106,6 +93,11 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	@Override
 	protected void doServerMessage(BufferedReader data, int connectionID) {
 		List<Serializable> postMessages = new ArrayList<Serializable>();
+		GwtAtmosphereResource resource = lookupResource(connectionID);
+
+		if (resource == null) {
+			return;
+		}
 		try {
 			while (true) {
 				String event = data.readLine();
@@ -134,7 +126,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 						Serializable message = deserialize(messageData
 								.substring(1));
 						ChatEvent chatEventMsg = (ChatEvent) message;
-						GwtAtmosphereResource resource = lookupResource(connectionID);
+						
 						reBroadcastMsg(chatEventMsg, resource);
 						//GwtAtmosphereResource resource = lookupResource(connectionID);
 						//broadcast(message, resource);
@@ -150,8 +142,6 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 						Serializable message = messageData.substring(1);
 
 						ChatEvent chatEvent = (ChatEvent) message;
-						
-						GwtAtmosphereResource resource = lookupResource(connectionID);
 						reBroadcastMsg(chatEvent, resource);
 						//broadcast(eventMsg, resource);
 						// broadcast(message);
@@ -178,8 +168,13 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
 			logins.add(chatEvent.getLogin());
 			chatEvent.setLogins(logins);
+		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
+			logins.remove(chatEvent.getLogin());
+			chatEvent.setLogins(logins);
 		}
-		broadcast(chatEvent, resource);
+		if (resource != null) {
+			broadcast(chatEvent, resource);
+		} 
 	}
 
 	@Override
