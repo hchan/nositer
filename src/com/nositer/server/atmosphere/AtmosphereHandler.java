@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ import com.nositer.webapp.Application;
  * @author p.havelaar
  */
 public class AtmosphereHandler extends AtmosphereGwtHandler {
-	public static TreeSet<String> logins;
+	public static HashMap<String, TreeSet<String>> loginsByGrouptagname;
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -42,7 +43,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		Logger.getLogger("gwtcomettest").setLevel(Level.ALL);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.ALL);
 		logger.trace("Updated logging levels");
-		logins = new TreeSet<String>();
+		loginsByGrouptagname = new HashMap<String, TreeSet<String>>();
 	}
 
 	@Override
@@ -161,16 +162,24 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	}
 
 	// TODO
-	// not the most efficent way - investiage post instead of braodcast
+	// not the most efficent way - investigate post instead of braodcast
 	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
 		if (chatEvent.getChatEventType() == null) {
 			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
 		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
-			logins.add(chatEvent.getLogin());
-			chatEvent.setLogins(logins);
-		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
-			logins.remove(chatEvent.getLogin());
-			chatEvent.setLogins(logins);
+			if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
+				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new TreeSet<String>());
+			}
+			TreeSet<String> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
+			loginsOfAGrouptagname.add(chatEvent.getLogin());
+			chatEvent.setLogins(loginsOfAGrouptagname);
+		} else if (chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
+			if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
+				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new TreeSet<String>());
+			}
+			TreeSet<String> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
+			loginsOfAGrouptagname.remove(chatEvent.getLogin());
+			chatEvent.setLogins(loginsOfAGrouptagname);
 		}
 		if (resource != null) {
 			broadcast(chatEvent, resource);
