@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.atmosphere.gwt.server.GwtAtmosphereResource;
+
 import com.extjs.gxt.ui.client.data.BaseModel;
 
 public class ChatEvent extends BaseModel implements Serializable {
@@ -62,6 +64,8 @@ public class ChatEvent extends BaseModel implements Serializable {
     public String toString() {
         return getLogin() + ": " + getData();
     }
+
+	
 
 
 }

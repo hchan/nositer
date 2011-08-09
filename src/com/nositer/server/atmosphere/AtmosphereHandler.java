@@ -23,6 +23,7 @@ import org.atmosphere.gwt.server.impl.GwtAtmosphereResourceImpl;
 
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.groupchat.ChatEvent;
 import com.nositer.client.groupchat.ChatEventType;
 import com.nositer.util.HTMLPurifier;
@@ -33,7 +34,7 @@ import com.nositer.webapp.Application;
  * @author p.havelaar
  */
 public class AtmosphereHandler extends AtmosphereGwtHandler {
-	public static HashMap<String, TreeSet<String>> loginsByGrouptagname;
+	public static HashMap<String, ArrayList<GwtAtmosphereResource>> loginsByGrouptagname;
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
@@ -43,7 +44,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		Logger.getLogger("gwtcomettest").setLevel(Level.ALL);
 		Logger.getLogger("").getHandlers()[0].setLevel(Level.ALL);
 		logger.trace("Updated logging levels");
-		loginsByGrouptagname = new HashMap<String, TreeSet<String>>();
+		loginsByGrouptagname = new HashMap<String, ArrayList<GwtAtmosphereResource>>();
 	}
 
 	@Override
@@ -127,7 +128,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 						Serializable message = deserialize(messageData
 								.substring(1));
 						ChatEvent chatEventMsg = (ChatEvent) message;
-						
+
 						reBroadcastMsg(chatEventMsg, resource);
 						//GwtAtmosphereResource resource = lookupResource(connectionID);
 						//broadcast(message, resource);
@@ -166,24 +167,34 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
 		if (chatEvent.getChatEventType() == null) {
 			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
-		} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
+		} else {
 			if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
-				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new TreeSet<String>());
+				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new ArrayList<GwtAtmosphereResource>());
 			}
-			TreeSet<String> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
-			loginsOfAGrouptagname.add(chatEvent.getLogin());
-			chatEvent.setLogins(loginsOfAGrouptagname);
-		} else if (chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
-			if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
-				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new TreeSet<String>());
+			ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
+			resource.setAttribute(User.Column.login.name(), chatEvent.getLogin());
+			if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
+				loginsOfAGrouptagname.add(resource);
+			} else if (chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
+				loginsOfAGrouptagname.remove(resource);
 			}
-			TreeSet<String> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
-			loginsOfAGrouptagname.remove(chatEvent.getLogin());
-			chatEvent.setLogins(loginsOfAGrouptagname);
+			populateLogins(loginsOfAGrouptagname, chatEvent);
 		}
+			
+		
 		if (resource != null) {
 			broadcast(chatEvent, resource);
 		} 
+	}
+
+	private void populateLogins(
+			ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname,
+			ChatEvent chatEvent) {
+		TreeSet<String> logins = new TreeSet<String>();
+		for (GwtAtmosphereResource gwtAtmosphereResource : loginsOfAGrouptagname) {
+			logins.add((String)gwtAtmosphereResource.getAttribute(User.Column.login.name()));
+		}
+		chatEvent.setLogins(logins);
 	}
 
 	@Override

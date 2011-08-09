@@ -93,7 +93,7 @@ public class CometListener implements AtmosphereListener {
 				);
 
 				groupChatContainer.getGroupChatMainPanel().layout();
-			} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
+			} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT) || chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
 				ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
 				//listField.clear();
 				listField.getStore().removeAll();
