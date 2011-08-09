@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 <#assign classbody>
 @SuppressWarnings("serial")
-<#include "PojoTypeDeclaration.ftl"/> , IsSerializable, Cloneable, BeanModelTag, DTO
+<#include "PojoTypeDeclaration.ftl"/> , IsSerializable, Cloneable, BeanModelTag, DTO, Comparable
 <#if pojo.getDeclarationName()?ends_with("code") && !pojo.getDeclarationName()?contains("Has")>
 , Lookupcode
 </#if> 
@@ -45,6 +45,11 @@ import java.util.Set;
 <#include "PojoExtraClassCode.ftl"/>
 <#include "GetCloneableMethod.ftl"/>
 <#include "GetColumnNames.ftl"/>
+	@Override
+	public int compareTo(Object o) {
+		DTO otherDTO = (DTO) o;
+		return getId().compareTo(otherDTO.getId());
+	}
 }
 
 </#assign>

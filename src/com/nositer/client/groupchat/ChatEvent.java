@@ -1,32 +1,42 @@
 package com.nositer.client.groupchat;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.atmosphere.gwt.server.GwtAtmosphereResource;
-
 import com.extjs.gxt.ui.client.data.BaseModel;
+import com.nositer.client.dto.generated.User;
 
 public class ChatEvent extends BaseModel implements Serializable {
 
-    private String login;
+	private User user;
     private String data;
     private String grouptagname;
     private ChatEventType chatEventType;
-    private TreeSet<String> logins;
+    private TreeSet<User> users; // users who are logged in to a group
     
     public ChatEvent() {
     }    
     
-    public TreeSet<String> getLogins() {
-		return logins;
+  
+	public User getUser() {
+		return user;
 	}
 
-	public void setLogins(TreeSet<String> logins) {
-		this.logins = logins;
+
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+
+	public TreeSet<User> getUsers() {
+		return users;
+	}
+
+
+	public void setUsers(TreeSet<User> users) {
+		this.users = users;
+	}
+
 
 	public ChatEventType getChatEventType() {
 		return chatEventType;
@@ -44,13 +54,6 @@ public class ChatEvent extends BaseModel implements Serializable {
 		this.grouptagname = grouptagname;
 	}
 
-	public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getData() {
         return data;
@@ -62,7 +65,7 @@ public class ChatEvent extends BaseModel implements Serializable {
 
     @Override
     public String toString() {
-        return getLogin() + ": " + getData();
+        return getUser().getLogin() + ": " + getData();
     }
 
 	

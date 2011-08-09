@@ -122,9 +122,9 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 
 	@Override
 	public void init() {
-		contextMenu = new Menu();
+		//contextMenu = new Menu();
 
-		setContextMenu(contextMenu);
+		//setContextMenu(contextMenu);
 
 
 		addListeners();
@@ -190,6 +190,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 		});
 	};
 
+	/*
 	@Override
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
 		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
@@ -216,6 +217,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 			gridEvent.setCancelled(true);
 		}
 	}
+	*/
 	
 	private void doViewSubscriber(GroupSubscriptionView subscriber) {
 		HistoryManager.addHistory(HistoryToken.USER + HistoryManager.SUBTOKENSEPARATOR + subscriber.getUserid());

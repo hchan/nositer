@@ -34,7 +34,7 @@ public class CometListener implements AtmosphereListener {
 	public void onConnected(int heartbeat, int connectionID) {
 		GWT.log("comet.connected [" +heartbeat+", "+connectionID+"]");
 		ChatEvent chatEvent = new ChatEvent();
-		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+		chatEvent.setUser(Nositer.getInstance().getUser());
 		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
 		chatEvent.setChatEventType(ChatEventType.CONNECT);
 		groupChatContainer.getClient().broadcast(chatEvent);
@@ -49,7 +49,7 @@ public class CometListener implements AtmosphereListener {
 	public void onDisconnected() {
 		GWT.log("comet.disconnected");
 		ChatEvent chatEvent = new ChatEvent();
-		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+		chatEvent.setUser(Nositer.getInstance().getUser());
 		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
 		chatEvent.setChatEventType(ChatEventType.DISCONNECT);
 		groupChatContainer.getClient().broadcast(chatEvent);
@@ -82,7 +82,7 @@ public class CometListener implements AtmosphereListener {
 			ChatEvent chatEvent = (ChatEvent)obj;
 			if (chatEvent.getChatEventType() == null) {
 				String html = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus().getHtmlHistory();
-				html += "<SPAN style='color: blue'>" + chatEvent.getLogin() + ":</SPAN> " + chatEvent.getData() + "<BR/>";
+				html += "<SPAN style='color: blue'>" + chatEvent.getUser().getLogin() + ":</SPAN> " + chatEvent.getData() + "<BR/>";
 				HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
 				htmlContainerPlus.setHtmlHistory(html);
 				htmlContainerPlus.setHtml(html);
@@ -97,9 +97,9 @@ public class CometListener implements AtmosphereListener {
 				ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
 				//listField.clear();
 				listField.getStore().removeAll();
-				for (String login : chatEvent.getLogins()) {
+				for (User user : chatEvent.getUsers()) {
 					BaseModel baseModel = new BaseModel();
-					baseModel.set(User.Column.login.name(), login);
+					baseModel.set(User.Column.login.name(), user.getLogin());
 					listField.getStore().add(baseModel);
 				}
 			}

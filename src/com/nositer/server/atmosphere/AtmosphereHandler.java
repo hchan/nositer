@@ -171,7 +171,8 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new ArrayList<GwtAtmosphereResource>());
 			}
 			ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
-			resource.setAttribute(User.Column.login.name(), chatEvent.getLogin());
+			resource.setAttribute(User.TABLENAME, chatEvent.getUser());
+			
 			if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
 				loginsOfAGrouptagname.add(resource);
 			} else if (chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
@@ -191,11 +192,11 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 	private void populateLogins(
 			ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname,
 			ChatEvent chatEvent) {
-		TreeSet<String> logins = new TreeSet<String>();
+		TreeSet<User> users = new TreeSet<User>();
 		for (GwtAtmosphereResource gwtAtmosphereResource : loginsOfAGrouptagname) {
-			logins.add((String)gwtAtmosphereResource.getAttribute(User.Column.login.name()));
+			users.add((User)gwtAtmosphereResource.getAttribute(User.TABLENAME));
 		}
-		chatEvent.setLogins(logins);
+		chatEvent.setUsers(users);
 	}
 
 	@Override

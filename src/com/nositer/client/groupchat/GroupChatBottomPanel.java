@@ -99,7 +99,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	
 	private void sendMessage() {
 		ChatEvent chatEvent = new ChatEvent();
-		chatEvent.setLogin(Nositer.getInstance().getUser().getLogin());
+		chatEvent.setUser(Nositer.getInstance().getUser());
 		chatEvent.setData(textArea.getValue());
 		groupChatContainer.getClient().broadcast(chatEvent);
 	}
