@@ -31,7 +31,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private GroupChatContainer groupChatContainer;
 	private TextArea textArea;
 	private Button button;
-	
+
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
 	}
@@ -80,10 +80,10 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 					sendMessage();
 				}
 			}
-			
+
 		});
 	}
-	
+
 	private void initButton() {
 		button = new Button("Send");
 		button.setWidth(50);
@@ -96,14 +96,15 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		};
 		button.addListener(Events.Select, listener);
 	}
-	
+
 	private void sendMessage() {
 		ChatEvent chatEvent = new ChatEvent();
 		chatEvent.setUser(Nositer.getInstance().getUser());
+		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
 		chatEvent.setData(textArea.getValue());
 		groupChatContainer.getClient().broadcast(chatEvent);
 	}
-	
+
 
 	// called when the borderlayout split is resized
 	@Override

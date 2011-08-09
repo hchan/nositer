@@ -442,6 +442,6 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 	@Override
 	public int compareTo(Object o) {
 		DTO otherDTO = (DTO) o;
-		return getId().compareTo(otherDTO.getId());
+		return otherDTO.getId().compareTo(getId());
 	}
 }

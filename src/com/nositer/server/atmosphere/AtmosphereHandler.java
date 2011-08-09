@@ -164,13 +164,16 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 
 	
 	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
+		if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
+			loginsByGrouptagname.put(chatEvent.getGrouptagname(), new ArrayList<GwtAtmosphereResource>());
+		}
+		ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
+		
 		if (chatEvent.getChatEventType() == null) {
 			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
 		} else {
-			if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
-				loginsByGrouptagname.put(chatEvent.getGrouptagname(), new ArrayList<GwtAtmosphereResource>());
-			}
-			ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
+		
+			
 			resource.setAttribute(User.TABLENAME, chatEvent.getUser());
 			
 			if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
@@ -182,11 +185,19 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		}
 			
 		
+		for (GwtAtmosphereResource gwtAtmosphereResource : loginsOfAGrouptagname) {
+			List<Serializable> messages = new ArrayList<Serializable>();
+			messages.add(chatEvent);
+			post(messages, gwtAtmosphereResource);
+		}
+		/*
 		if (resource != null) {
+		
 			broadcast(chatEvent, resource);
 			// TODO
 			// not the most efficent way - investigate post instead of braodcast
 		} 
+		*/
 	}
 
 	private void populateLogins(
