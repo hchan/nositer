@@ -162,8 +162,7 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 
 	}
 
-	// TODO
-	// not the most efficent way - investigate post instead of braodcast
+	
 	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
 		if (chatEvent.getChatEventType() == null) {
 			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
@@ -184,6 +183,8 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 		
 		if (resource != null) {
 			broadcast(chatEvent, resource);
+			// TODO
+			// not the most efficent way - investigate post instead of braodcast
 		} 
 	}
 

@@ -82,7 +82,7 @@ public class CometListener implements AtmosphereListener {
 			ChatEvent chatEvent = (ChatEvent)obj;
 			if (chatEvent.getChatEventType() == null) {
 				String html = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus().getHtmlHistory();
-				html += chatEvent.toString() + "<BR/>";
+				html += "<SPAN style='color: blue'>" + chatEvent.getLogin() + ":</SPAN> " + chatEvent.getData() + "<BR/>";
 				HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
 				htmlContainerPlus.setHtmlHistory(html);
 				htmlContainerPlus.setHtml(html);
