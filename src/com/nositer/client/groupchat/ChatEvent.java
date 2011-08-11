@@ -15,6 +15,7 @@ public class ChatEvent extends BaseModel implements Serializable {
     private TreeSet<User> users; // users who are logged in to a group
     
     public ChatEvent() {
+    	chatEventType = ChatEventType.NORMAL;
     }    
     
   

@@ -83,19 +83,14 @@ public class CometListener implements AtmosphereListener {
 		StringBuilder result = new StringBuilder();
 		for(Serializable obj : messages) {
 			ChatEvent chatEvent = (ChatEvent)obj;
-			if (chatEvent.getChatEventType() == null) {
+			if (chatEvent.getChatEventType().equals(ChatEventType.NORMAL)) {
 				String html = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus().getHtmlHistory();
 				html += "<SPAN style='color: blue'>" + chatEvent.getUser().getLogin() + ":</SPAN> " + chatEvent.getData() + "<BR/>";
-				HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
-				htmlContainerPlus.setHtmlHistory(html);
-				htmlContainerPlus.setHtml(html);
-				htmlContainerPlus.
-				getElement().
-				setScrollTop(
-						htmlContainerPlus.getElement().getScrollHeight()
-				);
-
-				groupChatContainer.getGroupChatMainPanel().layout();
+				displayMessage(html);
+			} else if (chatEvent.getChatEventType().equals(ChatEventType.WHISPER)) { 
+				String html = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus().getHtmlHistory();
+				html += "<SPAN style='color: pink'>" + chatEvent.getUser().getLogin() + ": " + chatEvent.getData() + "</SPAN><BR/>";
+				displayMessage(html);
 			} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT) || chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
 				ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
 				//listField.clear();
@@ -111,5 +106,18 @@ public class CometListener implements AtmosphereListener {
 		//GWTUtil.log("inside onMessage:"  + result);
 		//logger.log(Level.INFO, "comet.message ["+client.getConnectionID()+"] " + result.toString());
 		//Info.display("["+client.getConnectionID()+"] Received " + messages.size() + " messages", result.toString());
+	}
+	
+	private void displayMessage(String html) {
+		HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
+		htmlContainerPlus.setHtmlHistory(html);
+		htmlContainerPlus.setHtml(html);
+		htmlContainerPlus.
+		getElement().
+		setScrollTop(
+				htmlContainerPlus.getElement().getScrollHeight()
+		);
+
+		groupChatContainer.getGroupChatMainPanel().layout();
 	}
 };

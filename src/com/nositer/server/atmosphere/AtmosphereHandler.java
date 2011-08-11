@@ -162,20 +162,22 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 
 	}
 
-	
+
 	private void reBroadcastMsg(ChatEvent chatEvent, GwtAtmosphereResource resource) {
 		if (loginsByGrouptagname.get(chatEvent.getGrouptagname()) == null) {
 			loginsByGrouptagname.put(chatEvent.getGrouptagname(), new ArrayList<GwtAtmosphereResource>());
 		}
 		ArrayList<GwtAtmosphereResource> loginsOfAGrouptagname = loginsByGrouptagname.get(chatEvent.getGrouptagname());
-		
-		if (chatEvent.getChatEventType() == null) {
+
+		if (chatEvent.getChatEventType().equals(ChatEventType.NORMAL) ||
+				chatEvent.getChatEventType().equals(ChatEventType.WHISPER) 
+		) {
 			chatEvent.setData(HTMLPurifier.getCleanHTML(chatEvent.getData()));
 		} else {
-		
-			
+
+
 			resource.setAttribute(User.TABLENAME, chatEvent.getUser());
-			
+
 			if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT)) {
 				loginsOfAGrouptagname.add(resource);
 			} else if (chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
@@ -183,21 +185,29 @@ public class AtmosphereHandler extends AtmosphereGwtHandler {
 			}
 			populateLogins(loginsOfAGrouptagname, chatEvent);
 		}
-			
-		
+
 		for (GwtAtmosphereResource gwtAtmosphereResource : loginsOfAGrouptagname) {
+			User user = gwtAtmosphereResource.getAttribute(User.TABLENAME);
 			List<Serializable> messages = new ArrayList<Serializable>();
 			messages.add(chatEvent);
-			post(messages, gwtAtmosphereResource);
+			if (chatEvent.getChatEventType().equals(ChatEventType.WHISPER) && !userIsInWhisperSet(user, chatEvent.getUsers()))
+			{
+				continue;
+			} else {
+				post(messages, gwtAtmosphereResource);
+			}
 		}
-		/*
-		if (resource != null) {
-		
-			broadcast(chatEvent, resource);
-			// TODO
-			// not the most efficent way - investigate post instead of braodcast
-		} 
-		*/
+	}
+
+	private boolean userIsInWhisperSet(User user, TreeSet<User> users) {
+		boolean retval = false;
+		for (User userInSet : users) {
+			if (user.getId().equals(userInSet.getId())) {
+				retval = true;
+				break;
+			}
+		}
+		return retval;
 	}
 
 	private void populateLogins(

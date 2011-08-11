@@ -2,12 +2,15 @@ package com.nositer.client.groupchat;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.atmosphere.gwt.client.AtmosphereClient;
 import org.atmosphere.gwt.client.AtmosphereGWTSerializer;
 import org.atmosphere.gwt.client.AtmosphereListener;
 
 import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.data.BaseModel;
+import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -15,12 +18,14 @@ import com.extjs.gxt.ui.client.event.KeyListener;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Element;
 import com.nositer.client.Nositer;
+import com.nositer.client.dto.generated.User;
 import com.nositer.client.left.LeftPanel;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
@@ -35,8 +40,8 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private Button button;
 	private boolean whisper;
 
-	
-	
+
+
 	public Button getButton() {
 		return button;
 	}
@@ -124,6 +129,17 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		chatEvent.setUser(Nositer.getInstance().getUser());
 		chatEvent.setGrouptagname(groupChatContainer.getGroupPlusView().getTagname());
 		chatEvent.setData(textArea.getValue());
+		if (isWhisper()) {
+			chatEvent.setChatEventType(ChatEventType.WHISPER);
+			List<BaseModel> listUsers = groupChatContainer.getGroupChatLeftPanel().getListField().getSelection();
+			TreeSet<User> users = new TreeSet<User>();
+			for (BaseModel baseModel : listUsers) {
+				BeanModel beanModel = (BeanModel) baseModel;
+				User user = beanModel.getBean();
+				users.add(user);
+			}
+			chatEvent.setUsers(users);
+		}
 		groupChatContainer.getClient().broadcast(chatEvent);
 	}
 
@@ -154,7 +170,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		super.onRender(parent, pos);
 		resize(0,0);
 	}
-	
+
 	public void enableWhisper() {
 		setWhisper(true);
 		Element textAreaElement = (Element) textArea.getElement().getFirstChild();
