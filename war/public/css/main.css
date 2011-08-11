@@ -303,3 +303,7 @@
 .clickableUsername:hover, .tallyCount:hover {
 	background-color: #0000FF !important;
 }
+
+.whisper {
+	background-color: pink !important;
+}

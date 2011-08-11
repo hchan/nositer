@@ -7,6 +7,9 @@ import java.util.logging.Level;
 import org.atmosphere.gwt.client.AtmosphereListener;
 
 import com.extjs.gxt.ui.client.data.BaseModel;
+import com.extjs.gxt.ui.client.data.BeanModel;
+import com.extjs.gxt.ui.client.data.BeanModelFactory;
+import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.StatusCodeException;
@@ -98,13 +101,14 @@ public class CometListener implements AtmosphereListener {
 				//listField.clear();
 				listField.getStore().removeAll();
 				for (User user : chatEvent.getUsers()) {
-					BaseModel baseModel = new BaseModel();
-					baseModel.set(User.Column.login.name(), user.getLogin());
-					listField.getStore().add(baseModel);
+					BeanModelFactory factory = BeanModelLookup.get().getFactory(user.getClass());
+					BeanModel beanModel = factory.createModel(user);
+					//baseModel.set(User.Column.login.name(), user.getLogin());
+					listField.getStore().add(beanModel);
 				}
 			}
 		}
-		GWTUtil.log("inside onMessage:"  + result);
+		//GWTUtil.log("inside onMessage:"  + result);
 		//logger.log(Level.INFO, "comet.message ["+client.getConnectionID()+"] " + result.toString());
 		//Info.display("["+client.getConnectionID()+"] Received " + messages.size() + " messages", result.toString());
 	}

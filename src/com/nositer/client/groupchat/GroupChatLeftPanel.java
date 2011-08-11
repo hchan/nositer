@@ -16,10 +16,15 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.LoadListener;
+import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
+import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.form.ListField;
 import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.menu.Menu;
+import com.extjs.gxt.ui.client.widget.menu.MenuItem;
+import com.extjs.gxt.ui.client.widget.menu.SeparatorMenuItem;
 import com.google.gwt.user.client.Element;
 import com.nositer.client.Nositer;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
@@ -29,6 +34,7 @@ import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.top.TopPanel;
+import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.menuitem.SubscribeMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
@@ -39,6 +45,7 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 
 	private GroupChatContainer groupChatContainer;
 	private ListField<BaseModel> listField;
+	private User selectedUser;
 
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
@@ -66,19 +73,19 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		init();
 	}
 
-	
+
 	private void init() {
 		this.setId(this.getClass().getName());
 		this.setLayout(new FlowLayout(0));
 		this.setHeaderVisible(false);
-		listField = new ListField<BaseModel>();
-		listField.setDisplayField(User.Column.login.name());
+		initListField();
+
 		addListeners();
-	//	listField.addListener(eventType, listener)
+		//	listField.addListener(eventType, listener)
 		//User user = Nositer.getInstance().getUser();	
-		
-	   
-	 
+
+
+
 		ListStore<BaseModel> store = new ListStore<BaseModel>();
 		//BeanModelFactory factory = BeanModelLookup.get().getFactory(User.class);
 		//BeanModel val = factory.createModel(user);
@@ -88,33 +95,100 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		resize(0,0);
 	}
 
+	private void initListField() {
+		listField = new ListField<BaseModel>();
+		listField.setDisplayField(User.Column.login.name());
+		Menu menu = new Menu();
+		listField.setContextMenu(menu);
+		initContextMenu();
+	}
+
+	private void initContextMenu() {
+		Menu contextMenu = listField.getContextMenu();
+		contextMenu.removeAll();
+		if (selectedUser != null) {
+			MenuItem userMenuItem = new MenuItem(selectedUser.getFirstname() + " " + selectedUser.getLastname());
+			userMenuItem.addListener(Events.Select, new Listener<BaseEvent>() {  
+				@Override
+				public void handleEvent(BaseEvent be) {
+					if (selectedUser != null) {
+						doViewUser(selectedUser.getId());
+					}
+				}
+			});
+			contextMenu.add(userMenuItem);				
+			contextMenu.add(new SeparatorMenuItem());
+		}
+
+		if (getGroupChatContainer().getGroupChatBottomPanel() != null) {
+			MenuItem whisperMenuItem = new MenuItem("Whisper to selected users");
+			if (getGroupChatContainer().getGroupChatBottomPanel().isWhisper()) {
+				whisperMenuItem.disable();
+			}
+			whisperMenuItem.addListener(Events.Select, new Listener<BaseEvent>() {  
+				@Override
+				public void handleEvent(BaseEvent be) {
+					if (selectedUser != null) {
+						getGroupChatContainer().getGroupChatBottomPanel().enableWhisper();
+					}
+				}
+			});
+
+			MenuItem disableWhisperMenuItem = new MenuItem("Turn off whisper");
+			if (!getGroupChatContainer().getGroupChatBottomPanel().isWhisper()) {
+				disableWhisperMenuItem.disable();
+			}
+			disableWhisperMenuItem.addListener(Events.Select, new Listener<BaseEvent>() {  
+				@Override
+				public void handleEvent(BaseEvent be) {
+					if (selectedUser != null) {
+						getGroupChatContainer().getGroupChatBottomPanel().disableWhisper();
+					}
+				}
+			});
+
+
+
+			contextMenu.add(whisperMenuItem);
+			contextMenu.add(disableWhisperMenuItem);
+		}
+	}
+
 	private void addListeners() {
 		listField.addListener(Events.OnDoubleClick,  new Listener<BaseEvent>() {  
-
 			@Override
 			public void handleEvent(BaseEvent be) {
-				// TODO Auto-generated method stub
-				
+				if (selectedUser != null) {
+					doViewUser(selectedUser.getId());
+				}
 			}
 		});
-		
+
+		listField.addSelectionChangedListener(new SelectionChangedListener<BaseModel>() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent<BaseModel> se) {
+				BeanModel selectedItem = (BeanModel)se.getSelectedItem();
+				if (selectedItem != null) {
+					selectedUser = selectedItem.getBean();
+				}
+			}
+		});
+
 		listField.addListener(Events.ContextMenu, new Listener<BaseEvent>() {
-
 			@Override
 			public void handleEvent(BaseEvent be) {
-				// TODO Auto-generated method stub
-				
+				initContextMenu();
 			}
 		});
+
 	}
-	
-	
-	
-	private void doViewSubscriber(GroupSubscriptionView subscriber) {
-		HistoryManager.addHistory(HistoryToken.USER + HistoryManager.SUBTOKENSEPARATOR + subscriber.getUserid());
-		
+
+
+	private void doViewUser(int userid) {
+		HistoryManager.addHistory(HistoryToken.USER + HistoryManager.SUBTOKENSEPARATOR + userid);
+
 	}
-	
+
 
 	// called when the borderlayout split is resized
 	@Override
@@ -139,6 +213,6 @@ public class GroupChatLeftPanel extends ContentPanel implements Resizable {
 		super.onRender(parent, pos);
 		resize(0,0);
 	}
-	
-	
+
+
 }

@@ -21,6 +21,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Element;
 import com.nositer.client.Nositer;
+import com.nositer.client.left.LeftPanel;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.Resizable;
 import com.nositer.shared.Global;
@@ -31,6 +33,25 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	private GroupChatContainer groupChatContainer;
 	private TextArea textArea;
 	private Button button;
+	private boolean whisper;
+
+	
+	
+	public Button getButton() {
+		return button;
+	}
+
+	public void setButton(Button button) {
+		this.button = button;
+	}
+
+	public boolean isWhisper() {
+		return whisper;
+	}
+
+	public void setWhisper(boolean whisper) {
+		this.whisper = whisper;
+	}
 
 	public GroupChatContainer getGroupChatContainer() {
 		return groupChatContainer;
@@ -59,6 +80,7 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	}
 
 	public void init() {
+		whisper = false;
 		this.setId(this.getClass().getName());
 		this.setLayout(new RowLayout(Orientation.HORIZONTAL));
 		this.setHeaderVisible(false);
@@ -118,6 +140,8 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 		this.setHeight(52);
 		//listField.setHeight(MainPanel.getInstance().getHeight() - 160);
 		if (this.isRendered()) {
+			//this.setWidth(Nositer.getInstance().getMainPanel().getWidth());
+			GWTUtil.log("width:" + MainPanel.getInstance().getWidth());
 			textArea.setHeight(this.getHeight());
 			textArea.setWidth(this.getWidth()-button.getWidth());
 			button.setHeight(this.getHeight());
@@ -129,5 +153,17 @@ public class GroupChatBottomPanel extends ContentPanel implements Resizable {
 	protected void onRender(Element parent, int pos) {
 		super.onRender(parent, pos);
 		resize(0,0);
+	}
+	
+	public void enableWhisper() {
+		setWhisper(true);
+		Element textAreaElement = (Element) textArea.getElement().getFirstChild();
+		textAreaElement.setClassName("whisper");
+	}
+
+	public void disableWhisper() {
+		setWhisper(false);
+		Element textAreaElement = (Element) textArea.getElement().getFirstChild();
+		textAreaElement.removeClassName("whisper");
 	}
 }
