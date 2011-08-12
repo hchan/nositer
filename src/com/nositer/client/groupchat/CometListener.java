@@ -1,7 +1,9 @@
 package com.nositer.client.groupchat;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 
 import org.atmosphere.gwt.client.AtmosphereListener;
@@ -92,22 +94,63 @@ public class CometListener implements AtmosphereListener {
 				html += "<SPAN style='color: pink'>" + chatEvent.getUser().getLogin() + ": " + chatEvent.getData() + "</SPAN><BR/>";
 				displayMessage(html);
 			} else if (chatEvent.getChatEventType().equals(ChatEventType.CONNECT) || chatEvent.getChatEventType().equals(ChatEventType.DISCONNECT)) {
-				ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
-				//listField.clear();
-				listField.getStore().removeAll();
-				for (User user : chatEvent.getUsers()) {
-					BeanModelFactory factory = BeanModelLookup.get().getFactory(user.getClass());
-					BeanModel beanModel = factory.createModel(user);
-					//baseModel.set(User.Column.login.name(), user.getLogin());
-					listField.getStore().add(beanModel);
-				}
+				addOrRemoveUsers(chatEvent);
 			}
 		}
-		//GWTUtil.log("inside onMessage:"  + result);
-		//logger.log(Level.INFO, "comet.message ["+client.getConnectionID()+"] " + result.toString());
-		//Info.display("["+client.getConnectionID()+"] Received " + messages.size() + " messages", result.toString());
 	}
 	
+	private void addOrRemoveUsers(ChatEvent chatEvent) {
+		ListField<BaseModel> listField = groupChatContainer.getGroupChatLeftPanel().getListField();
+		TreeSet<User> usersFromChatEvent = chatEvent.getUsers();
+		
+		List<BaseModel> userBeanModels = listField.getStore().getModels();
+		
+		// add
+		for (User user : usersFromChatEvent) {
+			if (!isUserInList(user, userBeanModels)) {
+				BeanModelFactory factory = BeanModelLookup.get().getFactory(user.getClass());
+				BeanModel beanModel = factory.createModel(user);
+				//baseModel.set(User.Column.login.name(), user.getLogin());
+				listField.getStore().add(beanModel);
+			}				
+		}
+		
+		// subtract
+		Iterator<BaseModel> iteratorBeanModels = userBeanModels.iterator();
+		while (iteratorBeanModels.hasNext()) {
+			BaseModel baseModel = iteratorBeanModels.next();
+			User userBean = ((BeanModel)baseModel).getBean();
+			if (!isUserInSet(userBean, usersFromChatEvent)) {
+				//iteratorBeanModels.remove();
+				listField.getStore().remove(baseModel);
+			}
+		}
+	
+	}
+
+	private boolean isUserInSet(User userBean, TreeSet<User> usersFromChatEvent) {
+		boolean retval = false;
+		for (User userFromChatEvent : usersFromChatEvent) {			
+			if (userBean.getId().equals(userFromChatEvent.getId())) {
+				retval = true;
+				break;
+			}
+		}
+		return retval;
+	}
+
+	private boolean isUserInList(User user, List<BaseModel> userBeanModels) {
+		boolean retval = false;
+		for (BaseModel baseModel : userBeanModels) {
+			User userBean = ((BeanModel)baseModel).getBean();
+			if (user.getId().equals(userBean.getId())) {
+				retval = true;
+				break;
+			}
+		}
+		return retval;
+	}
+
 	private void displayMessage(String html) {
 		HtmlContainerPlus htmlContainerPlus = groupChatContainer.getGroupChatMainPanel().getHtmlContainerPlus();
 		htmlContainerPlus.setHtmlHistory(html);
