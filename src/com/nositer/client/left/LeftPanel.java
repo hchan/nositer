@@ -37,6 +37,8 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem changePasswordNavigationItem;
 	private NavigationItem uploadFilesNavigationItem;
 	private NavigationItem manageFilesNavigationItem;
+	private NavigationItem createBlogEntryNavigationItem;
+	private NavigationItem manageBlogNavigationItem;
 
 
 	public NavigationItem getSearchForGroupsNavigationItem() {
@@ -298,7 +300,8 @@ public class LeftPanel extends ContentPanel {
 		
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
-		
+		createBlogEntryNavigationItem = addNavigationItem("Create Blog Entry", blog, HistoryToken.CREATEBLOGENTRY);
+		manageBlogNavigationItem = addNavigationItem("I want to's ...", blog, HistoryToken.MANAGEBLOG);
 		
 		collapseAccordion();
 		this.layout();
