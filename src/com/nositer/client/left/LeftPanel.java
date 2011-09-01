@@ -40,15 +40,33 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem createBlogEntryNavigationItem;
 	private NavigationItem manageBlogNavigationItem;
 
-
 	public NavigationItem getSearchForGroupsNavigationItem() {
 		return searchForGroupsNavigationItem;
 	}
 
-
 	public void setSearchForGroupsNavigationItem(
 			NavigationItem searchForGroupsNavigationItem) {
 		this.searchForGroupsNavigationItem = searchForGroupsNavigationItem;
+	}
+	
+	public NavigationItem getCreateBlogEntryNavigationItem() {
+		return createBlogEntryNavigationItem;
+	}
+
+
+	public void setCreateBlogEntryNavigationItem(
+			NavigationItem createBlogEntryNavigationItem) {
+		this.createBlogEntryNavigationItem = createBlogEntryNavigationItem;
+	}
+
+
+	public NavigationItem getManageBlogNavigationItem() {
+		return manageBlogNavigationItem;
+	}
+
+
+	public void setManageBlogNavigationItem(NavigationItem manageBlogNavigationItem) {
+		this.manageBlogNavigationItem = manageBlogNavigationItem;
 	}
 
 
@@ -301,7 +319,7 @@ public class LeftPanel extends ContentPanel {
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
 		createBlogEntryNavigationItem = addNavigationItem("Create Blog Entry", blog, HistoryToken.CREATEBLOGENTRY);
-		manageBlogNavigationItem = addNavigationItem("I want to's ...", blog, HistoryToken.MANAGEBLOG);
+		manageBlogNavigationItem = addNavigationItem("Manage Blog", blog, HistoryToken.MANAGEBLOG);
 		
 		collapseAccordion();
 		this.layout();

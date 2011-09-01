@@ -11,6 +11,7 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
+import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.HistoryWidget;
 import com.nositer.client.widget.Resizable;
@@ -71,6 +72,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init(GroupPlusView groupPlusView) {
 		GroupTabItem.this.setText(groupPlusView.getName());
 		groupTabPanel = new GroupTabPanel(groupPlusView);		
+		groupTabPanel.setHeight(MainPanel.getInstance().getHeight()-55);
 		add(groupTabPanel);
 		if (tabItemType != null) {
 			groupTabPanel.show(tabItemType);

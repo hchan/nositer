@@ -1,4 +1,4 @@
-package com.nositer.client.createoreditgroup;
+package com.nositer.client.createoreditblog;
 
 import java.util.ArrayList;
 
@@ -34,9 +34,9 @@ import com.nositer.client.widget.Resizable;
 import com.nositer.client.widget.avatar.AvatarSelector;
 import com.nositer.client.widget.messagebox.InfoMessageBox;
 
-public class CreateOrEditGroup extends LayoutContainer implements Resizable {
+public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 
-	private Integer groupid;
+	private Integer blogid;
 	private boolean create = false;
 	private FormPanel formPanel;
 	private TextField<String> name;
@@ -51,13 +51,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		return editGroupTabItem;
 	}
 
-	public Integer getGroupid() {
-		return groupid;
-	}
-
-	public void setGroupid(Integer groupid) {
-		this.groupid = groupid;
-	}
+	
 
 	public boolean isCreate() {
 		return create;
@@ -115,7 +109,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 		this.avatarSelector = avatarSelector;
 	}
 
-	public CreateOrEditGroup(boolean create) {
+	public CreateOrEditBlog(boolean create) {
 		this.create = create;
 		init();
 	}
@@ -244,9 +238,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {		
-									if (editGroupTabItem != null) {
-										editGroupTabItem.getGroupTabPanel().getViewGroupTabItem().populate(result);
-									}
+									editGroupTabItem.getGroupTabPanel().getViewGroupTabItem().populate(result);
 									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
 								}								
 							});										
@@ -265,7 +257,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 
 
 	public void populate(GroupPlusView groupPlusView) {
-		groupid = groupPlusView.getId();
+		//groupid = groupPlusView.getId();
 		name.setValue(groupPlusView.getName());
 		tagname.setValue(groupPlusView.getTagname());
 		description.setValue(groupPlusView.getDescription());
@@ -275,7 +267,7 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 
 	private Group createGroupDTO() {
 		Group retval = new Group();
-		retval.setId(groupid);
+		//retval.setId(groupid);
 		retval.setName(name.getValue());
 		retval.setTagname(tagname.getValue());
 		retval.setDescription(description.getValue());

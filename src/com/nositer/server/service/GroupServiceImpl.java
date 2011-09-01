@@ -384,7 +384,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 
 	private boolean isGroupIBelongTo(GroupPlusView groupPlusView, User user) {
 		boolean retval = false;
-		if (groupPlusView.getUserid().equals(user.getId()) && !groupPlusView.getUserHasGroupDisable()) {
+		if (groupPlusView.getUserid().equals(user.getId()) && groupPlusView.getUserHasGroupDisable() != null && !groupPlusView.getUserHasGroupDisable()) {
 			retval = true;
 		}
 		return retval;

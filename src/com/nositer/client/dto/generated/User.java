@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Aug 9, 2011 3:20:43 PM by Hibernate Tools 3.2.4.GA
+// Generated Aug 23, 2011 3:04:52 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -442,6 +442,6 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 	@Override
 	public int compareTo(Object o) {
 		DTO otherDTO = (DTO) o;
-		return otherDTO.getId().compareTo(getId());
+		return getId().compareTo(otherDTO.getId());
 	}
 }

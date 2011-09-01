@@ -16,6 +16,7 @@ import com.nositer.client.Nositer;
 import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.createiwantto.CreateIWantTo;
+import com.nositer.client.createoreditblog.CreateOrEditBlog;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.editprofile.ChangePassword;
@@ -169,11 +170,15 @@ public class HistoryManager {
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.CHAT);
 			setMainPanel(Groups.getInstance(true));		
-		}  else if (historyToken.startsWith(USER.toString() + SUBTOKENSEPARATOR)) {
+		} else if (historyToken.startsWith(USER.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getGroups().expand();	
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.SUBSCRIBER);
 			setMainPanel(Groups.getInstance(true));
+		} else if (historyToken.startsWith(CREATEBLOGENTRY.toString())) {
+			leftPanel.getBlog().expand();
+			leftPanel.getNavigationTree().select(leftPanel.getCreateBlogEntryNavigationItem());
+			setMainPanel(new CreateOrEditBlog(true));
 		}
 	}
 
