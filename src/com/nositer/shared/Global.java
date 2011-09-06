@@ -1,7 +1,8 @@
 package com.nositer.shared;
 
 public class Global {
-
+	public static boolean DEBUG = false;
+	
 	public static final String UPLOADURL = "/upload";
 	public static final String CURRENTUSERASJSON = "/currentuserasjson";
 	public static final String UPLOADCREDENTIALKEY = "myid";

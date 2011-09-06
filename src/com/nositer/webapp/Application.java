@@ -35,7 +35,14 @@ public class Application {
 	}
 
 	public static User getCurrentUser() {
-		return (User) getRequest().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);
+		User retval = null;
+		if (Global.DEBUG) {
+			retval = new User();
+			retval.setId(1);
+		} else {
+			retval = (User) getRequest().getSession().getAttribute(AuthorizationFilter.USER_SESSION_KEY);
+		}
+		return retval;
 	}
 
 	public static void setCurrentUser(User user) {

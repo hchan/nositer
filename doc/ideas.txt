@@ -6,3 +6,5 @@ i want to ... for more information, see this LINK
 under /private have a acl.xml file that contains names of people you want to share this folder with
 
 http://groups.nositer.com/MyGroup
+
+short tweets with link to blog

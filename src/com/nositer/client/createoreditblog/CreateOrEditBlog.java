@@ -40,18 +40,10 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 	private boolean create = false;
 	private FormPanel formPanel;
 	private TextField<String> name;
-	private TextField<String> tagname;
 	private HtmlEditor description;
 	private ErrorPanel errorPanel;
-	private AvatarSelector avatarSelector;
-	private EditGroupTabItem editGroupTabItem;
-
 	
-	public EditGroupTabItem getEditGroupTabItem() {
-		return editGroupTabItem;
-	}
 
-	
 
 	public boolean isCreate() {
 		return create;
@@ -77,13 +69,6 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		this.name = name;
 	}
 
-	public TextField<String> getTagname() {
-		return tagname;
-	}
-
-	public void setTagname(TextField<String> tagname) {
-		this.tagname = tagname;
-	}
 
 	public HtmlEditor getDescription() {
 		return description;
@@ -99,14 +84,6 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 
 	public void setErrorPanel(ErrorPanel errorPanel) {
 		this.errorPanel = errorPanel;
-	}
-
-	public AvatarSelector getAvatarSelector() {
-		return avatarSelector;
-	}
-
-	public void setAvatarSelector(AvatarSelector avatarSelector) {
-		this.avatarSelector = avatarSelector;
 	}
 
 	public CreateOrEditBlog(boolean create) {
@@ -126,15 +103,11 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		errorPanel = new ErrorPanel();
 		errorPanel.setStyleAttribute("margin-bottom", "5px");
 		errorPanel.hide();
-		tagname = new TextField<String>();
-		tagname.setFieldLabel("* Tag Name");
-		tagname.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
+		
 
 		name = new TextField<String>();
 		name.setFieldLabel("* Name");
 		name.setLabelStyle("font-size: 14px; font-weight: bold; color: red");
-
-		avatarSelector = new AvatarSelector(new Scope(Scope.Type.group));
 
 		description = new HtmlEditor();
 		setDescriptionHeight();
@@ -143,37 +116,17 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		description.setLabelStyle("font-size: 14px; font-weight: bold;");
 		formPanel.add(errorPanel);
 		if (create) {
-			addLabel("Create Group");
+			addLabel("Create Blog Entry");
 		} else {
-			addLabel("Edit Group");
+			addLabel("Edit Blog Entry");
 		}
-		formPanel.add(tagname, new FormData("100%"));
+		
 		formPanel.add(name, new FormData("100%"));		
-		if (!isCreate()) {
-			FormData formDataAvatarSelector = new FormData();
-			formDataAvatarSelector.setMargins(new Margins(5, 0, 5, 0));
-			formPanel.add(avatarSelector, formDataAvatarSelector);			
-		}
+	
 		formPanel.add(description, new FormData("100%"));	
 
 		this.add(formPanel);
 		initButtons();	
-		/*
-		AsyncCallback<User> callback = new AsyncCallback<User>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				GWTUtil.log("", caught);
-			}
-
-			@Override
-			public void onSuccess(User result) {
-				if (result != null) {
-					populate(result);
-				}
-			}
-		};
-		ServiceBroker.profileService.getCurrentUser(callback);
-		 */
 	}
 
 
@@ -237,8 +190,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 						public void onSuccess(final Group result) {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
-								public void handleEvent(MessageBoxEvent be) {		
-									editGroupTabItem.getGroupTabPanel().getViewGroupTabItem().populate(result);
+								public void handleEvent(MessageBoxEvent be) {
 									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
 								}								
 							});										
@@ -259,19 +211,14 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 	public void populate(GroupPlusView groupPlusView) {
 		//groupid = groupPlusView.getId();
 		name.setValue(groupPlusView.getName());
-		tagname.setValue(groupPlusView.getTagname());
 		description.setValue(groupPlusView.getDescription());
-		avatarSelector.getScope().setGroupPlusView(groupPlusView);
-		avatarSelector.getSelectedFile().setValue(groupPlusView.getAvatarlocation());
 	}
 
 	private Group createGroupDTO() {
 		Group retval = new Group();
 		//retval.setId(groupid);
 		retval.setName(name.getValue());
-		retval.setTagname(tagname.getValue());
 		retval.setDescription(description.getValue());
-		retval.setAvatarlocation(avatarSelector.getSelectedFile().getValue());
 		return retval;
 	}
 
@@ -291,8 +238,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 
 
 	public ArrayList<String> getErrors() {
-		ArrayList<String> retval = new ArrayList<String>();		
-		GWTUtil.addRequiredErrorIfNecessary(tagname, retval);
+		ArrayList<String> retval = new ArrayList<String>();				
 		GWTUtil.addRequiredErrorIfNecessary(name, retval);				
 		return retval;
 	}
@@ -307,7 +253,5 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		formPanel.add(layoutContainer);
 	}
 
-	public void setEditGroupTabItem(EditGroupTabItem editGroupTabItem) {
-		this.editGroupTabItem = editGroupTabItem;
-	}
+	
 }
