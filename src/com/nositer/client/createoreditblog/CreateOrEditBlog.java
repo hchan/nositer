@@ -21,6 +21,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.Blog;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
@@ -176,7 +177,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 					resize(0,0);
 				} else {
 
-					AsyncCallback<Group> callback = new AsyncCallback<Group>() {
+					AsyncCallback<Blog> callback = new AsyncCallback<Blog>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							errorPanel.clearErrorMessages();
@@ -187,19 +188,19 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 						}
 
 						@Override
-						public void onSuccess(final Group result) {
+						public void onSuccess(final Blog result) {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {
-									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
+									HistoryManager.addHistory(HistoryToken.VIEWBLOG.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getId());									
 								}								
 							});										
 						}
 					};
 					if (isCreate()) {
-						ServiceBroker.groupService.createGroup(createGroupDTO(), callback);
+						ServiceBroker.blogService.createBlog(createBlogDTO(), callback);
 					} else {
-						ServiceBroker.groupService.updateGroup(createGroupDTO(), callback);
+						//ServiceBroker.blogService.createBlog(createBlogDTO(), callback);
 					}
 				}
 			}
@@ -214,8 +215,8 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		description.setValue(groupPlusView.getDescription());
 	}
 
-	private Group createGroupDTO() {
-		Group retval = new Group();
+	private Blog createBlogDTO() {
+		Blog retval = new Blog();
 		//retval.setId(groupid);
 		retval.setName(name.getValue());
 		retval.setDescription(description.getValue());
@@ -229,7 +230,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		Listener<BaseEvent> cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.GROUPS.toString());		
+				HistoryManager.addHistory(HistoryToken.MANAGEBLOG.toString());		
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);
