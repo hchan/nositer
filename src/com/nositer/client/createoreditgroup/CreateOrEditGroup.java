@@ -25,6 +25,7 @@ import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.groups.EditGroupTabItem;
+import com.nositer.client.groups.Groups;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.main.MainPanel;
@@ -247,7 +248,8 @@ public class CreateOrEditGroup extends LayoutContainer implements Resizable {
 									if (editGroupTabItem != null) {
 										editGroupTabItem.getGroupTabPanel().getViewGroupTabItem().populate(result);
 									}
-									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());									
+									HistoryManager.addHistory(HistoryToken.GROUPS.toString());
+									HistoryManager.addHistory(HistoryToken.GROUPS.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getTagname());											
 								}								
 							});										
 						}

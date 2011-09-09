@@ -204,7 +204,7 @@ public class GroupSubscriptionsGrid extends GroupsGrid {
 				};
 			};
 			contextMenu.add(viewMenuItem);		
-			if (Groups.isGroupIOwn(this.groupSubscriptionsContainer.getGroupPlusView())) {
+			if (Blogs.isGroupIOwn(this.groupSubscriptionsContainer.getGroupPlusView())) {
 				
 				SubscribeMenuItem subscribeMenuItem = new SubscribeMenuItem() {
 					public void doSelect() {

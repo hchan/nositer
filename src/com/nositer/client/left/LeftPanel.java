@@ -319,7 +319,7 @@ public class LeftPanel extends ContentPanel {
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
 		createBlogEntryNavigationItem = addNavigationItem("Create Blog Entry", blog, HistoryToken.CREATEBLOGENTRY);
-		manageBlogNavigationItem = addNavigationItem("Manage Blog", blog, HistoryToken.MANAGEBLOG);
+		manageBlogNavigationItem = addNavigationItem("Manage Blog", blog, HistoryToken.BLOGS);
 		
 		collapseAccordion();
 		this.layout();

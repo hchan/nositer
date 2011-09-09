@@ -1,4 +1,4 @@
-package com.nositer.client.groups;
+package com.nositer.client.blogs;
 
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -72,7 +72,7 @@ public class GroupTabItem extends TabItemPlus implements Resizable{
 	public void init(GroupPlusView groupPlusView) {
 		GroupTabItem.this.setText(groupPlusView.getName());
 		groupTabPanel = new GroupTabPanel(groupPlusView);		
-		groupTabPanel.setHeight(MainPanel.getInstance().getHeight()-30);
+		groupTabPanel.setHeight(MainPanel.getInstance().getHeight()-55);
 		add(groupTabPanel);
 		if (tabItemType != null) {
 			groupTabPanel.show(tabItemType);

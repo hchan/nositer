@@ -230,7 +230,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		Listener<BaseEvent> cancelListener = new Listener<BaseEvent>() {
 			@Override
 			public void handleEvent(BaseEvent be) {
-				HistoryManager.addHistory(HistoryToken.MANAGEBLOG.toString());		
+				HistoryManager.addHistory(HistoryToken.BLOGS.toString());		
 			}
 		};
 		cancelButton.addListener(Events.Select, cancelListener);

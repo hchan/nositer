@@ -83,7 +83,9 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 		}
 		catch (ConstraintViolationException e) {
 			HibernateUtil.rollbackTransaction(trx);		
-			throw new GWTException("Tagname: " + group.getTagname() + " is already taken");
+			throw new GWTException("Tagname: " + group.getTagname() + " or " +
+					"Name: " + group.getName() + " is already taken"		
+			);
 		}
 		catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		

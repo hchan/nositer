@@ -1,4 +1,4 @@
-package com.nositer.client.groups;
+package com.nositer.client.blogs;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -11,63 +11,63 @@ import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.searchforgroups.SearchForGroupsContainer;
+import com.nositer.client.searchforblogs.SearchForBlogsContainer;
 import com.nositer.client.widget.TabItemPlus;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class Groups extends TabPanel {
+public class Blogs extends TabPanel {
 
 	public enum TabItemType {
-		GROUPS, SEARCHFORGROUPS
+		BLOGS, SEARCHFORBLOGS
 	}
 
-	private TabItemPlus groupsTabItem;
-	private TabItem searchForGroupsTabItem;
-	private GroupsContainer groupsContainer;
-	private SearchForGroupsContainer searchForGroupsContainer;
-	private static Groups instance;
+	private TabItemPlus blogsTabItem;
+	private TabItem searchForBlogsTabItem;
+	private BlogsContainer blogsContainer;
+	private SearchForBlogsContainer searchForBlogsContainer;
+	private static Blogs instance;
 
 
-	public TabItem getSearchForGroupsTabItem() {
-		return searchForGroupsTabItem;
+	public TabItem getSearchForBlogsTabItem() {
+		return searchForBlogsTabItem;
 	}
 
-	public void setSearchForGroupsTabItem(TabItem searchForGroupsTabItem) {
-		this.searchForGroupsTabItem = searchForGroupsTabItem;
+	public void setSearchForBlogsTabItem(TabItem searchForGroupsTabItem) {
+		this.searchForBlogsTabItem = searchForGroupsTabItem;
 	}
 
-	public GroupsContainer getGroupsContainer() {
-		return groupsContainer;
+	public BlogsContainer getBlogsContainer() {
+		return blogsContainer;
 	}
 
-	public void setGroupsContainer(GroupsContainer groupsContainer) {
-		this.groupsContainer = groupsContainer;
+	public void setBlogsContainer(BlogsContainer blogsContainer) {
+		this.blogsContainer = blogsContainer;
 	}
 
 
-	public static Groups getInstance(boolean createIfNecessary) {
-		Groups retval = null;
+	public static Blogs getInstance(boolean createIfNecessary) {
+		Blogs retval = null;
 		if (instance != null) {
 			retval = instance;
 		} else if (createIfNecessary) {
-			retval = new Groups();			
+			retval = new Blogs();			
 		}
 		return retval;
 	}
 
-	public static void setInstance(Groups instance) {
-		Groups.instance = instance;
+	public static void setInstance(Blogs instance) {
+		Blogs.instance = instance;
 	}
 
-	public TabItemPlus getGroupsTabItem() {
-		return groupsTabItem;
+	public TabItemPlus getBlogsTabItem() {
+		return blogsTabItem;
 	}
 
-	public void setGroupsItem(TabItemPlus groupsTabItem) {
-		this.groupsTabItem = groupsTabItem;
+	public void setBlogsTabItem(TabItemPlus blogsTabItem) {
+		this.blogsTabItem = blogsTabItem;
 	}
 
-	public Groups() {
+	public Blogs() {
 		init();
 	}
 
@@ -75,17 +75,17 @@ public class Groups extends TabPanel {
 	public void init() {
 		setAutoHeight(true);
 		setAutoWidth(true);
-		groupsTabItem = createGroupsTabItem();
-		searchForGroupsTabItem = createSearchForGroupsTabItem();
+		blogsTabItem = createBlogsTabItem();
+		searchForBlogsTabItem = createSearchForBlogsTabItem();
 
-		add(groupsTabItem);
-		add(searchForGroupsTabItem);
+		add(blogsTabItem);
+		add(searchForBlogsTabItem);
 		instance = this;
 	}
 
-	private TabItemPlus createGroupsTabItem() {
+	private TabItemPlus createBlogsTabItem() {
 		TabItemPlus retval;
-		retval = new TabItemPlus("Groups") {
+		retval = new TabItemPlus("Blogs") {
 			@Override
 			public void resize(int width, int height) {				
 			}			
@@ -94,7 +94,7 @@ public class Groups extends TabPanel {
 				addListener(Events.Select, new Listener() {
 					@Override
 					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
-						HistoryManager.addHistory(HistoryToken.GROUPS.toString());
+						HistoryManager.addHistory(HistoryToken.BLOGS.toString());
 						resize(0,0);
 					}
 				});
@@ -108,16 +108,16 @@ public class Groups extends TabPanel {
 				//resize(0,0);
 
 			}});		
-		groupsContainer = new GroupsContainer();
+		blogsContainer = new BlogsContainer();
 		retval.setLayout(new FitLayout());
-		retval.add(groupsContainer);
+		retval.add(blogsContainer);
 		return retval;
 	}
 
-	private TabItem createSearchForGroupsTabItem() {
+	private TabItem createSearchForBlogsTabItem() {
 		TabItem retval;
-		searchForGroupsContainer = new SearchForGroupsContainer();
-		retval = new TabItemPlus("Search For Groups") {
+		searchForBlogsContainer = new SearchForBlogsContainer();
+		retval = new TabItemPlus("Search For Blogs") {
 			@Override
 			public void resize(int width, int height) {				
 			}			
@@ -126,8 +126,8 @@ public class Groups extends TabPanel {
 				addListener(Events.Select, new Listener() {
 					@Override
 					public void handleEvent(com.extjs.gxt.ui.client.event.BaseEvent be) {						
-						HistoryManager.addHistory(HistoryToken.SEARCHFORGROUPS.toString());
-						searchForGroupsContainer.resize(0,0);
+						HistoryManager.addHistory(HistoryToken.SEARCHFORBLOGENTRIES.toString());
+						searchForBlogsContainer.resize(0,0);
 					}
 				});
 			}			
@@ -142,7 +142,7 @@ public class Groups extends TabPanel {
 			}});		
 
 		retval.setLayout(new FitLayout());
-		retval.add(searchForGroupsContainer);
+		retval.add(searchForBlogsContainer);
 		return retval;
 	}
 
@@ -160,7 +160,7 @@ public class Groups extends TabPanel {
 				GroupTabItem groupTabItem = new GroupTabItem(tabId, tabItemType) {
 					public void init(GroupPlusView groupPlusView) {
 						super.init(groupPlusView);
-						if (Groups.isGroupIOwn(groupPlusView)) {
+						if (Blogs.isGroupIOwn(groupPlusView)) {
 							getGroupTabPanel().getUploadGroupTabItem().initSWF();
 							getGroupTabPanel().getUploadGroupTabItem().layout();
 						}
@@ -195,14 +195,14 @@ public class Groups extends TabPanel {
 		return tabItem;
 	}
 
-	public TabItem showNonClosableTab(Groups.TabItemType tabItemType) {
+	public TabItem showNonClosableTab(Blogs.TabItemType tabItemType) {
 		TabItem tabItem = null;
-		if (tabItemType.equals(Groups.TabItemType.GROUPS)) {
-			tabItem = groupsTabItem;
-			groupsContainer.resize(0,0);
-		} else if (tabItemType.equals(Groups.TabItemType.SEARCHFORGROUPS)) {
-			tabItem = searchForGroupsTabItem;
-			searchForGroupsContainer.resize(0, 0);
+		if (tabItemType.equals(Blogs.TabItemType.BLOGS)) {
+			tabItem = blogsTabItem;
+			blogsContainer.resize(0,0);
+		} else if (tabItemType.equals(Blogs.TabItemType.SEARCHFORBLOGS)) {
+			tabItem = searchForBlogsTabItem;
+			searchForBlogsContainer.resize(0, 0);
 		}
 		setSelection(tabItem);		
 
@@ -221,7 +221,7 @@ public class Groups extends TabPanel {
 	public static boolean isGroupICanSubscribeTo(GroupPlusView groupPlusView) {
 		boolean retval = false;
 		retval = (!(groupPlusView.getUserid().equals(Nositer.getInstance().getUser().getId()))) 
-		|| (groupPlusView.getUserHasGroupDisable() != null && groupPlusView.getUserHasGroupDisable());
+		|| groupPlusView.getUserHasGroupDisable();
 		return retval;
 	}
 
