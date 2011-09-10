@@ -39,7 +39,8 @@ public class LeftPanel extends ContentPanel {
 	private NavigationItem manageFilesNavigationItem;
 	private NavigationItem createBlogEntryNavigationItem;
 	private NavigationItem manageBlogNavigationItem;
-
+	private NavigationItem viewBlogNavigationItem;
+	
 	public NavigationItem getSearchForGroupsNavigationItem() {
 		return searchForGroupsNavigationItem;
 	}
@@ -69,6 +70,15 @@ public class LeftPanel extends ContentPanel {
 		this.manageBlogNavigationItem = manageBlogNavigationItem;
 	}
 
+	
+
+	public NavigationItem getViewBlogNavigationItem() {
+		return viewBlogNavigationItem;
+	}
+
+	public void setViewBlogNavigationItem(NavigationItem viewBlogNavigationItem) {
+		this.viewBlogNavigationItem = viewBlogNavigationItem;
+	}
 
 	public ContentPanel getIwantto() {
 		return iwantto;
@@ -319,6 +329,7 @@ public class LeftPanel extends ContentPanel {
 		// blog
 		blog = createNavigationContentPanel("Blog", this);	
 		createBlogEntryNavigationItem = addNavigationItem("Create Blog Entry", blog, HistoryToken.CREATEBLOGENTRY);
+		viewBlogNavigationItem = addNavigationItem("View Blog", blog, HistoryToken.VIEWBLOG);
 		manageBlogNavigationItem = addNavigationItem("Manage Blog", blog, HistoryToken.BLOGS);
 		
 		collapseAccordion();

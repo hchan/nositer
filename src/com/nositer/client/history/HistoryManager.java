@@ -1,26 +1,7 @@
 package com.nositer.client.history;
 
 
-import static com.nositer.client.history.HistoryToken.BLOGS;
-import static com.nositer.client.history.HistoryToken.CHANGEPASSWORD;
-import static com.nositer.client.history.HistoryToken.CHATGROUP;
-import static com.nositer.client.history.HistoryToken.CREATEBLOGENTRY;
-import static com.nositer.client.history.HistoryToken.CREATEGROUP;
-import static com.nositer.client.history.HistoryToken.CREATEIWANTTO;
-import static com.nositer.client.history.HistoryToken.DISCUSSIONSGROUP;
-import static com.nositer.client.history.HistoryToken.EDITABOUTME;
-import static com.nositer.client.history.HistoryToken.EDITBASICPROFILE;
-import static com.nositer.client.history.HistoryToken.EDITGROUP;
-import static com.nositer.client.history.HistoryToken.GROUPS;
-import static com.nositer.client.history.HistoryToken.IWANTTOS;
-import static com.nositer.client.history.HistoryToken.MANAGEFILES;
-import static com.nositer.client.history.HistoryToken.MANAGEFILESGROUP;
-import static com.nositer.client.history.HistoryToken.MYPROFILE;
-import static com.nositer.client.history.HistoryToken.SEARCHFORGROUPS;
-import static com.nositer.client.history.HistoryToken.SUBSCRIPTIONSGROUP;
-import static com.nositer.client.history.HistoryToken.UPLOADFILES;
-import static com.nositer.client.history.HistoryToken.UPLOADGROUP;
-import static com.nositer.client.history.HistoryToken.USER;
+import static com.nositer.client.history.HistoryToken.*;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -31,6 +12,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.nositer.client.Scope;
+import com.nositer.client.blogs.Blogs;
 import com.nositer.client.createiwantto.CreateIWantTo;
 import com.nositer.client.createoreditblog.CreateOrEditBlog;
 import com.nositer.client.createoreditgroup.CreateOrEditGroup;
@@ -45,6 +27,7 @@ import com.nositer.client.main.MainPanel;
 import com.nositer.client.managefiles.ManageMyFiles;
 import com.nositer.client.uploadfiles.UploadFiles;
 import com.nositer.client.util.GWTUtil;
+import com.nositer.client.viewblog.ViewBlog;
 import com.nositer.client.viewprofile.ViewProfile;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -189,13 +172,18 @@ public class HistoryManager {
 			leftPanel.getNavigationTree().select(leftPanel.getGroupsNavigationItem());
 			Groups.getInstance(true).showClosableTab(getSubHistoryToken(), GroupTabPanel.TabItemType.SUBSCRIBER);
 			setMainPanel(Groups.getInstance(true));
-		} else if (historyToken.startsWith(CREATEBLOGENTRY.toString())) {
+		} else if (historyToken.equals(CREATEBLOGENTRY.toString())) {
 			leftPanel.getBlog().expand();
 			leftPanel.getNavigationTree().select(leftPanel.getCreateBlogEntryNavigationItem());
 			setMainPanel(new CreateOrEditBlog(true));
-		} else if (historyToken.startsWith(BLOGS.toString())) {
+		} else if (historyToken.equals(BLOGS.toString())) {
 			leftPanel.getBlog().expand();
 			leftPanel.getNavigationTree().select(leftPanel.getManageBlogNavigationItem());
+			setMainPanel(Blogs.getInstance(true));
+		} else if (historyToken.equals(VIEWBLOG.toString())) {
+			leftPanel.getBlog().expand();
+			leftPanel.getNavigationTree().select(leftPanel.getViewBlogNavigationItem());
+			setMainPanel(new ViewBlog());
 		}
 	}
 
