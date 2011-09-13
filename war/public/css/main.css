@@ -165,7 +165,7 @@
 	font-weight: bold;	
 }
 
-.profileNoteLabel, .profileDescriptionLabel {
+.profileNoteLabel, .profileDescriptionLabel, .blogName {
 	font-weight: bold;	
 	font-size: 14pt;
 }

@@ -50,7 +50,8 @@ public class Groups extends TabPanel {
 		if (instance != null) {
 			retval = instance;
 		} else if (createIfNecessary) {
-			retval = new Groups();			
+			retval = new Groups();	
+			instance = retval;
 		}
 		return retval;
 	}

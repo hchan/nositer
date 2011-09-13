@@ -1,14 +1,20 @@
 package com.nositer.server.service;
 
 
+import java.math.BigInteger;
+import java.util.HashSet;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Blog;
+import com.nositer.client.dto.generated.Groupmessage;
+import com.nositer.client.dto.generated.Grouptopic;
 import com.nositer.client.dto.generated.User;
 import com.nositer.client.service.BlogService;
 import com.nositer.hibernate.HibernateUtil;
+import com.nositer.hibernate.SqlHelper;
 import com.nositer.shared.GWTException;
 import com.nositer.shared.Global;
 import com.nositer.util.BeanConversion;
@@ -65,6 +71,27 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 		finally {
 			HibernateUtil.closeSession(sess);
 		}
+		return retval;
+	}
+
+
+	@Override
+	public Blog getBlog(Integer blogid) throws GWTException {
+		Blog retval = null;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			com.nositer.hibernate.generated.domain.Blog blogDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.Blog.class, blogid, sess);
+			retval = BeanConversion.copyDomain2DTO(blogDomain, Blog.class);
+		} catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
 		return retval;
 	}
 

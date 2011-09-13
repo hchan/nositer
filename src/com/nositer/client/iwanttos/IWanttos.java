@@ -41,7 +41,8 @@ public class IWanttos extends TabPanel implements Resizable {
 		if (instance != null) {
 			retval = instance;
 		} else if (createIfNecessary) {
-			retval = new IWanttos();			
+			retval = new IWanttos();
+			instance = retval;
 		}
 		return retval;
 	}

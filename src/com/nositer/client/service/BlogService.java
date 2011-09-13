@@ -12,4 +12,6 @@ import com.nositer.shared.GWTException;
 @RemoteServiceRelativePath("ServiceResolver.gwtrpc")
 public interface BlogService extends RemoteService {
 	Blog createBlog(Blog blog) throws GWTException;
+
+	Blog getBlog(Integer blogid) throws GWTException;
 }

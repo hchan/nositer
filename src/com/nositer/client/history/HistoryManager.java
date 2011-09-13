@@ -183,7 +183,13 @@ public class HistoryManager {
 		} else if (historyToken.equals(VIEWBLOG.toString())) {
 			leftPanel.getBlog().expand();
 			leftPanel.getNavigationTree().select(leftPanel.getViewBlogNavigationItem());
-			setMainPanel(new ViewBlog());
+			ViewBlog.getInstance(true).showSearch();
+			setMainPanel(ViewBlog.getInstance(true));
+		} else if (historyToken.startsWith(VIEWBLOG.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getBlog().expand();
+			leftPanel.getNavigationTree().select(leftPanel.getViewBlogNavigationItem());
+			ViewBlog.getInstance(true).showBlog(getSubHistoryToken());
+			setMainPanel(ViewBlog.getInstance(true));
 		}
 	}
 
