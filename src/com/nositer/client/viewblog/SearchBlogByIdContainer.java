@@ -6,74 +6,77 @@ import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
-import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
-import com.extjs.gxt.ui.client.widget.form.HtmlEditor;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
-import com.nositer.client.dto.generated.User;
+import com.nositer.client.dto.generated.Blog;
+import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
-import com.nositer.client.main.MainPanel;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 import com.nositer.client.widget.Resizable;
-import com.nositer.client.widget.messagebox.InfoMessageBox;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class SearchBlogByIdContainer extends LayoutContainer implements Resizable {
 
 	private FormPanel formPanel;
-	private TextField<String> blogidTextField;
-	
+	private TextField <String> blogidTextField;
 	private ErrorPanel errorPanel;
+	private static SearchBlogByIdContainer instance;
+
+	public static SearchBlogByIdContainer getInstance(boolean createIfNecessary) {
+		SearchBlogByIdContainer retval = null;
+		if (instance != null) {
+			retval = instance;
+		} else if (createIfNecessary) {
+			retval = new SearchBlogByIdContainer();		
+			instance = retval;
+		}
+		return retval;
+	}
+
+	public static void setInstance(SearchBlogByIdContainer instance) {
+		SearchBlogByIdContainer.instance = instance;
+	}	
+
 	public SearchBlogByIdContainer() {
 		init();
 	}
 
 	public void init() {		
-		formPanel = new FormPanel();
-		
+		formPanel = new FormPanel();		
 		formPanel.setHeaderVisible(false);
-		//formPanel.setLabelWidth(200);
-		formPanel.setLabelAlign(LabelAlign.TOP);
+		//formPanel.setLabelAlign(LabelAlign.TOP);
 		//formPanel.setBorders(false);
 		formPanel.setBodyBorder(false);
+		formPanel.setLabelWidth(150);
 		errorPanel = new ErrorPanel();
 		errorPanel.setStyleAttribute("margin-bottom", "5px");
 		errorPanel.hide();
 		blogidTextField = new TextField<String>();
-		blogidTextField.setFieldLabel("Quick Note");  
-		blogidTextField.setLabelStyle("font-size: 14px; font-weight: bold;");
-		
+		blogidTextField.setFieldLabel("Enter the blog id");  
+		blogidTextField.setLabelStyle("font-size: 14px; font-weight: bold;");		
 		formPanel.add(errorPanel);
-		formPanel.add(blogidTextField, new FormData("100%"));
-	
-		
+		formPanel.add(blogidTextField);//, new FormData("100%"));		
 		this.add(formPanel);
-		initButtons();	
-		
-	}
-	
-	
+		initButtons();			
+	}	
+
 	@Override
 	public void resize(int width, int height) {
 		formPanel.setWidth(this.getWidth());
 	}
-	
 
 	public void initButtons() {
 		initSearchButton();
 	}
 
-
 	public void initSearchButton() {
-		formPanel.setButtonAlign(HorizontalAlignment.CENTER);  
+		formPanel.setButtonAlign(HorizontalAlignment.LEFT);  
 		Button button = new Button("Search");
 		formPanel.addButton(button);  
 
@@ -87,7 +90,7 @@ public class SearchBlogByIdContainer extends LayoutContainer implements Resizabl
 					resize(0,0);
 				} else {
 
-					AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+					AsyncCallback<Blog> callback = new AsyncCallback<Blog>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							errorPanel.clearErrorMessages();
@@ -98,17 +101,22 @@ public class SearchBlogByIdContainer extends LayoutContainer implements Resizabl
 						}
 
 						@Override
-						public void onSuccess(Void result) {
-							InfoMessageBox.show("Updated!", new Listener<MessageBoxEvent>() {
-								@Override
-								public void handleEvent(MessageBoxEvent be) {								
-									History.newItem(HistoryToken.MYPROFILE.toString());									
-								}								
-							});										
+						public void onSuccess(final Blog result) {						
+							History.newItem(HistoryToken.VIEWBLOG.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getId());	
 						}
 					};
-					//ServiceBroker.profileService.updateAboutMeOfCurrentUser(blogidTextField.getValue(), description.getValue(), callback);
-					// TODO 
+					int blogid = 0;
+					try {
+						blogid = Integer.parseInt(blogidTextField.getValue());
+						ServiceBroker.blogService.getBlog(blogid, callback);
+					} catch (Exception e) {
+						errorPanel.clearErrorMessages();
+						errorPanel.addErrorMessage("Invalid blog id");
+						errorPanel.show();
+						resize(0,0);
+					}
+					
+					
 				}
 			}
 		};

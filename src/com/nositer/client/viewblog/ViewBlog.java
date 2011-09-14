@@ -39,6 +39,8 @@ public class ViewBlog extends LayoutContainer {
 	}  
 		
 	public void showSearch() {
-		
+		removeAll();
+		add(SearchBlogByIdContainer.getInstance(true));		
+		layout();
 	}
 }

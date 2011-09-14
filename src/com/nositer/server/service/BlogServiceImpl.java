@@ -83,6 +83,9 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 		try {
 			trx = sess.beginTransaction();		
 			com.nositer.hibernate.generated.domain.Blog blogDomain = HibernateUtil.findByPrimaryKey(com.nositer.hibernate.generated.domain.Blog.class, blogid, sess);
+			if (blogDomain == null) {
+				throw new GWTException("No such blog id");
+			}
 			retval = BeanConversion.copyDomain2DTO(blogDomain, Blog.class);
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction(trx);		
