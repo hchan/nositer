@@ -6,18 +6,23 @@ import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.LoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadConfig;
+import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.util.GWTUtil;
 import com.nositer.client.widget.ErrorPanel;
 
-
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 	private GroupSubscriptionsContainer groupSubscriptionsContainer;
 	private TextField<String> lastname;	
@@ -64,15 +69,28 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 		init();
 	}
 
+	
 	public void init() {
 		//setHeaderVisible(false);
 		errorPanel = new ErrorPanel();
 		//errorPanel.init();
 		errorPanel.hide();
-		setHeading("Subscribers (to filter out the subscribers click the expand icon on the right for filter options)");
+		setHeading("Subscribers (Click to hide/show filter options)");
+		getHeader().sinkEvents(Event.ONCLICK);
+		getHeader().addListener(Events.OnClick, new Listener() {
+
+			@Override
+			public void handleEvent(BaseEvent event) {
+				if (SearchCriteriaForGroupSubscriptionsPanel.this.isCollapsed()) {
+					SearchCriteriaForGroupSubscriptionsPanel.this.expand();
+				} else {
+					SearchCriteriaForGroupSubscriptionsPanel.this.collapse();
+				}
+			}}
+		);
 		setCollapsible(true);
 		setBodyBorder(false);
-		//addSearchLabel();
+		// foaddSearchLabel();
 		setLabelWidth(107);
 		setFieldWidth(200);
 		lastname = new TextField<String>();
@@ -125,8 +143,7 @@ public class SearchCriteriaForGroupSubscriptionsPanel extends FormPanel {
 
 	public ArrayList<String> getErrors() {
 		ArrayList<String> retval = new ArrayList<String>();
-		GWTUtil.addRequiredErrorIfNecessary(lastname, retval);
-		
+		GWTUtil.addRequiredErrorIfNecessary(lastname, retval);		
 		return retval;
 	}
 
