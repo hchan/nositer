@@ -32,6 +32,7 @@ import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.dto.generated.Blog;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.history.HistoryManager;
@@ -47,9 +48,9 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 @SuppressWarnings({"rawtypes"})
 public class BlogsGrid extends Grid<BeanModel> {
 
-	protected RpcProxy<ArrayList<GroupPlusView>> proxy;
+	protected RpcProxy<ArrayList<Blog>> proxy;
 	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
-	protected GroupingView groupingView;
+
 	protected Menu contextMenu;
 
 	public RpcProxy getProxy() {
@@ -62,17 +63,17 @@ public class BlogsGrid extends Grid<BeanModel> {
 	
 	
 	public BlogsGrid() {
-		proxy = new RpcProxy<ArrayList<GroupPlusView>>() {
+		proxy = new RpcProxy<ArrayList<Blog>>() {
 			@Override
 			protected void load(Object loadConfig,
-					AsyncCallback<ArrayList<GroupPlusView>> callback) {
-				ServiceBroker.groupService.getMyGroups(callback);  
+					AsyncCallback<ArrayList<Blog>> callback) {
+				ServiceBroker.blogService.getMyBlogs(callback);  
 			}
 		};  		
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
 		loader.setRemoteSort(false);  
-		store = new GroupingStore<BeanModel>(loader);  
+		store = new ListStore<BeanModel>(loader);  
 		cm = createColumnModel();
 		this.view = new GridView();
 		disabledStyle = null;
@@ -85,42 +86,21 @@ public class BlogsGrid extends Grid<BeanModel> {
 	public ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
-		ColumnConfig avatarColumnConfig = new ColumnConfig(Group.Column.avatarlocation.toString(), "Avatar", 50);
-		avatarColumnConfig.setRenderer(getAvatarGridCellRenderer());
-		columns.add(avatarColumnConfig);  
-		columns.add(new ColumnConfig(Group.Column.name.toString(), "Name", 100));		
-		columns.add(new ColumnConfig(Group.Column.tagname.toString(), "Tag Name", 100));
-		ColumnConfig descriptionColumnConfig = new ColumnConfig(Group.Column.description.toString(), "Description", 200);
+		
+		columns.add(new ColumnConfig(Blog.Column.name.toString(), "Name", 100));		
+	
+		ColumnConfig descriptionColumnConfig = new ColumnConfig(Blog.Column.description.toString(), "Description", 200);
 		descriptionColumnConfig.setRenderer(getDescriptionGridCellRenderer());
 		columns.add(descriptionColumnConfig);  
-		ColumnConfig date = new ColumnConfig(Group.Column.createdtime.toString(), "Created On", 100);  
+		ColumnConfig date = new ColumnConfig(Blog.Column.createdtime.toString(), "Created On", 100);  
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
 		retval = new ColumnModel(columns);
 		return retval;
 	}
 
-	protected GridCellRenderer getAvatarGridCellRenderer() {
-		GridCellRenderer retval = new GridCellRenderer() {
-
-			@Override
-			public Object render(ModelData model, String property,
-					ColumnData config, int rowIndex, int colIndex,
-					ListStore store, Grid grid) {
-				Avatar retval = new Avatar();
-				try {
-					BeanModel beanModel = (BeanModel) model;
-					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setPathToSmallImage(HttpGetFileHelper.getGroupPathURL(groupPlusView.getAvatarlocation(), groupPlusView.getId()));
-				} catch (Exception e) {
-					GWTUtil.log("", e);
-				}
-				return retval;
-			}  
-		};
-		return retval;
-	}
-
+	
+	
 	protected GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
@@ -129,11 +109,11 @@ public class BlogsGrid extends Grid<BeanModel> {
 					ColumnData config, int rowIndex, int colIndex,
 					ListStore store, Grid grid) {
 				HtmlContainer retval = new HtmlContainer();
-				retval.setStyleName("myGroupsRow");
+				retval.setStyleName("myBlogsRow");
 				try {
 					BeanModel beanModel = (BeanModel) model;
-					GroupPlusView groupPlusView = beanModel.getBean();
-					retval.setHtml(groupPlusView.getDescription());
+					Blog blog = beanModel.getBean();
+					retval.setHtml(blog.getDescription());
 				} catch (Exception e) {
 					GWTUtil.log("", e);
 				}
@@ -147,156 +127,19 @@ public class BlogsGrid extends Grid<BeanModel> {
 		contextMenu = new Menu();
 
 		setContextMenu(contextMenu);
-		groupingView = new GroupingView();
-
-
-		groupingView.setForceFit(true);
-		//groupingView.setShowGroupedColumn(false);
-		groupingView.setGroupRenderer(new GridGroupRenderer() {
-
-			@Override
-			public String render(GroupColumnData data) {
-				BeanModel beanModel = (BeanModel) data.models.get(0);
-				GroupPlusView groupPlusView = beanModel.getBean();
-				String text = null;
-				if (Blogs.isGroupIOwn(groupPlusView)) {
-					text = "Blogs I own";
-				} else {
-					text = "Blogs I am subscribed too";
-				}
-				String length = data.models.size() == 1 ? "Item" : "Items";  				
-				return text + ": (" + data.models.size() + " " + length + ")";  
-			}
-
-
-		});
-		setView(groupingView);
-
-		addListeners();
-
-		GroupingStore<BeanModel> groupingStore = (GroupingStore<BeanModel>) store;
-		groupingStore.groupBy(GroupPlusView.Column.userid.toString());
+		
+		
 		store.getLoader().load();
 		setLoadMask(true);  
 		setBorders(true);  
-		setAutoExpandColumn(GroupPlusView.Column.description.toString());  
+		setAutoExpandColumn(Blog.Column.description.toString());  
 
 	}
 
 
-	protected void addListeners() {
-		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
-
-			@Override
-			public void handleEvent(MenuEvent me) {
-				if (me.getMenu().getBounds(true).x == me.getClientX()) {
-					contextMenu.hide();
-					BeanModel beanModel = BlogsGrid.this.getSelectionModel().getSelectedItem();
-					final GroupPlusView groupPlusView = beanModel.getBean();	
-					doViewGroup(groupPlusView);
-				}
-			}
-		});
-
-		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
-
-			@Override
-			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
-				showContextMenu(gridEvent);
-			}
-		});
-
-		this.addListener(Events.ContextMenu,  new Listener<GridEvent<BeanModel>>() {  
-
-			@Override
-			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
-				showContextMenu(gridEvent);
-			}
-		});
-
-		// sigh ... can't listen to single AND doubleclick - can listen to one of the two
-		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
-
-			@Override
-			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
-				BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-				final GroupPlusView groupPlusView = beanModel.getBean();	
-				doViewGroup(groupPlusView);
-			}
-		});
-	}
-
-
-	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
-		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
-		final GroupPlusView groupPlusView = beanModel.getBean();	
-		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
-		if (selectedItem != null) {
-			contextMenu.removeAll();
-			ViewMenuItem viewMenuItem = new ViewMenuItem() {
-				public void doSelect() {
-					doViewGroup(groupPlusView);
-				};
-			};
-			contextMenu.add(viewMenuItem);		
-			if (Blogs.isGroupIOwn(groupPlusView)) {
-				EditMenuItem editMenuItem = new EditMenuItem() {
-					public void doSelect() {
-						doEditGroup(groupPlusView);	
-					};
-				};
-				contextMenu.add(editMenuItem);
-				DeleteMenuItem deleteMenuItem = new DeleteMenuItem(){
-					public void doSelect() {
-						doDeleteGroup(groupPlusView);	
-					};
-				};
-				contextMenu.add(deleteMenuItem);
-			}
-			contextMenu.showAt(gridEvent.getClientX(), gridEvent.getClientY());
-
-		} else {
-			gridEvent.setCancelled(true);
-		}
-	}
-
-	public void doViewGroup(GroupPlusView groupPlusView) {
-		//HistoryManager.addSubHistoryToken(group.getTagname());
-		HistoryManager.addHistory(HistoryToken.GROUPS + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
-	}
-
-	public void doEditGroup(GroupPlusView groupPlusView) {
-		HistoryManager.addHistory(HistoryToken.EDITGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
-	}
 	
-	public void doSubscriptionsGroup(GroupPlusView groupPlusView) {
-		HistoryManager.addHistory(HistoryToken.SUBSCRIPTIONSGROUP + HistoryManager.SUBTOKENSEPARATOR + groupPlusView.getTagname());
-	}
 
-	public void doDeleteGroup(final GroupPlusView groupPlusView) {
-		Listener<MessageBoxEvent> callback = new Listener<MessageBoxEvent>() {
-			@Override
-			public void handleEvent(MessageBoxEvent be) {
-				if (be.getButtonClicked().getText().equalsIgnoreCase("yes")) {
-					AsyncCallback<Void> deleteCallback = new AsyncCallback<Void>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							GWTUtil.log("", caught);
-						}
-
-						@Override
-						public void onSuccess(Void result) {
-							refresh();
-						}						
-					};
-					ServiceBroker.groupService.disableGroup(groupPlusView, deleteCallback);
-				}			
-			}			
-		};
-		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + groupPlusView.getName(), callback);
-	}
-
+	
 	public void refresh() {
 		store.getLoader().load();
 	}

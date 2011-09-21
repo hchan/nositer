@@ -307,3 +307,8 @@
 .whisper {
 	background-color: pink !important;
 }
+
+.myBlogsRow {
+	height: 50px !important;
+	overflow: auto;
+}

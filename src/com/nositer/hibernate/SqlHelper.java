@@ -3,6 +3,7 @@ import static com.nositer.hibernate.CommonSql.*;
 
 import com.nositer.client.dto.DTO;
 import com.nositer.client.dto.Lookupcode;
+import com.nositer.client.dto.generated.Blog;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupSubscriptionView;
 import com.nositer.client.dto.generated.Groupmessage;
@@ -181,6 +182,15 @@ public class SqlHelper {
 		" on " + Groupmessage.Column.grouptopicid + " = " + Grouptopic.TABLENAME + "." + Grouptopic.Column.id +
 		" where " + Groupmessage.Column.grouptopicid + " = :" + Groupmessage.Column.grouptopicid +
 		" limit :" + OFFSET + ", 1"; 
+	public static String FINDMYBLOGS =
+		"select * from " + Blog.TABLENAME + " where " + Blog.Column.userid + " = :" + Blog.Column.userid + 
+		" and " + NOTDISABLE +
+		" order by " + Blog.Column.name;
+	
+	
+	
+	
+	
 	
 	public static String disableSQL(DTO dto) {
 		String retval = null;

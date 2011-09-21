@@ -85,7 +85,7 @@ public class BlogsContainer extends LayoutContainer implements Resizable {
 	
 	@Override
 	public void resize(int width, int height) {		
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-30);
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-20);
 		//blogsGrid.setSize(MainPanel.getInstance().getWidth()-15, MainPanel.getInstance().getHeight()-30);
 	}
 }
