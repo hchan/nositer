@@ -7,4 +7,4 @@ under /private have a acl.xml file that contains names of people you want to sha
 
 http://groups.nositer.com/MyGroup
 
-short tweets with link to blog
+short tweets with link to blog (BLIP - Blog Intelligent Post)

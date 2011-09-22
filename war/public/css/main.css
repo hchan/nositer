@@ -1,6 +1,6 @@
 .loginDescription {
 	text-align: center;
-	font-family: fantasy;	
+	font-family: fantasy;
 	font-size: 12pt;
 	background-color: #ccccee;
 	border-style: double;
@@ -101,84 +101,85 @@
 }
 
 .navigationPanel {
+	
 }
 
 .navigationPanel:hover {
 	background-color: #FF0000 !important;
 }
 
-.navigationItemOff, .navigationTreeItemOff {
+.navigationItemOff,.navigationTreeItemOff {
 	padding-left: 15px;
 	background-color: #F0F0F0;
 	color: black;
-	font: arial,tahoma,helvetica,sans-serif;
-    font-size: 14px;
-    cursor: pointer;
+	font: arial, tahoma, helvetica, sans-serif;
+	font-size: 14px;
+	cursor: pointer;
 }
 
-.navigationItemOn, .navigationTreeItemOn {
+.navigationItemOn,.navigationTreeItemOn {
 	padding-left: 15px;
 	background-color: #FFE8A0;
 	color: black;
-	font: arial,tahoma,helvetica,sans-serif;
-    font-size: 14px;
-    cursor: pointer;
+	font: arial, tahoma, helvetica, sans-serif;
+	font-size: 14px;
+	cursor: pointer;
 }
 
-.navigationItemOff:hover, .navigationTreeItemOff:hover, .navigationItemOn:hover, .navigationTreeItemOn:hover {
+.navigationItemOff:hover,.navigationTreeItemOff:hover,.navigationItemOn:hover,.navigationTreeItemOn:hover
+	{
 	background-color: #AAE8A0;
 }
 
-.requiredFieldLabel, .optionalFieldLabel {
+.requiredFieldLabel,.optionalFieldLabel {
 	font-size: 14px;
 	font-weight: bold;
 	color: #1111ee;
 }
 
 .avatar {
-	border-style:outset;
+	border-style: outset;
 	border-width: 1px;
 	border-color: black;
 	width: 200px;
 	height: 200px;
 }
+
 .avatarSmall {
-	border-style:outset;
+	border-style: outset;
 	border-width: 1px;
 	border-color: black;
 	width: 32px;
 	height: 32px;
 }
 
-
 .avatarSelector {
-	font-size: 14px; 
+	font-size: 14px;
 	font-weight: bold;
 }
 
 .avatarSelectorBasicProfile {
-	font: 12px tahoma,arial,helvetica,sans-serif;
-	top: 5px !important;	
+	font: 12px tahoma, arial, helvetica, sans-serif;
+	top: 5px !important;
 }
 
 .profileLabelField {
-	font-weight: bold;	
+	font-weight: bold;
 }
 
-.profileNoteLabel, .profileDescriptionLabel, .blogName {
-	font-weight: bold;	
+.profileNoteLabel,.profileDescriptionLabel,.blogName {
+	font-weight: bold;
 	font-size: 14pt;
 }
 
 .profileNoteModifiedtimeLabel {
-	font-family: fantasy;	
+	font-family: fantasy;
 	font-size: 8pt;
-	font-style: italic; 
+	font-style: italic;
 	font-weight: lighter;
 }
 
-.editBasicProfile {
-	/* you can use 
+.editBasicProfile { /* you can use 
 	the FF plugin: Web Developer -> Information -> View Color Information 
 	to find a match
 	*/
@@ -188,18 +189,23 @@
 .editBasicProfile .x-panel-mr {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-br {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-ml {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-bl {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-footer {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-tl {
 	width: 0px;
 	height: 0px;
@@ -207,13 +213,16 @@
 	padding: 0px;
 	background: #dfe8f6 !important;
 }
+
 .editBasicProfile .x-panel-tr {
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-tc {
 	width: 0px;
 	background: #dfe8f6;
 }
+
 .editBasicProfile .x-panel-header {
 	background: #dfe8f6;
 }
@@ -222,27 +231,27 @@
 	padding-right: 5px;
 	cursor: pointer;
 }
+
 .logout:hover {
 	background-color: #FF0000 !important;
 }
 
 .profileDescription ol {
-    list-style-type:decimal;
-    padding-left:40px;
+	list-style-type: decimal;
+	padding-left: 40px;
 }
 
 .profileDescription ul {
-    list-style-type:disc
-    padding-left:40px;
+	list-style-type: disc padding-left:40px;
 }
 
 .selectedFile input {
 	color: green !important;
 }
 
-.uploadBrowseContainer { 
+.uploadBrowseContainer {
 	display: inline;
-	border: 1px solid #7FAAFF;;	
+	border: 1px solid #7FAAFF;;
 	background-color: #C5D9FF;
 	padding: 3px;
 	position: relative;
@@ -292,15 +301,16 @@
 
 .groupmessageInfo {
 	font-size: 8pt;
-	font-style: italic; 
+	font-style: italic;
 }
 
-.clickableUsername, .tallyCount {
+.clickableUsername,.tallyCount {
 	color: #7F2222 !important;
 	background-color: #C5D9FF;
 	cursor: pointer;
 }
-.clickableUsername:hover, .tallyCount:hover {
+
+.clickableUsername:hover,.tallyCount:hover {
 	background-color: #0000FF !important;
 }
 
@@ -311,4 +321,10 @@
 .myBlogsRow {
 	height: 50px !important;
 	overflow: auto;
+}
+
+.myBlogsLabel {
+	font-family: fantasy;
+	font-size: 12pt;
+	margin-left: 10px;
 }

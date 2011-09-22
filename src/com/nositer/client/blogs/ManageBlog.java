@@ -1,22 +1,24 @@
 package com.nositer.client.blogs;
 
-import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Label;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.nositer.client.Nositer;
+import com.nositer.client.dto.generated.Blog;
+import com.nositer.client.dto.generated.GroupPlusView;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ManageBlog extends ContentPanel {
+public class ManageBlog extends TabPanel {
 	private static ManageBlog instance;
-	private BlogsContainer blogsContainer;
-	private LayoutContainer topComponent;
+	private BlogsContainerTabItem blogsContainerTabItem;
+	
 
-	public BlogsContainer getBlogsContainer() {
-		return blogsContainer;
+	public BlogsContainerTabItem getBlogsContainerTabItem() {
+		return blogsContainerTabItem;
 	}
 
-	public void setBlogsContainer(BlogsContainer blogsContainer) {
-		this.blogsContainer = blogsContainer;
+	public void setBlogsContainerTabItem(BlogsContainerTabItem blogsContainerTabItem) {
+		this.blogsContainerTabItem = blogsContainerTabItem;
 	}
+	
 
 	public static ManageBlog getInstance(boolean createIfNecessary) {
 		ManageBlog retval = null;
@@ -38,14 +40,18 @@ public class ManageBlog extends ContentPanel {
 	}
 
 	public void init() {
-		setHeaderVisible(false);
 		setAutoHeight(true);
 		setAutoWidth(true);
-		instance = this;
-		blogsContainer = new BlogsContainer();
-		add(blogsContainer);
-		topComponent = new LayoutContainer();
-		topComponent.add(new Label("My Blog"));
-		setTopComponent(topComponent);
+		blogsContainerTabItem = new BlogsContainerTabItem("My Blog");
+		add(blogsContainerTabItem);
+		
 	}	
+	
+	
+	public static boolean isBlogIOwn(Blog blog) {
+		boolean retval = false;
+		retval = blog.getUserid().equals(Nositer.getInstance().getUser().getId());
+		return retval;
+	}  
+
 }

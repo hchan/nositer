@@ -35,6 +35,8 @@ import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Blog;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
+import com.nositer.client.groups.Groups;
+import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
@@ -124,7 +126,7 @@ public class BlogsGrid extends Grid<BeanModel> {
 	}
 	
 	public void init() {
-		contextMenu = new Menu();
+		initContextMenu();
 
 		setContextMenu(contextMenu);
 		
@@ -137,9 +139,101 @@ public class BlogsGrid extends Grid<BeanModel> {
 	}
 
 
-	
 
+
+	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
+		BeanModel beanModel = gridEvent.getGrid().getSelectionModel().getSelectedItem();
+		final Blog blog = beanModel.getBean();	
+		ModelData selectedItem = this.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			contextMenu.removeAll();
+			ViewMenuItem viewMenuItem = new ViewMenuItem() {
+				public void doSelect() {
+					doViewBlog(blog);
+				};
+			};
+			contextMenu.add(viewMenuItem);		
+			if (ManageBlog.isBlogIOwn(blog)) {
+				EditMenuItem editMenuItem = new EditMenuItem() {
+					public void doSelect() {
+						doEditBlog(blog);	
+					};
+				};
+				contextMenu.add(editMenuItem);
+				DeleteMenuItem deleteMenuItem = new DeleteMenuItem(){
+					public void doSelect() {
+						doDeleteBlog(blog);	
+					};
+				};
+				contextMenu.add(deleteMenuItem);
+			}
+			contextMenu.showAt(gridEvent.getClientX(), gridEvent.getClientY());
+
+		} else {
+			gridEvent.setCancelled(true);
+		}
+		
+		
+	}
 	
+	private void initContextMenu() {
+		contextMenu = new Menu();
+		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
+
+			@Override
+			public void handleEvent(MenuEvent me) {
+				if (me.getMenu().getBounds(true).x == me.getClientX()) {
+					contextMenu.hide();
+					BeanModel beanModel = BlogsGrid.this.getSelectionModel().getSelectedItem();
+					final Blog blog = beanModel.getBean();	
+					doViewBlog(blog);
+				}
+			}
+		});
+
+		addListener(Events.RowClick, new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
+				showContextMenu(gridEvent);
+			}
+		});
+
+		this.addListener(Events.ContextMenu,  new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  
+				showContextMenu(gridEvent);
+			}
+		});
+
+		// sigh ... can't listen to single AND doubleclick - can listen to one of the two
+		this.addListener(Events.OnDoubleClick,  new Listener<GridEvent<BeanModel>>() {  
+
+			@Override
+			public void handleEvent(GridEvent<BeanModel> gridEvent) {  			
+				BeanModel beanModel = BlogsGrid.this.getSelectionModel().getSelectedItem();
+				final Blog blog = beanModel.getBean();	
+				doViewBlog(blog);
+			}
+		});
+		
+	
+	
+	}
+	
+	public void doViewBlog(Blog blog) {
+		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
+	}
+	
+	public void doEditBlog(Blog blog) {
+		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
+	}
+	
+	public void doDeleteBlog(Blog blog) {
+		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
+	}
+
 	public void refresh() {
 		store.getLoader().load();
 	}

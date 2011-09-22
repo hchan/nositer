@@ -12,10 +12,11 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.nositer.client.main.MainPanel;
 import com.nositer.client.widget.Resizable;
+import com.nositer.client.widget.TabItemPlus;
 import com.nositer.client.widget.button.RefreshButton;
 
 
-public class BlogsContainer extends LayoutContainer implements Resizable {
+public class BlogsContainerTabItem extends TabItemPlus {
 
 	private ContentPanel contentPanel;
 	private BlogsGrid blogsGrid;
@@ -45,7 +46,8 @@ public class BlogsContainer extends LayoutContainer implements Resizable {
 		this.toolBar = toolBar;
 	}
 
-	public BlogsContainer() {
+	public BlogsContainerTabItem(String str) {
+		super(str);
 		init();
 	}
 
@@ -85,7 +87,12 @@ public class BlogsContainer extends LayoutContainer implements Resizable {
 	
 	@Override
 	public void resize(int width, int height) {		
-		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-20);
+		contentPanel.setSize(MainPanel.getInstance().getWidth()-4, MainPanel.getInstance().getHeight()-25);
 		//blogsGrid.setSize(MainPanel.getInstance().getWidth()-15, MainPanel.getInstance().getHeight()-30);
+	}
+
+	@Override
+	public void addDefaultListeners() {
+		
 	}
 }
