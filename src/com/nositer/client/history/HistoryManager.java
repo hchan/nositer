@@ -22,6 +22,7 @@ import static com.nositer.client.history.HistoryToken.UPLOADFILES;
 import static com.nositer.client.history.HistoryToken.UPLOADGROUP;
 import static com.nositer.client.history.HistoryToken.USER;
 import static com.nositer.client.history.HistoryToken.VIEWBLOG;
+import static com.nositer.client.history.HistoryToken.EDITBLOG;
 
 import com.extjs.gxt.ui.client.event.BaseEvent;
 import com.extjs.gxt.ui.client.event.Events;
@@ -199,6 +200,7 @@ public class HistoryManager {
 		} else if (historyToken.equals(BLOGS.toString())) {
 			leftPanel.getBlog().expand();
 			leftPanel.getNavigationTree().select(leftPanel.getManageBlogNavigationItem());
+			ManageBlog.getInstance(true).showNonClosableTab(ManageBlog.TabItemType.BLOGS);
 			setMainPanel(ManageBlog.getInstance(true));
 		} else if (historyToken.equals(VIEWBLOG.toString())) {
 			leftPanel.getBlog().expand();
@@ -208,8 +210,13 @@ public class HistoryManager {
 		} else if (historyToken.startsWith(VIEWBLOG.toString() + SUBTOKENSEPARATOR)) {
 			leftPanel.getBlog().expand();
 			leftPanel.getNavigationTree().select(leftPanel.getViewBlogNavigationItem());
-			ViewBlog.getInstance(true).showBlog(getSubHistoryToken());
+			ViewBlog.getInstance(true).showBlog(getSubHistoryToken());			
 			setMainPanel(ViewBlog.getInstance(true));
+		} else if (historyToken.startsWith(EDITBLOG.toString() + SUBTOKENSEPARATOR)) {
+			leftPanel.getBlog().expand();
+			leftPanel.getNavigationTree().select(leftPanel.getManageBlogNavigationItem());
+			ManageBlog.getInstance(true).showClosableTab(getSubHistoryToken(), ManageBlog.TabItemType.EDITBLOG);
+			setMainPanel(ManageBlog.getInstance(true));
 		}
 	}
 

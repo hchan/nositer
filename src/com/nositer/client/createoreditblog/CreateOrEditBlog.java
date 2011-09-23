@@ -209,15 +209,14 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 	}
 
 
-	public void populate(GroupPlusView groupPlusView) {
-		//groupid = groupPlusView.getId();
-		name.setValue(groupPlusView.getName());
-		description.setValue(groupPlusView.getDescription());
+	public void populate(Blog blog) {
+		blogid = blog.getId();
+		name.setValue(blog.getName());
+		description.setValue(blog.getDescription());
 	}
 
 	private Blog createBlogDTO() {
 		Blog retval = new Blog();
-		//retval.setId(groupid);
 		retval.setName(name.getValue());
 		retval.setDescription(description.getValue());
 		return retval;

@@ -227,7 +227,7 @@ public class BlogsGrid extends Grid<BeanModel> {
 	}
 	
 	public void doEditBlog(Blog blog) {
-		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
+		HistoryManager.addHistory(HistoryToken.EDITBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
 	}
 	
 	public void doDeleteBlog(Blog blog) {
