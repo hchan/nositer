@@ -150,7 +150,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		if (isCreate()) {
 			retval = 225;
 		} else {
-			retval = 250;
+			retval = 192;
 		}		
 		return retval;
 	}

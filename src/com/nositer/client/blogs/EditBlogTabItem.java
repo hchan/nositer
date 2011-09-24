@@ -2,6 +2,7 @@ package com.nositer.client.blogs;
 
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
@@ -53,12 +54,13 @@ public class EditBlogTabItem extends TabItemPlus implements Resizable {
 			headerText = headerText.substring(0, lengthOfHeaderText);
 			headerText += "...";
 		}
-		EditBlogTabItem.this.setText(headerText);
+		setText(headerText);
 
 		CreateOrEditBlog createOrEditBlog = new CreateOrEditBlog(false);
 		createOrEditBlog.populate(blog);
-
+		
 		add(createOrEditBlog);
+		
 		layout();
 	}
 
@@ -81,7 +83,7 @@ public class EditBlogTabItem extends TabItemPlus implements Resizable {
 	}
 
 	@Override
-	public void resize(int width, int height) {		
+	public void resize(int width, int height) {	
 		//setSize(MainPanel.getInstance().getWidth()-3,
 		//		MainPanel.getInstance().getHeight());
 	}
