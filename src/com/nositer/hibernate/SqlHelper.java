@@ -186,9 +186,12 @@ public class SqlHelper {
 		"select * from " + Blog.TABLENAME + " where " + Blog.Column.userid + " = :" + Blog.Column.userid + 
 		" and " + NOTDISABLE +
 		" order by " + Blog.Column.name;
-	
-	
-	
+	public static String UPDATEBLOG =
+		"update " + Blog.TABLENAME + " set " + 
+		Blog.Column.name + "= :" + Blog.Column.name +  ", " +
+		Blog.Column.description + " = :" + Blog.Column.description + ", " +
+		MODIFIEDTIMENOW + 
+		" where " + Blog.Column.id + " = :" + Blog.Column.id;
 	
 	
 	

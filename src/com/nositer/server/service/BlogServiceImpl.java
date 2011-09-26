@@ -8,9 +8,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.nositer.client.dto.generated.Blog;
+import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.GroupPlusView;
 import com.nositer.client.dto.generated.Groupmessage;
 import com.nositer.client.dto.generated.Grouptopic;
@@ -48,6 +50,8 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 			trx = sess.beginTransaction();		
 			String description = blog.getDescription();
 			blog.setDescription(HTMLPurifier.getCleanHTML(description));
+			String name = blog.getName();
+			blog.setName(HTMLPurifier.getCleanHTML(name));
 			User user = Application.getCurrentUser();
 			
 			com.nositer.hibernate.generated.domain.Blog blogDomain = BeanConversion.copyDTO2Domain(blog, com.nositer.hibernate.generated.domain.Blog.class);
@@ -131,6 +135,40 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 		finally {
 			HibernateUtil.closeSession(sess);
 		}	
+		return retval;
+	}
+
+
+	@Override
+	public Blog updateBlog(Blog blog) throws GWTException {
+		Blog retval = blog;
+		Session sess = HibernateUtil.getSession();
+		Transaction trx = null;
+		try {
+			trx = sess.beginTransaction();		
+			String description = blog.getDescription();
+			blog.setDescription(HTMLPurifier.getCleanHTML(description));
+			String name = blog.getName();
+			blog.setName(HTMLPurifier.getCleanHTML(name));
+			
+			sess.createSQLQuery(SqlHelper.UPDATEBLOG).
+			setString(com.nositer.client.dto.generated.Blog.Column.name.toString(), blog.getName()).
+			setString(com.nositer.client.dto.generated.Blog.Column.description.toString(), blog.getName()).
+			setInteger(com.nositer.client.dto.generated.Blog.Column.id.toString(), blog.getId()).
+			executeUpdate();	
+			trx.commit();
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}
 		return retval;
 	}
 

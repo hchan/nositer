@@ -15,5 +15,7 @@ public interface BlogServiceAsync {
 	void getBlog(Integer blogid, AsyncCallback<Blog> callback);
 
 	void getMyBlogs(AsyncCallback<ArrayList<Blog>> callback);
+	
+	void updateBlog(Blog blog, AsyncCallback<Blog> callback);
 
 }

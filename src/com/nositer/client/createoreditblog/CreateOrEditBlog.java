@@ -200,7 +200,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 					if (isCreate()) {
 						ServiceBroker.blogService.createBlog(createBlogDTO(), callback);
 					} else {
-						//ServiceBroker.blogService.createBlog(createBlogDTO(), callback);
+						ServiceBroker.blogService.updateBlog(createBlogDTO(), callback);
 					}
 				}
 			}
@@ -219,6 +219,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 		Blog retval = new Blog();
 		retval.setName(name.getValue());
 		retval.setDescription(description.getValue());
+		retval.setId(blogid);
 		return retval;
 	}
 
