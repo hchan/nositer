@@ -21,6 +21,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.Scope;
 import com.nositer.client.ServiceBroker;
+import com.nositer.client.blogs.ManageBlog;
 import com.nositer.client.dto.generated.Blog;
 import com.nositer.client.dto.generated.Group;
 import com.nositer.client.dto.generated.User;
@@ -192,6 +193,7 @@ public class CreateOrEditBlog extends LayoutContainer implements Resizable {
 							InfoMessageBox.show("Saved!", new Listener<MessageBoxEvent>() {
 								@Override
 								public void handleEvent(MessageBoxEvent be) {
+									ManageBlog.getInstance(true).getBlogsContainerTabItem().getBlogsGrid().refresh();
 									HistoryManager.addHistory(HistoryToken.VIEWBLOG.toString() + HistoryManager.SUBTOKENSEPARATOR + result.getId());									
 								}								
 							});										
