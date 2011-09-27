@@ -10,6 +10,8 @@ import com.extjs.gxt.ui.client.data.Loader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
@@ -17,6 +19,7 @@ import com.extjs.gxt.ui.client.event.MenuEvent;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
@@ -75,8 +78,8 @@ public class BlogsGrid extends Grid<BeanModel> {
 		loader = new BaseListLoader<PagingLoadResult<ModelData>>(  
 				proxy, new BeanModelReader());  
 		loader.setRemoteSort(false);  
-		store = new ListStore<BeanModel>(loader);  
 		cm = createColumnModel();
+		store = new ListStore<BeanModel>(loader);  		
 		this.view = new GridView();
 		disabledStyle = null;
 		baseStyle = "x-grid-panel";
@@ -98,6 +101,9 @@ public class BlogsGrid extends Grid<BeanModel> {
 		date.setDateTimeFormat(DateTimeFormat.getFormat("MM/dd/y"));  
 		columns.add(date);  
 		retval = new ColumnModel(columns);
+		setAutoExpandColumn(Blog.Column.description.toString());  
+		setAutoWidth(true);
+		setAutoExpandMin(200);
 		return retval;
 	}
 

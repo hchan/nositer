@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Aug 23, 2011 3:04:52 PM by Hibernate Tools 3.2.4.GA
+// Generated Sep 27, 2011 2:19:03 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -45,6 +45,7 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 	private Date modifiedtime;
 	private Set<Groupmessage> groupmessages = new HashSet<Groupmessage>(0);
 	private Set<Grouptopic> grouptopics = new HashSet<Grouptopic>(0);
+	private Set<UserHasBlog> userHasBlogs = new HashSet<UserHasBlog>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
@@ -76,8 +77,8 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Boolean disable, Date createdtime,
 			Date modifiedtime, Set<Groupmessage> groupmessages,
-			Set<Grouptopic> grouptopics, Set<UserHasGroup> userHasGroups,
-			Set<Iwantto> iwanttos,
+			Set<Grouptopic> grouptopics, Set<UserHasBlog> userHasBlogs,
+			Set<UserHasGroup> userHasGroups, Set<Iwantto> iwanttos,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
 			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
@@ -103,6 +104,7 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 		this.modifiedtime = modifiedtime;
 		this.groupmessages = groupmessages;
 		this.grouptopics = grouptopics;
+		this.userHasBlogs = userHasBlogs;
 		this.userHasGroups = userHasGroups;
 		this.iwanttos = iwanttos;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
@@ -339,6 +341,14 @@ public class User implements java.io.Serializable, IsSerializable, Cloneable,
 
 	public void setGrouptopics(Set<Grouptopic> grouptopics) {
 		this.grouptopics = grouptopics;
+	}
+
+	public Set<UserHasBlog> getUserHasBlogs() {
+		return this.userHasBlogs;
+	}
+
+	public void setUserHasBlogs(Set<UserHasBlog> userHasBlogs) {
+		this.userHasBlogs = userHasBlogs;
 	}
 
 	public Set<UserHasGroup> getUserHasGroups() {

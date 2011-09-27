@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Aug 23, 2011 3:04:51 PM by Hibernate Tools 3.2.4.GA
+// Generated Sep 27, 2011 2:18:59 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;
@@ -57,6 +57,7 @@ public class User implements java.io.Serializable, Domain {
 	private Date modifiedtime;
 	private Set<Groupmessage> groupmessages = new HashSet<Groupmessage>(0);
 	private Set<Grouptopic> grouptopics = new HashSet<Grouptopic>(0);
+	private Set<UserHasBlog> userHasBlogs = new HashSet<UserHasBlog>(0);
 	private Set<UserHasGroup> userHasGroups = new HashSet<UserHasGroup>(0);
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	private Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes = new HashSet<UserHasSecurityquestioncode>(
@@ -83,8 +84,8 @@ public class User implements java.io.Serializable, Domain {
 			String note, Date notemodifedtime, String description,
 			Date lastlogin, Boolean disable, Date createdtime,
 			Date modifiedtime, Set<Groupmessage> groupmessages,
-			Set<Grouptopic> grouptopics, Set<UserHasGroup> userHasGroups,
-			Set<Iwantto> iwanttos,
+			Set<Grouptopic> grouptopics, Set<UserHasBlog> userHasBlogs,
+			Set<UserHasGroup> userHasGroups, Set<Iwantto> iwanttos,
 			Set<UserHasSecurityquestioncode> userHasSecurityquestioncodes,
 			Set<Blog> blogs) {
 		this.salutationcode = salutationcode;
@@ -110,6 +111,7 @@ public class User implements java.io.Serializable, Domain {
 		this.modifiedtime = modifiedtime;
 		this.groupmessages = groupmessages;
 		this.grouptopics = grouptopics;
+		this.userHasBlogs = userHasBlogs;
 		this.userHasGroups = userHasGroups;
 		this.iwanttos = iwanttos;
 		this.userHasSecurityquestioncodes = userHasSecurityquestioncodes;
@@ -417,6 +419,15 @@ public class User implements java.io.Serializable, Domain {
 
 	public void setGrouptopics(Set<Grouptopic> grouptopics) {
 		this.grouptopics = grouptopics;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserHasBlog> getUserHasBlogs() {
+		return this.userHasBlogs;
+	}
+
+	public void setUserHasBlogs(Set<UserHasBlog> userHasBlogs) {
+		this.userHasBlogs = userHasBlogs;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

@@ -3,7 +3,7 @@ package com.nositer.hibernate.generated.domain;
 import com.nositer.hibernate.*;
 import javax.persistence.Transient;
 
-// Generated Aug 23, 2011 3:04:51 PM by Hibernate Tools 3.2.4.GA
+// Generated Sep 27, 2011 2:18:59 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 //import java.util.List;
 //import java.util.ArrayList;

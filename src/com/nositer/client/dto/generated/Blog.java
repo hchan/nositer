@@ -2,7 +2,7 @@ package com.nositer.client.dto.generated;
 
 import com.nositer.client.dto.*;
 
-// Generated Aug 23, 2011 3:04:52 PM by Hibernate Tools 3.2.4.GA
+// Generated Sep 27, 2011 2:19:03 PM by Hibernate Tools 3.2.4.GA
 // Enhanced by Henry
 
 //import com.extjs.gxt.ui.client.data.BaseModelData;
@@ -28,6 +28,7 @@ public class Blog implements java.io.Serializable, IsSerializable, Cloneable,
 	private Boolean disable;
 	private Date createdtime;
 	private Date modifiedtime;
+	private Set<UserHasBlog> userHasBlogs = new HashSet<UserHasBlog>(0);
 	private Set<Iwantto> iwanttos = new HashSet<Iwantto>(0);
 	public static final String TABLENAME = "nositer.blog";
 
@@ -43,13 +44,15 @@ public class Blog implements java.io.Serializable, IsSerializable, Cloneable,
 	}
 
 	public Blog(User user, String name, String description, Boolean disable,
-			Date createdtime, Date modifiedtime, Set<Iwantto> iwanttos) {
+			Date createdtime, Date modifiedtime, Set<UserHasBlog> userHasBlogs,
+			Set<Iwantto> iwanttos) {
 		this.user = user;
 		this.name = name;
 		this.description = description;
 		this.disable = disable;
 		this.createdtime = createdtime;
 		this.modifiedtime = modifiedtime;
+		this.userHasBlogs = userHasBlogs;
 		this.iwanttos = iwanttos;
 	}
 
@@ -117,6 +120,14 @@ public class Blog implements java.io.Serializable, IsSerializable, Cloneable,
 
 	public void setModifiedtime(Date modifiedtime) {
 		this.modifiedtime = modifiedtime;
+	}
+
+	public Set<UserHasBlog> getUserHasBlogs() {
+		return this.userHasBlogs;
+	}
+
+	public void setUserHasBlogs(Set<UserHasBlog> userHasBlogs) {
+		this.userHasBlogs = userHasBlogs;
 	}
 
 	public Set<Iwantto> getIwanttos() {

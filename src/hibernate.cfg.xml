@@ -30,6 +30,7 @@
         <mapping class="com.nositer.hibernate.generated.domain.Iwantto" />
         <mapping class="com.nositer.hibernate.generated.domain.Grouptopic" />
         <mapping class="com.nositer.hibernate.generated.domain.Postalcode" />
+        <mapping class="com.nositer.hibernate.generated.domain.UserHasBlog" />
         <mapping class="com.nositer.hibernate.generated.domain.Relationshipcode" />
         <mapping class="com.nositer.hibernate.generated.domain.GroupPlusView" />
         <mapping class="com.nositer.hibernate.generated.domain.User" />

@@ -153,7 +153,7 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 			
 			sess.createSQLQuery(SqlHelper.UPDATEBLOG).
 			setString(com.nositer.client.dto.generated.Blog.Column.name.toString(), blog.getName()).
-			setString(com.nositer.client.dto.generated.Blog.Column.description.toString(), blog.getName()).
+			setString(com.nositer.client.dto.generated.Blog.Column.description.toString(), blog.getDescription()).
 			setInteger(com.nositer.client.dto.generated.Blog.Column.id.toString(), blog.getId()).
 			executeUpdate();	
 			trx.commit();
