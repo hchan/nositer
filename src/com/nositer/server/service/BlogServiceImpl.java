@@ -173,5 +173,33 @@ public class BlogServiceImpl extends RemoteServiceServlet implements BlogService
 	}
 
 
+	@Override
+	public void disableBlog(Blog blog) throws GWTException {
+		Session sess = HibernateUtil.getSession();
+		User user = null;
+		Transaction trx = null;
+		try {
+			user = Application.getCurrentUser();
+			trx = sess.beginTransaction();				
+			sess.createSQLQuery(SqlHelper.DISABLEBLOG).
+			setInteger(Blog.Column.id.toString(), blog.getId()).
+			setInteger(Blog.Column.userid.toString(), user.getId()).
+			executeUpdate();			
+			trx.commit();			
+		}
+		catch (GWTException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			HibernateUtil.rollbackTransaction(trx);		
+			Application.log.error("", e);
+			throw new GWTException(e);
+		}
+		finally {
+			HibernateUtil.closeSession(sess);
+		}	
+	}
+
+
 	
 }

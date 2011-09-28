@@ -115,7 +115,7 @@ public class SqlHelper {
 		"update " + GroupPlusView.TABLENAME + " set " +
 		GroupPlusView.Column.disable + " = true " +
 		" where " + GroupPlusView.Column.id + " = :" + GroupPlusView.Column.id + " and " +
-		GroupPlusView.Column.owner + " = true " +
+		GroupPlusView.Column.owner + " = true " + " and " +
 		GroupPlusView.Column.userid + " = :" + GroupPlusView.Column.userid;
 	public static String GETSUBSCRIPTIONS =
 		"select * from " + GroupSubscriptionView.TABLENAME + 
@@ -192,7 +192,11 @@ public class SqlHelper {
 		Blog.Column.description + " = :" + Blog.Column.description + ", " +
 		MODIFIEDTIMENOW + 
 		" where " + Blog.Column.id + " = :" + Blog.Column.id;
-	
+	public static String DISABLEBLOG =
+		"update " + Blog.TABLENAME + " set " +
+		Blog.Column.disable + " = true " +
+		" where " + Blog.Column.id + " = :" + Blog.Column.id + " and " +
+		Blog.Column.userid + " = :" + Blog.Column.userid;
 	
 	
 	public static String disableSQL(DTO dto) {

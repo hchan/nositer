@@ -1,4 +1,10 @@
 package com.nositer.client.blogs;
+/**
+ * @author Henry Chan
+ * Sep/2010
+ * 
+ * This class is a UI component (Grid) that will display a grid of blogs 
+ */
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,41 +16,28 @@ import com.extjs.gxt.ui.client.data.Loader;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.extjs.gxt.ui.client.data.RpcProxy;
-import com.extjs.gxt.ui.client.event.BaseEvent;
-import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MenuEvent;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
-import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.widget.HtmlContainer;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
-import com.extjs.gxt.ui.client.widget.grid.GridGroupRenderer;
 import com.extjs.gxt.ui.client.widget.grid.GridSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.GridView;
-import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
-import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nositer.client.ServiceBroker;
 import com.nositer.client.dto.generated.Blog;
-import com.nositer.client.dto.generated.Group;
-import com.nositer.client.dto.generated.GroupPlusView;
-import com.nositer.client.groups.Groups;
-import com.nositer.client.groups.GroupsGrid;
 import com.nositer.client.history.HistoryManager;
 import com.nositer.client.history.HistoryToken;
 import com.nositer.client.util.GWTUtil;
-import com.nositer.client.util.HttpGetFileHelper;
-import com.nositer.client.widget.avatar.Avatar;
 import com.nositer.client.widget.menuitem.DeleteMenuItem;
 import com.nositer.client.widget.menuitem.EditMenuItem;
 import com.nositer.client.widget.menuitem.ViewMenuItem;
@@ -52,12 +45,13 @@ import com.nositer.client.widget.messagebox.ConfirmMessageBox;
 
 @SuppressWarnings({"rawtypes"})
 public class BlogsGrid extends Grid<BeanModel> {
-
+	private static final String BASE_STYLE = "x-grid-panel";
+	private static final String ROW_STYLE = "myBlogsRow";
 	protected RpcProxy<ArrayList<Blog>> proxy;
 	protected BaseListLoader<PagingLoadResult<ModelData>> loader;
-
 	protected Menu contextMenu;
 
+	// Getters/Setters
 	public RpcProxy getProxy() {
 		return proxy;
 	}
@@ -66,8 +60,31 @@ public class BlogsGrid extends Grid<BeanModel> {
 		return loader;
 	}
 	
-	
+	public Menu getContextMenu() {
+		return contextMenu;
+	}
+
+	public void setContextMenu(Menu contextMenu) {
+		this.contextMenu = contextMenu;
+		super.setContextMenu(contextMenu); // don't forget to call super =)
+	}
+
+	public void setProxy(RpcProxy<ArrayList<Blog>> proxy) {
+		this.proxy = proxy;
+	}
+
+	public void setLoader(BaseListLoader<PagingLoadResult<ModelData>> loader) {
+		this.loader = loader;
+	}
+
+	// ctor
 	public BlogsGrid() {
+		init();
+	}
+	
+	// init is separated from ctor as it may be re-init from another component
+	public void init() {
+		initContextMenuAndClicks();
 		proxy = new RpcProxy<ArrayList<Blog>>() {
 			@Override
 			protected void load(Object loadConfig,
@@ -82,13 +99,20 @@ public class BlogsGrid extends Grid<BeanModel> {
 		store = new ListStore<BeanModel>(loader);  		
 		this.view = new GridView();
 		disabledStyle = null;
-		baseStyle = "x-grid-panel";
+		baseStyle = BASE_STYLE;
 		setSelectionModel(new GridSelectionModel<BeanModel>());
 		disableTextSelection(true);
-		init();
+		
+		
+		store.getLoader().load();
+		setLoadMask(true);  
+		setBorders(true);  
+		setAutoExpandColumn(Blog.Column.description.toString());  
+
 	}
 
-	public ColumnModel createColumnModel() {
+	// TODO refactor column names, width to a properties file?
+	private ColumnModel createColumnModel() {
 		ColumnModel retval = null;
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();  
 		
@@ -108,7 +132,6 @@ public class BlogsGrid extends Grid<BeanModel> {
 	}
 
 	
-	
 	protected GridCellRenderer getDescriptionGridCellRenderer() {
 		GridCellRenderer retval = new GridCellRenderer() {
 
@@ -117,7 +140,7 @@ public class BlogsGrid extends Grid<BeanModel> {
 					ColumnData config, int rowIndex, int colIndex,
 					ListStore store, Grid grid) {
 				HtmlContainer retval = new HtmlContainer();
-				retval.setStyleName("myBlogsRow");
+				retval.setStyleName(ROW_STYLE);
 				try {
 					BeanModel beanModel = (BeanModel) model;
 					Blog blog = beanModel.getBean();
@@ -131,20 +154,6 @@ public class BlogsGrid extends Grid<BeanModel> {
 		return retval;
 	}
 	
-	public void init() {
-		initContextMenu();
-
-		setContextMenu(contextMenu);
-		
-		
-		store.getLoader().load();
-		setLoadMask(true);  
-		setBorders(true);  
-		setAutoExpandColumn(Blog.Column.description.toString());  
-
-	}
-
-
 
 
 	protected void showContextMenu(GridEvent<BeanModel> gridEvent) {
@@ -182,8 +191,10 @@ public class BlogsGrid extends Grid<BeanModel> {
 		
 	}
 	
-	private void initContextMenu() {
+	// initializes right-click
+	private void initContextMenuAndClicks() {
 		contextMenu = new Menu();
+		setContextMenu(contextMenu);
 		contextMenu.addListener(Events.OnClick, new Listener<MenuEvent>() {
 
 			@Override
@@ -223,23 +234,45 @@ public class BlogsGrid extends Grid<BeanModel> {
 				doViewBlog(blog);
 			}
 		});
-		
-	
 	
 	}
 	
+	// view the blog via GWT History
 	public void doViewBlog(Blog blog) {
 		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
 	}
 	
+	// edit the blog via GWT History
 	public void doEditBlog(Blog blog) {
 		HistoryManager.addHistory(HistoryToken.EDITBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
 	}
 	
-	public void doDeleteBlog(Blog blog) {
-		HistoryManager.addHistory(HistoryToken.VIEWBLOG + HistoryManager.SUBTOKENSEPARATOR + blog.getId());
+	// delete blog (prompts a confirm)
+	public void doDeleteBlog(final Blog blog) {
+		Listener<MessageBoxEvent> callback = new Listener<MessageBoxEvent>() {
+			@Override
+			public void handleEvent(MessageBoxEvent be) {
+				if (be.getButtonClicked().getText().equalsIgnoreCase("yes")) {
+					AsyncCallback<Void> deleteCallback = new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							GWTUtil.log("", caught);
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							refresh();
+						}						
+					};
+					ServiceBroker.blogService.disableBlog(blog, deleteCallback);
+				}			
+			}			
+		};
+		ConfirmMessageBox.show("Confirm", "Are you sure you want to Delete " + blog.getName(), callback);
 	}
 
+	// refreshes the grid
 	public void refresh() {
 		store.getLoader().load();
 	}

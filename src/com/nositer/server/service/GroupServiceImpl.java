@@ -229,6 +229,7 @@ public class GroupServiceImpl extends RemoteServiceServlet implements GroupServi
 			user = Application.getCurrentUser();
 			trx = sess.beginTransaction();				
 			sess.createSQLQuery(SqlHelper.DISABLEGROUP).
+			setInteger(GroupPlusView.Column.id.toString(), groupPlusView.getId()).
 			setInteger(GroupPlusView.Column.userid.toString(), user.getId())
 			.executeUpdate();			
 			trx.commit();			

@@ -18,4 +18,6 @@ public interface BlogServiceAsync {
 	
 	void updateBlog(Blog blog, AsyncCallback<Blog> callback);
 
+	void disableBlog(Blog blog, AsyncCallback<Void> callback);
+
 }

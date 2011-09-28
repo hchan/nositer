@@ -21,4 +21,7 @@ public interface BlogService extends RemoteService {
 	ArrayList<Blog> getMyBlogs() throws GWTException;
 
 	Blog updateBlog(Blog blog) throws GWTException;
+
+	void disableBlog(Blog blog) throws GWTException;
+
 }
