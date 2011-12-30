@@ -31,6 +31,7 @@ public class IWantToServiceImpl extends RemoteServiceServlet implements IWantToS
 			trx = sess.beginTransaction();		
 			User user = Application.getCurrentUser();
 			iwantto.setUser(user);
+			iwantto.setDisable(false);
 			iwanttoDomain = BeanConversion.copyDTO2Domain(iwantto, com.nositer.hibernate.generated.domain.Iwantto.class);
 			sess.save(iwanttoDomain);
 			trx.commit();
